@@ -1,0 +1,27 @@
+{
+  "name": "vf-graphql",
+  "version": "0.0.1",
+  "description": "Reference GraphQL implementation of the ValueFlows spec",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/valueflows/vf-graphql.git"
+  },
+  "keywords": [
+    "ValueFlows",
+    "GraphQL",
+    "grammar"
+  ],
+  "author": "ValueFlows contributors",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/valueflows/vf-graphql/issues"
+  },
+  "homepage": "https://github.com/valueflows/vf-graphql#readme",
+  "dependencies": {
+    "graphql": "^14.1.1"
+  }
+}
