@@ -4,7 +4,7 @@
   "description": "Reference GraphQL implementation of the ValueFlows spec",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "tape tests/**/*.js | faucet"
   },
   "repository": {
     "type": "git",
@@ -23,5 +23,10 @@
   "homepage": "https://github.com/valueflows/vf-graphql#readme",
   "dependencies": {
     "graphql": "^14.1.1"
+  },
+  "devDependencies": {
+    "faucet": "0.0.1",
+    "tape": "^4.10.0",
+    "tape-catch": "^1.0.6"
   }
 }
