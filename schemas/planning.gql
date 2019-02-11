@@ -11,6 +11,24 @@
 #
 ##
 
+type Plan {
+  id: ID!
+  plannedOn: String
+  due: String
+  note: String
+  name: String
+  createdBy: Agent
+  scope: [Agent]
+  planProcesses(year: Int, month: Int): [Process]
+  workingAgents: [Agent]
+  plannedNonWorkInputs: [Commitment]
+  plannedOutputs: [Commitment]
+  nonWorkInputs: [EconomicEvent]
+  outputs: [EconomicEvent]
+  kanbanState: String
+  isDeletable: Boolean
+}
+
 type Commitment {
   id: ID!
   url: String!
@@ -36,6 +54,14 @@ type Commitment {
   isDeletable: Boolean
   userIsAuthorizedToUpdate: Boolean
   userIsAuthorizedToDelete: Boolean
+}
+
+type Fulfillment {
+  id: ID!
+  fulfilledBy: EconomicEvent!
+  fulfills: Commitment!
+  fulfilledQuantity: QuantityValue!
+  note: String
 }
 
 type ExchangeAgreement {
