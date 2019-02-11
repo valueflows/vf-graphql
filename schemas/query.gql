@@ -1,0 +1,86 @@
+##
+#
+# Main query entrypoint
+#
+# @package  HoloREA
+# @author   pospi <pospi@spadgos.com>
+# @since    2019-02-11
+#
+##
+
+type Query {
+
+  # Agent module
+  myAgent: Agent
+  agent(id: Int): Agent
+  allAgents: [Agent]
+
+  organization(id: Int): Organization
+  allOrganizations: [Organization]
+
+  person(id: Int): Person
+  allPeople: [Person]
+
+  agentRelationship(id: Int): AgentRelationship
+  allAgentRelationships: [AgentRelationship]
+  agentRelationshipRole(id: Int): AgentRelationshipRole
+  allAgentRelationshipRoles: [AgentRelationshipRole]
+
+  # Observation layer
+  economicEvent(id: Int): EconomicEvent
+  allEconomicEvents: [EconomicEvent]
+  filteredEconomicEvents(providerId: Int, receiverId: Int, resourceClassifiedAsId: Int, action: String, startDate: String, endDate: String): [EconomicEvent]
+
+  economicResource(id: Int): EconomicResource
+  allEconomicResources: [EconomicResource]
+
+  validation(id: Int): Validation
+  allValidations: [Validation]
+
+  process(id: Int): Process
+  allProcesses: [Process]
+
+  transfer(id: Int): Transfer
+  allTransfers: [Transfer]
+
+  # Planning layer
+  allRecipes: [ResourceClassification]
+
+  commitment(id: Int): Commitment
+  allCommitments: [Commitment]
+
+  plan(id: Int): Plan
+  allPlans: [Plan]
+
+  exchangeAgreement(id: Int): ExchangeAgreement
+  allExchangeAgreements: [ExchangeAgreement]
+
+  # Knowledge layer
+  resourceClassification(id: Int): ResourceClassification
+  allResourceClassifications: [ResourceClassification]
+  resourceClassificationsByProcessCategory(category: EconomicResourceProcessCategory): [ResourceClassification]
+  resourceClassificationsByAction(action: Action): [ResourceClassification]
+  resourceClassificationsByFacetValues(facetValues: String): [ResourceClassification]
+
+  agentResourceClassification(id: Int): AgentResourceClassification
+  allAgentResourceClassifications: [AgentResourceClassification]
+
+  processClassification(id: Int): ProcessClassification
+  allProcessClassifications: [ProcessClassification]
+
+  organizationClassification(id: Int): OrganizationClassification
+  allOrganizationClassifications: [OrganizationClassification]
+
+  facet(id: Int): Facet
+  allFacets: [Facet]
+
+  # System config layer
+  unit(id: Int): Unit
+  allUnits: [Unit]
+
+  quantityValue(id: Int): QuantityValue
+
+  place(id: Int): Place
+  allPlaces: [Place]
+
+}
