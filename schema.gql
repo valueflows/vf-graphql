@@ -1,0 +1,647 @@
+enum Action {
+  NONE
+  ACCEPT
+  ADJUST
+  CITE
+  CONSUME
+  GIVE
+  IMPROVE
+  PRODUCE
+  TAKE
+  USE
+  WORK
+}
+
+interface Agent {
+  id: String
+  name: String
+  type: String
+  image: String
+  note: String
+  primaryLocation: Place
+  primaryPhone: String
+  email: String
+  ownedEconomicResources(category: EconomicResourceCategory, resourceClassificationId: Int, page: Int): [EconomicResource]
+  searchOwnedInventoryResources(searchString: String): [EconomicResource]
+  agentProcesses(isFinished: Boolean): [Process]
+  searchAgentProcesses(searchString: String, isFinished: Boolean): [Process]
+  agentPlans(isFinished: Boolean, year: Int, month: Int): [Plan]
+  searchAgentPlans(searchString: String, isFinished: Boolean): [Plan]
+  agentEconomicEvents(latestNumberOfDays: Int, requestDistribution: Boolean, action: String, year: Int, month: Int): [EconomicEvent]
+  agentCommitments(latestNumberOfDays: Int): [Commitment]
+  searchAgentCommitments(searchString: String, isFinished: Boolean): [Commitment]
+  agentRelationships(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship]
+  agentRelationshipsAsSubject(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship]
+  agentRelationshipsAsObject(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship]
+  agentRoles: [AgentRelationshipRole]
+  agentRecipes: [ResourceClassification]
+  faircoinAddress: String
+  agentNotificationSettings: [NotificationSetting]
+  memberRelationships: [AgentRelationship]
+  agentSkills: [ResourceClassification]
+  agentSkillRelationships: [AgentResourceClassification]
+  commitmentsMatchingSkills: [Commitment]
+  validatedEventsCount(month: Int, year: Int): Int
+  eventsCount(year: Int, month: Int): Int
+  eventHoursCount(year: Int, month: Int): Int
+  eventPeopleCount(year: Int, month: Int): Int
+}
+
+type AgentRelationship {
+  id: ID!
+  subject: Agent
+  object: Agent
+  relationship: AgentRelationshipRole
+  note: String
+}
+
+enum AgentRelationshipCategory {
+  NONE
+  LEGALPARTNER
+  MEMBER
+  PART
+  PEER
+  TRADINGPARTNER
+}
+
+type AgentRelationshipRole {
+  id: ID!
+  label: String
+  inverseLabel: String
+  category: AgentRelationshipCategory
+}
+
+type AgentResourceClassification {
+  id: ID!
+  agent: Agent
+  resourceClassification: ResourceClassification
+  action: String
+}
+
+type Commitment {
+  id: ID!
+  url: String!
+  action: String
+  inputOf: Process
+  outputOf: Process
+  provider: Agent
+  receiver: Agent
+  scope: Agent
+  resourceClassifiedAs: ResourceClassification
+  involves: EconomicResource
+  committedQuantity: QuantityValue
+  committedOn: String
+  plannedStart: String
+  due: String
+  isFinished: Boolean
+  plan: Plan
+  isPlanDeliverable: Boolean
+  forPlanDeliverable: Commitment
+  note: String
+  fulfilledBy(requestDistribution: Boolean): [Fulfillment]
+  involvedAgents: [Agent]
+  isDeletable: Boolean
+  userIsAuthorizedToUpdate: Boolean
+  userIsAuthorizedToDelete: Boolean
+}
+
+type CreateAgentRelationship {
+  agentRelationship: AgentRelationship
+}
+
+type CreateAgentResourceClassification {
+  agentResourceClassification: AgentResourceClassification
+}
+
+type CreateCommitment {
+  commitment: Commitment
+}
+
+type CreateEconomicEvent {
+  economicEvent: EconomicEvent
+}
+
+type CreateNotificationSetting {
+  notificationSetting: NotificationSetting
+}
+
+type CreateOrganization {
+  organization: Organization
+}
+
+type CreatePerson {
+  person: Person
+}
+
+type CreatePlan {
+  plan: Plan
+}
+
+type CreatePlanFromRecipe {
+  plan: Plan
+}
+
+type CreateProcess {
+  process: Process
+}
+
+type CreateToken {
+  token: String
+}
+
+type CreateValidation {
+  validation: Validation
+}
+
+"""
+The `DateTime` scalar type represents a DateTime
+value as specified by
+[iso8601](https://en.wikipedia.org/wiki/ISO_8601).
+"""
+scalar DateTime
+
+type DeleteAgentResourceClassification {
+  agentResourceClassification: AgentResourceClassification
+}
+
+type DeleteCommitment {
+  commitment: Commitment
+}
+
+type DeleteEconomicEvent {
+  economicEvent: EconomicEvent
+}
+
+type DeleteEconomicResource {
+  economicResource: EconomicResource
+}
+
+type DeleteOrganization {
+  organization: Organization
+}
+
+type DeletePerson {
+  person: Person
+}
+
+type DeletePlan {
+  plan: Plan
+}
+
+type DeleteProcess {
+  process: Process
+}
+
+type DeleteValidation {
+  validation: Validation
+}
+
+type DjangoDebug {
+  sql: [DjangoDebugSQL]
+}
+
+type DjangoDebugSQL {
+  vendor: String
+  alias: String
+  sql: String
+  duration: Float
+  rawSql: String
+  params: String
+  startTime: Float
+  stopTime: Float
+  isSlow: Boolean
+  isSelect: Boolean
+  transId: String
+  transStatus: String
+  isoLevel: String
+  encoding: String
+}
+
+type EconomicEvent {
+  id: ID!
+  action: String
+  inputOf: Process
+  outputOf: Process
+  provider: Agent
+  receiver: Agent
+  scope: Agent
+  affects: EconomicResource
+  affectedQuantity: QuantityValue
+  start: String
+  url: String
+  requestDistribution: Boolean
+  note: String
+  fulfills: [Fulfillment]
+  validations: [Validation]
+  isValidated: Boolean
+  userIsAuthorizedToUpdate: Boolean
+  userIsAuthorizedToDelete: Boolean
+}
+
+type EconomicResource {
+  id: ID!
+  url: String!
+  resourceClassifiedAs: ResourceClassification
+  trackingIdentifier: String
+  image: String
+  currentQuantity: QuantityValue
+  note: String
+  category: String
+  currentLocation: Place
+  createdDate: String
+  transfers: [Transfer]
+  resourceContacts: [Agent]
+  owners: [Agent]
+}
+
+enum EconomicResourceCategory {
+  NONE
+  CURRENCY
+  INVENTORY
+  WORK
+}
+
+enum EconomicResourceProcessCategory {
+  NONE
+  CITED
+  CONSUMED
+  PRODUCED
+  USED
+}
+
+type ExchangeAgreement {
+  id: ID!
+  name: String!
+  plannedStart: String
+  scope: Agent
+  note: String
+  transfers: [Transfer]
+  involvedAgents: [Agent]
+}
+
+type Facet {
+  id: ID!
+  name: String!
+  description: String
+  facetValues: [FacetValue]
+}
+
+type FacetValue {
+  id: ID!
+  value: String!
+  description: String
+  facet: [Facet]
+}
+
+type Fulfillment {
+  id: ID!
+  fulfilledBy: EconomicEvent!
+  fulfills: Commitment!
+  fulfilledQuantity: QuantityValue!
+  note: String
+}
+
+type Mutation {
+  createToken(username: String!, password: String!): CreateToken
+  createPerson(name: String!, primaryPhone: String, image: String, note: String, token: String!, type: String, email: String, primaryLocationId: Int): CreatePerson
+  createOrganization(name: String!, primaryPhone: String, image: String, note: String, token: String!, type: String!, email: String, primaryLocationId: Int): CreateOrganization
+  updatePerson(name: String, image: String, email: String, note: String, token: String!, id: Int!, primaryLocationId: Int): UpdatePerson
+  updateOrganization(name: String, image: String, email: String, note: String, token: String!, id: Int!, primaryLocationId: Int): UpdateOrganization
+  deletePerson(token: String!, id: Int!): DeletePerson
+  deleteOrganization(token: String!, id: Int!): DeleteOrganization
+  createProcess(plannedFinish: String!, planId: Int!, name: String!, plannedStart: String!, note: String, token: String!, scopeId: Int!): CreateProcess
+  updateProcess(plannedFinish: String, planId: Int, name: String, plannedStart: String, note: String, token: String!, scopeId: Int, isFinished: Boolean, id: Int!): UpdateProcess
+  deleteProcess(token: String!, id: Int!): DeleteProcess
+  createCommitment(receiverId: Int, committedNumericValue: String!, planId: Int, isPlanDeliverable: Boolean, committedUnitId: Int!, inputOfId: Int, providerId: Int, plannedStart: String, due: String!, note: String, url: String, token: String!, scopeId: Int, involvesId: Int, action: String!, outputOfId: Int, committedResourceClassifiedAsId: Int!): CreateCommitment
+  updateCommitment(receiverId: Int, committedNumericValue: String, inputOfId: Int, committedUnitId: Int, committedResourceClassifiedAsId: Int, providerId: Int, plannedStart: String, due: String, note: String, url: String, token: String!, scopeId: Int, involvesId: Int, committedOn: String, action: String, isFinished: Boolean, outputOfId: Int, id: Int!): UpdateCommitment
+  deleteCommitment(token: String!, id: Int!): DeleteCommitment
+  createEconomicEvent(providerId: Int, resourceImage: String, affectedResourceClassifiedAsId: Int, affectedNumericValue: String!, note: String, start: String, requestDistribution: Boolean, resourceTrackingIdentifier: String, receiverId: Int, inputOfId: Int, affectedUnitId: Int, scopeId: Int, outputOfId: Int, createResource: Boolean, url: String, affectsId: Int, resourceNote: String, resourceCurrentLocationId: Int, token: String!, action: String, resourceUrl: String, fulfillsCommitmentId: Int): CreateEconomicEvent
+  updateEconomicEvent(receiverId: Int, fulfillsCommitmentId: Int, affectedNumericValue: String, inputOfId: Int, url: String, affectedUnitId: Int, affectsId: Int, providerId: Int, note: String, start: String, token: String!, scopeId: Int, action: String, requestDistribution: Boolean, outputOfId: Int, affectedResourceClassifiedAsId: Int, id: Int!): UpdateEconomicEvent
+  deleteEconomicEvent(token: String!, id: Int!): DeleteEconomicEvent
+  createPlan(note: String, token: String!, name: String!, due: String!): CreatePlan
+  createPlanFromRecipe(note: String, producesResourceClassificationId: Int!, token: String!, name: String!, due: String!): CreatePlanFromRecipe
+  updatePlan(note: String, token: String!, id: Int!, name: String, due: String): UpdatePlan
+  deletePlan(token: String!, id: Int!): DeletePlan
+  updateEconomicResource(trackingIdentifier: String, url: String, image: String, resourceClassifiedAsId: Int, note: String, currentLocationId: Int, token: String!, id: Int!): UpdateEconomicResource
+  deleteEconomicResource(token: String!, id: Int!): DeleteEconomicResource
+  createValidation(note: String, token: String!, economicEventId: Int!, validatedById: Int!): CreateValidation
+  deleteValidation(token: String!, id: Int!): DeleteValidation
+  createNotificationSetting(token: String!, notificationTypeId: Int!, agentId: Int, send: Boolean!): CreateNotificationSetting
+  updateNotificationSetting(token: String!, id: Int!, send: Boolean): UpdateNotificationSetting
+  createAgentRelationship(note: String, subjectId: Int!, relationshipId: Int!, token: String!, objectId: Int!): CreateAgentRelationship
+  updateAgentRelationship(subjectId: Int, objectId: Int, note: String, token: String!, relationshipId: Int, id: Int!): UpdateAgentRelationship
+  createAgentResourceClassification(token: String!, resourceClassificationId: Int!, agentId: Int!): CreateAgentResourceClassification
+  deleteAgentResourceClassification(token: String!, id: Int!): DeleteAgentResourceClassification
+}
+
+type NotificationSetting {
+  id: ID!
+  send: Boolean!
+  agent: Agent
+  notificationType: NotificationType
+}
+
+type NotificationType {
+  id: ID!
+  label: String!
+  display: String!
+  description: String!
+}
+
+type Organization implements Agent {
+  id: String
+  name: String
+  type: String
+  image: String
+  note: String
+  primaryLocation: Place
+  primaryPhone: String
+  email: String
+  ownedEconomicResources(category: EconomicResourceCategory, resourceClassificationId: Int, page: Int): [EconomicResource]
+  searchOwnedInventoryResources(searchString: String): [EconomicResource]
+  agentProcesses(isFinished: Boolean): [Process]
+  searchAgentProcesses(searchString: String, isFinished: Boolean): [Process]
+  agentPlans(isFinished: Boolean, year: Int, month: Int): [Plan]
+  searchAgentPlans(searchString: String, isFinished: Boolean): [Plan]
+  agentEconomicEvents(latestNumberOfDays: Int, requestDistribution: Boolean, action: String, year: Int, month: Int): [EconomicEvent]
+  agentCommitments(latestNumberOfDays: Int): [Commitment]
+  searchAgentCommitments(searchString: String, isFinished: Boolean): [Commitment]
+  agentRelationships(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship]
+  agentRelationshipsAsSubject(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship]
+  agentRelationshipsAsObject(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship]
+  agentRoles: [AgentRelationshipRole]
+  agentRecipes: [ResourceClassification]
+  faircoinAddress: String
+  agentNotificationSettings: [NotificationSetting]
+  memberRelationships: [AgentRelationship]
+  agentSkills: [ResourceClassification]
+  agentSkillRelationships: [AgentResourceClassification]
+  commitmentsMatchingSkills: [Commitment]
+  validatedEventsCount(month: Int, year: Int): Int
+  eventsCount(year: Int, month: Int): Int
+  eventHoursCount(year: Int, month: Int): Int
+  eventPeopleCount(year: Int, month: Int): Int
+}
+
+type OrganizationClassification {
+  id: ID!
+  name: String!
+  note: String
+}
+
+type OrganizationType {
+  id: ID!
+  name: String!
+}
+
+type Person implements Agent {
+  id: String
+  name: String
+  type: String
+  image: String
+  note: String
+  primaryLocation: Place
+  primaryPhone: String
+  email: String
+  ownedEconomicResources(category: EconomicResourceCategory, resourceClassificationId: Int, page: Int): [EconomicResource]
+  searchOwnedInventoryResources(searchString: String): [EconomicResource]
+  agentProcesses(isFinished: Boolean): [Process]
+  searchAgentProcesses(searchString: String, isFinished: Boolean): [Process]
+  agentPlans(isFinished: Boolean, year: Int, month: Int): [Plan]
+  searchAgentPlans(searchString: String, isFinished: Boolean): [Plan]
+  agentEconomicEvents(latestNumberOfDays: Int, requestDistribution: Boolean, action: String, year: Int, month: Int): [EconomicEvent]
+  agentCommitments(latestNumberOfDays: Int): [Commitment]
+  searchAgentCommitments(searchString: String, isFinished: Boolean): [Commitment]
+  agentRelationships(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship]
+  agentRelationshipsAsSubject(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship]
+  agentRelationshipsAsObject(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship]
+  agentRoles: [AgentRelationshipRole]
+  agentRecipes: [ResourceClassification]
+  faircoinAddress: String
+  agentNotificationSettings: [NotificationSetting]
+  memberRelationships: [AgentRelationship]
+  agentSkills: [ResourceClassification]
+  agentSkillRelationships: [AgentResourceClassification]
+  commitmentsMatchingSkills: [Commitment]
+  validatedEventsCount(month: Int, year: Int): Int
+  eventsCount(year: Int, month: Int): Int
+  eventHoursCount(year: Int, month: Int): Int
+  eventPeopleCount(year: Int, month: Int): Int
+}
+
+type Place {
+  id: ID!
+  name: String!
+  address: String!
+  latitude: Float
+  longitude: Float
+  note: String
+  placeResources: [EconomicResource]
+  placeAgents: [Agent]
+}
+
+type Plan {
+  id: ID!
+  plannedOn: String
+  due: String
+  note: String
+  name: String
+  createdBy: Agent
+  scope: [Agent]
+  planProcesses(year: Int, month: Int): [Process]
+  workingAgents: [Agent]
+  plannedNonWorkInputs: [Commitment]
+  plannedOutputs: [Commitment]
+  nonWorkInputs: [EconomicEvent]
+  outputs: [EconomicEvent]
+  kanbanState: String
+  isDeletable: Boolean
+}
+
+type Process {
+  id: ID!
+  name: String!
+  scope: Agent
+  plannedStart: String
+  plannedFinish: String
+  isStarted: Boolean
+  isFinished: Boolean
+  processClassifiedAs: ProcessClassification
+  note: String
+  plannedDuration: String
+  isDeletable: Boolean
+  inputs(action: Action): [EconomicEvent]
+  outputs(action: Action): [EconomicEvent]
+  unplannedEconomicEvents(action: Action): [EconomicEvent]
+  committedInputs(action: Action): [Commitment]
+  committedOutputs(action: Action): [Commitment]
+  nextProcesses: [Process]
+  previousProcesses: [Process]
+  workingAgents: [Agent]
+  processPlan: Plan
+  userIsAuthorizedToUpdate: Boolean
+  userIsAuthorizedToDelete: Boolean
+}
+
+type ProcessClassification {
+  id: ID!
+  name: String!
+  note: String
+  scope: Agent
+  estimatedDuration: String
+}
+
+type QuantityValue {
+  numericValue: Float
+  unit: Unit
+}
+
+type Query {
+  viewer(token: String): ViewerQuery
+  __debug: DjangoDebug
+}
+
+type ResourceClassification {
+  id: ID!
+  name: String!
+
+  """
+  if this resource has different units of use and inventory, this is the unit of inventory
+  """
+  unit: Unit
+  image: String
+  note: String
+  category: String
+  processCategory: String
+  classificationResources: [EconomicResource]
+}
+
+type Transfer {
+  id: ID!
+  name: String!
+  under: ExchangeAgreement
+  plannedDate: String
+  scope: Agent
+  note: String
+  provider: Agent
+  receiver: Agent
+  resourceClassifiedAs: ResourceClassification
+  giveResource: EconomicResource
+  takeResource: EconomicResource
+  transferQuantity: QuantityValue
+  transferDate: String
+  transferEconomicEvents: [EconomicEvent]
+  giveEconomicEvent: EconomicEvent
+  takeEconomicEvent: EconomicEvent
+  transferCommitments: [Commitment]
+  giveCommitment: Commitment
+  takeCommitment: Commitment
+  involvedAgents: [Agent]
+}
+
+type Unit {
+  id: ID!
+  name: String!
+  symbol: String!
+}
+
+type UpdateAgentRelationship {
+  agentRelationship: AgentRelationship
+}
+
+type UpdateCommitment {
+  commitment: Commitment
+}
+
+type UpdateEconomicEvent {
+  economicEvent: EconomicEvent
+}
+
+type UpdateEconomicResource {
+  economicResource: EconomicResource
+}
+
+type UpdateNotificationSetting {
+  notificationSetting: NotificationSetting
+}
+
+type UpdateOrganization {
+  organization: Organization
+}
+
+type UpdatePerson {
+  person: Person
+}
+
+type UpdatePlan {
+  plan: Plan
+}
+
+type UpdateProcess {
+  process: Process
+}
+
+type Validation {
+  id: ID!
+  validationDate: DateTime
+  note: String
+  validatedBy: Agent
+  economicEvent: EconomicEvent
+}
+
+type ViewerQuery {
+  myAgent: Agent
+  agent(id: Int): Agent
+  allAgents: [Agent]
+  userIsAuthorizedToCreate(scopeId: Int): Boolean
+  agentRelationship(id: Int): AgentRelationship
+  allAgentRelationships: [AgentRelationship]
+  agentRelationshipRole(id: Int): AgentRelationshipRole
+  allAgentRelationshipRoles: [AgentRelationshipRole]
+  agentResourceClassification(id: Int): AgentResourceClassification
+  allAgentResourceClassifications: [AgentResourceClassification]
+  organization(id: Int): Organization
+  allOrganizations: [Organization]
+  fcOrganizations(joiningStyle: String, visibility: String): [Organization]
+  organizationTypes: [OrganizationType]
+  organizationClassification(id: Int): OrganizationClassification
+  allOrganizationClassifications: [OrganizationClassification]
+  person(id: Int): Person
+  allPeople: [Person]
+  economicResource(id: Int): EconomicResource
+  allEconomicResources: [EconomicResource]
+  process(id: Int): Process
+  allProcesses: [Process]
+  exchangeAgreement(id: Int): ExchangeAgreement
+  allExchangeAgreements: [ExchangeAgreement]
+  transfer(id: Int): Transfer
+  allTransfers: [Transfer]
+  economicEvent(id: Int): EconomicEvent
+  allEconomicEvents: [EconomicEvent]
+  filteredEconomicEvents(providerId: Int, receiverId: Int, resourceClassifiedAsId: Int, action: String, startDate: String, endDate: String): [EconomicEvent]
+  quantityValue(id: Int): QuantityValue
+  unit(id: Int): Unit
+  allUnits: [Unit]
+  resourceClassification(id: Int): ResourceClassification
+  allResourceClassifications: [ResourceClassification]
+  resourceClassificationsByProcessCategory(category: EconomicResourceProcessCategory): [ResourceClassification]
+  resourceClassificationsByAction(action: Action): [ResourceClassification]
+  allRecipes: [ResourceClassification]
+  resourceClassificationsByFacetValues(facetValues: String): [ResourceClassification]
+  facet(id: Int): Facet
+  allFacets: [Facet]
+  processClassification(id: Int): ProcessClassification
+  allProcessClassifications: [ProcessClassification]
+  commitment(id: Int): Commitment
+  allCommitments: [Commitment]
+  plan(id: Int): Plan
+  allPlans: [Plan]
+  place(id: Int): Place
+  allPlaces: [Place]
+  validation(id: Int): Validation
+  allValidations: [Validation]
+  notificationSetting(id: Int): NotificationSetting
+  allNotificationSettings: [NotificationSetting]
+  notificationType(id: Int): NotificationType
+  allNotificationTypes: [NotificationType]
+}
