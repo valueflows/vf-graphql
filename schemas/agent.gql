@@ -35,7 +35,6 @@ interface Agent {
   agentRoles: [AgentRelationshipRole]
   agentRecipes: [ResourceClassification]
   faircoinAddress: String
-  agentNotificationSettings: [NotificationSetting]
   memberRelationships: [AgentRelationship]
   agentSkills: [ResourceClassification]
   agentSkillRelationships: [AgentResourceClassification]
