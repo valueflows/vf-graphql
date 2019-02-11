@@ -4,7 +4,16 @@
   "description": "Reference GraphQL implementation of the ValueFlows spec",
   "main": "index.js",
   "scripts": {
+    "dev": "npm-watch",
     "test": "tape tests/**/*.js | faucet"
+  },
+  "watch": {
+    "test": {
+      "patterns": [
+        "tests", "schemas"
+      ],
+      "extensions": "js,gql"
+    }
   },
   "repository": {
     "type": "git",
@@ -26,6 +35,7 @@
   },
   "devDependencies": {
     "faucet": "0.0.1",
+    "npm-watch": "^0.6.0",
     "tape": "^4.10.0",
     "tape-catch": "^1.0.6"
   }
