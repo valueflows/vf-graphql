@@ -46,10 +46,6 @@ type CreateProcess {
   process: Process
 }
 
-type CreateToken {
-  token: String
-}
-
 type CreateValidation {
   validation: Validation
 }
@@ -129,41 +125,36 @@ type UpdateProcess {
 # Main entrypoints
 
 type Mutation {
-  createToken(username: String!, password: String!): CreateToken
-  createPerson(name: String!, primaryPhone: String, image: String, note: String, token: String!, type: String, email: String, primaryLocationId: Int): CreatePerson
-  createOrganization(name: String!, primaryPhone: String, image: String, note: String, token: String!, type: String!, email: String, primaryLocationId: Int): CreateOrganization
-  updatePerson(name: String, image: String, email: String, note: String, token: String!, id: Int!, primaryLocationId: Int): UpdatePerson
-  updateOrganization(name: String, image: String, email: String, note: String, token: String!, id: Int!, primaryLocationId: Int): UpdateOrganization
-  deletePerson(token: String!, id: Int!): DeletePerson
-  deleteOrganization(token: String!, id: Int!): DeleteOrganization
-  createProcess(plannedFinish: String!, planId: Int!, name: String!, plannedStart: String!, note: String, token: String!, scopeId: Int!): CreateProcess
-  updateProcess(plannedFinish: String, planId: Int, name: String, plannedStart: String, note: String, token: String!, scopeId: Int, isFinished: Boolean, id: Int!): UpdateProcess
-  deleteProcess(token: String!, id: Int!): DeleteProcess
-  createCommitment(receiverId: Int, committedNumericValue: String!, planId: Int, isPlanDeliverable: Boolean, committedUnitId: Int!, inputOfId: Int, providerId: Int, plannedStart: String, due: String!, note: String, url: String, token: String!, scopeId: Int, involvesId: Int, action: String!, outputOfId: Int, committedResourceClassifiedAsId: Int!): CreateCommitment
-  updateCommitment(receiverId: Int, committedNumericValue: String, inputOfId: Int, committedUnitId: Int, committedResourceClassifiedAsId: Int, providerId: Int, plannedStart: String, due: String, note: String, url: String, token: String!, scopeId: Int, involvesId: Int, committedOn: String, action: String, isFinished: Boolean, outputOfId: Int, id: Int!): UpdateCommitment
-  deleteCommitment(token: String!, id: Int!): DeleteCommitment
-  createEconomicEvent(providerId: Int, resourceImage: String, affectedResourceClassifiedAsId: Int, affectedNumericValue: String!, note: String, start: String, requestDistribution: Boolean, resourceTrackingIdentifier: String, receiverId: Int, inputOfId: Int, affectedUnitId: Int, scopeId: Int, outputOfId: Int, createResource: Boolean, url: String, affectsId: Int, resourceNote: String, resourceCurrentLocationId: Int, token: String!, action: String, resourceUrl: String, fulfillsCommitmentId: Int): CreateEconomicEvent
-  updateEconomicEvent(receiverId: Int, fulfillsCommitmentId: Int, affectedNumericValue: String, inputOfId: Int, url: String, affectedUnitId: Int, affectsId: Int, providerId: Int, note: String, start: String, token: String!, scopeId: Int, action: String, requestDistribution: Boolean, outputOfId: Int, affectedResourceClassifiedAsId: Int, id: Int!): UpdateEconomicEvent
-  deleteEconomicEvent(token: String!, id: Int!): DeleteEconomicEvent
-  createPlan(note: String, token: String!, name: String!, due: String!): CreatePlan
-  createPlanFromRecipe(note: String, producesResourceClassificationId: Int!, token: String!, name: String!, due: String!): CreatePlanFromRecipe
-  updatePlan(note: String, token: String!, id: Int!, name: String, due: String): UpdatePlan
-  deletePlan(token: String!, id: Int!): DeletePlan
-  updateEconomicResource(trackingIdentifier: String, url: String, image: String, resourceClassifiedAsId: Int, note: String, currentLocationId: Int, token: String!, id: Int!): UpdateEconomicResource
-  deleteEconomicResource(token: String!, id: Int!): DeleteEconomicResource
-  createValidation(note: String, token: String!, economicEventId: Int!, validatedById: Int!): CreateValidation
-  deleteValidation(token: String!, id: Int!): DeleteValidation
-  createAgentRelationship(note: String, subjectId: Int!, relationshipId: Int!, token: String!, objectId: Int!): CreateAgentRelationship
-  updateAgentRelationship(subjectId: Int, objectId: Int, note: String, token: String!, relationshipId: Int, id: Int!): UpdateAgentRelationship
-  createAgentResourceClassification(token: String!, resourceClassificationId: Int!, agentId: Int!): CreateAgentResourceClassification
-  deleteAgentResourceClassification(token: String!, id: Int!): DeleteAgentResourceClassification
+  createPerson(name: String!, primaryPhone: String, image: String, note: String, type: String, email: String, primaryLocationId: Int): CreatePerson
+  createOrganization(name: String!, primaryPhone: String, image: String, note: String, type: String!, email: String, primaryLocationId: Int): CreateOrganization
+  updatePerson(name: String, image: String, email: String, note: String, id: Int!, primaryLocationId: Int): UpdatePerson
+  updateOrganization(name: String, image: String, email: String, note: String, id: Int!, primaryLocationId: Int): UpdateOrganization
+  deletePerson(id: Int!): DeletePerson
+  deleteOrganization(id: Int!): DeleteOrganization
+  createProcess(plannedFinish: String!, planId: Int!, name: String!, plannedStart: String!, note: String, scopeId: Int!): CreateProcess
+  updateProcess(plannedFinish: String, planId: Int, name: String, plannedStart: String, note: String, scopeId: Int, isFinished: Boolean, id: Int!): UpdateProcess
+  deleteProcess(id: Int!): DeleteProcess
+  createCommitment(receiverId: Int, committedNumericValue: String!, planId: Int, isPlanDeliverable: Boolean, committedUnitId: Int!, inputOfId: Int, providerId: Int, plannedStart: String, due: String!, note: String, url: String, scopeId: Int, involvesId: Int, action: String!, outputOfId: Int, committedResourceClassifiedAsId: Int!): CreateCommitment
+  updateCommitment(receiverId: Int, committedNumericValue: String, inputOfId: Int, committedUnitId: Int, committedResourceClassifiedAsId: Int, providerId: Int, plannedStart: String, due: String, note: String, url: String, scopeId: Int, involvesId: Int, committedOn: String, action: String, isFinished: Boolean, outputOfId: Int, id: Int!): UpdateCommitment
+  deleteCommitment(id: Int!): DeleteCommitment
+  createEconomicEvent(providerId: Int, resourceImage: String, affectedResourceClassifiedAsId: Int, affectedNumericValue: String!, note: String, start: String, requestDistribution: Boolean, resourceTrackingIdentifier: String, receiverId: Int, inputOfId: Int, affectedUnitId: Int, scopeId: Int, outputOfId: Int, createResource: Boolean, url: String, affectsId: Int, resourceNote: String, resourceCurrentLocationId: Int, action: String, resourceUrl: String, fulfillsCommitmentId: Int): CreateEconomicEvent
+  updateEconomicEvent(receiverId: Int, fulfillsCommitmentId: Int, affectedNumericValue: String, inputOfId: Int, url: String, affectedUnitId: Int, affectsId: Int, providerId: Int, note: String, start: String, scopeId: Int, action: String, requestDistribution: Boolean, outputOfId: Int, affectedResourceClassifiedAsId: Int, id: Int!): UpdateEconomicEvent
+  deleteEconomicEvent(id: Int!): DeleteEconomicEvent
+  createPlan(note: String, name: String!, due: String!): CreatePlan
+  createPlanFromRecipe(note: String, producesResourceClassificationId: Int!, name: String!, due: String!): CreatePlanFromRecipe
+  updatePlan(note: String, id: Int!, name: String, due: String): UpdatePlan
+  deletePlan(id: Int!): DeletePlan
+  updateEconomicResource(trackingIdentifier: String, url: String, image: String, resourceClassifiedAsId: Int, note: String, currentLocationId: Int, id: Int!): UpdateEconomicResource
+  deleteEconomicResource(id: Int!): DeleteEconomicResource
+  createValidation(note: String, economicEventId: Int!, validatedById: Int!): CreateValidation
+  deleteValidation(id: Int!): DeleteValidation
+  createAgentRelationship(note: String, subjectId: Int!, relationshipId: Int!, objectId: Int!): CreateAgentRelationship
+  updateAgentRelationship(subjectId: Int, objectId: Int, note: String, relationshipId: Int, id: Int!): UpdateAgentRelationship
+  createAgentResourceClassification(resourceClassificationId: Int!, agentId: Int!): CreateAgentResourceClassification
+  deleteAgentResourceClassification(id: Int!): DeleteAgentResourceClassification
 }
 
 type Query {
-  viewer(token: String): ViewerQuery
-}
-
-type ViewerQuery {
   myAgent: Agent
   agent(id: Int): Agent
   allAgents: [Agent]
