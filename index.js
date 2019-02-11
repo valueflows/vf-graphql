@@ -9,15 +9,19 @@
 const fs = require('fs')
 const { buildSchema, findBreakingChanges } = require('graphql')
 
-const schema = buildSchema([
-  fs.readFileSync('schemas/config.gql'),
-  fs.readFileSync('schemas/agent.gql'),
-  fs.readFileSync('schemas/observation.gql'),
-  fs.readFileSync('schemas/planning.gql'),
-  fs.readFileSync('schemas/knowledge.gql'),
-  fs.readFileSync('schemas/query.gql'),
-  fs.readFileSync('schemas/mutation.gql'),
-].join(''))
+const schema = buildSchema(
+  [
+    'config',
+    'agent',
+    'observation',
+    'planning',
+    'knowledge',
+    'query',
+    'mutation',
+  ]
+  .map(f => fs.readFileSync(`schemas/${f}.gql`))
+  .join('')
+)
 
 module.exports = {
   schema,
