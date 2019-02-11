@@ -1,0 +1,49 @@
+##
+#
+# Planning layer
+#
+# Allows agents to coordinate economic activity by agreeing on a series of
+# future events to be undertaken.
+#
+# @package  HoloREA
+# @author   pospi <pospi@spadgos.com>
+# @since    2019-02-11
+#
+##
+
+type Commitment {
+  id: ID!
+  url: String!
+  action: String
+  inputOf: Process
+  outputOf: Process
+  provider: Agent
+  receiver: Agent
+  scope: Agent
+  resourceClassifiedAs: ResourceClassification
+  involves: EconomicResource
+  committedQuantity: QuantityValue
+  committedOn: String
+  plannedStart: String
+  due: String
+  isFinished: Boolean
+  plan: Plan
+  isPlanDeliverable: Boolean
+  forPlanDeliverable: Commitment
+  note: String
+  fulfilledBy(requestDistribution: Boolean): [Fulfillment]
+  involvedAgents: [Agent]
+  isDeletable: Boolean
+  userIsAuthorizedToUpdate: Boolean
+  userIsAuthorizedToDelete: Boolean
+}
+
+type ExchangeAgreement {
+  id: ID!
+  name: String!
+  plannedStart: String
+  scope: Agent
+  note: String
+  transfers: [Transfer]
+  involvedAgents: [Agent]
+}

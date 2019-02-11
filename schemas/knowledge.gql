@@ -1,0 +1,76 @@
+##
+#
+# Knowledge layer
+#
+# Provides functionality for classifying and organising other parts of the system.
+#
+# @package  HoloREA
+# @author   pospi <pospi@spadgos.com>
+# @since    2019-02-11
+#
+##
+
+# Classifications system
+
+"""
+Classification for declaring types of `Resource`s.
+"""
+type ResourceClassification {
+  id: ID!
+  name: String!
+  """
+  if this resource has different units of use and inventory, this is the unit of inventory
+  """
+  unit: Unit
+  image: String
+  note: String
+  category: String
+  processCategory: String
+  classificationResources: [EconomicResource]
+}
+
+"""
+Classification for declaring types of `Process`es.
+"""
+type ProcessClassification {
+  id: ID!
+  name: String!
+  note: String
+  scope: Agent
+  estimatedDuration: String
+}
+
+"""
+Classifies the skill resources that `Agent`s may offer.
+"""
+type AgentResourceClassification {
+  id: ID!
+  agent: Agent
+  resourceClassification: ResourceClassification
+  action: String
+}
+
+"""
+Classification for declaring types of `Organisation`s.
+"""
+type OrganizationClassification {
+  id: ID!
+  name: String!
+  note: String
+}
+
+# Facets, for sub-dividing classifications
+
+type Facet {
+  id: ID!
+  name: String!
+  description: String
+  facetValues: [FacetValue]
+}
+
+type FacetValue {
+  id: ID!
+  value: String!
+  description: String
+  facet: [Facet]
+}

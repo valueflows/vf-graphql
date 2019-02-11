@@ -1,0 +1,217 @@
+##
+#
+# ValueFlows schema entrypoint & response format definitions
+#
+# @package  HoloREA
+# @author   pospi <pospi@spadgos.com>
+# @since    2019-02-11
+#
+##
+
+# CREATE mutation responses
+
+type CreateAgentRelationship {
+  agentRelationship: AgentRelationship
+}
+
+type CreateAgentResourceClassification {
+  agentResourceClassification: AgentResourceClassification
+}
+
+type CreateCommitment {
+  commitment: Commitment
+}
+
+type CreateEconomicEvent {
+  economicEvent: EconomicEvent
+}
+
+type CreateOrganization {
+  organization: Organization
+}
+
+type CreatePerson {
+  person: Person
+}
+
+type CreatePlan {
+  plan: Plan
+}
+
+type CreatePlanFromRecipe {
+  plan: Plan
+}
+
+type CreateProcess {
+  process: Process
+}
+
+type CreateToken {
+  token: String
+}
+
+type CreateValidation {
+  validation: Validation
+}
+
+# DELETE mutation responses
+
+type DeleteAgentResourceClassification {
+  agentResourceClassification: AgentResourceClassification
+}
+
+type DeleteCommitment {
+  commitment: Commitment
+}
+
+type DeleteEconomicEvent {
+  economicEvent: EconomicEvent
+}
+
+type DeleteEconomicResource {
+  economicResource: EconomicResource
+}
+
+type DeleteOrganization {
+  organization: Organization
+}
+
+type DeletePerson {
+  person: Person
+}
+
+type DeletePlan {
+  plan: Plan
+}
+
+type DeleteProcess {
+  process: Process
+}
+
+type DeleteValidation {
+  validation: Validation
+}
+
+# UPDATE mutation responses
+
+type UpdateAgentRelationship {
+  agentRelationship: AgentRelationship
+}
+
+type UpdateCommitment {
+  commitment: Commitment
+}
+
+type UpdateEconomicEvent {
+  economicEvent: EconomicEvent
+}
+
+type UpdateEconomicResource {
+  economicResource: EconomicResource
+}
+
+type UpdateOrganization {
+  organization: Organization
+}
+
+type UpdatePerson {
+  person: Person
+}
+
+type UpdatePlan {
+  plan: Plan
+}
+
+type UpdateProcess {
+  process: Process
+}
+
+# Main entrypoints
+
+type Mutation {
+  createToken(username: String!, password: String!): CreateToken
+  createPerson(name: String!, primaryPhone: String, image: String, note: String, token: String!, type: String, email: String, primaryLocationId: Int): CreatePerson
+  createOrganization(name: String!, primaryPhone: String, image: String, note: String, token: String!, type: String!, email: String, primaryLocationId: Int): CreateOrganization
+  updatePerson(name: String, image: String, email: String, note: String, token: String!, id: Int!, primaryLocationId: Int): UpdatePerson
+  updateOrganization(name: String, image: String, email: String, note: String, token: String!, id: Int!, primaryLocationId: Int): UpdateOrganization
+  deletePerson(token: String!, id: Int!): DeletePerson
+  deleteOrganization(token: String!, id: Int!): DeleteOrganization
+  createProcess(plannedFinish: String!, planId: Int!, name: String!, plannedStart: String!, note: String, token: String!, scopeId: Int!): CreateProcess
+  updateProcess(plannedFinish: String, planId: Int, name: String, plannedStart: String, note: String, token: String!, scopeId: Int, isFinished: Boolean, id: Int!): UpdateProcess
+  deleteProcess(token: String!, id: Int!): DeleteProcess
+  createCommitment(receiverId: Int, committedNumericValue: String!, planId: Int, isPlanDeliverable: Boolean, committedUnitId: Int!, inputOfId: Int, providerId: Int, plannedStart: String, due: String!, note: String, url: String, token: String!, scopeId: Int, involvesId: Int, action: String!, outputOfId: Int, committedResourceClassifiedAsId: Int!): CreateCommitment
+  updateCommitment(receiverId: Int, committedNumericValue: String, inputOfId: Int, committedUnitId: Int, committedResourceClassifiedAsId: Int, providerId: Int, plannedStart: String, due: String, note: String, url: String, token: String!, scopeId: Int, involvesId: Int, committedOn: String, action: String, isFinished: Boolean, outputOfId: Int, id: Int!): UpdateCommitment
+  deleteCommitment(token: String!, id: Int!): DeleteCommitment
+  createEconomicEvent(providerId: Int, resourceImage: String, affectedResourceClassifiedAsId: Int, affectedNumericValue: String!, note: String, start: String, requestDistribution: Boolean, resourceTrackingIdentifier: String, receiverId: Int, inputOfId: Int, affectedUnitId: Int, scopeId: Int, outputOfId: Int, createResource: Boolean, url: String, affectsId: Int, resourceNote: String, resourceCurrentLocationId: Int, token: String!, action: String, resourceUrl: String, fulfillsCommitmentId: Int): CreateEconomicEvent
+  updateEconomicEvent(receiverId: Int, fulfillsCommitmentId: Int, affectedNumericValue: String, inputOfId: Int, url: String, affectedUnitId: Int, affectsId: Int, providerId: Int, note: String, start: String, token: String!, scopeId: Int, action: String, requestDistribution: Boolean, outputOfId: Int, affectedResourceClassifiedAsId: Int, id: Int!): UpdateEconomicEvent
+  deleteEconomicEvent(token: String!, id: Int!): DeleteEconomicEvent
+  createPlan(note: String, token: String!, name: String!, due: String!): CreatePlan
+  createPlanFromRecipe(note: String, producesResourceClassificationId: Int!, token: String!, name: String!, due: String!): CreatePlanFromRecipe
+  updatePlan(note: String, token: String!, id: Int!, name: String, due: String): UpdatePlan
+  deletePlan(token: String!, id: Int!): DeletePlan
+  updateEconomicResource(trackingIdentifier: String, url: String, image: String, resourceClassifiedAsId: Int, note: String, currentLocationId: Int, token: String!, id: Int!): UpdateEconomicResource
+  deleteEconomicResource(token: String!, id: Int!): DeleteEconomicResource
+  createValidation(note: String, token: String!, economicEventId: Int!, validatedById: Int!): CreateValidation
+  deleteValidation(token: String!, id: Int!): DeleteValidation
+  createAgentRelationship(note: String, subjectId: Int!, relationshipId: Int!, token: String!, objectId: Int!): CreateAgentRelationship
+  updateAgentRelationship(subjectId: Int, objectId: Int, note: String, token: String!, relationshipId: Int, id: Int!): UpdateAgentRelationship
+  createAgentResourceClassification(token: String!, resourceClassificationId: Int!, agentId: Int!): CreateAgentResourceClassification
+  deleteAgentResourceClassification(token: String!, id: Int!): DeleteAgentResourceClassification
+}
+
+type Query {
+  viewer(token: String): ViewerQuery
+}
+
+type ViewerQuery {
+  myAgent: Agent
+  agent(id: Int): Agent
+  allAgents: [Agent]
+  userIsAuthorizedToCreate(scopeId: Int): Boolean
+  agentRelationship(id: Int): AgentRelationship
+  allAgentRelationships: [AgentRelationship]
+  agentRelationshipRole(id: Int): AgentRelationshipRole
+  allAgentRelationshipRoles: [AgentRelationshipRole]
+  agentResourceClassification(id: Int): AgentResourceClassification
+  allAgentResourceClassifications: [AgentResourceClassification]
+  organization(id: Int): Organization
+  allOrganizations: [Organization]
+  fcOrganizations(joiningStyle: String, visibility: String): [Organization]
+  organizationTypes: [OrganizationType]
+  organizationClassification(id: Int): OrganizationClassification
+  allOrganizationClassifications: [OrganizationClassification]
+  person(id: Int): Person
+  allPeople: [Person]
+  economicResource(id: Int): EconomicResource
+  allEconomicResources: [EconomicResource]
+  process(id: Int): Process
+  allProcesses: [Process]
+  exchangeAgreement(id: Int): ExchangeAgreement
+  allExchangeAgreements: [ExchangeAgreement]
+  transfer(id: Int): Transfer
+  allTransfers: [Transfer]
+  economicEvent(id: Int): EconomicEvent
+  allEconomicEvents: [EconomicEvent]
+  filteredEconomicEvents(providerId: Int, receiverId: Int, resourceClassifiedAsId: Int, action: String, startDate: String, endDate: String): [EconomicEvent]
+  quantityValue(id: Int): QuantityValue
+  unit(id: Int): Unit
+  allUnits: [Unit]
+  resourceClassification(id: Int): ResourceClassification
+  allResourceClassifications: [ResourceClassification]
+  resourceClassificationsByProcessCategory(category: EconomicResourceProcessCategory): [ResourceClassification]
+  resourceClassificationsByAction(action: Action): [ResourceClassification]
+  allRecipes: [ResourceClassification]
+  resourceClassificationsByFacetValues(facetValues: String): [ResourceClassification]
+  facet(id: Int): Facet
+  allFacets: [Facet]
+  processClassification(id: Int): ProcessClassification
+  allProcessClassifications: [ProcessClassification]
+  commitment(id: Int): Commitment
+  allCommitments: [Commitment]
+  plan(id: Int): Plan
+  allPlans: [Plan]
+  place(id: Int): Place
+  allPlaces: [Place]
+  validation(id: Int): Validation
+  allValidations: [Validation]
+}

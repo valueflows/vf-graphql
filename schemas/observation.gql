@@ -1,0 +1,105 @@
+##
+#
+# Observation layer
+#
+# Records subjective observations as to the state of the material world,
+# according to the perspectives of agents.
+#
+# @package  HoloREA
+# @author   pospi <pospi@spadgos.com>
+# @since    2019-02-11
+#
+##
+
+type EconomicEvent {
+  id: ID!
+  action: String
+  inputOf: Process
+  outputOf: Process
+  provider: Agent
+  receiver: Agent
+  scope: Agent
+  affects: EconomicResource
+  affectedQuantity: QuantityValue
+  start: String
+  url: String
+  requestDistribution: Boolean
+  note: String
+  fulfills: [Fulfillment]
+  validations: [Validation]
+  isValidated: Boolean
+  userIsAuthorizedToUpdate: Boolean
+  userIsAuthorizedToDelete: Boolean
+}
+
+type EconomicResource {
+  id: ID!
+  url: String!
+  resourceClassifiedAs: ResourceClassification
+  trackingIdentifier: String
+  image: String
+  currentQuantity: QuantityValue
+  note: String
+  category: String
+  currentLocation: Place
+  createdDate: String
+  transfers: [Transfer]
+  resourceContacts: [Agent]
+  owners: [Agent]
+}
+
+type Transfer {
+  id: ID!
+  name: String!
+  under: ExchangeAgreement
+  plannedDate: String
+  scope: Agent
+  note: String
+  provider: Agent
+  receiver: Agent
+  resourceClassifiedAs: ResourceClassification
+  giveResource: EconomicResource
+  takeResource: EconomicResource
+  transferQuantity: QuantityValue
+  transferDate: String
+  transferEconomicEvents: [EconomicEvent]
+  giveEconomicEvent: EconomicEvent
+  takeEconomicEvent: EconomicEvent
+  transferCommitments: [Commitment]
+  giveCommitment: Commitment
+  takeCommitment: Commitment
+  involvedAgents: [Agent]
+}
+
+type Process {
+  id: ID!
+  name: String!
+  scope: Agent
+  plannedStart: String
+  plannedFinish: String
+  isStarted: Boolean
+  isFinished: Boolean
+  processClassifiedAs: ProcessClassification
+  note: String
+  plannedDuration: String
+  isDeletable: Boolean
+  inputs(action: Action): [EconomicEvent]
+  outputs(action: Action): [EconomicEvent]
+  unplannedEconomicEvents(action: Action): [EconomicEvent]
+  committedInputs(action: Action): [Commitment]
+  committedOutputs(action: Action): [Commitment]
+  nextProcesses: [Process]
+  previousProcesses: [Process]
+  workingAgents: [Agent]
+  processPlan: Plan
+  userIsAuthorizedToUpdate: Boolean
+  userIsAuthorizedToDelete: Boolean
+}
+
+type Validation {
+  id: ID!
+  validationDate: DateTime
+  note: String
+  validatedBy: Agent
+  economicEvent: EconomicEvent
+}

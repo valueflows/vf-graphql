@@ -1,0 +1,134 @@
+##
+#
+# Agent module
+#
+# All functionality related to the definition of autonomous agents and their
+# relationships and interdependencies.
+#
+# @package  HoloREA
+# @author   pospi <pospi@spadgos.com>
+# @since    2019-02-11
+#
+##
+
+interface Agent {
+  id: String
+  name: String
+  type: String
+  image: String
+  note: String
+  primaryLocation: Place
+  primaryPhone: String
+  email: String
+  ownedEconomicResources(category: EconomicResourceCategory, resourceClassificationId: Int, page: Int): [EconomicResource]
+  searchOwnedInventoryResources(searchString: String): [EconomicResource]
+  agentProcesses(isFinished: Boolean): [Process]
+  searchAgentProcesses(searchString: String, isFinished: Boolean): [Process]
+  agentPlans(isFinished: Boolean, year: Int, month: Int): [Plan]
+  searchAgentPlans(searchString: String, isFinished: Boolean): [Plan]
+  agentEconomicEvents(latestNumberOfDays: Int, requestDistribution: Boolean, action: String, year: Int, month: Int): [EconomicEvent]
+  agentCommitments(latestNumberOfDays: Int): [Commitment]
+  searchAgentCommitments(searchString: String, isFinished: Boolean): [Commitment]
+  agentRelationships(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship]
+  agentRelationshipsAsSubject(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship]
+  agentRelationshipsAsObject(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship]
+  agentRoles: [AgentRelationshipRole]
+  agentRecipes: [ResourceClassification]
+  faircoinAddress: String
+  agentNotificationSettings: [NotificationSetting]
+  memberRelationships: [AgentRelationship]
+  agentSkills: [ResourceClassification]
+  agentSkillRelationships: [AgentResourceClassification]
+  commitmentsMatchingSkills: [Commitment]
+  validatedEventsCount(month: Int, year: Int): Int
+  eventsCount(year: Int, month: Int): Int
+  eventHoursCount(year: Int, month: Int): Int
+  eventPeopleCount(year: Int, month: Int): Int
+}
+
+# Variants of agents
+
+type Person implements Agent {
+  id: String
+  name: String
+  type: String
+  image: String
+  note: String
+  primaryLocation: Place
+  primaryPhone: String
+  email: String
+  ownedEconomicResources(category: EconomicResourceCategory, resourceClassificationId: Int, page: Int): [EconomicResource]
+  searchOwnedInventoryResources(searchString: String): [EconomicResource]
+  agentProcesses(isFinished: Boolean): [Process]
+  searchAgentProcesses(searchString: String, isFinished: Boolean): [Process]
+  agentPlans(isFinished: Boolean, year: Int, month: Int): [Plan]
+  searchAgentPlans(searchString: String, isFinished: Boolean): [Plan]
+  agentEconomicEvents(latestNumberOfDays: Int, requestDistribution: Boolean, action: String, year: Int, month: Int): [EconomicEvent]
+  agentCommitments(latestNumberOfDays: Int): [Commitment]
+  searchAgentCommitments(searchString: String, isFinished: Boolean): [Commitment]
+  agentRelationships(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship]
+  agentRelationshipsAsSubject(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship]
+  agentRelationshipsAsObject(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship]
+  agentRoles: [AgentRelationshipRole]
+  agentRecipes: [ResourceClassification]
+  faircoinAddress: String
+  memberRelationships: [AgentRelationship]
+  agentSkills: [ResourceClassification]
+  agentSkillRelationships: [AgentResourceClassification]
+  commitmentsMatchingSkills: [Commitment]
+  validatedEventsCount(month: Int, year: Int): Int
+  eventsCount(year: Int, month: Int): Int
+  eventHoursCount(year: Int, month: Int): Int
+  eventPeopleCount(year: Int, month: Int): Int
+}
+
+type Organization implements Agent {
+  id: String
+  name: String
+  type: String
+  image: String
+  note: String
+  primaryLocation: Place
+  primaryPhone: String
+  email: String
+  ownedEconomicResources(category: EconomicResourceCategory, resourceClassificationId: Int, page: Int): [EconomicResource]
+  searchOwnedInventoryResources(searchString: String): [EconomicResource]
+  agentProcesses(isFinished: Boolean): [Process]
+  searchAgentProcesses(searchString: String, isFinished: Boolean): [Process]
+  agentPlans(isFinished: Boolean, year: Int, month: Int): [Plan]
+  searchAgentPlans(searchString: String, isFinished: Boolean): [Plan]
+  agentEconomicEvents(latestNumberOfDays: Int, requestDistribution: Boolean, action: String, year: Int, month: Int): [EconomicEvent]
+  agentCommitments(latestNumberOfDays: Int): [Commitment]
+  searchAgentCommitments(searchString: String, isFinished: Boolean): [Commitment]
+  agentRelationships(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship]
+  agentRelationshipsAsSubject(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship]
+  agentRelationshipsAsObject(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship]
+  agentRoles: [AgentRelationshipRole]
+  agentRecipes: [ResourceClassification]
+  faircoinAddress: String
+  memberRelationships: [AgentRelationship]
+  agentSkills: [ResourceClassification]
+  agentSkillRelationships: [AgentResourceClassification]
+  commitmentsMatchingSkills: [Commitment]
+  validatedEventsCount(month: Int, year: Int): Int
+  eventsCount(year: Int, month: Int): Int
+  eventHoursCount(year: Int, month: Int): Int
+  eventPeopleCount(year: Int, month: Int): Int
+}
+
+# Relationships between agents
+
+type AgentRelationship {
+  id: ID!
+  subject: Agent
+  object: Agent
+  relationship: AgentRelationshipRole
+  note: String
+}
+
+type AgentRelationshipRole {
+  id: ID!
+  label: String
+  inverseLabel: String
+  category: AgentRelationshipCategory
+}

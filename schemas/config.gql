@@ -1,0 +1,102 @@
+##
+#
+# Configuration-related types
+#
+# These are definitions which define the available behaviour within the VF network
+#
+# :TODO: need to figure out a way of making these enums extensible while
+#        still validating implementations
+#
+# @package  vf-graphql
+# @author   pospi <pospi@spadgos.com>
+# @since    2019-02-11
+#
+##
+
+"""
+The `DateTime` scalar type represents a DateTime
+value as specified by
+[iso8601](https://en.wikipedia.org/wiki/ISO_8601).
+"""
+scalar DateTime
+
+"""
+Associations between different `Agent`s
+"""
+enum AgentRelationshipCategory {
+  NONE
+  LEGALPARTNER
+  MEMBER
+  PART
+  PEER
+  TRADINGPARTNER
+}
+
+"""
+Action types define what was 'done' in each `EconomicEvent`.
+"""
+enum Action {
+  NONE
+  ACCEPT
+  ADJUST
+  CITE
+  CONSUME
+  GIVE
+  IMPROVE
+  PRODUCE
+  TAKE
+  USE
+  WORK
+}
+
+"""
+Types of `EconomicResource`s
+"""
+enum EconomicResourceCategory {
+  NONE
+  CURRENCY
+  INVENTORY
+  WORK
+}
+
+"""
+Types of `Process`es
+"""
+enum EconomicResourceProcessCategory {
+  NONE
+  CITED
+  CONSUMED
+  PRODUCED
+  USED
+}
+
+"""
+Defines a unit of measurement, along with its display symbol.
+"""
+type Unit {
+  id: ID!
+  name: String!
+  symbol: String!
+}
+
+"""
+Semantic meaning for measurements: binds a quantity to its measurement unit.
+"""
+type QuantityValue {
+  quantity: Float
+  unit: Unit
+}
+
+"""
+A physical location
+"""
+type Place {
+  id: ID!
+  name: String!
+  address: String!
+  latitude: Float
+  longitude: Float
+  note: String
+  placeResources: [EconomicResource]
+  placeAgents: [Agent]
+}
