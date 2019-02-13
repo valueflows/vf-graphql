@@ -21,56 +21,6 @@ value as specified by
 scalar DateTime
 
 """
-Associations between different `Agent`s
-"""
-enum AgentRelationshipCategory {
-  NONE
-  LEGALPARTNER
-  MEMBER
-  PART
-  PEER
-  TRADINGPARTNER
-}
-
-"""
-Action types define what was 'done' in each `EconomicEvent`.
-"""
-enum Action {
-  NONE
-  ACCEPT
-  ADJUST
-  CITE
-  CONSUME
-  GIVE
-  IMPROVE
-  PRODUCE
-  TAKE
-  USE
-  WORK
-}
-
-"""
-Types of `EconomicResource`s
-"""
-enum EconomicResourceCategory {
-  NONE
-  CURRENCY
-  INVENTORY
-  WORK
-}
-
-"""
-Types of `Process`es
-"""
-enum EconomicResourceProcessCategory {
-  NONE
-  CITED
-  CONSUMED
-  PRODUCED
-  USED
-}
-
-"""
 Defines a unit of measurement, along with its display symbol.
 """
 type Unit {

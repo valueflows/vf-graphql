@@ -13,6 +13,33 @@
 # Classifications system
 
 """
+Action types define what was 'done' in each `EconomicEvent`.
+"""
+enum Action {
+  NONE
+  ACCEPT
+  ADJUST
+  CITE
+  CONSUME
+  GIVE
+  IMPROVE
+  PRODUCE
+  TAKE
+  USE
+  WORK
+}
+
+"""
+Types of `EconomicResource`s
+"""
+enum EconomicResourceCategory {
+  NONE
+  CURRENCY
+  INVENTORY
+  WORK
+}
+
+"""
 Classification for declaring types of `Resource`s.
 """
 type ResourceClassification {
@@ -30,6 +57,17 @@ type ResourceClassification {
 }
 
 """
+Types of `Process`es
+"""
+enum EconomicResourceProcessCategory {
+  NONE
+  CITED
+  CONSUMED
+  PRODUCED
+  USED
+}
+
+"""
 Classification for declaring types of `Process`es.
 """
 type ProcessClassification {
@@ -38,6 +76,18 @@ type ProcessClassification {
   note: String
   scope: Agent
   estimatedDuration: String
+}
+
+"""
+Associations between different `Agent`s
+"""
+enum AgentRelationshipCategory {
+  NONE
+  LEGALPARTNER
+  MEMBER
+  PART
+  PEER
+  TRADINGPARTNER
 }
 
 """
