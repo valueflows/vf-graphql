@@ -3,7 +3,7 @@
 # Observation layer
 #
 # Records subjective observations as to the state of the material world,
-# according to the perspectives of agents.
+# according to the perspectives of agents. TODO: better definition, not always subjective, can be measured by instruments, etc.
 #
 # @package  HoloREA
 # @since    2019-02-11
@@ -20,18 +20,19 @@ type EconomicEvent {
   outputOf: Process
   provider: Agent
   receiver: Agent
-  scope: Agent
+  inScopeOf: Agent #TODO how to loosen this up to be more than Agent? (mostly it is Agents)
   affects: EconomicResource
+  resourceClassifiedAs: [ResourceClassification]
+  resourceConformsTo: ResourceSpecification
   affectedQuantity: QuantityValue
-  start: String
-  url: String
-  requestDistribution: Boolean
+  observedTime: TemporalEntity #TODO: define what this actually can be
+  # requestDistribution: Boolean
   note: String
   fulfills: [Fulfillment]
-  validations: [Validation]
-  isValidated: Boolean
-  userIsAuthorizedToUpdate: Boolean
-  userIsAuthorizedToDelete: Boolean
+  # validations: [Validation]
+  # isValidated: Boolean
+  # userIsAuthorizedToUpdate: Boolean
+  # userIsAuthorizedToDelete: Boolean
 }
 
 """
@@ -40,37 +41,30 @@ A resource which is useful to people or the ecosystem.
 type EconomicResource {
   id: ID!
   url: String!
-  resourceClassifiedAs: ResourceClassification
+  resourceClassifiedAs: [String]
+  resourceConformsTo: ResourceSpecification
   trackingIdentifier: String
   image: String
   currentQuantity: QuantityValue
   note: String
-  category: String
-  currentLocation: Place
-  createdDate: String
+  category: String #TODO: check this
+  currentLocation: String
+  createdDate: String #TODO: put these everywhere?
   transfers: [Transfer]
-  resourceContacts: [Agent]
-  owners: [Agent]
+  # resourceContacts: [Agent]
+  # owners: [Agent]  TODO: define agent-resource relationships, if we do need them
 }
 
 """
 An activity that assigns the rights and responsibilities for an economic resource from one agent to another.
 """
-type Transfer {
+type Transfer { #TODO this whole model is under review
   id: ID!
   name: String!
-  under: ExchangeAgreement
-  plannedDate: String
-  scope: Agent
+  # under: ExchangeAgreement TODO need to finish this definition
+  plannedTime: TemporalEntity #TODO: define what this actually can be - or if it should even be here
   note: String
-  provider: Agent
-  receiver: Agent
-  resourceClassifiedAs: ResourceClassification
-  giveResource: EconomicResource
-  takeResource: EconomicResource
-  transferQuantity: QuantityValue
-  transferDate: String
-  transferEconomicEvents: [EconomicEvent]
+  economicEvents: [EconomicEvent]
   giveEconomicEvent: EconomicEvent
   takeEconomicEvent: EconomicEvent
   transferCommitments: [Commitment]
@@ -85,15 +79,13 @@ An activity that changes inputs into outputs.  It could transform or transport e
 type Process {
   id: ID!
   name: String!
-  scope: Agent
-  plannedStart: String
-  plannedFinish: String
-  isStarted: Boolean
-  isFinished: Boolean
-  processClassifiedAs: ProcessClassification
+  inScopeOf: Agent
+  plannedTime: TemporalEntity
+  started: Boolean
+  finished: Boolean
+  basedOn: RecipeProcess
   note: String
-  plannedDuration: String
-  isDeletable: Boolean
+  deletable: Boolean
   inputs(action: Action): [EconomicEvent]
   outputs(action: Action): [EconomicEvent]
   unplannedEconomicEvents(action: Action): [EconomicEvent]
@@ -102,15 +94,15 @@ type Process {
   nextProcesses: [Process]
   previousProcesses: [Process]
   workingAgents: [Agent]
-  processPlan: Plan
-  userIsAuthorizedToUpdate: Boolean
-  userIsAuthorizedToDelete: Boolean
+  plan: Plan
+  # userIsAuthorizedToUpdate: Boolean
+  # userIsAuthorizedToDelete: Boolean
 }
 
-type Validation {
-  id: ID!
-  validationDate: DateTime
-  note: String
-  validatedBy: Agent
-  economicEvent: EconomicEvent
-}
+#type Validation {
+#  id: ID!
+#  validationDate: DateTime
+# note: String
+# validatedBy: Agent
+#  economicEvent: EconomicEvent
+#}
