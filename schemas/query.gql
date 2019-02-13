@@ -29,7 +29,7 @@ type Query {
   # Observation layer
   economicEvent(id: Int): EconomicEvent
   allEconomicEvents: [EconomicEvent]
-  filteredEconomicEvents(providerId: Int, receiverId: Int, resourceClassifiedAsId: Int, action: String, startDate: String, endDate: String): [EconomicEvent]
+  filteredEconomicEvents(providerId: Int, receiverId: Int, resourceClassifiedAsId: Int, action: Action, startDate: String, endDate: String): [EconomicEvent]
 
   economicResource(id: Int): EconomicResource
   allEconomicResources: [EconomicResource]

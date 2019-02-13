@@ -13,7 +13,7 @@
 
 type EconomicEvent {
   id: ID!
-  action: String
+  action: Action
   inputOf: Process
   outputOf: Process
   provider: Agent

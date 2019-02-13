@@ -47,7 +47,7 @@ type AgentResourceClassification {
   id: ID!
   agent: Agent
   resourceClassification: ResourceClassification
-  action: String
+  action: Action
 }
 
 """

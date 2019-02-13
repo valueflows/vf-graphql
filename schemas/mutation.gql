@@ -23,8 +23,8 @@ type Mutation {
   updateAgentRelationship(subjectId: Int, objectId: Int, note: String, relationshipId: Int, id: Int!): UpdateAgentRelationship
 
   # Observation layer
-  createEconomicEvent(providerId: Int, resourceImage: String, affectedResourceClassifiedAsId: Int, affectedNumericValue: String!, note: String, start: String, requestDistribution: Boolean, resourceTrackingIdentifier: String, receiverId: Int, inputOfId: Int, affectedUnitId: Int, scopeId: Int, outputOfId: Int, createResource: Boolean, url: String, affectsId: Int, resourceNote: String, resourceCurrentLocationId: Int, action: String, resourceUrl: String, fulfillsCommitmentId: Int): CreateEconomicEvent
-  updateEconomicEvent(receiverId: Int, fulfillsCommitmentId: Int, affectedNumericValue: String, inputOfId: Int, url: String, affectedUnitId: Int, affectsId: Int, providerId: Int, note: String, start: String, scopeId: Int, action: String, requestDistribution: Boolean, outputOfId: Int, affectedResourceClassifiedAsId: Int, id: Int!): UpdateEconomicEvent
+  createEconomicEvent(providerId: Int, resourceImage: String, affectedResourceClassifiedAsId: Int, affectedNumericValue: String!, note: String, start: String, requestDistribution: Boolean, resourceTrackingIdentifier: String, receiverId: Int, inputOfId: Int, affectedUnitId: Int, scopeId: Int, outputOfId: Int, createResource: Boolean, url: String, affectsId: Int, resourceNote: String, resourceCurrentLocationId: Int, action: Action, resourceUrl: String, fulfillsCommitmentId: Int): CreateEconomicEvent
+  updateEconomicEvent(receiverId: Int, fulfillsCommitmentId: Int, affectedNumericValue: String, inputOfId: Int, url: String, affectedUnitId: Int, affectsId: Int, providerId: Int, note: String, start: String, scopeId: Int, action: Action, requestDistribution: Boolean, outputOfId: Int, affectedResourceClassifiedAsId: Int, id: Int!): UpdateEconomicEvent
   deleteEconomicEvent(id: Int!): DeleteEconomicEvent
 
   updateEconomicResource(trackingIdentifier: String, url: String, image: String, resourceClassifiedAsId: Int, note: String, currentLocationId: Int, id: Int!): UpdateEconomicResource
@@ -38,8 +38,8 @@ type Mutation {
   deleteProcess(id: Int!): DeleteProcess
 
   # Planning layer
-  createCommitment(receiverId: Int, committedNumericValue: String!, planId: Int, isPlanDeliverable: Boolean, committedUnitId: Int!, inputOfId: Int, providerId: Int, plannedStart: String, due: String!, note: String, url: String, scopeId: Int, involvesId: Int, action: String!, outputOfId: Int, committedResourceClassifiedAsId: Int!): CreateCommitment
-  updateCommitment(receiverId: Int, committedNumericValue: String, inputOfId: Int, committedUnitId: Int, committedResourceClassifiedAsId: Int, providerId: Int, plannedStart: String, due: String, note: String, url: String, scopeId: Int, involvesId: Int, committedOn: String, action: String, isFinished: Boolean, outputOfId: Int, id: Int!): UpdateCommitment
+  createCommitment(receiverId: Int, committedNumericValue: String!, planId: Int, isPlanDeliverable: Boolean, committedUnitId: Int!, inputOfId: Int, providerId: Int, plannedStart: String, due: String!, note: String, url: String, scopeId: Int, involvesId: Int, action: Action!, outputOfId: Int, committedResourceClassifiedAsId: Int!): CreateCommitment
+  updateCommitment(receiverId: Int, committedNumericValue: String, inputOfId: Int, committedUnitId: Int, committedResourceClassifiedAsId: Int, providerId: Int, plannedStart: String, due: String, note: String, url: String, scopeId: Int, involvesId: Int, committedOn: String, action: Action, isFinished: Boolean, outputOfId: Int, id: Int!): UpdateCommitment
   deleteCommitment(id: Int!): DeleteCommitment
 
   createPlan(note: String, name: String!, due: String!): CreatePlan
