@@ -2,7 +2,6 @@
  * Ensures that the schema is valid
  *
  * @package: HoloREA
- * @author:  pospi <pospi@spadgos.com>
  * @since:   2019-02-11
  */
 
