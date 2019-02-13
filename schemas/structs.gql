@@ -1,11 +1,8 @@
 ##
 #
-# Configuration-related types
+# Utility structs
 #
-# These are definitions which define the available behaviour within the VF network
-#
-# :TODO: need to figure out a way of making these enums extensible while
-#        still validating implementations
+# These are common data structures used throughout the API
 #
 # @package  vf-graphql
 # @author   pospi <pospi@spadgos.com>
