@@ -28,6 +28,9 @@ type Plan {
   isDeletable: Boolean
 }
 
+"""
+A planned economic flow that has been promised by an agent to another agent.
+"""
 type Commitment {
   id: ID!
   url: String!
@@ -55,6 +58,9 @@ type Commitment {
   userIsAuthorizedToDelete: Boolean
 }
 
+"""
+The quantity that the economic event fulfilled towards the commitment.
+"""
 type Fulfillment {
   id: ID!
   fulfilledBy: EconomicEvent!
@@ -63,6 +69,9 @@ type Fulfillment {
   note: String
 }
 
+"""
+An agreement to exchange something with another agent(s), containing commitments towards that end.
+"""
 type ExchangeAgreement {
   id: ID!
   name: String!

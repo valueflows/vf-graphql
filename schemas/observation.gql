@@ -10,6 +10,9 @@
 #
 ##
 
+"""
+An observed economic flow, as opposed to a flow planned to happen in the future. This could reflect a change in the quantity of an economic resource. It is also defined by its behavior in relation to the economic resource (see `Action`)
+"""
 type EconomicEvent {
   id: ID!
   action: Action
@@ -31,6 +34,9 @@ type EconomicEvent {
   userIsAuthorizedToDelete: Boolean
 }
 
+"""
+A resource which is useful to people or the ecosystem.
+"""
 type EconomicResource {
   id: ID!
   url: String!
@@ -47,6 +53,9 @@ type EconomicResource {
   owners: [Agent]
 }
 
+"""
+An activity that assigns the rights and responsibilities for an economic resource from one agent to another.
+"""
 type Transfer {
   id: ID!
   name: String!
@@ -70,6 +79,9 @@ type Transfer {
   involvedAgents: [Agent]
 }
 
+"""
+An activity that changes inputs into outputs.  It could transform or transport economic resource(s).
+"""
 type Process {
   id: ID!
   name: String!

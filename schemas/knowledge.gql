@@ -15,7 +15,7 @@
 # Classifications system
 
 """
-Action types define what was 'done' in each `EconomicEvent`.
+An action verb defining the kind of event, commitment, or intent.
 """
 enum Action {
   NONE
@@ -42,7 +42,7 @@ enum EconomicResourceCategory {
 }
 
 """
-Classification for declaring types of `Resource`s.
+Specification of a kind of resource. Could define a material item, service, digital item, currency account, etc.
 """
 type ResourceClassification {
   id: ID!

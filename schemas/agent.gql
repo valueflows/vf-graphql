@@ -116,6 +116,9 @@ type Organization implements Agent {
 
 # Relationships between agents
 
+"""
+An ongoing voluntary association between 2 agents of any kind.
+"""
 type AgentRelationship {
   id: ID!
   subject: Agent
@@ -124,6 +127,9 @@ type AgentRelationship {
   note: String
 }
 
+"""
+A relationship role defining the kind of association one agent can have with another.
+"""
 type AgentRelationshipRole {
   id: ID!
   label: String
