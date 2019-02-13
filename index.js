@@ -11,7 +11,7 @@ const { buildSchema, findBreakingChanges } = require('graphql')
 
 const schema = buildSchema(
   [
-    'config',
+    'structs',
     'agent',
     'observation',
     'planning',
