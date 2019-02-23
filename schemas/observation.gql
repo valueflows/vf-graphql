@@ -5,8 +5,6 @@
 # Records subjective observations as to the state of the material world,
 # according to the perspectives of agents. TODO: better definition, not always subjective, can be measured by instruments, etc.
 #
-# @package  HoloREA
-# @since    2019-02-11
 #
 ##
 
@@ -64,6 +62,7 @@ type Transfer { #TODO this whole model is under review
   # under: ExchangeAgreement TODO need to finish this definition
   plannedTime: TemporalEntity #TODO: define what this actually can be - or if it should even be here
   note: String
+  ### inverse relationships
   economicEvents: [EconomicEvent]
   giveEconomicEvent: EconomicEvent
   takeEconomicEvent: EconomicEvent
@@ -86,6 +85,7 @@ type Process {
   basedOn: RecipeProcess
   note: String
   deletable: Boolean
+  ### inverse relationships and queries
   inputs(action: Action): [EconomicEvent]
   outputs(action: Action): [EconomicEvent]
   unplannedEconomicEvents(action: Action): [EconomicEvent]
