@@ -31,13 +31,12 @@ A planned economic flow, which can lead to economic events (sometimes through co
 """
 type Intent {
   id: ID!
-  url: String!
   action: Action
   inputOf: Process #TODO or Transfer...
   outputOf: Process #TODO or Transfer...
   provider: Agent
   receiver: Agent
-  inScopeOf: Agent
+  inScopeOf: Agent #TODO: more than Agent
   resourceClassifiedAs: [ResourceClassification]
   resourceConformsTo: ResourceSpecification
   involves: EconomicResource
@@ -45,11 +44,11 @@ type Intent {
   intendedTime: TemporalEntity
   finished: Boolean
   note: String
-  # fulfilledBy(requestDistribution: Boolean): [Fulfillment]
+  image: String # url
+  under: Agreement #TODO
+  ### inverse relationships and queries
   satisfiedBy: [Satisfaction]
-  deletable: Boolean
-  # userIsAuthorizedToUpdate: Boolean
-  # userIsAuthorizedToDelete: Boolean
+  # deletable: Boolean
 }
 
 """
@@ -68,7 +67,6 @@ A planned economic flow that has been promised by an agent to another agent.
 """
 type Commitment {
   id: ID!
-  url: String!
   action: Action
   inputOf: Process #TODO or Transfer...
   outputOf: Process #TODO or Transfer...
@@ -79,30 +77,18 @@ type Commitment {
   resourceConformsTo: ResourceSpecification
   involves: EconomicResource
   committedQuantity: QuantityValue
-  committedOn: String #TODO: ??
+  # committedOn: String #TODO: ??
   committedTime: TemporalEntity
   finished: Boolean
   plan: Plan
-  isPlanDeliverable: Boolean #TODO: define in VF?
-  forPlanDeliverable: Commitment
+  # isPlanDeliverable: Boolean #TODO: define in VF?
+  # forPlanDeliverable: Commitment #TODO: define in VF?
   note: String
+  under: Agreement #TODO
   # fulfilledBy(requestDistribution: Boolean): [Fulfillment]
   fulfilledBy: [Fulfillment]
   involvedAgents: [Agent]
-  deletable: Boolean
-  # userIsAuthorizedToUpdate: Boolean
-  # userIsAuthorizedToDelete: Boolean
-}
-
-"""
-The quantity that the economic event fulfilled towards the commitment.
-"""
-type Fulfillment {
-  id: ID!
-  fulfilledBy: EconomicEvent!
-  fulfills: Commitment!
-  fulfilledQuantity: QuantityValue
-  note: String
+  # deletable: Boolean
 }
 
 """

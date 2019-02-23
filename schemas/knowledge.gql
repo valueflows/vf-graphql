@@ -79,58 +79,58 @@ type RecipeFlow {
   recipeOutputOf: RecipeProcess
 }
 
-"""
-Types of `EconomicResource`s
-"""
-enum EconomicResourceCategory { #TODO: need better list, if we keep this
-  NONE
-  CURRENCY
-  INVENTORY
-  WORK
-}
+# """
+# Types of `EconomicResource`s
+# """
+# enum EconomicResourceCategory { #TODO: need better list, if we keep this
+#   NONE
+#   CURRENCY
+#   INVENTORY
+#   WORK
+# }
 
-"""
-Used to filter `EconomicResource`s in flow definition
-"""
-enum EconomicResourceProcessCategory { #TODO: need better list if we keep this, and better name
-  NONE
-  CITED
-  CONSUMED
-  PRODUCED
-  USED
-}
+# """
+# Used to filter `EconomicResource`s in flow definition
+# """
+# enum EconomicResourceProcessCategory { #TODO: need better list if we keep this, and better name
+#   NONE
+#   CITED
+#   CONSUMED
+#   PRODUCED
+#   USED
+# }
 
-"""
-Classifies the skill resources that `Agent`s may offer.
-"""
-type AgentResourceClassification { #TODO: do we want something like this? if so, is this the best model?
-  id: ID!
-  agent: Agent
-  resourceClassification: ResourceClassification
-  action: Action
-}
+# """
+# Classifies the skill resources that `Agent`s may offer.
+# """
+# type AgentResourceClassification { #TODO: do we want something like this? if so, is this the best model?
+#   id: ID!
+#   agent: Agent
+#   resourceClassification: ResourceClassification
+#   action: Action
+# }
 
-"""
-Classification for declaring types of `Organisation`s.
-"""
-type OrganizationClassification { #TODO: name? recommended model?
-  id: ID!
-  name: String!
-  note: String
-}
+# """
+# Classification for declaring types of `Organisation`s.
+# """
+# type OrganizationClassification { #TODO: name? recommended model?
+#   id: ID!
+#   name: String!
+#   note: String
+# }
 
 # Faceted classification (handled by resourceClassifiedBy probably in VF) TODO: want to define?  probably not for VF
 
-type Facet {
-  id: ID!
-  name: String!
-  description: String
-  facetValues: [FacetValue]
-}
+# type Facet {
+#   id: ID!
+#   name: String!
+#   description: String
+#   facetValues: [FacetValue]
+# }
 
-type FacetValue {
-  id: ID!
-  value: String!
-  description: String
-  facet: [Facet]
-}
+# type FacetValue {
+#   id: ID!
+#   value: String!
+#   description: String
+#   facet: [Facet]
+# }

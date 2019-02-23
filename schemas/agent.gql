@@ -13,7 +13,7 @@ A person or group or organization with economic agency.
 """
 interface Agent {
   id: String
-  name: String
+  name: String!
   # type: String
   image: String
   note: String
@@ -51,7 +51,7 @@ A natural person.
 """
 type Person implements Agent {
   id: String
-  name: String
+  name: String!
   # type: String
   image: String
   note: String

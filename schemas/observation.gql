@@ -2,8 +2,7 @@
 #
 # Observation layer
 #
-# Records subjective observations as to the state of the material world,
-# according to the perspectives of agents. TODO: better definition, not always subjective, can be measured by instruments, etc.
+# Record of what actually happened affecting the economic ecosystem.
 #
 #
 ##
@@ -13,24 +12,29 @@ An observed economic flow, as opposed to a flow planned to happen in the future.
 """
 type EconomicEvent {
   id: ID!
-  action: Action
-  inputOf: Process
-  outputOf: Process
+  action: Action!
+  inputOf: Process # or Transfer
+  outputOf: Process # or Transfer
   provider: Agent
   receiver: Agent
   inScopeOf: Agent #TODO how to loosen this up to be more than Agent? (mostly it is Agents)
   affects: EconomicResource
   resourceClassifiedAs: [ResourceClassification]
   resourceConformsTo: ResourceSpecification
-  affectedQuantity: QuantityValue
+  observedQuantity: QuantityValue
   observedTime: TemporalEntity #TODO: define what this actually can be
-  # requestDistribution: Boolean
   note: String
+  under: Agreement
+  # requestDistribution: Boolean
+  ### inverse relationships and queries
   fulfills: [Fulfillment]
+  satisfies: [Satisfaction]
+  appreciationFor: [EconomicEvent] #TODO: might change soon
+  track: [Process, Transfer, EconomicResource] #TODO: how define more than one class returned?
+  trace: [Process, Transfer, EconomicResource] #TODO: how define more than one class returned?
   # validations: [Validation]
   # isValidated: Boolean
-  # userIsAuthorizedToUpdate: Boolean
-  # userIsAuthorizedToDelete: Boolean
+  #TODO: should we have everything on a resource here also for events that create resources? or just on mutation definition?
 }
 
 """
@@ -38,17 +42,20 @@ A resource which is useful to people or the ecosystem.
 """
 type EconomicResource {
   id: ID!
-  url: String!
-  resourceClassifiedAs: [String]
+  url: String
+  classifiedAs: [String]
   resourceConformsTo: ResourceSpecification
   trackingIdentifier: String
-  image: String
+  image: String # url
   currentQuantity: QuantityValue
   note: String
-  category: String #TODO: check this
+  underlyingResource: EconomicResource
+  contains: [EconomicResource] #TODO: containedBy and make this the inverse??
+  # category: String
   currentLocation: String
-  createdDate: String #TODO: put these everywhere?
-  transfers: [Transfer]
+  ### inverse relationships and queries
+  trace: [EconomicEvent]
+  track: [EconomicEvent]
   # resourceContacts: [Agent]
   # owners: [Agent]  TODO: define agent-resource relationships, if we do need them
 }
@@ -70,6 +77,8 @@ type Transfer { #TODO this whole model is under review
   giveCommitment: Commitment
   takeCommitment: Commitment
   involvedAgents: [Agent]
+  trace: [EconomicEvent]
+  track: [EconomicEvent]
 }
 
 """
@@ -78,13 +87,14 @@ An activity that changes inputs into outputs.  It could transform or transport e
 type Process {
   id: ID!
   name: String!
-  inScopeOf: Agent
+  inScopeOf: Agent #TODO:
   plannedTime: TemporalEntity
-  started: Boolean
+  # started: Boolean
   finished: Boolean
   basedOn: RecipeProcess
+  classifiedAs: [String]
   note: String
-  deletable: Boolean
+  # deletable: Boolean
   ### inverse relationships and queries
   inputs(action: Action): [EconomicEvent]
   outputs(action: Action): [EconomicEvent]
@@ -95,9 +105,21 @@ type Process {
   previousProcesses: [Process]
   workingAgents: [Agent]
   plan: Plan
-  # userIsAuthorizedToUpdate: Boolean
-  # userIsAuthorizedToDelete: Boolean
+  trace: [EconomicEvent]
+  track: [EconomicEvent]
 }
+
+"""
+The quantity that the economic event fulfilled towards the commitment.
+"""
+type Fulfillment {
+  fulfilledBy: EconomicEvent
+  fulfills: Commitment
+  fulfilledQuantity: QuantityValue
+  note: String
+  under: Agreement #TODO
+}
+
 
 #type Validation {
 #  id: ID!
