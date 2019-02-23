@@ -10,108 +10,110 @@
 #
 ##
 
+"""
+A person or group or organization with economic agency.
+"""
 interface Agent {
   id: String
   name: String
-  type: String
+  # type: String
   image: String
   note: String
-  primaryLocation: Place
+  primaryLocation: String
   primaryPhone: String
   email: String
-  ownedEconomicResources(category: EconomicResourceCategory, resourceClassificationId: Int, page: Int): [EconomicResource]
-  searchOwnedInventoryResources(searchString: String): [EconomicResource]
-  agentProcesses(isFinished: Boolean): [Process]
-  searchAgentProcesses(searchString: String, isFinished: Boolean): [Process]
-  agentPlans(isFinished: Boolean, year: Int, month: Int): [Plan]
-  searchAgentPlans(searchString: String, isFinished: Boolean): [Plan]
-  agentEconomicEvents(latestNumberOfDays: Int, requestDistribution: Boolean, action: Action, year: Int, month: Int): [EconomicEvent]
-  agentCommitments(latestNumberOfDays: Int): [Commitment]
-  searchAgentCommitments(searchString: String, isFinished: Boolean): [Commitment]
-  agentRelationships(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship]
-  agentRelationshipsAsSubject(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship]
-  agentRelationshipsAsObject(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship]
-  agentRoles: [AgentRelationshipRole]
-  agentRecipes: [ResourceClassification]
-  faircoinAddress: String
-  memberRelationships: [AgentRelationship]
-  agentSkills: [ResourceClassification]
-  agentSkillRelationships: [AgentResourceClassification]
+  inventoriedEconomicResources(category: EconomicResourceCategory, resourceClassificationId: Int, page: Int): [EconomicResource]
+  searchInventoriedEconomicResources(searchString: String): [EconomicResource]
+  processes(finished: Boolean): [Process]
+  searchProcesses(searchString: String, finished: Boolean): [Process]
+  plans(finished: Boolean, year: Int, month: Int): [Plan]
+  searchPlans(searchString: String, finished: Boolean): [Plan]
+  economicEvents(action: Action, year: Int, month: Int): [EconomicEvent]
+  commitments(action: Action, finished: Boolean): [Commitment]
+  searchCommitments(searchString: String, finished: Boolean): [Commitment]
+  agentRelationships(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
+  agentRelationshipsAsSubject(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
+  agentRelationshipsAsObject(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
+  roles: [AgentRelationshipRole]
+  recipes: [ResourceSpecification] #TODO: is this useful or even realistic?
+  # memberRelationships: [AgentRelationship]
+  # agentSkills: [ResourceClassification] # can get skills by more generic means... do we want this anyhow?
+  # agentSkillRelationships: [AgentResourceClassification] # check this... if keep, rename
   commitmentsMatchingSkills: [Commitment]
-  validatedEventsCount(month: Int, year: Int): Int
-  eventsCount(year: Int, month: Int): Int
-  eventHoursCount(year: Int, month: Int): Int
-  eventPeopleCount(year: Int, month: Int): Int
+  # validatedEventsCount(month: Int, year: Int): Int
+  eventsCount(year: Int, month: Int): Int #TODO: ??
+  eventHoursCount(year: Int, month: Int): Int #TODO: ??
+  eventPeopleCount(year: Int, month: Int): Int #TODO: ??
 }
 
 # Variants of agents
 
+"""
+A natural person.
+"""
 type Person implements Agent {
   id: String
   name: String
-  type: String
+  # type: String
   image: String
   note: String
-  primaryLocation: Place
+  primaryLocation: String
   primaryPhone: String
   email: String
-  ownedEconomicResources(category: EconomicResourceCategory, resourceClassificationId: Int, page: Int): [EconomicResource]
-  searchOwnedInventoryResources(searchString: String): [EconomicResource]
-  agentProcesses(isFinished: Boolean): [Process]
-  searchAgentProcesses(searchString: String, isFinished: Boolean): [Process]
-  agentPlans(isFinished: Boolean, year: Int, month: Int): [Plan]
-  searchAgentPlans(searchString: String, isFinished: Boolean): [Plan]
-  agentEconomicEvents(latestNumberOfDays: Int, requestDistribution: Boolean, action: Action, year: Int, month: Int): [EconomicEvent]
-  agentCommitments(latestNumberOfDays: Int): [Commitment]
-  searchAgentCommitments(searchString: String, isFinished: Boolean): [Commitment]
-  agentRelationships(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship]
-  agentRelationshipsAsSubject(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship]
-  agentRelationshipsAsObject(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship]
-  agentRoles: [AgentRelationshipRole]
-  agentRecipes: [ResourceClassification]
-  faircoinAddress: String
-  memberRelationships: [AgentRelationship]
-  agentSkills: [ResourceClassification]
-  agentSkillRelationships: [AgentResourceClassification]
+  inventoriedEconomicResources(category: EconomicResourceCategory, resourceClassificationId: Int, page: Int): [EconomicResource]
+  searchInventoriedEconomicResources(searchString: String): [EconomicResource]
+  processes(finished: Boolean): [Process]
+  searchProcesses(searchString: String, finished: Boolean): [Process]
+  plans(finished: Boolean, year: Int, month: Int): [Plan]
+  searchPlans(searchString: String, finished: Boolean): [Plan]
+  economicEvents(action: Action, year: Int, month: Int): [EconomicEvent]
+  commitments(action: Action, finished: Boolean): [Commitment]
+  searchCommitments(searchString: String, finished: Boolean): [Commitment]
+  agentRelationships(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
+  agentRelationshipsAsSubject(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
+  agentRelationshipsAsObject(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
+  roles: [AgentRelationshipRole]
+  recipes: [ResourceSpecification] #TODO: is this useful or even realistic?
+  # memberRelationships: [AgentRelationship]
+  # agentSkills: [ResourceClassification]
+  # agentSkillRelationships: [AgentResourceClassification]
   commitmentsMatchingSkills: [Commitment]
-  validatedEventsCount(month: Int, year: Int): Int
-  eventsCount(year: Int, month: Int): Int
-  eventHoursCount(year: Int, month: Int): Int
-  eventPeopleCount(year: Int, month: Int): Int
+  # validatedEventsCount(month: Int, year: Int): Int
+  eventsCount(year: Int, month: Int): Int #TODO: ??
+  eventHoursCount(year: Int, month: Int): Int #TODO: ??
 }
 
+"""
+A formal or informal group, or legal organization.
+"""
 type Organization implements Agent {
   id: String
   name: String
-  type: String
+  type: OrganizationClassification #TODO: define how people can create further typing of Organization, also might need a different name
   image: String
   note: String
-  primaryLocation: Place
+  primaryLocation: String
   primaryPhone: String
   email: String
-  ownedEconomicResources(category: EconomicResourceCategory, resourceClassificationId: Int, page: Int): [EconomicResource]
-  searchOwnedInventoryResources(searchString: String): [EconomicResource]
-  agentProcesses(isFinished: Boolean): [Process]
-  searchAgentProcesses(searchString: String, isFinished: Boolean): [Process]
-  agentPlans(isFinished: Boolean, year: Int, month: Int): [Plan]
-  searchAgentPlans(searchString: String, isFinished: Boolean): [Plan]
-  agentEconomicEvents(latestNumberOfDays: Int, requestDistribution: Boolean, action: Action, year: Int, month: Int): [EconomicEvent]
-  agentCommitments(latestNumberOfDays: Int): [Commitment]
-  searchAgentCommitments(searchString: String, isFinished: Boolean): [Commitment]
-  agentRelationships(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship]
-  agentRelationshipsAsSubject(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship]
-  agentRelationshipsAsObject(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship]
-  agentRoles: [AgentRelationshipRole]
-  agentRecipes: [ResourceClassification]
-  faircoinAddress: String
-  memberRelationships: [AgentRelationship]
-  agentSkills: [ResourceClassification]
-  agentSkillRelationships: [AgentResourceClassification]
-  commitmentsMatchingSkills: [Commitment]
-  validatedEventsCount(month: Int, year: Int): Int
-  eventsCount(year: Int, month: Int): Int
-  eventHoursCount(year: Int, month: Int): Int
-  eventPeopleCount(year: Int, month: Int): Int
+  inventoriedEconomicResources(category: EconomicResourceCategory, resourceClassificationId: Int, page: Int): [EconomicResource]
+  searchInventoriedEconomicResources(searchString: String): [EconomicResource]
+  processes(finished: Boolean): [Process]
+  searchProcesses(searchString: String, finished: Boolean): [Process]
+  plans(finished: Boolean, year: Int, month: Int): [Plan]
+  searchPlans(searchString: String, finished: Boolean): [Plan]
+  economicEvents(action: Action, year: Int, month: Int): [EconomicEvent]
+  commitments(action: Action, finished: Boolean): [Commitment]
+  searchCommitments(searchString: String, finished: Boolean): [Commitment]
+  agentRelationships(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
+  agentRelationshipsAsSubject(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
+  agentRelationshipsAsObject(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
+  roles: [AgentRelationshipRole]
+  recipes: [ResourceSpecification] #TODO: is this useful or even realistic?
+  # memberRelationships: [AgentRelationship]
+  # validatedEventsCount(month: Int, year: Int): Int
+  eventsCount(year: Int, month: Int): Int #TODO: ??
+  eventHoursCount(year: Int, month: Int): Int #TODO: ??
+  eventPeopleCount(year: Int, month: Int): Int #TODO: ??
 }
 
 # Relationships between agents
@@ -125,6 +127,7 @@ type AgentRelationship {
   object: Agent
   relationship: AgentRelationshipRole
   note: String
+  # probably need the state (and CUD events)
 }
 
 """
@@ -134,5 +137,5 @@ type AgentRelationshipRole {
   id: ID!
   label: String
   inverseLabel: String
-  category: AgentRelationshipCategory
+  category: AgentRelationshipCategory #TODO: figure out
 }

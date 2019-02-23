@@ -2,7 +2,7 @@
 #
 # Knowledge layer
 #
-# Provides functionality for classifying and organising other parts of the system.
+# Provides functionality for classifying and organising other parts of the system, including recipes.
 #
 # :TODO: need to figure out a way of making these enums extensible while
 #        still validating implementations
@@ -17,24 +17,29 @@
 """
 An action verb defining the kind of event, commitment, or intent.
 """
-enum Action {
-  NONE
-  ACCEPT
-  ADJUST
-  CITE
-  CONSUME
-  GIVE
-  IMPROVE
-  PRODUCE
-  TAKE
-  USE
-  WORK
+#enum Action {
+#  NONE
+#  ACCEPT
+#  ADJUST
+#  CITE
+#  CONSUME
+#  GIVE
+#  IMPROVE
+#  PRODUCE
+#  TAKE
+#  USE
+#  WORK
+#}
+type Action {
+  id: ID!
+  name: String!
+  resourceEffect: String! # "+", "-", "0"
 }
 
 """
 Types of `EconomicResource`s
 """
-enum EconomicResourceCategory {
+enum EconomicResourceCategory { # need better list, if we keep this
   NONE
   CURRENCY
   INVENTORY
@@ -43,25 +48,24 @@ enum EconomicResourceCategory {
 
 """
 Specification of a kind of resource. Could define a material item, service, digital item, currency account, etc.
+Used instead of a classification when more information is needed, particularly for recipes.
 """
-type ResourceClassification {
+type ResourceSpecification {
   id: ID!
   name: String!
-  """
-  if this resource has different units of use and inventory, this is the unit of inventory
-  """
   unit: Unit
   image: String
   note: String
-  category: String
-  processCategory: String
+  category: String #TODO
+  processCategory: String #TODO
+  resourceClassifiedAs: [String]
   classificationResources: [EconomicResource]
 }
 
 """
-Types of `Process`es
+Used to filter `EconomicResource`s in flow definition
 """
-enum EconomicResourceProcessCategory {
+enum EconomicResourceProcessCategory { # need better list if we keep this, and better name
   NONE
   CITED
   CONSUMED
@@ -72,7 +76,7 @@ enum EconomicResourceProcessCategory {
 """
 Classification for declaring types of `Process`es.
 """
-type ProcessClassification {
+type RecipeProcess {
   id: ID!
   name: String!
   note: String
@@ -81,10 +85,9 @@ type ProcessClassification {
 }
 
 """
-Associations between different `Agent`s
+Association behaviors between different `Agent`s
 """
 enum AgentRelationshipCategory {
-  NONE
   LEGALPARTNER
   MEMBER
   PART
@@ -95,7 +98,7 @@ enum AgentRelationshipCategory {
 """
 Classifies the skill resources that `Agent`s may offer.
 """
-type AgentResourceClassification {
+type AgentResourceClassification { # TODO: do we want something like this?
   id: ID!
   agent: Agent
   resourceClassification: ResourceClassification
@@ -105,13 +108,13 @@ type AgentResourceClassification {
 """
 Classification for declaring types of `Organisation`s.
 """
-type OrganizationClassification {
+type OrganizationClassification { #TODO: name?
   id: ID!
   name: String!
   note: String
 }
 
-# Facets, for sub-dividing classifications
+# Faceted classification (handled by resourceClassifiedBy probably in VF) TODO
 
 type Facet {
   id: ID!

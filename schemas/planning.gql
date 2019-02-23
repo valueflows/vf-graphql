@@ -10,22 +10,59 @@
 #
 ##
 
-type Plan {
+type Plan { #TODO: this is not yet in VF, and may or may not be named Plan
   id: ID!
   plannedOn: String
   due: String
   note: String
   name: String
-  createdBy: Agent
-  scope: [Agent]
-  planProcesses(year: Int, month: Int): [Process]
+  # createdBy: Agent
+  inScopeOf: [Agent] #TODO can be more than Agent
+  processes(year: Int, month: Int): [Process]
   workingAgents: [Agent]
   plannedNonWorkInputs: [Commitment]
   plannedOutputs: [Commitment]
   nonWorkInputs: [EconomicEvent]
   outputs: [EconomicEvent]
-  kanbanState: String
-  isDeletable: Boolean
+  kanbanState: String #TODO: codify this?
+  deletable: Boolean
+}
+
+"""
+A planned economic flow, which can lead to economic events (sometimes through commitments).
+"""
+type Intent {
+  id: ID!
+  url: String!
+  action: Action
+  inputOf: Process #TODO or Transfer...
+  outputOf: Process #TODO or Transfer...
+  provider: Agent
+  receiver: Agent
+  inScopeOf: Agent
+  resourceClassifiedAs: [ResourceClassification]
+  resourceConformsTo: ResourceSpecification
+  involves: EconomicResource
+  intendedQuantity: QuantityValue
+  intendedTime: TemporalEntity
+  finished: Boolean
+  note: String
+  # fulfilledBy(requestDistribution: Boolean): [Fulfillment]
+  satisfiedBy: [Satisfaction]
+  deletable: Boolean
+  # userIsAuthorizedToUpdate: Boolean
+  # userIsAuthorizedToDelete: Boolean
+}
+
+"""
+A commitment or economic event that partially or fully satisfies one or more intents.
+"""
+type Satisfaction {
+  id: ID!
+  satisfiedBy: Commitment! #TODO: or EconomicEvent, how to express this?
+  satisfies: Intent!
+  satisfiedQuantity: QuantityValue
+  note: String
 }
 
 """
@@ -35,27 +72,28 @@ type Commitment {
   id: ID!
   url: String!
   action: Action
-  inputOf: Process
-  outputOf: Process
+  inputOf: Process #TODO or Transfer...
+  outputOf: Process #TODO or Transfer...
   provider: Agent
   receiver: Agent
-  scope: Agent
-  resourceClassifiedAs: ResourceClassification
+  inScopeOf: Agent
+  resourceClassifiedAs: [ResourceClassification]
+  resourceConformsTo: ResourceSpecification
   involves: EconomicResource
   committedQuantity: QuantityValue
-  committedOn: String
-  plannedStart: String
-  due: String
-  isFinished: Boolean
+  committedOn: String #TODO: ??
+  committedTime: TemporalEntity
+  finished: Boolean
   plan: Plan
-  isPlanDeliverable: Boolean
+  isPlanDeliverable: Boolean #TODO: define in VF?
   forPlanDeliverable: Commitment
   note: String
-  fulfilledBy(requestDistribution: Boolean): [Fulfillment]
+  # fulfilledBy(requestDistribution: Boolean): [Fulfillment]
+  fulfilledBy: [Fulfillment]
   involvedAgents: [Agent]
-  isDeletable: Boolean
-  userIsAuthorizedToUpdate: Boolean
-  userIsAuthorizedToDelete: Boolean
+  deletable: Boolean
+  # userIsAuthorizedToUpdate: Boolean
+  # userIsAuthorizedToDelete: Boolean
 }
 
 """
@@ -65,7 +103,7 @@ type Fulfillment {
   id: ID!
   fulfilledBy: EconomicEvent!
   fulfills: Commitment!
-  fulfilledQuantity: QuantityValue!
+  fulfilledQuantity: QuantityValue
   note: String
 }
 
@@ -75,9 +113,8 @@ An agreement to exchange something with another agent(s), containing commitments
 type ExchangeAgreement {
   id: ID!
   name: String!
-  plannedStart: String
-  scope: Agent
-  note: String
-  transfers: [Transfer]
+  plannedStart: String #TODO: ??
+  commitments: [Commitment]
+  economicEvents: [EconomicEvent]
   involvedAgents: [Agent]
 }
