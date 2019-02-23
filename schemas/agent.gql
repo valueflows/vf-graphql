@@ -2,11 +2,9 @@
 #
 # Agent module
 #
-# All functionality related to the definition of autonomous agents and their
-# relationships and interdependencies.
+# All functionality related to the definition of autonomous agents
+# (people, organizations, groups) and their relationships.
 #
-# @package  HoloREA
-# @since    2019-02-11
 #
 ##
 
@@ -95,6 +93,7 @@ type Organization implements Agent {
   primaryLocation: String
   primaryPhone: String
   email: String
+  ### inverse relationships
   inventoriedEconomicResources(category: EconomicResourceCategory, resourceClassificationId: Int, page: Int): [EconomicResource]
   searchInventoriedEconomicResources(searchString: String): [EconomicResource]
   processes(finished: Boolean): [Process]
@@ -104,9 +103,9 @@ type Organization implements Agent {
   economicEvents(action: Action, year: Int, month: Int): [EconomicEvent]
   commitments(action: Action, finished: Boolean): [Commitment]
   searchCommitments(searchString: String, finished: Boolean): [Commitment]
-  agentRelationships(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
-  agentRelationshipsAsSubject(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
-  agentRelationshipsAsObject(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
+  relationships(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
+  relationshipsAsSubject(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
+  relationshipsAsObject(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
   roles: [AgentRelationshipRole]
   recipes: [ResourceSpecification] #TODO: is this useful or even realistic?
   # memberRelationships: [AgentRelationship]
@@ -137,5 +136,16 @@ type AgentRelationshipRole {
   id: ID!
   label: String
   inverseLabel: String
-  category: AgentRelationshipCategory #TODO: figure out
+  # category: AgentRelationshipCategory #TODO: figure out
+}
+
+"""
+Generalized behaviors for agent relationship roles
+"""
+enum AgentRelationshipCategory {  #TODO how do we want to do this concept?
+  LEGALPARTNER
+  MEMBER
+  PART
+  PEER
+  TRADINGPARTNER
 }
