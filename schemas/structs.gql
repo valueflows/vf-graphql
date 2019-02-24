@@ -32,15 +32,16 @@ type QuantityValue {
 }
 
 """
-A physical location
+A physical location (not defined by ValueFlows)
 """
-type Place {
+type Location { #TODO: ??
   id: ID!
   name: String!
   address: String!
   latitude: Float
   longitude: Float
   note: String
-  placeResources: [EconomicResource]
-  placeAgents: [Agent]
+  ### inverse relationships and queries
+  resources: [EconomicResource]
+  agents: [Agent]
 }

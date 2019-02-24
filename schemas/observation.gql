@@ -113,8 +113,8 @@ type Process {
 The quantity that the economic event fulfilled towards the commitment.
 """
 type Fulfillment {
-  fulfilledBy: EconomicEvent
-  fulfills: Commitment
+  fulfilledBy: EconomicEvent!
+  fulfills: Commitment!
   fulfilledQuantity: QuantityValue
   note: String
   under: Agreement #TODO
