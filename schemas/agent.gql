@@ -58,6 +58,7 @@ type Person implements Agent {
   primaryLocation: String
   primaryPhone: String
   email: String
+  ### inverse relationships and queries
   inventoriedEconomicResources(category: EconomicResourceCategory, resourceClassificationId: Int, page: Int): [EconomicResource]
   searchInventoriedEconomicResources(searchString: String): [EconomicResource]
   processes(finished: Boolean): [Process]
@@ -93,7 +94,7 @@ type Organization implements Agent {
   primaryLocation: String
   primaryPhone: String
   email: String
-  ### inverse relationships
+  ### inverse relationships and queries
   inventoriedEconomicResources(category: EconomicResourceCategory, resourceClassificationId: Int, page: Int): [EconomicResource]
   searchInventoriedEconomicResources(searchString: String): [EconomicResource]
   processes(finished: Boolean): [Process]
@@ -122,9 +123,9 @@ An ongoing voluntary association between 2 agents of any kind.
 """
 type AgentRelationship {
   id: ID!
-  subject: Agent
-  object: Agent
-  relationship: AgentRelationshipRole
+  subject: Agent!
+  object: Agent!
+  relationship: AgentRelationshipRole!
   note: String
   # probably need the state (and CUD events)
 }
@@ -134,7 +135,7 @@ A relationship role defining the kind of association one agent can have with ano
 """
 type AgentRelationshipRole {
   id: ID!
-  label: String
+  label: String!
   inverseLabel: String
   # category: AgentRelationshipCategory #TODO: figure out
 }

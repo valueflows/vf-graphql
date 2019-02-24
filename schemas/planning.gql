@@ -52,7 +52,7 @@ type Intent {
 }
 
 """
-A commitment or economic event that partially or fully satisfies one or more intents.
+A commitment or economic event that partially or fully satisfies an intent.
 """
 type Satisfaction {
   id: ID!
@@ -96,8 +96,9 @@ An agreement to exchange something with another agent(s), containing commitments
 """
 type ExchangeAgreement {
   id: ID!
-  name: String!
-  plannedStart: String #TODO: ??
+  name: String
+  agreedTime: TemporalEntity
+  ### inverse relationships and queries
   commitments: [Commitment]
   economicEvents: [EconomicEvent]
   involvedAgents: [Agent]
