@@ -27,7 +27,7 @@ type Unit {
 Semantic meaning for measurements: binds a quantity to its measurement unit.
 """
 type QuantityValue {
-  quantity: Float
+  numericValue: Float
   unit: Unit
 }
 
