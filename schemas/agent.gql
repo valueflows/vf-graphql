@@ -12,7 +12,7 @@
 A person or group or organization with economic agency.
 """
 interface Agent {
-  id: String
+  id: ID!
   name: String!
   # type: String
   image: String
@@ -50,7 +50,7 @@ interface Agent {
 A natural person.
 """
 type Person implements Agent {
-  id: String
+  id: ID!
   name: String!
   # type: String
   image: String
@@ -86,7 +86,7 @@ type Person implements Agent {
 A formal or informal group, or legal organization.
 """
 type Organization implements Agent {
-  id: String
+  id: ID!
   name: String
   type: OrganizationClassification #TODO: define how people can create further typing of Organization, also might need a different name
   image: String

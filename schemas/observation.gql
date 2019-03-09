@@ -113,6 +113,7 @@ type Process {
 The quantity that the economic event fulfilled towards the commitment.
 """
 type Fulfillment {
+  id: ID!
   fulfilledBy: EconomicEvent!
   fulfills: Commitment!
   fulfilledQuantity: QuantityValue
