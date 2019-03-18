@@ -1,0 +1,32 @@
+{
+  "name": "@valueflows/vf-graphql-server-mock",
+  "version": "0.0.1",
+  "description": "GraphQL / GraphiQL interface to a static ValueFlows-based economic system",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/valueflows/vf-graphql.git"
+  },
+  "keywords": [
+    "ValueFlows",
+    "GraphQL",
+    "server",
+    "mock"
+  ],
+  "author": "ValueFlows project contributors",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/valueflows/vf-graphql/issues"
+  },
+  "homepage": "https://github.com/valueflows/vf-graphql#readme",
+  "dependencies": {
+    "@valueflows/vf-graphql": "0.0.1",
+    "apollo-server-express": "^2.4.8",
+    "express": "^4.16.4",
+    "graphql": "^14.1.1"
+  }
+}
