@@ -10,7 +10,8 @@
   "watch": {
     "test": {
       "patterns": [
-        "tests", "../schemas"
+        "tests",
+        "../schemas"
       ],
       "extensions": "js,gql"
     }
@@ -31,7 +32,8 @@
   },
   "homepage": "https://github.com/valueflows/vf-graphql#readme",
   "dependencies": {
-    "graphql": "^14.1.1"
+    "graphql": "^14.1.1",
+    "graphql-tools": "^4.0.4"
   },
   "devDependencies": {
     "faucet": "0.0.1",
