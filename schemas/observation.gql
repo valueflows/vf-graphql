@@ -21,7 +21,7 @@ type EconomicEvent {
   receiver: Agent
   inScopeOf: Agent #TODO how to loosen this up to be more than Agent? (mostly it is Agents)
   affects: EconomicResource
-  resourceClassifiedAs: [ResourceClassification]
+  resourceClassifiedAs: [String]
   resourceConformsTo: ResourceSpecification
   observedQuantity: QuantityValue
   observedTime: DateTime

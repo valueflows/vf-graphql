@@ -37,7 +37,7 @@ type Intent {
   provider: Agent
   receiver: Agent
   inScopeOf: Agent #TODO: more than Agent
-  resourceClassifiedAs: [ResourceClassification]
+  resourceClassifiedAs: [String]
   resourceConformsTo: ResourceSpecification
   involves: EconomicResource
   intendedQuantity: QuantityValue
@@ -74,7 +74,7 @@ type Commitment {
   receiver: Agent
   inScopeOf: Agent
   # :TODO: what is the purpose of these two fields? Are these values not present on the `EconomicResource` this `involves`?
-  resourceClassifiedAs: [ResourceClassification]
+  resourceClassifiedAs: [String]
   resourceConformsTo: ResourceSpecification
   involves: EconomicResource
   committedQuantity: QuantityValue
