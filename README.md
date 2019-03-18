@@ -38,7 +38,7 @@ See `scripts` in `package.json` for the available commands. For quickly spinning
 
 ## Contributing
 
-The recommended way to contribute to this repo is via the `npm run dev` command. This will watch the code for changes and run tests every time you save a file. It's best to do it this way as the errors from the GraphQL parser can be hard to track down- more frequent feedback means you will catch any errors sooner.
+The recommended way to contribute to this repo is via the `npm run dev:schema` command (also run as part of `npm start`). This will watch the code for changes and run tests every time you save a file. It's best to do it this way as the errors from the GraphQL parser can be hard to track down- more frequent feedback means you will catch any errors sooner.
 
 
 
