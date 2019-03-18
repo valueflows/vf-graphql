@@ -34,14 +34,14 @@ interface Agent {
   plans(finished: Boolean, year: Int, month: Int): [Plan]
   searchPlans(searchString: String, finished: Boolean): [Plan]
 
-  economicEvents(action: Action, year: Int, month: Int): [EconomicEvent]
+  economicEvents(action: ID, year: Int, month: Int): [EconomicEvent]
 
-  commitments(action: Action, finished: Boolean): [Commitment]
+  commitments(action: ID, finished: Boolean): [Commitment]
   searchCommitments(searchString: String, finished: Boolean): [Commitment]
 
-  agentRelationships(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
-  agentRelationshipsAsSubject(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
-  agentRelationshipsAsObject(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
+  relationships(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
+  relationshipsAsSubject(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
+  relationshipsAsObject(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
 
   roles: [AgentRelationshipRole]
 
@@ -89,14 +89,14 @@ type Person implements Agent {
   plans(finished: Boolean, year: Int, month: Int): [Plan]
   searchPlans(searchString: String, finished: Boolean): [Plan]
 
-  economicEvents(action: Action, year: Int, month: Int): [EconomicEvent]
+  economicEvents(action: ID, year: Int, month: Int): [EconomicEvent]
 
-  commitments(action: Action, finished: Boolean): [Commitment]
+  commitments(action: ID, finished: Boolean): [Commitment]
   searchCommitments(searchString: String, finished: Boolean): [Commitment]
 
-  agentRelationships(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
-  agentRelationshipsAsSubject(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
-  agentRelationshipsAsObject(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
+  relationships(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
+  relationshipsAsSubject(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
+  relationshipsAsObject(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
 
   roles: [AgentRelationshipRole]
 
@@ -111,6 +111,7 @@ type Person implements Agent {
   # validatedEventsCount(month: Int, year: Int): Int
   eventsCount(year: Int, month: Int): Int #TODO: ??
   eventHoursCount(year: Int, month: Int): Int #TODO: ??
+  eventPeopleCount(year: Int, month: Int): Int #TODO: ??
 }
 
 """
@@ -118,7 +119,7 @@ A formal or informal group, or legal organization.
 """
 type Organization implements Agent {
   id: ID!
-  name: String
+  name: String!
   # :TODO: define how people can create further typing of Organization, also might need a different name
   # type: OrganizationClassification
   image: String
@@ -141,9 +142,9 @@ type Organization implements Agent {
   plans(finished: Boolean, year: Int, month: Int): [Plan]
   searchPlans(searchString: String, finished: Boolean): [Plan]
 
-  economicEvents(action: Action, year: Int, month: Int): [EconomicEvent]
+  economicEvents(action: ID, year: Int, month: Int): [EconomicEvent]
 
-  commitments(action: Action, finished: Boolean): [Commitment]
+  commitments(action: ID, finished: Boolean): [Commitment]
   searchCommitments(searchString: String, finished: Boolean): [Commitment]
 
   relationships(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
@@ -155,6 +156,8 @@ type Organization implements Agent {
   recipes: [ResourceSpecification] #TODO: is this useful or even realistic?
 
   # memberRelationships: [AgentRelationship]
+
+  commitmentsMatchingSkills: [Commitment]
 
   # validatedEventsCount(month: Int, year: Int): Int
   eventsCount(year: Int, month: Int): Int #TODO: ??
