@@ -26,7 +26,7 @@ type EconomicEvent {
   observedQuantity: QuantityValue
   observedTime: DateTime
   note: String
-  under: Agreement
+  under: ExchangeAgreement
   # requestDistribution: Boolean
   ### inverse relationships and queries
   fulfills: [Fulfillment]
@@ -119,7 +119,7 @@ type Fulfillment {
   fulfills: Commitment!
   fulfilledQuantity: QuantityValue
   note: String
-  under: Agreement #TODO
+  under: ExchangeAgreement
 }
 
 
