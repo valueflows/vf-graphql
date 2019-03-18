@@ -68,7 +68,7 @@ type Query {
   # Knowledge layer
   resourceClassification(id: ID): ResourceClassification
   allResourceClassifications: [ResourceClassification]
-  resourceClassificationsByProcessCategory(category: EconomicResourceProcessCategory): [ResourceClassification]
+  # resourceClassificationsByProcessCategory(category: EconomicResourceProcessCategory): [ResourceClassification]
   resourceClassificationsByAction(action: Action): [ResourceClassification]
   resourceClassificationsByFacetValues(facetValues: String): [ResourceClassification]
 
