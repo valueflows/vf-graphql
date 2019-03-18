@@ -10,6 +10,19 @@
 union ProductionFlowItem = Process | Transfer | EconomicResource
 
 """
+When an `Intent`, `Commitment` or `EconomicEvent` is set to provide some
+`EconomicResource`s, but the exact resources to service are still unknown, or
+(in the case of `EconomicResource`) not inventoried.
+
+In these cases, an `IntendedResource` can be used to indicate the type
+of resource to be provided later.
+"""
+type IntendedResource {
+  classifiedAs: [String]
+  conformsTo: ResourceSpecification
+}
+
+"""
 An observed economic flow, as opposed to a flow planned to happen in the future. This could reflect a change in the quantity of an economic resource. It is also defined by its behavior in relation to the economic resource (see `Action`)
 """
 type EconomicEvent {
@@ -21,8 +34,7 @@ type EconomicEvent {
   receiver: Agent
   inScopeOf: Agent #TODO how to loosen this up to be more than Agent? (mostly it is Agents)
   affects: EconomicResource
-  resourceClassifiedAs: [String]
-  resourceConformsTo: ResourceSpecification
+  affectsSome: IntendedResource
   observedQuantity: QuantityValue
   observedTime: DateTime
   note: String
