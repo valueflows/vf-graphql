@@ -8,11 +8,16 @@
 ##
 
 """
-The `DateTime` scalar type represents a DateTime
-value as specified by
-[iso8601](https://en.wikipedia.org/wiki/ISO_8601).
+The `DateTime` scalar type represents a DateTime value as specified by
+[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601).
 """
 scalar DateTime
+
+"""
+The `DateInterval` scalar type represents an interval between two `DateTime` values
+as specified by [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#Durations).
+"""
+scalar DateInterval
 
 """
 Defines a unit of measurement, along with its display symbol.
