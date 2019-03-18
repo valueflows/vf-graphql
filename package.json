@@ -11,6 +11,7 @@
   "scripts": {
     "preinstall": "npm run clean",
     "start": "npm-run-all --parallel dev:schema dev:demoUI",
+    "test": "cd lib && npm run test",
     "dev:schema": "cd lib && npm run dev",
     "dev:demoUI": "cd mock-server && npm start",
     "clean": "rm -Rf node_modules; rm -Rf mock-server/node_modules; rm -Rf lib/node_modules"
