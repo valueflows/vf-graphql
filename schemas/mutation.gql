@@ -9,58 +9,264 @@ type Mutation {
 
   # Agent module
 
-  createPerson(name: String!, primaryPhone: String, image: String, note: String, email: String, primaryLocation: String): CreatePerson
-  updatePerson(name: String, image: String, email: String, note: String, id: String!, primaryLocation: String): UpdatePerson
+  createPerson(
+    name: String!,
+    primaryPhone: String,
+    image: String,
+    note: String,
+    email: String,
+    primaryLocation: String
+  ): CreatePerson
+  updatePerson(
+    id: ID!,
+    name: String,
+    image: String,
+    email: String,
+    note: String,
+    primaryLocation: String
+  ): UpdatePerson
   deletePerson(id: String!): DeletePerson
 
-  createOrganization(name: String!, primaryPhone: String, image: String, note: String, type: String, email: String, primaryLocation: String): CreateOrganization
-  updateOrganization(name: String, image: String, email: String, note: String, id: String!, primaryLocation: String): UpdateOrganization
+  createOrganization(
+    name: String!,
+    primaryPhone: String,
+    image: String,
+    note: String,
+    type: String,
+    email: String,
+    primaryLocation: String
+  ): CreateOrganization
+  updateOrganization(
+    id: ID!,
+    name: String,
+    image: String,
+    email: String,
+    note: String,
+    primaryLocation: String
+  ): UpdateOrganization
   deleteOrganization(id: String!): DeleteOrganization
 
-  createAgentRelationship(note: String, subjectId: String!, relationshipId: String!, objectId: String!): CreateAgentRelationship
-  updateAgentRelationship(subjectId: String, objectId: String, note: String, relationshipId: String, id: String!): UpdateAgentRelationship
+  createAgentRelationship(
+    subjectId: String!,
+    objectId: String!,
+    relationshipId: String!,
+    note: String
+  ): CreateAgentRelationship
+  updateAgentRelationship(
+    id: ID!,
+    subjectId: String,
+    objectId: String,
+    note: String,
+    relationshipId: String
+  ): UpdateAgentRelationship
+  deleteAgentRelationship(id: String!): DeleteAgentRelationship
 
   # Observation layer
 
-  createEconomicEvent(providerId: String, resourceImage: String, resourceClassifiedAs: String, observedNumericValue: String!, note: String, observedTime: TemporalEntity!, resourceTrackingIdentifier: String, receiverId: String, inputOfId: String, observedUnitId: String!, inScopeOfId: String, outputOfId: String, createResource: Boolean, affectsId: String, resourceNote: String, resourceCurrentLocation: String, action: Action, resourceUrl: String): CreateEconomicEvent
-  updateEconomicEvent(receiverId: String, affectedNumericValue: String, inputOfId: String, observedUnitId: String, affectsId: String, providerId: String, note: String, observedTime: TemporalEntity, inScopeOfId: String, action: Action, outputOfId: String, resourceClassifiedAs: String, id: String!): UpdateEconomicEvent
+  createEconomicEvent(
+    inputOfId: String,
+    outputOfId: String,
+    providerId: String,
+    receiverId: String,
+    inScopeOfId: String,
+    affectsId: String,
+      observedNumericValue: String!,
+      observedUnitId: String!,
+      observedTime: TemporalEntity!,
+    createResource: Boolean,
+      resourceTrackingIdentifier: String,
+      resourceNote: String,
+      resourceCurrentLocation: String,
+      resourceUrl: String,
+      resourceClassifiedAs: String,
+      resourceImage: String,
+    action: Action,
+    note: String
+  ): CreateEconomicEvent
+  updateEconomicEvent(
+    id: ID!,
+    inputOfId: String,
+    outputOfId: String,
+    providerId: String,
+    receiverId: String,
+    inScopeOfId: String,
+    affectsId: String,
+      affectedNumericValue: String,
+      observedUnitId: String,
+      observedTime: TemporalEntity,
+    resourceClassifiedAs: String, # :TODO: should we be able to update created resources via this method, or would that be done with updateEconomicResource?
+    action: Action,
+    note: String
+  ): UpdateEconomicEvent
   deleteEconomicEvent(id: String!): DeleteEconomicEvent
 
-  createFulfillment(fulfilledBy: EconomicEvent!, fulfills: Commitment!, fulfilledQuantity: QuantityValue, note: String, under: Agreement): CreateFulfillment
-  updateFulfillment(id: String!, fulfilledBy: EconomicEvent, fulfills: Commitment, fulfilledQuantity: QuantityValue, note: String, under: Agreement): UpdateFulfillment
+  createFulfillment(
+    fulfilledBy: EconomicEvent!,
+    fulfills: Commitment!,
+    fulfilledQuantity: QuantityValue,
+    under: Agreement,
+    note: String
+  ): CreateFulfillment
+  updateFulfillment(
+    id: ID!,
+    fulfilledBy: EconomicEvent,
+    fulfills: Commitment,
+    fulfilledQuantity: QuantityValue,
+    under: Agreement,
+    note: String
+  ): UpdateFulfillment
   deleteFulfillment(id: String!): DeleteFulfillment
 
-  updateEconomicResource(trackingIdentifier: String, url: String, image: String, classifiedAsId: String, note: String, currentLocationId: String, id: String!): UpdateEconomicResource
+  updateEconomicResource(
+    id: ID!,
+    trackingIdentifier: String,
+    url: String,
+    image: String,
+    classifiedAsId: String,
+    currentLocationId: String,
+    note: String
+  ): UpdateEconomicResource
   deleteEconomicResource(id: String!): DeleteEconomicResource
 
   #createValidation(note: String, economicEventId: String!, validatedById: String!): CreateValidation
   #deleteValidation(id: String!): DeleteValidation
 
-  createProcess(plannedDuration: TemporalEntity, planId: String, name: String!, note: String, inScopeOfId: String): CreateProcess
-  updateProcess(plannedDuration: TemporalEntity, planId: String, name: String, note: String, inScopeOfId: String, finished: Boolean, id: String!): UpdateProcess
+  createProcess(
+    plannedDuration: TemporalEntity,
+    planId: String,
+    name: String!,
+    inScopeOfId: String,
+    note: String
+  ): CreateProcess
+  updateProcess(
+    id: ID!,
+    plannedDuration: TemporalEntity,
+    planId: String,
+    name: String,
+    inScopeOfId: String,
+    finished: Boolean,
+    note: String
+  ): UpdateProcess
   deleteProcess(id: String!): DeleteProcess
 
   # Planning layer
 
-  createIntent(receiverId: String, intendedNumericValue: String, planId: String, intendedUnitId: String, inputOfId: String, providerId: String, intendedTime: TemporalEntity, note: String, image: String, inScopeOfId: String, involvesId: String, action: Action, outputOfId: String, resourceClassifiedAs: String, resourceConformsToId: String, underId: String): CreateIntent
-  updateIntent(receiverId: String, intendedNumericValue: String, planId: String, inputOfId: String, intendedUnitId: String, resourceClassifiedAs: String, resourceConformsToId: String, providerId: String, intendedTime: TemporalEntity, note: String, inScopeOfId: String, involvesId: String, action: Action, finished: Boolean, outputOfId: String, id: String!): UpdateIntent
+  createIntent(
+    inputOfId: String,
+    outputOfId: String,
+    providerId: String,
+    receiverId: String,
+    inScopeOfId: String,
+    involvesId: String,
+    underId: String,
+    planId: String,
+      intendedNumericValue: String,
+      intendedUnitId: String,
+      intendedTime: TemporalEntity,
+    image: String,
+    action: Action,
+      resourceClassifiedAs: String,
+      resourceConformsToId: String,
+    note: String
+  ): CreateIntent
+  updateIntent(
+    id: ID!,
+    inputOfId: String,
+    outputOfId: String,
+    providerId: String,
+    receiverId: String,
+    inScopeOfId: String,
+    involvesId: String,
+    planId: String,
+      intendedNumericValue: String,
+      intendedUnitId: String,
+      intendedTime: TemporalEntity,
+      resourceClassifiedAs: String,
+      resourceConformsToId: String,
+    action: Action,
+    finished: Boolean,
+    note: String
+  ): UpdateIntent
   deleteIntent(id: String!): DeleteIntent
 
-  createCommitment(receiverId: String, committedNumericValue: String!, planId: String, isPlanDeliverable: Boolean, committedUnitId: String!, inputOfId: String, providerId: String, committedTime: TemporalEntity!, note: String, inScopeOfId: String, involvesId: String, action: Action!, outputOfId: String, resourceClassifiedAs: String): CreateCommitment
-  updateCommitment(receiverId: String, committedNumericValue: String, inputOfId: String, committedUnitId: String, resourceClassifiedAsId: String, providerId: String, committedTime: TemporalEntity, note: String, inScopeOfId: String, involvesId: String, committedOn: String, action: Action, finished: Boolean, outputOfId: String, id: String!): UpdateCommitment
+  createCommitment(
+    inputOfId: String,
+    outputOfId: String,
+    providerId: String,
+    receiverId: String,
+    inScopeOfId: String,
+    involvesId: String,
+    planId: String,
+    isPlanDeliverable: Boolean,
+      committedNumericValue: String!,
+      committedUnitId: String!,
+      committedTime: TemporalEntity!,
+    action: Action!,
+      resourceClassifiedAs: String,
+    note: String
+  ): CreateCommitment
+  updateCommitment(
+    id: ID!,
+    inputOfId: String,
+    outputOfId: String,
+    providerId: String,
+    receiverId: String,
+    inScopeOfId: String,
+    involvesId: String,
+      committedOn: String,
+      committedTime: TemporalEntity,
+      committedNumericValue: String,
+      committedUnitId: String,
+    action: Action,
+      resourceClassifiedAsId: String,
+    finished: Boolean,
+    note: String
+  ): UpdateCommitment
   deleteCommitment(id: String!): DeleteCommitment
 
-  createSatisfaction(satisfiedBy: Commitment!, satisfies: Intent!, satisfiedQuantity: QuantityValue, note: String):CreateSatisfaction
-  updateSatisfaction(id: String!, satisfiedBy: Commitment, satisfies: Intent, satisfiedQuantity: QuantityValue, note: String):UpdateSatisfaction # TODO: add EconomicEvent
+  createSatisfaction(
+    satisfies: Intent!,
+    satisfiedBy: Commitment!,
+    satisfiedQuantity: QuantityValue,
+    note: String
+  ):CreateSatisfaction
+  updateSatisfaction(
+    id: ID!,
+    satisfies: Intent,
+    satisfiedBy: Commitment,
+    satisfiedQuantity: QuantityValue,
+    note: String
+  ):UpdateSatisfaction # TODO: add EconomicEvent
   deleteSatisfaction(id: String!): DeleteSatisfaction
 
-  createPlan(note: String, name: String!, plannedTime: TemporalEntity!): CreatePlan
-  createPlanFromRecipe(note: String, producesResourceClassificationId: String!, name: String!, plannedTime: TemporalEntity!): CreatePlanFromRecipe
-  updatePlan(note: String, id: String!, name: String, plannedTime: TemporalEntity): UpdatePlan
+  createPlan(
+    name: String!,
+    plannedTime: TemporalEntity!,
+    note: String
+  ): CreatePlan
+  createPlanFromRecipe(
+    name: String!,
+    plannedTime: TemporalEntity!
+    producesResourceClassificationId: String!,
+    note: String
+  ): CreatePlanFromRecipe
+  updatePlan(
+    id: ID!,
+    name: String,
+    plannedTime: TemporalEntity,
+    note: String
+  ): UpdatePlan
   deletePlan(id: String!): DeletePlan
 
-  createExchangeAgreement(name: String, agreedTime: TemporalEntity): CreateExchangeAgreement
-  updateExchangeAgreement(id: String!, name: String, agreedTime: TemporalEntity): UpdateExchangeAgreement
+  createExchangeAgreement(
+    name: String,
+    agreedTime: TemporalEntity
+  ): CreateExchangeAgreement
+  updateExchangeAgreement(
+    id: ID!,
+    name: String,
+    agreedTime: TemporalEntity
+  ): UpdateExchangeAgreement
   deleteExchangeAgreement(id: String!): DeleteExchangeAgreement
 
   # Knowledge layer
@@ -68,20 +274,74 @@ type Mutation {
   #createAgentResourceClassification(resourceClassificationId: String!, agentId: String!): CreateAgentResourceClassification
   #deleteAgentResourceClassification(id: String!): DeleteAgentResourceClassification
 
-  createResourceSpecification(name: String!, unit: Unit, substitutable: Boolean, image: String, note: String, resourceClassifiedAs: String): CreateResourceSpecification
-  updateResourceSpecification(id: String!, name: String, unit: Unit, substitutable: Boolean, image: String, note: String, resourceClassifiedAs: String): UpdateResourceSpecification
+  createResourceSpecification(
+    name: String!,
+    unit: Unit,
+    substitutable: Boolean,
+    image: String,
+    resourceClassifiedAs: String,
+    note: String
+  ): CreateResourceSpecification
+  updateResourceSpecification(
+    id: ID!,
+    name: String,
+    unit: Unit,
+    substitutable: Boolean,
+    image: String,
+    resourceClassifiedAs: String,
+    note: String
+  ): UpdateResourceSpecification
   deleteResourceSpecification(id: String!): DeleteResourceSpecification
 
-  updateRecipeProcess(name: String!, note: String, inScopeOf: Agent, duration: TemporalDuration, durationMultiplier: Float, processClassifiedAs: String): CreateRecipeProcess
-  createRecipeProcess(id: String!, name: String, note: String, inScopeOf: Agent, duration: TemporalDuration, durationMultiplier: Float, processClassifiedAs: String): UpdateRecipeProcess
+  updateRecipeProcess(
+    name: String!,
+    inScopeOf: Agent,
+    duration: TemporalDuration,
+    durationMultiplier: Float,
+    processClassifiedAs: String,
+    note: String
+  ): CreateRecipeProcess
+  createRecipeProcess(
+    id: ID!,
+    name: String,
+    inScopeOf: Agent,
+    duration: TemporalDuration,
+    durationMultiplier: Float,
+    processClassifiedAs: String,
+    note: String
+  ): UpdateRecipeProcess
   deleteRecipeProcess(id: String!): DeleteRecipeProcess
 
-  createRecipeFlow(note: String, definedQuantity: QuantityValue!, resourceConformsTo: ResourceSpecification!, resourceClassifiedAs: String, action: Action!, recipeInputOf: RecipeProcess, recipeOutputOf: RecipeProcess): CreateRecipeFlow
-  updateRecipeFlow(id: String!, note: String, definedQuantity: QuantityValue, resourceConformsTo: ResourceSpecification, resourceClassifiedAs: String, action: Action, recipeInputOf: RecipeProcess, recipeOutputOf: RecipeProcess): UpdateRecipeFlow
+  createRecipeFlow(
+    note: String,
+    definedQuantity: QuantityValue!,
+    resourceConformsTo: ResourceSpecification!,
+    resourceClassifiedAs: String,
+    action: Action!,
+    recipeInputOf: RecipeProcess,
+    recipeOutputOf: RecipeProcess
+  ): CreateRecipeFlow
+  updateRecipeFlow(
+    id: ID!,
+    note: String,
+    definedQuantity: QuantityValue,
+    resourceConformsTo: ResourceSpecification,
+    resourceClassifiedAs: String,
+    action: Action,
+    recipeInputOf: RecipeProcess,
+    recipeOutputOf: RecipeProcess
+  ): UpdateRecipeFlow
   deleteRecipeFlow(id: String!): DeleteRecipeFlow
 
-  createAgentRelationshipRole(label: String!, inverseLabel: String): CreateAgentRelationshipRole
-  updateAgentRelationshipRole(id: String!, label: String, inverseLabel: String): UpdateAgentRelationshipRole
+  createAgentRelationshipRole(
+    label: String!,
+    inverseLabel: String
+  ): CreateAgentRelationshipRole
+  updateAgentRelationshipRole(
+    id: ID!,
+    label: String,
+    inverseLabel: String
+  ): UpdateAgentRelationshipRole
   deleteAgentRelationshipRole(id: String!): DeleteAgentRelationshipRole
 }
 
@@ -178,6 +438,10 @@ type UpdateProcess {
 
 
 # DELETE mutation responses
+
+type DeleteAgentRelationship {
+  agentRelationship: AgentRelationship
+}
 
 type DeleteAgentResourceClassification {
   agentResourceClassification: AgentResourceClassification

@@ -20,24 +20,40 @@ interface Agent {
   primaryLocation: String
   primaryPhone: String
   email: String
-  inventoriedEconomicResources(category: EconomicResourceCategory, resourceClassificationId: Int, page: Int): [EconomicResource]
+
+  inventoriedEconomicResources(
+    category: EconomicResourceCategory,
+    resourceClassificationId: Int,
+    page: Int
+  ): [EconomicResource]
   searchInventoriedEconomicResources(searchString: String): [EconomicResource]
+
   processes(finished: Boolean): [Process]
   searchProcesses(searchString: String, finished: Boolean): [Process]
+
   plans(finished: Boolean, year: Int, month: Int): [Plan]
   searchPlans(searchString: String, finished: Boolean): [Plan]
+
   economicEvents(action: Action, year: Int, month: Int): [EconomicEvent]
+
   commitments(action: Action, finished: Boolean): [Commitment]
   searchCommitments(searchString: String, finished: Boolean): [Commitment]
+
   agentRelationships(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
   agentRelationshipsAsSubject(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
   agentRelationshipsAsObject(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
+
   roles: [AgentRelationshipRole]
+
   recipes: [ResourceSpecification] #TODO: is this useful or even realistic?
+
   # memberRelationships: [AgentRelationship]
+
   # agentSkills: [ResourceClassification] # can get skills by more generic means... do we want this anyhow?
   # agentSkillRelationships: [AgentResourceClassification] # check this... if keep, rename
+
   commitmentsMatchingSkills: [Commitment]
+
   # validatedEventsCount(month: Int, year: Int): Int
   eventsCount(year: Int, month: Int): Int #TODO: ??
   eventHoursCount(year: Int, month: Int): Int #TODO: ??
@@ -58,25 +74,40 @@ type Person implements Agent {
   primaryLocation: String
   primaryPhone: String
   email: String
+
   ### inverse relationships and queries
-  inventoriedEconomicResources(category: EconomicResourceCategory, resourceClassificationId: Int, page: Int): [EconomicResource]
+  inventoriedEconomicResources(
+    category: EconomicResourceCategory,
+    resourceClassificationId: Int,
+    page: Int
+  ): [EconomicResource]
   searchInventoriedEconomicResources(searchString: String): [EconomicResource]
+
   processes(finished: Boolean): [Process]
   searchProcesses(searchString: String, finished: Boolean): [Process]
+
   plans(finished: Boolean, year: Int, month: Int): [Plan]
   searchPlans(searchString: String, finished: Boolean): [Plan]
+
   economicEvents(action: Action, year: Int, month: Int): [EconomicEvent]
+
   commitments(action: Action, finished: Boolean): [Commitment]
   searchCommitments(searchString: String, finished: Boolean): [Commitment]
+
   agentRelationships(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
   agentRelationshipsAsSubject(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
   agentRelationshipsAsObject(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
+
   roles: [AgentRelationshipRole]
+
   recipes: [ResourceSpecification] #TODO: is this useful or even realistic?
+
   # memberRelationships: [AgentRelationship]
   # agentSkills: [ResourceClassification]
   # agentSkillRelationships: [AgentResourceClassification]
+
   commitmentsMatchingSkills: [Commitment]
+
   # validatedEventsCount(month: Int, year: Int): Int
   eventsCount(year: Int, month: Int): Int #TODO: ??
   eventHoursCount(year: Int, month: Int): Int #TODO: ??
@@ -94,22 +125,36 @@ type Organization implements Agent {
   primaryLocation: String
   primaryPhone: String
   email: String
+
   ### inverse relationships and queries
-  inventoriedEconomicResources(category: EconomicResourceCategory, resourceClassificationId: Int, page: Int): [EconomicResource]
+  inventoriedEconomicResources(
+    category: EconomicResourceCategory,
+    resourceClassificationId: Int,
+    page: Int
+  ): [EconomicResource]
   searchInventoriedEconomicResources(searchString: String): [EconomicResource]
+
   processes(finished: Boolean): [Process]
   searchProcesses(searchString: String, finished: Boolean): [Process]
+
   plans(finished: Boolean, year: Int, month: Int): [Plan]
   searchPlans(searchString: String, finished: Boolean): [Plan]
+
   economicEvents(action: Action, year: Int, month: Int): [EconomicEvent]
+
   commitments(action: Action, finished: Boolean): [Commitment]
   searchCommitments(searchString: String, finished: Boolean): [Commitment]
+
   relationships(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
   relationshipsAsSubject(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
   relationshipsAsObject(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
+
   roles: [AgentRelationshipRole]
+
   recipes: [ResourceSpecification] #TODO: is this useful or even realistic?
+
   # memberRelationships: [AgentRelationship]
+
   # validatedEventsCount(month: Int, year: Int): Int
   eventsCount(year: Int, month: Int): Int #TODO: ??
   eventHoursCount(year: Int, month: Int): Int #TODO: ??
