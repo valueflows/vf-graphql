@@ -48,3 +48,5 @@ To implement a system gateway compatible with the ValueFlows spec, you will need
 
 - An [implementation object](https://www.apollographql.com/docs/graphql-tools/generate-schema.html) for resolving all relationship fields, to be passed to `makeExecutableSchema` along with the `schema` definition exported by this module
 - [Scalar type resolvers](https://www.apollographql.com/docs/graphql-tools/scalars.html) for the ISO8601 `DateTime` & `DateInterval` types
+
+For a more detailed example, see the project in `./mock-server/`.
