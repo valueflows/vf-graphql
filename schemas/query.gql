@@ -9,100 +9,100 @@ type Query {
 
   # Agent module
   myAgent: Agent
-  agent(id: String): Agent
+  agent(id: ID): Agent
   allAgents: [Agent]
 
-  organization(id: String): Organization
+  organization(id: ID): Organization
   allOrganizations: [Organization]
 
-  person(id: String): Person
+  person(id: ID): Person
   allPeople: [Person]
 
-  agentRelationship(id: String): AgentRelationship
+  agentRelationship(id: ID): AgentRelationship
   allAgentRelationships: [AgentRelationship]
-  agentRelationshipRole(id: String): AgentRelationshipRole
+  agentRelationshipRole(id: ID): AgentRelationshipRole
   allAgentRelationshipRoles: [AgentRelationshipRole]
 
   # Observation layer
-  economicEvent(id: String): EconomicEvent
+  economicEvent(id: ID): EconomicEvent
   allEconomicEvents: [EconomicEvent]
   filteredEconomicEvents(
-    providerId: String,
-    receiverId: String,
+    providerId: ID,
+    receiverId: ID,
     resourceClassifiedAs: String,
     action: Action,
     startDate: String,
     endDate: String
   ): [EconomicEvent]
 
-  fulfillment(id: String): Fulfillment
+  fulfillment(id: ID): Fulfillment
   allFulfillments: [Fulfillment]
 
-  economicResource(id: String): EconomicResource
+  economicResource(id: ID): EconomicResource
   allEconomicResources: [EconomicResource]
 
-  #validation(id: String): Validation
+  #validation(id: ID): Validation
   #allValidations: [Validation]
 
-  process(id: String): Process
+  process(id: ID): Process
   allProcesses: [Process]
 
-  transfer(id: String): Transfer
+  transfer(id: ID): Transfer
   allTransfers: [Transfer]
 
   # Planning layer
   allRecipes: [ResourceClassification]
 
-  commitment(id: String): Commitment
+  commitment(id: ID): Commitment
   allCommitments: [Commitment]
 
-  satisfaction(id: String): Satisfaction
+  satisfaction(id: ID): Satisfaction
   allSatisfactions: [Satisfaction]
 
-  plan(id: String): Plan
+  plan(id: ID): Plan
   allPlans: [Plan]
 
-  exchangeAgreement(id: String): ExchangeAgreement
+  exchangeAgreement(id: ID): ExchangeAgreement
   allExchangeAgreements: [ExchangeAgreement]
 
   # Knowledge layer
-  resourceClassification(id: String): ResourceClassification
+  resourceClassification(id: ID): ResourceClassification
   allResourceClassifications: [ResourceClassification]
   resourceClassificationsByProcessCategory(category: EconomicResourceProcessCategory): [ResourceClassification]
   resourceClassificationsByAction(action: Action): [ResourceClassification]
   resourceClassificationsByFacetValues(facetValues: String): [ResourceClassification]
 
-  agentResourceClassification(id: String): AgentResourceClassification
+  agentResourceClassification(id: ID): AgentResourceClassification
   allAgentResourceClassifications: [AgentResourceClassification]
 
-  processClassification(id: String): ProcessClassification
+  processClassification(id: ID): ProcessClassification
   allProcessClassifications: [ProcessClassification]
 
-  organizationClassification(id: String): OrganizationClassification
+  organizationClassification(id: ID): OrganizationClassification
   allOrganizationClassifications: [OrganizationClassification]
 
-  resourceSpecification(id: String): ResourceSpecification
+  resourceSpecification(id: ID): ResourceSpecification
   allResourceSpecifications: [ResourceSpecification]
 
-  recipeProcess(id: String): RecipeProcess
+  recipeProcess(id: ID): RecipeProcess
   allRecipeProcesses: [RecipeProcess]
 
-  recipeFlow(id: String): RecipeFlow
+  recipeFlow(id: ID): RecipeFlow
   allRecipeFlows: [RecipeFlow]
 
-  action(id: String): Action
+  action(id: ID): Action
   allActions: [Action]
 
-  #facet(id: String): Facet
+  #facet(id: ID): Facet
   #allFacets: [Facet]
 
   # System config layer
-  unit(id: String): Unit
+  unit(id: ID): Unit
   allUnits: [Unit]
 
-  quantityValue(id: String): QuantityValue
+  quantityValue(id: ID): QuantityValue
 
-  location(id: String): Location #TODO: ??
+  location(id: ID): Location #TODO: ??
   allLocations: [Location] #TODO: ??
 
 }
