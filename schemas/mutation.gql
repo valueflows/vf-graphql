@@ -35,9 +35,9 @@
 
 # Generic parameters
 
-interface UpdateParams {
-  id: ID!
-}
+# interface UpdateParams {
+#   id: ID!
+# }
 
 
 
@@ -46,20 +46,20 @@ interface UpdateParams {
 # Agent layer                                                                  #
 ################################################################################
 
-interface AgentParams {
-  name: String
-  image: String
-  email: String
-  primaryLocation: String
-  note: String
-}
+# interface AgentParams {
+#   name: String
+#   image: String
+#   email: String
+#   primaryLocation: String
+#   note: String
+# }
 
 
-interface PersonParams {
-  primaryPhone: String
-}
+# interface PersonParams {
+#   primaryPhone: String
+# }
 
-type PersonCreateParams implements PersonParams & AgentParams {
+input PersonCreateParams { # implements PersonParams & AgentParams
   primaryPhone: String
   name: String!
   image: String
@@ -68,7 +68,7 @@ type PersonCreateParams implements PersonParams & AgentParams {
   note: String
 }
 
-type PersonUpdateParams implements UpdateParams & PersonParams & AgentParams {
+input PersonUpdateParams { # implements UpdateParams & PersonParams & AgentParams
   id: ID!
   primaryPhone: String
   name: String
@@ -83,12 +83,12 @@ type PersonResponse {
 }
 
 
-interface OrganizationParams {
-  primaryPhone: String
-  type: String
-}
+# interface OrganizationParams {
+#   primaryPhone: String
+#   type: String
+# }
 
-type OrganizationCreateParams implements OrganizationParams & AgentParams {
+input OrganizationCreateParams { # implements OrganizationParams & AgentParams
   primaryPhone: String
   type: String
   name: String!
@@ -98,7 +98,7 @@ type OrganizationCreateParams implements OrganizationParams & AgentParams {
   note: String
 }
 
-type OrganizationUpdateParams implements UpdateParams & OrganizationParams & AgentParams {
+input OrganizationUpdateParams { # implements UpdateParams & OrganizationParams & AgentParams
   id: ID!
   primaryPhone: String
   type: String
@@ -114,21 +114,21 @@ type OrganizationResponse {
 }
 
 
-interface AgentRelationshipParams {
-  subjectId: ID
-  objectId: ID
-  relationshipId: ID
-  note: String
-}
+# interface AgentRelationshipParams {
+#   subjectId: ID
+#   objectId: ID
+#   relationshipId: ID
+#   note: String
+# }
 
-type AgentRelationshipCreateParams implements AgentRelationshipParams {
+input AgentRelationshipCreateParams { # implements AgentRelationshipParams
   subjectId: ID!
   objectId: ID!
   relationshipId: ID!
   note: String
 }
 
-type AgentRelationshipUpdateParams implements UpdateParams & AgentRelationshipParams {
+input AgentRelationshipUpdateParams { # implements UpdateParams & AgentRelationshipParams
   id: ID!
   subjectId: ID
   objectId: ID
@@ -149,7 +149,20 @@ type AgentRelationshipResponse {
 # Observation layer                                                            #
 ################################################################################
 
-interface EconomicEventParams {
+# interface EconomicEventParams {
+#   action: ID!
+#   inputOfId: ID
+#   outputOfId: ID
+#   providerId: ID
+#   receiverId: ID
+#   inScopeOfId: ID
+#   affectsId: ID
+#   observedQuantity: IQuantityValue
+#   observedTime: DateTime
+#   note: String
+# }
+
+input EconomicEventCreateParams { # implements EconomicEventParams
   action: ID!
   inputOfId: ID
   outputOfId: ID
@@ -162,20 +175,7 @@ interface EconomicEventParams {
   note: String
 }
 
-type EconomicEventCreateParams implements EconomicEventParams {
-  action: ID!
-  inputOfId: ID
-  outputOfId: ID
-  providerId: ID
-  receiverId: ID
-  inScopeOfId: ID
-  affectsId: ID
-  observedQuantity: IQuantityValue
-  observedTime: DateTime
-  note: String
-}
-
-type EconomicEventUpdateParams implements UpdateParams & EconomicEventParams {
+input EconomicEventUpdateParams { # implements UpdateParams & EconomicEventParams
   id: ID!
   action: ID
   inputOfId: ID
@@ -195,10 +195,21 @@ type EconomicEventResponse {
 }
 
 
+# interface EconomicResourceParams {
+#   url: String
+#   classifiedAs: [String]
+#   resourceConformsTo: ID # ResourceSpecification
+#   trackingIdentifier: String
+#   image: String # url
+#   currentQuantity: IQuantityValue
+#   currentLocation: String
+#   note: String
+# }
+
 """
 Input `EconomicResource` type used when sending events to setup initial resource recordings
 """
-interface EconomicResourceParams {
+input EconomicResourceCreateParams { # implements EconomicResourceParams
   url: String
   classifiedAs: [String]
   resourceConformsTo: ID # ResourceSpecification
@@ -209,18 +220,7 @@ interface EconomicResourceParams {
   note: String
 }
 
-type EconomicResourceCreateParams implements EconomicResourceParams {
-  url: String
-  classifiedAs: [String]
-  resourceConformsTo: ID # ResourceSpecification
-  trackingIdentifier: String
-  image: String # url
-  currentQuantity: IQuantityValue
-  currentLocation: String
-  note: String
-}
-
-type EconomicResourceUpdateParams implements UpdateParams & EconomicResourceParams {
+input EconomicResourceUpdateParams { # implements UpdateParams & EconomicResourceParams
   id: ID!,
   url: String
   classifiedAs: [String]
@@ -237,15 +237,15 @@ type EconomicResourceResponse {
 }
 
 
-interface FulfillmentParams {
-  fulfilledBy: ID # EconomicEvent
-  fulfills: ID # Commmitment
-  fulfilledQuantity: IQuantityValue
-  under: ID  # ExchangeAgreement
-  note: String
-}
+# interface FulfillmentParams {
+#   fulfilledBy: ID # EconomicEvent
+#   fulfills: ID # Commmitment
+#   fulfilledQuantity: IQuantityValue
+#   under: ID  # ExchangeAgreement
+#   note: String
+# }
 
-type FulfillmentCreateParams implements FulfillmentParams {
+input FulfillmentCreateParams { # implements FulfillmentParams
   fulfilledBy: ID!
   fulfills: ID!
   fulfilledQuantity: IQuantityValue
@@ -253,7 +253,7 @@ type FulfillmentCreateParams implements FulfillmentParams {
   note: String
 }
 
-type FulfillmentUpdateParams implements UpdateParams & FulfillmentParams {
+input FulfillmentUpdateParams { # implements UpdateParams & FulfillmentParams
   id: ID!
   fulfilledBy: ID
   fulfills: ID
@@ -267,15 +267,15 @@ type FulfillmentResponse {
 }
 
 
-interface ProcessParams {
-  name: String
-  plannedDuration: DateInterval
-  planId: String
-  inScopeOfId: String
-  note: String
-}
+# interface ProcessParams {
+#   name: String
+#   plannedDuration: DateInterval
+#   planId: String
+#   inScopeOfId: String
+#   note: String
+# }
 
-type ProcessCreateParams implements ProcessParams {
+input ProcessCreateParams { # implements ProcessParams
   name: String!
   plannedDuration: DateInterval
   planId: String
@@ -283,7 +283,7 @@ type ProcessCreateParams implements ProcessParams {
   note: String
 }
 
-type ProcessUpdateParams implements UpdateParams & ProcessParams {
+input ProcessUpdateParams { # implements UpdateParams & ProcessParams
   id: ID!
   name: String
   plannedDuration: DateInterval
@@ -316,24 +316,24 @@ input IResourceIntention {
   conformsTo: ID # ResourceSpecification
 }
 
-interface IntentParams {
-  action: ID
-  inputOfId: ID
-  outputOfId: ID
-  providerId: ID
-  receiverId: ID
-  inScopeOfId: ID
-  involvesId: ID
-  underId: ID
-  planId: ID
-  intendedResource: IResourceIntention
-  intendedQuantity: IQuantityValue
-  intendedTime: DateTime
-  image: String
-  note: String
-}
+# interface IntentParams {
+#   action: ID
+#   inputOfId: ID
+#   outputOfId: ID
+#   providerId: ID
+#   receiverId: ID
+#   inScopeOfId: ID
+#   involvesId: ID
+#   underId: ID
+#   planId: ID
+#   intendedResource: IResourceIntention
+#   intendedQuantity: IQuantityValue
+#   intendedTime: DateTime
+#   image: String
+#   note: String
+# }
 
-type IntentCreateParams implements IntentParams {
+input IntentCreateParams { # implements IntentParams
   action: ID!
   inputOfId: ID
   outputOfId: ID
@@ -350,7 +350,7 @@ type IntentCreateParams implements IntentParams {
   note: String
 }
 
-type IntentUpdateParams implements UpdateParams & IntentParams {
+input IntentUpdateParams { # implements UpdateParams & IntentParams
   id: ID!
   action: ID
   inputOfId: ID
@@ -381,23 +381,23 @@ type IntentResponse {
 }
 
 
-interface CommitmentParams {
-  action: ID
-  committedQuantity: IQuantityValue
-  committedTime: DateTime
-  inputOfId: ID
-  outputOfId: ID
-  providerId: ID
-  receiverId: ID
-  inScopeOfId: ID
-  involvesId: ID
-  planId: ID
-  isPlanDeliverable: Boolean # :TODO: does this go here, or in `Plan`?
-  underId: ID
-  note: String
-}
+# interface CommitmentParams {
+#   action: ID
+#   committedQuantity: IQuantityValue
+#   committedTime: DateTime
+#   inputOfId: ID
+#   outputOfId: ID
+#   providerId: ID
+#   receiverId: ID
+#   inScopeOfId: ID
+#   involvesId: ID
+#   planId: ID
+#   isPlanDeliverable: Boolean # :TODO: does this go here, or in `Plan`?
+#   underId: ID
+#   note: String
+# }
 
-type CommitmentCreateParams implements CommitmentParams {
+input CommitmentCreateParams { # implements CommitmentParams
   action: ID!
   committedQuantity: IQuantityValue!
   committedTime: DateTime!
@@ -413,7 +413,7 @@ type CommitmentCreateParams implements CommitmentParams {
   note: String
 }
 
-type CommitmentUpdateParams implements UpdateParams & CommitmentParams {
+input CommitmentUpdateParams { # implements UpdateParams & CommitmentParams
   id: ID!
   action: ID
   # committedOn: String,  # :TODO: unsure if this is a real field, or errata from Valuenetwork
@@ -437,21 +437,21 @@ type CommitmentResponse {
 }
 
 
-interface SatisfactionParams {
-  satisfies: Intent
-  satisfiedBy: Commitment
-  satisfiedQuantity: QuantityValue
-  note: String
-}
+# interface SatisfactionParams {
+#   satisfies: Intent
+#   satisfiedBy: Commitment
+#   satisfiedQuantity: QuantityValue
+#   note: String
+# }
 
-type SatisfactionCreateParams implements SatisfactionParams {
+input SatisfactionCreateParams { # implements SatisfactionParams
   satisfies: Intent!
   satisfiedBy: Commitment!
   satisfiedQuantity: QuantityValue
   note: String
 }
 
-type SatisfactionUpdateParams implements UpdateParams & SatisfactionParams {
+input SatisfactionUpdateParams { # implements UpdateParams & SatisfactionParams
   id: ID!
   satisfies: Intent!
   satisfiedBy: Commitment!
@@ -468,11 +468,11 @@ type SatisfactionResponse {
 
 # }
 
-# type PlanCreateParams implements PlanParams {
+# type PlanCreateParams { # implements PlanParams
 
 # }
 
-# type PlanUpdateParams implements UpdateParams & PlanParams {
+# type PlanUpdateParams { # implements UpdateParams & PlanParams
 
 # }
 
@@ -481,17 +481,17 @@ type SatisfactionResponse {
 # }
 
 
-interface ExchangeAgreementParams {
-  name: String
-  agreedTime: DateTime
-}
+# interface ExchangeAgreementParams {
+#   name: String
+#   agreedTime: DateTime
+# }
 
-type ExchangeAgreementCreateParams implements ExchangeAgreementParams {
+input ExchangeAgreementCreateParams { # implements ExchangeAgreementParams
   name: String!
   agreedTime: DateTime!
 }
 
-type ExchangeAgreementUpdateParams implements UpdateParams & ExchangeAgreementParams {
+input ExchangeAgreementUpdateParams { # implements UpdateParams & ExchangeAgreementParams
   id: ID!
   name: String
   agreedTime: DateTime
@@ -511,16 +511,16 @@ type ExchangeAgreementResponse {
 ################################################################################
 
 
-interface ResourceSpecificationParams {
-  name: String
-  unit: ID
-  substitutable: Boolean
-  image: String
-  resourceClassifiedAs: String
-  note: String
-}
+# interface ResourceSpecificationParams {
+#   name: String
+#   unit: ID
+#   substitutable: Boolean
+#   image: String
+#   resourceClassifiedAs: String
+#   note: String
+# }
 
-type ResourceSpecificationCreateParams implements ResourceSpecificationParams {
+input ResourceSpecificationCreateParams { # implements ResourceSpecificationParams
   name: String!
   unit: ID
   substitutable: Boolean
@@ -529,7 +529,7 @@ type ResourceSpecificationCreateParams implements ResourceSpecificationParams {
   note: String
 }
 
-type ResourceSpecificationUpdateParams implements UpdateParams & ResourceSpecificationParams {
+input ResourceSpecificationUpdateParams { # implements UpdateParams & ResourceSpecificationParams
   id: ID!
   name: String
   unit: ID
@@ -544,16 +544,16 @@ type ResourceSpecificationResponse {
 }
 
 
-interface RecipeProcessParams {
-  name: String
-  inScopeOf: Agent
-  duration: DateInterval
-  durationMultiplier: Float
-  processClassifiedAs: String
-  note: String
-}
+# interface RecipeProcessParams {
+#   name: String
+#   inScopeOf: Agent
+#   duration: DateInterval
+#   durationMultiplier: Float
+#   processClassifiedAs: String
+#   note: String
+# }
 
-type RecipeProcessCreateParams implements RecipeProcessParams {
+input RecipeProcessCreateParams { # implements RecipeProcessParams
   name: String!
   inScopeOf: Agent
   duration: DateInterval
@@ -562,7 +562,7 @@ type RecipeProcessCreateParams implements RecipeProcessParams {
   note: String
 }
 
-type RecipeProcessUpdateParams implements UpdateParams & RecipeProcessParams {
+input RecipeProcessUpdateParams { # implements UpdateParams & RecipeProcessParams
   id: ID!
   name: String
   inScopeOf: Agent
@@ -577,17 +577,17 @@ type RecipeProcessResponse {
 }
 
 
-interface RecipeFlowParams {
-  action: Action
-  definedQuantity: IQuantityValue
-  resourceConformsTo: ResourceSpecification
-  resourceClassifiedAs: String
-  recipeInputOf: RecipeProcess
-  recipeOutputOf: RecipeProcess
-  note: String
-}
+# interface RecipeFlowParams {
+#   action: Action
+#   definedQuantity: IQuantityValue
+#   resourceConformsTo: ResourceSpecification
+#   resourceClassifiedAs: String
+#   recipeInputOf: RecipeProcess
+#   recipeOutputOf: RecipeProcess
+#   note: String
+# }
 
-type RecipeFlowCreateParams implements RecipeFlowParams {
+input RecipeFlowCreateParams { # implements RecipeFlowParams
   action: Action!
   definedQuantity: QuantityValue!
   resourceConformsTo: ResourceSpecification!
@@ -597,7 +597,7 @@ type RecipeFlowCreateParams implements RecipeFlowParams {
   note: String
 }
 
-type RecipeFlowUpdateParams implements UpdateParams & RecipeFlowParams {
+input RecipeFlowUpdateParams { # implements UpdateParams & RecipeFlowParams
   id: ID!
   action: Action
   definedQuantity: IQuantityValue
@@ -613,17 +613,17 @@ type RecipeFlowResponse {
 }
 
 
-interface AgentRelationshipRoleParams {
-  label: String
-  inverseLabel: String
-}
+# interface AgentRelationshipRoleParams {
+#   label: String
+#   inverseLabel: String
+# }
 
-type AgentRelationshipRoleCreateParams implements AgentRelationshipRoleParams {
+input AgentRelationshipRoleCreateParams { # implements AgentRelationshipRoleParams
   label: String!
   inverseLabel: String
 }
 
-type AgentRelationshipRoleUpdateParams implements UpdateParams & AgentRelationshipRoleParams {
+input AgentRelationshipRoleUpdateParams { # implements UpdateParams & AgentRelationshipRoleParams
   id: ID!
   label: String
   inverseLabel: String
