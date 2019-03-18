@@ -2,6 +2,34 @@
 #
 # System mutations entrypoint
 #
+# Conventions for all operations are as follows:
+# - input record data is provided in named sub-fields of the request & response
+#   - the sub-field ID is the lower camelCase name of the record type
+#
+# CREATE:
+# - fields which are required by the record are required in input parameters
+# - optional fields will be left `null` in the record if ommitted
+#
+# UPDATE:
+# - `id` field is required
+# - all other fields are optional, if left unchanged they will remain at their
+#   current values
+# - passing no ID is treated as an error
+# - no fields being updated is treated as a no-op; clients should optimise
+#   to avoid unnecessary writes
+#
+# DELETE:
+# - `id` is only parmeter
+# - the deleted record will be returned in the response for its fields to be retained
+#
+# Where there are exceptions to these basic rules, they should be explicitly documented
+# in the field description.
+#
+# :TODO:
+# - ensure we have thought about how to handle field deletion (pass `null` in input params?)
+# - enable validation of shared core record field presence in C&U operations
+#   (@see https://github.com/facebook/graphql/issues/488)
+#
 ##
 
 
