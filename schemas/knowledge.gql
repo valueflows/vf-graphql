@@ -60,7 +60,7 @@ type RecipeProcess {
   name: String!
   note: String
   inScopeOf: Agent
-  duration: TemporalDuration #TODO: ??
+  duration: DateInterval
   durationMultiplier: Float
   processClassifiedAs: [String]
 }

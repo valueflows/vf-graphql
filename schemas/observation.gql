@@ -24,7 +24,7 @@ type EconomicEvent {
   resourceClassifiedAs: [ResourceClassification]
   resourceConformsTo: ResourceSpecification
   observedQuantity: QuantityValue
-  observedTime: TemporalEntity #TODO: define what this actually can be
+  observedTime: DateTime
   note: String
   under: Agreement
   # requestDistribution: Boolean
@@ -68,7 +68,7 @@ type Transfer { #TODO this whole model is under review
   id: ID!
   name: String!
   # under: ExchangeAgreement TODO need to finish this definition
-  plannedTime: TemporalEntity #TODO: define what this actually can be - or if it should even be here
+  plannedTime: DateTime
   note: String
   ### inverse relationships
   economicEvents: [EconomicEvent]
@@ -89,7 +89,7 @@ type Process {
   id: ID!
   name: String!
   inScopeOf: Agent #TODO:
-  plannedTime: TemporalEntity
+  plannedTime: DateTime
   # started: Boolean
   finished: Boolean
   basedOn: RecipeProcess

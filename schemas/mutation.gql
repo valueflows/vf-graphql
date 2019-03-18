@@ -72,7 +72,7 @@ type Mutation {
     affectsId: String,
       observedNumericValue: String!,
       observedUnitId: String!,
-      observedTime: TemporalEntity!,
+      observedTime: DateTime!,
     createResource: Boolean,
       resourceTrackingIdentifier: String,
       resourceNote: String,
@@ -93,7 +93,7 @@ type Mutation {
     affectsId: String,
       affectedNumericValue: String,
       observedUnitId: String,
-      observedTime: TemporalEntity,
+      observedTime: DateTime,
     resourceClassifiedAs: String, # :TODO: should we be able to update created resources via this method, or would that be done with updateEconomicResource?
     action: Action,
     note: String
@@ -132,7 +132,7 @@ type Mutation {
   #deleteValidation(id: String!): DeleteValidation
 
   createProcess(
-    plannedDuration: TemporalEntity,
+    plannedDuration: DateInterval,
     planId: String,
     name: String!,
     inScopeOfId: String,
@@ -140,7 +140,7 @@ type Mutation {
   ): CreateProcess
   updateProcess(
     id: ID!,
-    plannedDuration: TemporalEntity,
+    plannedDuration: DateInterval,
     planId: String,
     name: String,
     inScopeOfId: String,
@@ -162,7 +162,7 @@ type Mutation {
     planId: String,
       intendedNumericValue: String,
       intendedUnitId: String,
-      intendedTime: TemporalEntity,
+      intendedTime: DateTime,
     image: String,
     action: Action,
       resourceClassifiedAs: String,
@@ -180,7 +180,7 @@ type Mutation {
     planId: String,
       intendedNumericValue: String,
       intendedUnitId: String,
-      intendedTime: TemporalEntity,
+      intendedTime: DateTime,
       resourceClassifiedAs: String,
       resourceConformsToId: String,
     action: Action,
@@ -200,7 +200,7 @@ type Mutation {
     isPlanDeliverable: Boolean,
       committedNumericValue: String!,
       committedUnitId: String!,
-      committedTime: TemporalEntity!,
+      committedTime: DateTime!,
     action: Action!,
       resourceClassifiedAs: String,
     note: String
@@ -214,7 +214,7 @@ type Mutation {
     inScopeOfId: String,
     involvesId: String,
       committedOn: String,
-      committedTime: TemporalEntity,
+      committedTime: DateTime,
       committedNumericValue: String,
       committedUnitId: String,
     action: Action,
@@ -241,31 +241,31 @@ type Mutation {
 
   createPlan(
     name: String!,
-    plannedTime: TemporalEntity!,
+    plannedTime: DateTime!,
     note: String
   ): CreatePlan
   createPlanFromRecipe(
     name: String!,
-    plannedTime: TemporalEntity!
+    plannedTime: DateTime!
     producesResourceClassificationId: String!,
     note: String
   ): CreatePlanFromRecipe
   updatePlan(
     id: ID!,
     name: String,
-    plannedTime: TemporalEntity,
+    plannedTime: DateTime,
     note: String
   ): UpdatePlan
   deletePlan(id: String!): DeletePlan
 
   createExchangeAgreement(
     name: String,
-    agreedTime: TemporalEntity
+    agreedTime: DateTime
   ): CreateExchangeAgreement
   updateExchangeAgreement(
     id: ID!,
     name: String,
-    agreedTime: TemporalEntity
+    agreedTime: DateTime
   ): UpdateExchangeAgreement
   deleteExchangeAgreement(id: String!): DeleteExchangeAgreement
 
@@ -296,7 +296,7 @@ type Mutation {
   updateRecipeProcess(
     name: String!,
     inScopeOf: Agent,
-    duration: TemporalDuration,
+    duration: DateInterval,
     durationMultiplier: Float,
     processClassifiedAs: String,
     note: String
@@ -305,7 +305,7 @@ type Mutation {
     id: ID!,
     name: String,
     inScopeOf: Agent,
-    duration: TemporalDuration,
+    duration: DateInterval,
     durationMultiplier: Float,
     processClassifiedAs: String,
     note: String
