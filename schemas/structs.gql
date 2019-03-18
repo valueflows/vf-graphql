@@ -8,6 +8,11 @@
 ##
 
 """
+The `URL` type simply declares a reference to an external web URL.
+"""
+scalar URL
+
+"""
 The `DateTime` scalar type represents a DateTime value as specified by
 [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601).
 """

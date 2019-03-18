@@ -23,7 +23,7 @@ interface Agent {
 
   inventoriedEconomicResources(
     # category: EconomicResourceCategory,
-    resourceClassificationId: Int,
+    resourceClassification: URL,
     page: Int
   ): [EconomicResource]
   searchInventoriedEconomicResources(searchString: String): [EconomicResource]
@@ -78,7 +78,7 @@ type Person implements Agent {
   ### inverse relationships and queries
   inventoriedEconomicResources(
     # category: EconomicResourceCategory,
-    resourceClassificationId: Int,
+    resourceClassification: URL,
     page: Int
   ): [EconomicResource]
   searchInventoriedEconomicResources(searchString: String): [EconomicResource]
@@ -130,7 +130,7 @@ type Organization implements Agent {
   ### inverse relationships and queries
   inventoriedEconomicResources(
     # category: EconomicResourceCategory,
-    resourceClassificationId: Int,
+    resourceClassification: URL,
     page: Int
   ): [EconomicResource]
   searchInventoriedEconomicResources(searchString: String): [EconomicResource]
