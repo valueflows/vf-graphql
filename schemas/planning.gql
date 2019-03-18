@@ -27,21 +27,53 @@ type Plan { #TODO: this is not yet in VF, and may or may not be named Plan
 }
 
 """
+When an `Intent` is set to provide some `EconomicResource`s, but the exact resources
+to service the intent are still unknown, an `IntendedResource` can be used to indicate
+the type of resource to be provided later.
+"""
+type IntendedResource {
+  classifiedAs: String
+  conformsTo: ResourceSpecification
+}
+
+union ProcessOrTransfer = Process | Transfer
+
+"""
 A planned economic flow, which can lead to economic events (sometimes through commitments).
 """
 type Intent {
   id: ID!
+  """
+  Type of behaviour that is desired
+  """
   action: Action
-  inputOf: Process #TODO or Transfer...
-  outputOf: Process #TODO or Transfer...
+  """
+  A `Process` or `Transfer` to which this `Intent` is hoping to contribute towards.
+  """
+  inputOf: ProcessOrTransfer
+  """
+  A `Process` or `Transfer` which this `Intent` will eventuate as a result of.
+  """
+  outputOf: ProcessOrTransfer
+  """
+  The agent whom the creator of this `Intent` hopes to provide the requested `EconomicResource`.
+  """
   provider: Agent
+  """
+  The agent whom the creator of this `Intent` hopes to benefit from the requested `EconomicResource`.
+  """
   receiver: Agent
   inScopeOf: Agent #TODO: more than Agent
-  resourceClassifiedAs: [String]
-  resourceConformsTo: ResourceSpecification
-  involves: EconomicResource
+  """
+  Description of the type of `EconomicResource` that the `provider` may offer to service the intent later.
+  """
+  intendedResource: IntendedResource
   intendedQuantity: QuantityValue
   intendedTime: DateTime
+  """
+  When a specific `EconomicResource` is known which can service the `Intent`, this defines that resource.
+  """
+  involves: EconomicResource
   finished: Boolean
   note: String
   image: String # url
@@ -51,13 +83,15 @@ type Intent {
   # deletable: Boolean
 }
 
+union EventOrCommitment = EconomicEvent | Commitment
+
 """
 A commitment or economic event that partially or fully satisfies an intent.
 """
 type Satisfaction {
   id: ID!
-  satisfiedBy: Commitment! #TODO: or EconomicEvent, how to express this?
   satisfies: Intent!
+  satisfiedBy: EventOrCommitment!
   satisfiedQuantity: QuantityValue
   note: String
 }
@@ -67,19 +101,39 @@ A planned economic flow that has been promised by an agent to another agent.
 """
 type Commitment {
   id: ID!
+  """
+  Type of behaviour that has been committed to
+  """
   action: Action
-  inputOf: Process #TODO or Transfer...
-  outputOf: Process #TODO or Transfer...
+  """
+  A `Process` or `Transfer` which this `Commitment` will aid in the finalisation of.
+  """
+  inputOf: ProcessOrTransfer
+  """
+  A `Process` or `Transfer` which this `Commitment` has been generated as a result of.
+  """
+  outputOf: ProcessOrTransfer
+  """
+  The agent who is committing to provide some `EconomicResource`.
+  """
   provider: Agent
+  """
+  The agent who will receive any provided `EconomicResource`.
+  """
   receiver: Agent
   inScopeOf: Agent
-  # :TODO: what is the purpose of these two fields? Are these values not present on the `EconomicResource` this `involves`?
-  resourceClassifiedAs: [String]
-  resourceConformsTo: ResourceSpecification
-  involves: EconomicResource
+  """
+  Description of the type of `EconomicResource` that the `provider` may provide
+  to service the `Commitment` later.
+  """
+  committedResource: IntendedResource
   committedQuantity: QuantityValue
-  # committedOn: String #TODO: ??
   committedTime: DateTime
+  """
+  Defines a specific `EconomicResource` that will be provided by the `provider`
+  to service the `Commitment`.
+  """
+  involves: EconomicResource
   finished: Boolean
   plan: Plan
   # isPlanDeliverable: Boolean #TODO: define in VF?
