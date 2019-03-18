@@ -7,6 +7,8 @@
 #
 ##
 
+union ProductionFlowItem = Process | Transfer | EconomicResource
+
 """
 An observed economic flow, as opposed to a flow planned to happen in the future. This could reflect a change in the quantity of an economic resource. It is also defined by its behavior in relation to the economic resource (see `Action`)
 """
@@ -30,11 +32,10 @@ type EconomicEvent {
   fulfills: [Fulfillment]
   satisfies: [Satisfaction]
   appreciationFor: [EconomicEvent] #TODO: might change soon
-  track: [Process, Transfer, EconomicResource] #TODO: how define more than one class returned?
-  trace: [Process, Transfer, EconomicResource] #TODO: how define more than one class returned?
+  track: [ProductionFlowItem]
+  trace: [ProductionFlowItem]
   # validations: [Validation]
   # isValidated: Boolean
-  #TODO: should we have everything on a resource here also for events that create resources? or just on mutation definition?
 }
 
 """
