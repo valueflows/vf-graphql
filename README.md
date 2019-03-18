@@ -4,6 +4,10 @@ Reference GraphQL implementation of the ValueFlows spec
 
 <!-- MarkdownTOC -->
 
+- [Setup](#setup)
+	- [Prerequisites](#prerequisites)
+	- [Initialising for development](#initialising-for-development)
+	- [Available commands](#available-commands)
 - [Contributing](#contributing)
 - [Implementing](#implementing)
 
@@ -12,6 +16,24 @@ Reference GraphQL implementation of the ValueFlows spec
 
 This is to help synchronize the projects using VF for a graphql interface between client and server.  It includes the VF specification, plus recommended vocabulary specification not part of the rdf-based VF spec but needed for all VF based implementations of economic software (for example Agent, Person, Organization, note, image).  It also includes recommended inverse relationship naming, which is particularly useful in graphql implementations.
 
+
+## Setup
+
+### Prerequisites
+
+- If you don't have Yarn- `npm i -g yarn` using the version of node you plan on developing this project against *(for recommended, see `.nvmrc`)*. You can setup your modules manually using `npm link` if you prefer, but Yarn's workspaces feature will save you a lot of time.
+
+### Initialising for development
+
+- Run `yarn` from the top level folder of this repository to install and wire up all dependencies.
+
+### Available commands
+
+See `scripts` in `package.json` for the available commands. For quickly spinning up the full system, you should usually be able to simply run `npm start`. This will load up:
+
+- Test runner for the schemas. **It is recommended when authoring schemas to save often and watch the test output, as no line number information is available when debugging.**
+- A read-only GraphQL API at `http://localhost:3000/graphql`
+- A GraphiQL query UI at `http://localhost:3000/graphiql` which you can use to test queries against the above
 
 
 ## Contributing
