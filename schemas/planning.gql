@@ -23,7 +23,7 @@ type Plan { #TODO: this is not yet in VF, and may or may not be named Plan
   nonWorkInputs: [EconomicEvent]
   outputs: [EconomicEvent]
   kanbanState: String #TODO: codify this?
-  deletable: Boolean
+  # deletable: Boolean
 }
 
 """
@@ -73,6 +73,7 @@ type Commitment {
   provider: Agent
   receiver: Agent
   inScopeOf: Agent
+  # :TODO: what is the purpose of these two fields? Are these values not present on the `EconomicResource` this `involves`?
   resourceClassifiedAs: [ResourceClassification]
   resourceConformsTo: ResourceSpecification
   involves: EconomicResource

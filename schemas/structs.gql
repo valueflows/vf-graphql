@@ -37,6 +37,14 @@ type QuantityValue {
 }
 
 """
+Mutation input structure for defining measurements. Should be nulled if not present, rather than empty.
+"""
+input IQuantityValue {
+  unit: ID!,
+  numericValue: Float!
+}
+
+"""
 A physical location (not defined by ValueFlows)
 """
 type Location { #TODO: ??

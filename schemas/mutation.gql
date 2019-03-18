@@ -2,479 +2,700 @@
 #
 # System mutations entrypoint
 #
-#
 ##
+
+
+# Generic parameters
+
+interface UpdateParams {
+  id: ID!
+}
+
+
+
+
+################################################################################
+# Agent layer                                                                  #
+################################################################################
+
+interface AgentParams {
+  name: String
+  image: String
+  email: String
+  primaryLocation: String
+  note: String
+}
+
+
+interface PersonParams {
+  primaryPhone: String
+}
+
+type PersonCreateParams implements PersonParams & AgentParams {
+  primaryPhone: String
+  name: String!
+  image: String
+  email: String
+  primaryLocation: String
+  note: String
+}
+
+type PersonUpdateParams implements UpdateParams & PersonParams & AgentParams {
+  id: ID!
+  primaryPhone: String
+  name: String
+  image: String
+  email: String
+  primaryLocation: String
+  note: String
+}
+
+type PersonResponse {
+  agent: Person!
+}
+
+
+interface OrganizationParams {
+  primaryPhone: String
+  type: String
+}
+
+type OrganizationCreateParams implements OrganizationParams & AgentParams {
+  primaryPhone: String
+  type: String
+  name: String!
+  image: String
+  email: String
+  primaryLocation: String
+  note: String
+}
+
+type OrganizationUpdateParams implements UpdateParams & OrganizationParams & AgentParams {
+  id: ID!
+  primaryPhone: String
+  type: String
+  name: String
+  image: String
+  email: String
+  primaryLocation: String
+  note: String
+}
+
+type OrganizationResponse {
+  agent: Organization!
+}
+
+
+interface AgentRelationshipParams {
+  subjectId: ID
+  objectId: ID
+  relationshipId: ID
+  note: String
+}
+
+type AgentRelationshipCreateParams implements AgentRelationshipParams {
+  subjectId: ID!
+  objectId: ID!
+  relationshipId: ID!
+  note: String
+}
+
+type AgentRelationshipUpdateParams implements UpdateParams & AgentRelationshipParams {
+  id: ID!
+  subjectId: ID
+  objectId: ID
+  relationshipId: ID
+  note: String
+}
+
+type AgentRelationshipResponse {
+  agentRelationship: AgentRelationship!
+}
+
+
+
+
+
+
+################################################################################
+# Observation layer                                                            #
+################################################################################
+
+interface EconomicEventParams {
+  action: ID!
+  inputOfId: ID
+  outputOfId: ID
+  providerId: ID
+  receiverId: ID
+  inScopeOfId: ID
+  affectsId: ID
+  observedQuantity: IQuantityValue
+  observedTime: DateTime
+  note: String
+}
+
+type EconomicEventCreateParams implements EconomicEventParams {
+  action: ID!
+  inputOfId: ID
+  outputOfId: ID
+  providerId: ID
+  receiverId: ID
+  inScopeOfId: ID
+  affectsId: ID
+  observedQuantity: IQuantityValue
+  observedTime: DateTime
+  note: String
+}
+
+type EconomicEventUpdateParams implements UpdateParams & EconomicEventParams {
+  id: ID!
+  action: ID
+  inputOfId: ID
+  outputOfId: ID
+  providerId: ID
+  receiverId: ID
+  inScopeOfId: ID
+  affectsId: ID
+  observedQuantity: IQuantityValue
+  observedTime: DateTime
+  note: String
+}
+
+type EconomicEventResponse {
+  event: EconomicEvent!
+  resource: EconomicResource # only for resource creation events
+}
+
+
+"""
+Input `EconomicResource` type used when sending events to setup initial resource recordings
+"""
+interface EconomicResourceParams {
+  url: String
+  classifiedAs: [String]
+  resourceConformsTo: ID # ResourceSpecification
+  trackingIdentifier: String
+  image: String # url
+  currentQuantity: IQuantityValue
+  currentLocation: String
+  note: String
+}
+
+type EconomicResourceCreateParams implements EconomicResourceParams {
+  url: String
+  classifiedAs: [String]
+  resourceConformsTo: ID # ResourceSpecification
+  trackingIdentifier: String
+  image: String # url
+  currentQuantity: IQuantityValue
+  currentLocation: String
+  note: String
+}
+
+type EconomicResourceUpdateParams implements UpdateParams & EconomicResourceParams {
+  id: ID!,
+  url: String
+  classifiedAs: [String]
+  resourceConformsTo: ID # ResourceSpecification
+  trackingIdentifier: String
+  image: String # url
+  currentQuantity: IQuantityValue
+  currentLocation: String
+  note: String
+}
+
+type EconomicResourceResponse {
+  resource: EconomicResource!
+}
+
+
+interface FulfillmentParams {
+  fulfilledBy: ID # EconomicEvent
+  fulfills: ID # Commmitment
+  fulfilledQuantity: IQuantityValue
+  under: ID  # ExchangeAgreement
+  note: String
+}
+
+type FulfillmentCreateParams implements FulfillmentParams {
+  fulfilledBy: ID!
+  fulfills: ID!
+  fulfilledQuantity: IQuantityValue
+  under: ID
+  note: String
+}
+
+type FulfillmentUpdateParams implements UpdateParams & FulfillmentParams {
+  id: ID!
+  fulfilledBy: ID
+  fulfills: ID
+  fulfilledQuantity: IQuantityValue
+  under: ID
+  note: String
+}
+
+type FulfillmentResponse {
+  fulfillment: Fulfillment
+}
+
+
+interface ProcessParams {
+  name: String
+  plannedDuration: DateInterval
+  planId: String
+  inScopeOfId: String
+  note: String
+}
+
+type ProcessCreateParams implements ProcessParams {
+  name: String!
+  plannedDuration: DateInterval
+  planId: String
+  inScopeOfId: String
+  note: String
+}
+
+type ProcessUpdateParams implements UpdateParams & ProcessParams {
+  id: ID!
+  name: String
+  plannedDuration: DateInterval
+  planId: String
+  inScopeOfId: String
+  finished: Boolean
+  note: String
+}
+
+type ProcessResponse {
+  process: Process
+}
+
+
+
+
+
+
+################################################################################
+# Planning layer                                                               #
+################################################################################
+
+
+"""
+Represents an intent to record the existence of a particular type of resource
+at a future point in time.
+"""
+input IResourceIntention {
+  classifiedAs: String
+  conformsTo: ID # ResourceSpecification
+}
+
+interface IntentParams {
+  action: ID
+  inputOfId: ID
+  outputOfId: ID
+  providerId: ID
+  receiverId: ID
+  inScopeOfId: ID
+  involvesId: ID
+  underId: ID
+  planId: ID
+  intendedResource: IResourceIntention
+  intendedQuantity: IQuantityValue
+  intendedTime: DateTime
+  image: String
+  note: String
+}
+
+type IntentCreateParams implements IntentParams {
+  action: ID!
+  inputOfId: ID
+  outputOfId: ID
+  providerId: ID
+  receiverId: ID
+  inScopeOfId: ID
+  involvesId: ID
+  underId: ID
+  planId: ID
+  intendedResource: IResourceIntention
+  intendedQuantity: IQuantityValue
+  intendedTime: DateTime
+  image: String
+  note: String
+}
+
+type IntentUpdateParams implements UpdateParams & IntentParams {
+  id: ID!
+  action: ID
+  inputOfId: ID
+  outputOfId: ID
+  providerId: ID
+  receiverId: ID
+  inScopeOfId: ID
+  involvesId: ID
+  underId: ID
+  planId: ID
+  intendedResource: IResourceIntention
+  intendedQuantity: IQuantityValue
+  intendedTime: DateTime
+  image: String
+  finished: Boolean
+  note: String
+}
+
+type IntentCreateResponse {
+  intent: Intent!
+  # :TODO: should this return a simulated copy of the resource that would be
+  # created, or just the fields needed to create it? (aka IResourceIntention)
+  createResourceIntent: EconomicResource
+}
+
+type IntentResponse {
+  intent: Intent!
+}
+
+
+interface CommitmentParams {
+  action: ID
+  committedQuantity: IQuantityValue
+  committedTime: DateTime
+  inputOfId: ID
+  outputOfId: ID
+  providerId: ID
+  receiverId: ID
+  inScopeOfId: ID
+  involvesId: ID
+  planId: ID
+  isPlanDeliverable: Boolean # :TODO: does this go here, or in `Plan`?
+  underId: ID
+  note: String
+}
+
+type CommitmentCreateParams implements CommitmentParams {
+  action: ID!
+  committedQuantity: IQuantityValue!
+  committedTime: DateTime!
+  inputOfId: ID
+  outputOfId: ID
+  providerId: ID
+  receiverId: ID
+  inScopeOfId: ID
+  involvesId: ID
+  planId: ID
+  isPlanDeliverable: Boolean # :TODO: does this go here, or in `Plan`?
+  underId: ID
+  note: String
+}
+
+type CommitmentUpdateParams implements UpdateParams & CommitmentParams {
+  id: ID!
+  action: ID
+  # committedOn: String,  # :TODO: unsure if this is a real field, or errata from Valuenetwork
+  committedQuantity: IQuantityValue
+  committedTime: DateTime
+  inputOfId: ID
+  outputOfId: ID
+  providerId: ID
+  receiverId: ID
+  inScopeOfId: ID
+  involvesId: ID
+  planId: ID
+  isPlanDeliverable: Boolean # :TODO: does this go here, or in `Plan`?
+  underId: ID
+  finished: Boolean
+  note: String
+}
+
+type CommitmentResponse {
+  commitment: Commitment
+}
+
+
+interface SatisfactionParams {
+  satisfies: Intent
+  satisfiedBy: Commitment
+  satisfiedQuantity: QuantityValue
+  note: String
+}
+
+type SatisfactionCreateParams implements SatisfactionParams {
+  satisfies: Intent!
+  satisfiedBy: Commitment!
+  satisfiedQuantity: QuantityValue
+  note: String
+}
+
+type SatisfactionUpdateParams implements UpdateParams & SatisfactionParams {
+  id: ID!
+  satisfies: Intent!
+  satisfiedBy: Commitment!
+  satisfiedQuantity: QuantityValue
+  note: String
+}
+
+type SatisfactionResponse {
+  satisfaction: Satisfaction
+}
+
+
+# interface PlanParams {
+
+# }
+
+# type PlanCreateParams implements PlanParams {
+
+# }
+
+# type PlanUpdateParams implements UpdateParams & PlanParams {
+
+# }
+
+# type PlanResponse {
+#   plan: Plan
+# }
+
+
+interface ExchangeAgreementParams {
+  name: String
+  agreedTime: DateTime
+}
+
+type ExchangeAgreementCreateParams implements ExchangeAgreementParams {
+  name: String!
+  agreedTime: DateTime!
+}
+
+type ExchangeAgreementUpdateParams implements UpdateParams & ExchangeAgreementParams {
+  id: ID!
+  name: String
+  agreedTime: DateTime
+}
+
+type ExchangeAgreementResponse {
+  exchangeAgreement: ExchangeAgreement
+}
+
+
+
+
+
+
+################################################################################
+# Knowledge layer
+################################################################################
+
+
+interface ResourceSpecificationParams {
+  name: String
+  unit: ID
+  substitutable: Boolean
+  image: String
+  resourceClassifiedAs: String
+  note: String
+}
+
+type ResourceSpecificationCreateParams implements ResourceSpecificationParams {
+  name: String!
+  unit: ID
+  substitutable: Boolean
+  image: String
+  resourceClassifiedAs: String
+  note: String
+}
+
+type ResourceSpecificationUpdateParams implements UpdateParams & ResourceSpecificationParams {
+  id: ID!
+  name: String
+  unit: ID
+  substitutable: Boolean
+  image: String
+  resourceClassifiedAs: String
+  note: String
+}
+
+type ResourceSpecificationResponse {
+  resourceSpecification: ResourceSpecification
+}
+
+
+interface RecipeProcessParams {
+  name: String
+  inScopeOf: Agent
+  duration: DateInterval
+  durationMultiplier: Float
+  processClassifiedAs: String
+  note: String
+}
+
+type RecipeProcessCreateParams implements RecipeProcessParams {
+  name: String!
+  inScopeOf: Agent
+  duration: DateInterval
+  durationMultiplier: Float
+  processClassifiedAs: String
+  note: String
+}
+
+type RecipeProcessUpdateParams implements UpdateParams & RecipeProcessParams {
+  id: ID!
+  name: String
+  inScopeOf: Agent
+  duration: DateInterval
+  durationMultiplier: Float
+  processClassifiedAs: String
+  note: String
+}
+
+type RecipeProcessResponse {
+  recipeProcess: RecipeProcess
+}
+
+
+interface RecipeFlowParams {
+  action: Action
+  definedQuantity: IQuantityValue
+  resourceConformsTo: ResourceSpecification
+  resourceClassifiedAs: String
+  recipeInputOf: RecipeProcess
+  recipeOutputOf: RecipeProcess
+  note: String
+}
+
+type RecipeFlowCreateParams implements RecipeFlowParams {
+  action: Action!
+  definedQuantity: QuantityValue!
+  resourceConformsTo: ResourceSpecification!
+  resourceClassifiedAs: String
+  recipeInputOf: RecipeProcess
+  recipeOutputOf: RecipeProcess
+  note: String
+}
+
+type RecipeFlowUpdateParams implements UpdateParams & RecipeFlowParams {
+  id: ID!
+  action: Action
+  definedQuantity: IQuantityValue
+  resourceConformsTo: ResourceSpecification
+  resourceClassifiedAs: String
+  recipeInputOf: RecipeProcess
+  recipeOutputOf: RecipeProcess
+  note: String
+}
+
+type RecipeFlowResponse {
+  recipeFlow: RecipeFlow
+}
+
+
+interface AgentRelationshipRoleParams {
+  label: String
+  inverseLabel: String
+}
+
+type AgentRelationshipRoleCreateParams implements AgentRelationshipRoleParams {
+  label: String!
+  inverseLabel: String
+}
+
+type AgentRelationshipRoleUpdateParams implements UpdateParams & AgentRelationshipRoleParams {
+  id: ID!
+  label: String
+  inverseLabel: String
+}
+
+type AgentRelationshipRoleResponse {
+  agentRelationshipRole: AgentRelationshipRole
+}
+
+
+
+
+
+
+
+
+
+################################################################################
+# MAIN MUTATIONS ENTRYPOINT                                                    #
+################################################################################
 
 type Mutation {
 
   # Agent module
 
-  createPerson(
-    name: String!,
-    primaryPhone: String,
-    image: String,
-    note: String,
-    email: String,
-    primaryLocation: String
-  ): CreatePerson
-  updatePerson(
-    id: ID!,
-    name: String,
-    image: String,
-    email: String,
-    note: String,
-    primaryLocation: String
-  ): UpdatePerson
-  deletePerson(id: String!): DeletePerson
+  createPerson(person: PersonCreateParams!): PersonResponse
+  updatePerson(person: PersonUpdateParams!): PersonResponse
+  deletePerson(id: String!): PersonResponse
 
-  createOrganization(
-    name: String!,
-    primaryPhone: String,
-    image: String,
-    note: String,
-    type: String,
-    email: String,
-    primaryLocation: String
-  ): CreateOrganization
-  updateOrganization(
-    id: ID!,
-    name: String,
-    image: String,
-    email: String,
-    note: String,
-    primaryLocation: String
-  ): UpdateOrganization
-  deleteOrganization(id: String!): DeleteOrganization
+  createOrganization(organization: OrganizationCreateParams!): OrganizationResponse
+  updateOrganization(organization: OrganizationUpdateParams!): OrganizationResponse
+  deleteOrganization(id: String!): OrganizationResponse
 
-  createAgentRelationship(
-    subjectId: String!,
-    objectId: String!,
-    relationshipId: String!,
-    note: String
-  ): CreateAgentRelationship
-  updateAgentRelationship(
-    id: ID!,
-    subjectId: String,
-    objectId: String,
-    note: String,
-    relationshipId: String
-  ): UpdateAgentRelationship
-  deleteAgentRelationship(id: String!): DeleteAgentRelationship
+  createAgentRelationship(relationship: AgentRelationshipCreateParams!): AgentRelationshipResponse
+  updateAgentRelationship(relationship: AgentRelationshipUpdateParams!): AgentRelationshipResponse
+  deleteAgentRelationship(id: String!): AgentRelationshipResponse
 
   # Observation layer
 
-  createEconomicEvent(
-    inputOfId: String,
-    outputOfId: String,
-    providerId: String,
-    receiverId: String,
-    inScopeOfId: String,
-    affectsId: String,
-      observedNumericValue: String!,
-      observedUnitId: String!,
-      observedTime: DateTime!,
-    createResource: Boolean,
-      resourceTrackingIdentifier: String,
-      resourceNote: String,
-      resourceCurrentLocation: String,
-      resourceUrl: String,
-      resourceClassifiedAs: String,
-      resourceImage: String,
-    action: Action,
-    note: String
-  ): CreateEconomicEvent
-  updateEconomicEvent(
-    id: ID!,
-    inputOfId: String,
-    outputOfId: String,
-    providerId: String,
-    receiverId: String,
-    inScopeOfId: String,
-    affectsId: String,
-      affectedNumericValue: String,
-      observedUnitId: String,
-      observedTime: DateTime,
-    resourceClassifiedAs: String, # :TODO: should we be able to update created resources via this method, or would that be done with updateEconomicResource?
-    action: Action,
-    note: String
-  ): UpdateEconomicEvent
-  deleteEconomicEvent(id: String!): DeleteEconomicEvent
+  createEconomicEvent(event: EconomicEventCreateParams!, createResource: EconomicResourceCreateParams): EconomicEventResponse
+  updateEconomicEvent(event: EconomicEventUpdateParams!): EconomicEventResponse
+  deleteEconomicEvent(id: String!): EconomicEventResponse
 
-  createFulfillment(
-    fulfilledBy: EconomicEvent!,
-    fulfills: Commitment!,
-    fulfilledQuantity: QuantityValue,
-    under: Agreement,
-    note: String
-  ): CreateFulfillment
-  updateFulfillment(
-    id: ID!,
-    fulfilledBy: EconomicEvent,
-    fulfills: Commitment,
-    fulfilledQuantity: QuantityValue,
-    under: Agreement,
-    note: String
-  ): UpdateFulfillment
-  deleteFulfillment(id: String!): DeleteFulfillment
+  createFulfillment(fulfillment: FulfillmentCreateParams!): FulfillmentResponse
+  updateFulfillment(fulfillment: FulfillmentUpdateParams!): FulfillmentResponse
+  deleteFulfillment(id: String!): FulfillmentResponse
 
-  updateEconomicResource(
-    id: ID!,
-    trackingIdentifier: String,
-    url: String,
-    image: String,
-    classifiedAsId: String,
-    currentLocationId: String,
-    note: String
-  ): UpdateEconomicResource
-  deleteEconomicResource(id: String!): DeleteEconomicResource
+  # :TODO: should this be allowed without an originating event? Or should the event be recorded transparently?
+  updateEconomicResource(resource: EconomicResourceUpdateParams!): EconomicResourceResponse
+  deleteEconomicResource(id: String!): EconomicResourceResponse
 
   #createValidation(note: String, economicEventId: String!, validatedById: String!): CreateValidation
   #deleteValidation(id: String!): DeleteValidation
 
-  createProcess(
-    plannedDuration: DateInterval,
-    planId: String,
-    name: String!,
-    inScopeOfId: String,
-    note: String
-  ): CreateProcess
-  updateProcess(
-    id: ID!,
-    plannedDuration: DateInterval,
-    planId: String,
-    name: String,
-    inScopeOfId: String,
-    finished: Boolean,
-    note: String
-  ): UpdateProcess
-  deleteProcess(id: String!): DeleteProcess
+  createProcess(process: ProcessCreateParams!): ProcessResponse
+  updateProcess(process: ProcessUpdateParams!): ProcessResponse
+  deleteProcess(id: String!): ProcessResponse
 
   # Planning layer
 
-  createIntent(
-    inputOfId: String,
-    outputOfId: String,
-    providerId: String,
-    receiverId: String,
-    inScopeOfId: String,
-    involvesId: String,
-    underId: String,
-    planId: String,
-      intendedNumericValue: String,
-      intendedUnitId: String,
-      intendedTime: DateTime,
-    image: String,
-    action: Action,
-      resourceClassifiedAs: String,
-      resourceConformsToId: String,
-    note: String
-  ): CreateIntent
-  updateIntent(
-    id: ID!,
-    inputOfId: String,
-    outputOfId: String,
-    providerId: String,
-    receiverId: String,
-    inScopeOfId: String,
-    involvesId: String,
-    planId: String,
-      intendedNumericValue: String,
-      intendedUnitId: String,
-      intendedTime: DateTime,
-      resourceClassifiedAs: String,
-      resourceConformsToId: String,
-    action: Action,
-    finished: Boolean,
-    note: String
-  ): UpdateIntent
-  deleteIntent(id: String!): DeleteIntent
+  createIntent(intent: IntentCreateParams): IntentCreateResponse
+  updateIntent(intent: IntentUpdateParams): IntentResponse
+  deleteIntent(id: String!): IntentResponse
 
-  createCommitment(
-    inputOfId: String,
-    outputOfId: String,
-    providerId: String,
-    receiverId: String,
-    inScopeOfId: String,
-    involvesId: String,
-    planId: String,
-    isPlanDeliverable: Boolean,
-      committedNumericValue: String!,
-      committedUnitId: String!,
-      committedTime: DateTime!,
-    action: Action!,
-      resourceClassifiedAs: String,
-    note: String
-  ): CreateCommitment
-  updateCommitment(
-    id: ID!,
-    inputOfId: String,
-    outputOfId: String,
-    providerId: String,
-    receiverId: String,
-    inScopeOfId: String,
-    involvesId: String,
-      committedOn: String,
-      committedTime: DateTime,
-      committedNumericValue: String,
-      committedUnitId: String,
-    action: Action,
-      resourceClassifiedAsId: String,
-    finished: Boolean,
-    note: String
-  ): UpdateCommitment
-  deleteCommitment(id: String!): DeleteCommitment
+  createCommitment(commitment: CommitmentCreateParams): CommitmentResponse
+  updateCommitment(commitment: CommitmentUpdateParams): CommitmentResponse
+  deleteCommitment(id: String!): CommitmentResponse
 
-  createSatisfaction(
-    satisfies: Intent!,
-    satisfiedBy: Commitment!,
-    satisfiedQuantity: QuantityValue,
-    note: String
-  ):CreateSatisfaction
-  updateSatisfaction(
-    id: ID!,
-    satisfies: Intent,
-    satisfiedBy: Commitment,
-    satisfiedQuantity: QuantityValue,
-    note: String
-  ):UpdateSatisfaction # TODO: add EconomicEvent
-  deleteSatisfaction(id: String!): DeleteSatisfaction
+  createSatisfaction(satisfaction: SatisfactionCreateParams): SatisfactionResponse
+  updateSatisfaction(satisfaction: SatisfactionUpdateParams): SatisfactionResponse # TODO: add EconomicEvent
+  deleteSatisfaction(id: String!): SatisfactionResponse
 
-  createPlan(
-    name: String!,
-    plannedTime: DateTime!,
-    note: String
-  ): CreatePlan
-  createPlanFromRecipe(
-    name: String!,
-    plannedTime: DateTime!
-    producesResourceClassificationId: String!,
-    note: String
-  ): CreatePlanFromRecipe
-  updatePlan(
-    id: ID!,
-    name: String,
-    plannedTime: DateTime,
-    note: String
-  ): UpdatePlan
-  deletePlan(id: String!): DeletePlan
+  # :TODO: @see planning.gql
+  # createPlan(): PlanResponse
+  # createPlanFromRecipe(): PlanResponse
+  # updatePlan(): PlanResponse
+  # deletePlan(id: String!): PlanResponse
 
-  createExchangeAgreement(
-    name: String,
-    agreedTime: DateTime
-  ): CreateExchangeAgreement
-  updateExchangeAgreement(
-    id: ID!,
-    name: String,
-    agreedTime: DateTime
-  ): UpdateExchangeAgreement
-  deleteExchangeAgreement(id: String!): DeleteExchangeAgreement
+  createExchangeAgreement(exchangeAgreement: ExchangeAgreementCreateParams): ExchangeAgreementResponse
+  updateExchangeAgreement(exchangeAgreement: ExchangeAgreementUpdateParams): ExchangeAgreementResponse
+  deleteExchangeAgreement(id: String!): ExchangeAgreementResponse
 
   # Knowledge layer
+
+  createAgentRelationshipRole(agentRelationshipRole: AgentRelationshipRoleCreateParams): AgentRelationshipRoleResponse
+  updateAgentRelationshipRole(agentRelationshipRole: AgentRelationshipRoleUpdateParams): AgentRelationshipRoleResponse
+  deleteAgentRelationshipRole(id: String!): AgentRelationshipRoleResponse
 
   #createAgentResourceClassification(resourceClassificationId: String!, agentId: String!): CreateAgentResourceClassification
   #deleteAgentResourceClassification(id: String!): DeleteAgentResourceClassification
 
-  createResourceSpecification(
-    name: String!,
-    unit: Unit,
-    substitutable: Boolean,
-    image: String,
-    resourceClassifiedAs: String,
-    note: String
-  ): CreateResourceSpecification
-  updateResourceSpecification(
-    id: ID!,
-    name: String,
-    unit: Unit,
-    substitutable: Boolean,
-    image: String,
-    resourceClassifiedAs: String,
-    note: String
-  ): UpdateResourceSpecification
-  deleteResourceSpecification(id: String!): DeleteResourceSpecification
+  createResourceSpecification(resourceSpecification: ResourceSpecificationCreateParams): ResourceSpecificationResponse
+  updateResourceSpecification(resourceSpecification: ResourceSpecificationUpdateParams): ResourceSpecificationResponse
+  deleteResourceSpecification(id: String!): ResourceSpecificationResponse
 
-  updateRecipeProcess(
-    name: String!,
-    inScopeOf: Agent,
-    duration: DateInterval,
-    durationMultiplier: Float,
-    processClassifiedAs: String,
-    note: String
-  ): CreateRecipeProcess
-  createRecipeProcess(
-    id: ID!,
-    name: String,
-    inScopeOf: Agent,
-    duration: DateInterval,
-    durationMultiplier: Float,
-    processClassifiedAs: String,
-    note: String
-  ): UpdateRecipeProcess
-  deleteRecipeProcess(id: String!): DeleteRecipeProcess
+  createRecipeProcess(recipeProcess: RecipeProcessCreateParams): RecipeProcessResponse
+  updateRecipeProcess(recipeProcess: RecipeProcessUpdateParams): RecipeProcessResponse
+  deleteRecipeProcess(id: String!): RecipeProcessResponse
 
-  createRecipeFlow(
-    note: String,
-    definedQuantity: QuantityValue!,
-    resourceConformsTo: ResourceSpecification!,
-    resourceClassifiedAs: String,
-    action: Action!,
-    recipeInputOf: RecipeProcess,
-    recipeOutputOf: RecipeProcess
-  ): CreateRecipeFlow
-  updateRecipeFlow(
-    id: ID!,
-    note: String,
-    definedQuantity: QuantityValue,
-    resourceConformsTo: ResourceSpecification,
-    resourceClassifiedAs: String,
-    action: Action,
-    recipeInputOf: RecipeProcess,
-    recipeOutputOf: RecipeProcess
-  ): UpdateRecipeFlow
-  deleteRecipeFlow(id: String!): DeleteRecipeFlow
-
-  createAgentRelationshipRole(
-    label: String!,
-    inverseLabel: String
-  ): CreateAgentRelationshipRole
-  updateAgentRelationshipRole(
-    id: ID!,
-    label: String,
-    inverseLabel: String
-  ): UpdateAgentRelationshipRole
-  deleteAgentRelationshipRole(id: String!): DeleteAgentRelationshipRole
+  createRecipeFlow(recipeFlow: RecipeFlowCreateParams): RecipeFlowResponse
+  updateRecipeFlow(recipeFlow: RecipeFlowUpdateParams): RecipeFlowResponse
+  deleteRecipeFlow(id: String!): RecipeFlowResponse
 }
-
-
-
-# CREATE mutation responses
-
-type CreateAgentRelationship {
-  agentRelationship: AgentRelationship
-}
-
-#type CreateAgentResourceClassification {
-#  agentResourceClassification: AgentResourceClassification
-#}
-
-type CreateCommitment {
-  commitment: Commitment
-}
-
-type CreateIntent {
-  commitment: Intent
-}
-
-type CreateEconomicEvent {
-  economicEvent: EconomicEvent
-}
-
-type CreateOrganization {
-  organization: Organization
-}
-
-type CreatePerson {
-  person: Person
-}
-
-type CreatePlan {
-  plan: Plan
-}
-
-type CreatePlanFromRecipe {
-  plan: Plan
-}
-
-type CreateProcess {
-  process: Process
-}
-
-#type CreateValidation {
-#  validation: Validation
-#}
-
-type createResourceSpecification {
-  resourceSpecification: ResourceSpecification
-}
-
-
-# UPDATE mutation responses
-
-type UpdateAgentRelationship {
-  agentRelationship: AgentRelationship
-}
-
-type UpdateCommitment {
-  commitment: Commitment
-}
-
-type UpdateIntent {
-  commitment: Intent
-}
-
-type UpdateEconomicEvent {
-  economicEvent: EconomicEvent
-}
-
-type UpdateEconomicResource {
-  economicResource: EconomicResource
-}
-
-type UpdateOrganization {
-  organization: Organization
-}
-
-type UpdatePerson {
-  person: Person
-}
-
-type UpdatePlan {
-  plan: Plan
-}
-
-type UpdateProcess {
-  process: Process
-}
-
-
-# DELETE mutation responses
-
-type DeleteAgentRelationship {
-  agentRelationship: AgentRelationship
-}
-
-type DeleteAgentResourceClassification {
-  agentResourceClassification: AgentResourceClassification
-}
-
-type DeleteCommitment {
-  commitment: Commitment
-}
-
-type DeleteEconomicEvent {
-  economicEvent: EconomicEvent
-}
-
-type DeleteEconomicResource {
-  economicResource: EconomicResource
-}
-
-type DeleteOrganization {
-  organization: Organization
-}
-
-type DeletePerson {
-  person: Person
-}
-
-type DeletePlan {
-  plan: Plan
-}
-
-type DeleteProcess {
-  process: Process
-}
-
-#type DeleteValidation {
-#  validation: Validation
-#}
