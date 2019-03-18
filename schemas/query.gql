@@ -30,7 +30,7 @@ type Query {
     providerId: ID,
     receiverId: ID,
     resourceClassifiedAs: String,
-    action: Action,
+    action: ID,
     startDate: String,
     endDate: String
   ): [EconomicEvent]

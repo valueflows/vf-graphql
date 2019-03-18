@@ -109,11 +109,11 @@ type Process {
   note: String
   # deletable: Boolean
   ### inverse relationships and queries
-  inputs(action: Action): [EconomicEvent]
-  outputs(action: Action): [EconomicEvent]
-  unplannedEconomicEvents(action: Action): [EconomicEvent]
-  committedInputs(action: Action): [Commitment]
-  committedOutputs(action: Action): [Commitment]
+  inputs(action: ID): [EconomicEvent]
+  outputs(action: ID): [EconomicEvent]
+  unplannedEconomicEvents(action: ID): [EconomicEvent]
+  committedInputs(action: ID): [Commitment]
+  committedOutputs(action: ID): [Commitment]
   nextProcesses: [Process]
   previousProcesses: [Process]
   workingAgents: [Agent]
