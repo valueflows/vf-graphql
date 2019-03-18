@@ -41,7 +41,7 @@ type Intent {
   resourceConformsTo: ResourceSpecification
   involves: EconomicResource
   intendedQuantity: QuantityValue
-  intendedTime: TemporalEntity
+  intendedTime: DateTime
   finished: Boolean
   note: String
   image: String # url
@@ -78,7 +78,7 @@ type Commitment {
   involves: EconomicResource
   committedQuantity: QuantityValue
   # committedOn: String #TODO: ??
-  committedTime: TemporalEntity
+  committedTime: DateTime
   finished: Boolean
   plan: Plan
   # isPlanDeliverable: Boolean #TODO: define in VF?
@@ -97,7 +97,7 @@ An agreement to exchange something with another agent(s), containing commitments
 type ExchangeAgreement {
   id: ID!
   name: String
-  agreedTime: TemporalEntity
+  agreedTime: DateTime
   ### inverse relationships and queries
   commitments: [Commitment]
   economicEvents: [EconomicEvent]
