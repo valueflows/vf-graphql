@@ -45,7 +45,7 @@ type Intent {
   finished: Boolean
   note: String
   image: String # url
-  under: Agreement #TODO
+  under: ExchangeAgreement
   ### inverse relationships and queries
   satisfiedBy: [Satisfaction]
   # deletable: Boolean
@@ -84,7 +84,7 @@ type Commitment {
   # isPlanDeliverable: Boolean #TODO: define in VF?
   # forPlanDeliverable: Commitment #TODO: define in VF?
   note: String
-  under: Agreement #TODO
+  under: ExchangeAgreement
   # fulfilledBy(requestDistribution: Boolean): [Fulfillment]
   fulfilledBy: [Fulfillment]
   involvedAgents: [Agent]
