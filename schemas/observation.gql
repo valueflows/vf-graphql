@@ -57,7 +57,7 @@ type EconomicResource {
   id: ID!
   url: String
   classifiedAs: [String]
-  resourceConformsTo: ResourceSpecification
+  conformsTo: ResourceSpecification
   trackingIdentifier: String
   image: String # url
   currentQuantity: QuantityValue
