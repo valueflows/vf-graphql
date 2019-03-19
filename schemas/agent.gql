@@ -39,9 +39,9 @@ interface Agent {
   commitments(action: ID, finished: Boolean): [Commitment]
   searchCommitments(searchString: String, finished: Boolean): [Commitment]
 
-  relationships(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
-  relationshipsAsSubject(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
-  relationshipsAsObject(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
+  relationships(roleId: ID, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
+  relationshipsAsSubject(roleId: ID, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
+  relationshipsAsObject(roleId: ID, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
 
   roles: [AgentRelationshipRole]
 
@@ -94,9 +94,9 @@ type Person implements Agent {
   commitments(action: ID, finished: Boolean): [Commitment]
   searchCommitments(searchString: String, finished: Boolean): [Commitment]
 
-  relationships(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
-  relationshipsAsSubject(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
-  relationshipsAsObject(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
+  relationships(roleId: ID, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
+  relationshipsAsSubject(roleId: ID, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
+  relationshipsAsObject(roleId: ID, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
 
   roles: [AgentRelationshipRole]
 
@@ -147,9 +147,9 @@ type Organization implements Agent {
   commitments(action: ID, finished: Boolean): [Commitment]
   searchCommitments(searchString: String, finished: Boolean): [Commitment]
 
-  relationships(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
-  relationshipsAsSubject(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
-  relationshipsAsObject(roleId: Int, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
+  relationships(roleId: ID, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
+  relationshipsAsSubject(roleId: ID, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
+  relationshipsAsObject(roleId: ID, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
 
   roles: [AgentRelationshipRole]
 
