@@ -29,7 +29,7 @@ type Query {
   filteredEconomicEvents(
     providerId: ID,
     receiverId: ID,
-    resourceClassifiedAs: String,
+    resourceClassifiedAs: URL,
     action: ID,
     startDate: String,
     endDate: String

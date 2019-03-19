@@ -445,17 +445,17 @@ type CommitmentResponse {
 # }
 
 input SatisfactionCreateParams { # implements SatisfactionParams
-  satisfies: Intent!
-  satisfiedBy: Commitment!
-  satisfiedQuantity: QuantityValue
+  satisfies: ID! # Intent
+  satisfiedBy: ID! # Commitment
+  satisfiedQuantity: IQuantityValue
   note: String
 }
 
 input SatisfactionUpdateParams { # implements UpdateParams & SatisfactionParams
   id: ID!
-  satisfies: Intent!
-  satisfiedBy: Commitment!
-  satisfiedQuantity: QuantityValue
+  satisfies: ID # Intent
+  satisfiedBy: ID # Commitment
+  satisfiedQuantity: IQuantityValue
   note: String
 }
 
@@ -555,20 +555,20 @@ type ResourceSpecificationResponse {
 
 input RecipeProcessCreateParams { # implements RecipeProcessParams
   name: String!
-  inScopeOf: Agent
+  inScopeOf: ID # Agent
   duration: DateInterval
   durationMultiplier: Float
-  processClassifiedAs: String
+  processClassifiedAs: URL
   note: String
 }
 
 input RecipeProcessUpdateParams { # implements UpdateParams & RecipeProcessParams
   id: ID!
   name: String
-  inScopeOf: Agent
+  inScopeOf: ID # Agent
   duration: DateInterval
   durationMultiplier: Float
-  processClassifiedAs: String
+  processClassifiedAs: URL
   note: String
 }
 
@@ -588,23 +588,23 @@ type RecipeProcessResponse {
 # }
 
 input RecipeFlowCreateParams { # implements RecipeFlowParams
-  action: Action!
-  definedQuantity: QuantityValue!
-  resourceConformsTo: ResourceSpecification!
-  resourceClassifiedAs: String
-  recipeInputOf: RecipeProcess
-  recipeOutputOf: RecipeProcess
+  action: ID! # Action
+  definedQuantity: IQuantityValue!
+  resourceConformsTo: ID! # ResourceSpecification!
+  resourceClassifiedAs: URL
+  recipeInputOf: ID # RecipeProcess
+  recipeOutputOf: ID # RecipeProcess
   note: String
 }
 
 input RecipeFlowUpdateParams { # implements UpdateParams & RecipeFlowParams
   id: ID!
-  action: Action
+  action: ID # Action
   definedQuantity: IQuantityValue
-  resourceConformsTo: ResourceSpecification
-  resourceClassifiedAs: String
-  recipeInputOf: RecipeProcess
-  recipeOutputOf: RecipeProcess
+  resourceConformsTo: ID # ResourceSpecification
+  resourceClassifiedAs: URL
+  recipeInputOf: ID # RecipeProcess
+  recipeOutputOf: ID # RecipeProcess
   note: String
 }
 
