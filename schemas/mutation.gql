@@ -122,9 +122,9 @@ type OrganizationResponse {
 # }
 
 input AgentRelationshipCreateParams { # implements AgentRelationshipParams
-  subjectId: ID!
-  objectId: ID!
-  relationshipId: ID!
+  subjectId: ID! # Agent
+  objectId: ID! # Agent
+  relationshipId: ID! # AgentRelationshipRole
   note: String
 }
 
@@ -163,13 +163,14 @@ type AgentRelationshipResponse {
 # }
 
 input EconomicEventCreateParams { # implements EconomicEventParams
-  action: ID!
-  inputOfId: ID
-  outputOfId: ID
-  providerId: ID
-  receiverId: ID
-  inScopeOfId: ID
-  affectsId: ID
+  action: ID! # Action
+  inputOfId: ID # Process
+  outputOfId: ID # Process
+  providerId: ID # Agent
+  receiverId: ID # Agent
+  inScopeOfId: ID # Agent
+  affectsId: ID # EconomicResource
+  affectsSome: IIntendedResource
   observedQuantity: IQuantityValue
   observedTime: DateTime
   note: String
@@ -184,6 +185,7 @@ input EconomicEventUpdateParams { # implements UpdateParams & EconomicEventParam
   receiverId: ID
   inScopeOfId: ID
   affectsId: ID
+  affectsSome: IIntendedResource
   observedQuantity: IQuantityValue
   observedTime: DateTime
   note: String

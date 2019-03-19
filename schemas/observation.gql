@@ -23,6 +23,15 @@ type IntendedResource {
 }
 
 """
+Specifies an intention to provide a type of resource in some interaction
+context (usually an `Intent`, `Commitment` or `EconomicEvent`)
+"""
+input IIntendedResource {
+  classifiedAs: [String]
+  conformsTo: ID # ResourceSpecification
+}
+
+"""
 An observed economic flow, as opposed to a flow planned to happen in the future. This could reflect a change in the quantity of an economic resource. It is also defined by its behavior in relation to the economic resource (see `Action`)
 """
 type EconomicEvent {
@@ -38,6 +47,8 @@ type EconomicEvent {
   observedQuantity: QuantityValue
   observedTime: DateTime
   note: String
+
+  # relationship fields; can only be set indirectly
   under: ExchangeAgreement
   # requestDistribution: Boolean
   ### inverse relationships and queries
