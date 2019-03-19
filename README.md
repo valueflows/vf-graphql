@@ -32,8 +32,7 @@ This is to help synchronize the projects using VF for a graphql interface betwee
 See `scripts` in `package.json` for the available commands. For quickly spinning up the full system, you should usually be able to simply run `npm start`. This will load up:
 
 - Test runner for the schemas. **It is recommended when authoring schemas to save often and watch the test output, as no line number information is available when debugging.**
-- A read-only GraphQL API at `http://localhost:3000/graphql`
-- A GraphiQL query UI at `http://localhost:3000/graphiql` which you can use to test queries against the above
+- A GraphiQL query UI at `http://localhost:3000/graphql` which you can use to test queries against a mock GraphQL API derived from the schema.
 
 
 ## Contributing
