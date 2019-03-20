@@ -156,7 +156,7 @@ type AgentRelationshipResponse {
 #   providerId: ID
 #   receiverId: ID
 #   inScopeOfId: ID
-#   affectsId: ID
+#   involvesId: ID
 #   observedQuantity: IQuantityValue
 #   observedTime: DateTime
 #   note: String
@@ -169,7 +169,7 @@ input EconomicEventCreateParams { # implements EconomicEventParams
   providerId: ID # Agent
   receiverId: ID # Agent
   inScopeOfId: ID # Agent
-  affectsId: ID # EconomicResource
+  involvesId: ID # EconomicResource
   affectsSome: IIntendedResource
   observedQuantity: IQuantityValue
   observedTime: DateTime
@@ -184,7 +184,7 @@ input EconomicEventUpdateParams { # implements UpdateParams & EconomicEventParam
   providerId: ID
   receiverId: ID
   inScopeOfId: ID
-  affectsId: ID
+  involvesId: ID
   affectsSome: IIntendedResource
   observedQuantity: IQuantityValue
   observedTime: DateTime
