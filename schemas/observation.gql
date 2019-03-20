@@ -42,7 +42,7 @@ type EconomicEvent {
   provider: Agent
   receiver: Agent
   inScopeOf: Agent #TODO how to loosen this up to be more than Agent? (mostly it is Agents)
-  affects: EconomicResource
+  involves: EconomicResource
   affectsSome: IntendedResource
   observedQuantity: QuantityValue
   observedTime: DateTime
