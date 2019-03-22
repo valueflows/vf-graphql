@@ -47,7 +47,7 @@ type ResourceSpecification {
   note: String
   # category: String #TODO
   # processCategory: String #TODO
-  resourceClassifiedAs: [String]
+  resourceClassifiedAs: [URL]
   ### inverse relationships
   conformingResources: [EconomicResource]
 }
@@ -62,7 +62,7 @@ type RecipeProcess {
   inScopeOf: Agent
   duration: DateInterval
   durationMultiplier: Float
-  processClassifiedAs: [String]
+  processClassifiedAs: [URL]
 }
 
 """
