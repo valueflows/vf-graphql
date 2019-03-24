@@ -8,7 +8,11 @@
 
 const express = require('express')
 const { ApolloServer, gql } = require('apollo-server-express')
+const { express: voyagerMiddleware } = require('graphql-voyager/middleware')
 const { makeExecutableSchema, addMockFunctionsToSchema } = require('graphql-tools')
+
+const SERVER_PORT = 3000
+const SCHEMA_VIEWER_PATH = '/viewer'
 
 const typeDefs = require('@valueflows/vf-graphql').typeDefs
 
@@ -20,6 +24,17 @@ const server = new ApolloServer({ schema })
 const app = express()
 server.applyMiddleware({ app })
 
-app.listen({ port: 3000 }, () =>
-  console.log(`🚀 Server ready at http://localhost:3000${server.graphqlPath}`)
+app.use(SCHEMA_VIEWER_PATH, voyagerMiddleware({
+  endpointUrl: server.graphqlPath,
+  displayOptions: {
+    hideRoot: true,
+    showLeafFields: false,
+  },
+}));
+
+app.listen({ port: SERVER_PORT }, () =>
+  console.log(`🚀🚀🚀
+    Query browser at http://localhost:${SERVER_PORT}${server.graphqlPath}
+    Schema visualiser at http://localhost:${SERVER_PORT}${SCHEMA_VIEWER_PATH}
+🚀🚀🚀`)
 )
