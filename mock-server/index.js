@@ -28,7 +28,7 @@ app.use(SCHEMA_VIEWER_PATH, voyagerMiddleware({
   endpointUrl: server.graphqlPath,
   displayOptions: {
     hideRoot: true,
-    showLeafFields: false,
+    showLeafFields: true,
   },
 }));
 
