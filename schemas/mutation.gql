@@ -170,7 +170,8 @@ input EconomicEventCreateParams { # implements EconomicEventParams
   receiverId: ID # Agent
   inScopeOfId: ID # Agent
   involvesId: ID # EconomicResource
-  affectsSome: IIntendedResource
+  resourceClassifiedAs: [URL]
+  resourceConformsTo: ID # ResourceSpecification
   observedQuantity: IQuantityValue
   observedTime: DateTime
   note: String
@@ -185,7 +186,8 @@ input EconomicEventUpdateParams { # implements UpdateParams & EconomicEventParam
   receiverId: ID
   inScopeOfId: ID
   involvesId: ID
-  affectsSome: IIntendedResource
+  resourceClassifiedAs: [URL]
+  resourceConformsTo: ID
   observedQuantity: IQuantityValue
   observedTime: DateTime
   note: String
@@ -213,7 +215,7 @@ Input `EconomicResource` type used when sending events to setup initial resource
 """
 input EconomicResourceCreateParams { # implements EconomicResourceParams
   url: String
-  classifiedAs: [String]
+  classifiedAs: [URL]
   resourceConformsTo: ID # ResourceSpecification
   trackingIdentifier: String
   image: String # url
@@ -225,7 +227,7 @@ input EconomicResourceCreateParams { # implements EconomicResourceParams
 input EconomicResourceUpdateParams { # implements UpdateParams & EconomicResourceParams
   id: ID!,
   url: String
-  classifiedAs: [String]
+  classifiedAs: [URL]
   resourceConformsTo: ID # ResourceSpecification
   trackingIdentifier: String
   image: String # url
@@ -511,7 +513,7 @@ type ExchangeAgreementResponse {
 #   unit: ID
 #   substitutable: Boolean
 #   image: String
-#   resourceClassifiedAs: String
+#   resourceClassifiedAs: [URL]
 #   note: String
 # }
 
@@ -520,7 +522,7 @@ input ResourceSpecificationCreateParams { # implements ResourceSpecificationPara
   unit: ID
   substitutable: Boolean
   image: String
-  resourceClassifiedAs: String
+  resourceClassifiedAs: [URL]
   note: String
 }
 
@@ -530,7 +532,7 @@ input ResourceSpecificationUpdateParams { # implements UpdateParams & ResourceSp
   unit: ID
   substitutable: Boolean
   image: String
-  resourceClassifiedAs: String
+  resourceClassifiedAs: [URL]
   note: String
 }
 
@@ -544,7 +546,7 @@ type ResourceSpecificationResponse {
 #   inScopeOf: Agent
 #   duration: DateInterval
 #   durationMultiplier: Float
-#   processClassifiedAs: String
+#   processClassifiedAs: [URL]
 #   note: String
 # }
 
@@ -553,7 +555,7 @@ input RecipeProcessCreateParams { # implements RecipeProcessParams
   inScopeOf: ID # Agent
   duration: DateInterval
   durationMultiplier: Float
-  processClassifiedAs: URL
+  processClassifiedAs: [URL]
   note: String
 }
 
@@ -563,7 +565,7 @@ input RecipeProcessUpdateParams { # implements UpdateParams & RecipeProcessParam
   inScopeOf: ID # Agent
   duration: DateInterval
   durationMultiplier: Float
-  processClassifiedAs: URL
+  processClassifiedAs: [URL]
   note: String
 }
 
@@ -576,7 +578,7 @@ type RecipeProcessResponse {
 #   action: Action
 #   definedQuantity: IQuantityValue
 #   resourceConformsTo: ResourceSpecification
-#   resourceClassifiedAs: String
+#   resourceClassifiedAs: [URL]
 #   recipeInputOf: RecipeProcess
 #   recipeOutputOf: RecipeProcess
 #   note: String
@@ -586,7 +588,7 @@ input RecipeFlowCreateParams { # implements RecipeFlowParams
   action: ID! # Action
   definedQuantity: IQuantityValue!
   resourceConformsTo: ID! # ResourceSpecification!
-  resourceClassifiedAs: URL
+  resourceClassifiedAs: [URL]
   recipeInputOf: ID # RecipeProcess
   recipeOutputOf: ID # RecipeProcess
   note: String
@@ -597,7 +599,7 @@ input RecipeFlowUpdateParams { # implements UpdateParams & RecipeFlowParams
   action: ID # Action
   definedQuantity: IQuantityValue
   resourceConformsTo: ID # ResourceSpecification
-  resourceClassifiedAs: URL
+  resourceClassifiedAs: [URL]
   recipeInputOf: ID # RecipeProcess
   recipeOutputOf: ID # RecipeProcess
   note: String

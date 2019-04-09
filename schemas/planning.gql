@@ -57,7 +57,7 @@ type Intent {
   """
   Description of the type of `EconomicResource` that the `provider` may offer to service the intent later.
   """
-  intendedResourceClassifiedAs: URL
+  intendedResourceClassifiedAs: [URL]
   intendedResourceConformsTo: ResourceSpecification
   intendedQuantity: QuantityValue
   intendedTime: DateTime
@@ -117,7 +117,7 @@ type Commitment {
   Description of the type of `EconomicResource` that the `provider` may provide
   to service the `Commitment` later.
   """
-  committedResourceClassifiedAs: URL
+  committedResourceClassifiedAs: [URL]
   committedResourceConformsTo: ResourceSpecification
   committedQuantity: QuantityValue
   committedTime: DateTime

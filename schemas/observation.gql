@@ -21,7 +21,7 @@ type EconomicEvent {
   receiver: Agent
   inScopeOf: Agent #TODO how to loosen this up to be more than Agent? (mostly it is Agents)
   involves: EconomicResource
-  resourceClassifiedAs: [String]
+  resourceClassifiedAs: [URL]
   resourceConformsTo: ResourceSpecification
   observedQuantity: QuantityValue
   observedTime: DateTime
@@ -46,7 +46,7 @@ A resource which is useful to people or the ecosystem.
 type EconomicResource {
   id: ID!
   url: String
-  classifiedAs: [String]
+  classifiedAs: [URL]
   conformsTo: ResourceSpecification
   trackingIdentifier: String
   image: String # url
@@ -95,7 +95,7 @@ type Process {
   # started: Boolean
   finished: Boolean
   basedOn: RecipeProcess
-  classifiedAs: [String]
+  classifiedAs: [URL]
   note: String
   # deletable: Boolean
   ### inverse relationships and queries
