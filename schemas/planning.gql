@@ -26,16 +26,6 @@ type Plan { #TODO: this is not yet in VF, and may or may not be named Plan
   # deletable: Boolean
 }
 
-"""
-When an `Intent` is set to provide some `EconomicResource`s, but the exact resources
-to service the intent are still unknown, an `IntendedResource` can be used to indicate
-the type of resource to be provided later.
-"""
-type IntendedResource {
-  classifiedAs: String
-  conformsTo: ResourceSpecification
-}
-
 union ProcessOrTransfer = Process | Transfer
 
 """
@@ -67,7 +57,8 @@ type Intent {
   """
   Description of the type of `EconomicResource` that the `provider` may offer to service the intent later.
   """
-  intendedResource: IntendedResource
+  intendedResourceClassifiedAs: URL
+  intendedResourceConformsTo: ResourceSpecification
   intendedQuantity: QuantityValue
   intendedTime: DateTime
   """
@@ -126,7 +117,8 @@ type Commitment {
   Description of the type of `EconomicResource` that the `provider` may provide
   to service the `Commitment` later.
   """
-  committedResource: IntendedResource
+  committedResourceClassifiedAs: URL
+  committedResourceConformsTo: ResourceSpecification
   committedQuantity: QuantityValue
   committedTime: DateTime
   """

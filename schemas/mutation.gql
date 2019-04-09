@@ -308,16 +308,6 @@ type ProcessResponse {
 # Planning layer                                                               #
 ################################################################################
 
-
-"""
-Represents an intent to record the existence of a particular type of resource
-at a future point in time.
-"""
-input IResourceIntention {
-  classifiedAs: String
-  conformsTo: ID # ResourceSpecification
-}
-
 # interface IntentParams {
 #   action: ID
 #   inputOfId: ID
@@ -328,7 +318,8 @@ input IResourceIntention {
 #   involvesId: ID
 #   underId: ID
 #   planId: ID
-#   intendedResource: IResourceIntention
+#   intendedResourceConformsTo: ID
+#   intendedResourceClassifiedAs: URL
 #   intendedQuantity: IQuantityValue
 #   intendedTime: DateTime
 #   image: String
@@ -345,7 +336,8 @@ input IntentCreateParams { # implements IntentParams
   involvesId: ID
   underId: ID
   planId: ID
-  intendedResource: IResourceIntention
+  intendedResourceConformsTo: ID
+  intendedResourceClassifiedAs: URL
   intendedQuantity: IQuantityValue
   intendedTime: DateTime
   image: String
@@ -363,7 +355,8 @@ input IntentUpdateParams { # implements UpdateParams & IntentParams
   involvesId: ID
   underId: ID
   planId: ID
-  intendedResource: IResourceIntention
+  intendedResourceConformsTo: ID
+  intendedResourceClassifiedAs: URL
   intendedQuantity: IQuantityValue
   intendedTime: DateTime
   image: String
@@ -374,7 +367,7 @@ input IntentUpdateParams { # implements UpdateParams & IntentParams
 type IntentCreateResponse {
   intent: Intent!
   # :TODO: should this return a simulated copy of the resource that would be
-  # created, or just the fields needed to create it? (aka IResourceIntention)
+  # created, or just the fields needed to create it? (aka classifiedAs / conformsTo)
   createResourceIntent: EconomicResource
 }
 
