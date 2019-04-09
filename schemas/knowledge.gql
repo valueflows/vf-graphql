@@ -72,7 +72,8 @@ type RecipeFlow {
   id: ID!
   note: String
   definedQuantity: QuantityValue
-  definedResource: IntendedResource
+  resourceConformsTo: ResourceSpecification
+  resourceClassifiedAs: [String] # url
   action: Action!
   recipeInputOf: RecipeProcess
   recipeOutputOf: RecipeProcess
