@@ -14,16 +14,37 @@ An observed economic flow, as opposed to a flow planned to happen in the future.
 """
 type EconomicEvent {
   id: ID!
+
+  "Relates a process input or output to a verb, such as consume, produce, work, improve, etc."
   action: Action!
+
+  "Defines the activity to which this event is an input"
   inputOf: Process # or Transfer
+
+  "Defines the activity for which this event is an output"
   outputOf: Process # or Transfer
+
+  "The economic agent from whom the intended, committed, or actual economic event is initiated."
   provider: Agent
+
+  "The economic agent whom the intended, committed, or actual economic event is for."
   receiver: Agent
+
+  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
   inScopeOf: Agent #TODO how to loosen this up to be more than Agent? (mostly it is Agents)
+
+  "Economic resource involved in the flow."
   resourceInventoriedAs: EconomicResource
+
+  "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
   resourceClassifiedAs: [URL]
+
+  "The primary resource knowledge specification or definition of an existing or potential resource."
   resourceConformsTo: ResourceSpecification
+
+  "The amount and unit of the event. This is the quantity that could be used to increment or decrement a resource, depending on the type of resource and type of event."
   quantifiedAs: QuantityValue
+
   hasBeginning: DateTime
   hasEnd: DateTime
   hasPointInTime: DateTime
@@ -31,15 +52,28 @@ type EconomicEvent {
   after: DateTime
   note: String
 
+  ##############################################################################
   # relationship fields; can only be set indirectly
+
+  "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this flow."
   under: ExchangeAgreement # or Agreement?
+
   # requestDistribution: Boolean
-  ### inverse relationships and queries
+
+  ##############################################################################
+  # inverse relationships and queries
+
+  "The commitment which is completely or partially fulfilled by an economic event."
   fulfills: [Fulfillment]
+
+  "An intent satisfied fully or partially by an economic event or commitment."
   satisfies: [Satisfaction]
-  appreciationFor: [EconomicEvent]
+
+  # appreciationFor: [EconomicEvent]
+
   track: [ProductionFlowItem]
   trace: [ProductionFlowItem]
+
   # validations: [Validation]
   # isValidated: Boolean
 }
@@ -50,19 +84,42 @@ A resource which is useful to people or the ecosystem.
 type EconomicResource {
   id: ID!
   url: String
+
+  "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
   classifiedAs: [URL]
+
+  "The primary resource knowledge specification or definition of an existing or potential resource."
   conformsTo: ResourceSpecification
+
+  "Sometimes called lot number, used for trackable batched resources. Sometimes called serial number, used when each item must have a trackable identifier (like a computer). Could also be used for other unique tracking identifiers needed for resources."
   trackingIdentifier: String
-  image: String URL
+
+  "URL to a descriptive picture of this item."
+  image: URL
+
+  "The current amount and unit of the economic resource. This can be stored or derived from economic events affecting the resource."
   currentQuantity: QuantityValue
+
   note: String
+
+  ##############################################################################
+  # relationship fields; can only be set indirectly
+
+  "A more concrete resource upon which a resource is based."
   underlyingResource: EconomicResource
+
+  "Used when a stock economic resource contains units also defined as economic resources."
   contains: [EconomicResource] #TODO: containedBy and make this the inverse??
-  # category: String
+
+  "The current place an economic resource is located. Could be at any level of granularity, from a town to an address to a warehouse location. Usually mappable."
   currentLocation: String # under discussion
-  ### inverse relationships and queries
+
+  ##############################################################################
+  # inverse relationships and queries
+
   trace: [EconomicEvent]
   track: [EconomicEvent]
+
   # resourceContacts: [Agent]
   # owners: [Agent]  TODO: define agent-resource relationships, if we do need them
 }
@@ -76,14 +133,20 @@ type Transfer { #TODO this whole model is under review
   # under: ExchangeAgreement TODO need to finish this definition
   plannedTime: DateTime
   note: String
-  ### inverse relationships
+
+  ##############################################################################
+  # inverse relationships and queries
+
   economicEvents: [EconomicEvent]
   giveEconomicEvent: EconomicEvent
   takeEconomicEvent: EconomicEvent
+
   transferCommitments: [Commitment]
   giveCommitment: Commitment
   takeCommitment: Commitment
+
   involvedAgents: [Agent]
+
   trace: [EconomicEvent]
   track: [EconomicEvent]
 }
@@ -94,24 +157,42 @@ An activity that changes inputs into outputs.  It could transform or transport e
 type Process {
   id: ID!
   name: String!
+
+  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
   inScopeOf: Agent #TODO:
+
   plannedTime: DateTime
+
   # started: Boolean
   finished: Boolean
+
+  "The recipe definition or specification for a process."
   basedOn: RecipeProcess
+
+  "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
   classifiedAs: [URL]
+
   note: String
+
   # deletable: Boolean
-  ### inverse relationships and queries
+
+  ##############################################################################
+  # inverse relationships and queries
+
   inputs(action: ID): [EconomicEvent]
   outputs(action: ID): [EconomicEvent]
   unplannedEconomicEvents(action: ID): [EconomicEvent]
+
   committedInputs(action: ID): [Commitment]
   committedOutputs(action: ID): [Commitment]
+
   nextProcesses: [Process]
   previousProcesses: [Process]
+
   workingAgents: [Agent]
+
   plan: Plan
+
   trace: [EconomicEvent]
   track: [EconomicEvent]
 }
@@ -121,13 +202,24 @@ The quantity that the economic event fulfilled towards the commitment.
 """
 type Fulfillment {
   id: ID!
+
+  "The economic event which completely or partially fulfills a commitment."
   fulfilledBy: EconomicEvent!
+
+  "The commitment which is completely or partially fulfilled by an economic event."
   fulfills: Commitment!
+
+  "The quantity of the fulfillment of an event towards a commitment or an intent."
   fulfilledQuantity: QuantityValue
+
   note: String
+
+  ##############################################################################
+  # relationship fields; can only be set indirectly
+
+  "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this flow."
   under: ExchangeAgreement # Agreement?
 }
-
 
 #type Validation {
 #  id: ID!

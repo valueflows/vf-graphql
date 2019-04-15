@@ -33,49 +33,59 @@ A planned economic flow, which can lead to economic events (sometimes through co
 """
 type Intent {
   id: ID!
-  """
-  Type of behaviour that is desired
-  """
+
+  "Relates a process input or output to a verb, such as consume, produce, work, improve, etc."
   action: Action!
-  """
-  A `Process` or `Transfer` to which this `Intent` is hoping to contribute towards.
-  """
+
+  "A `Process` or `Transfer` to which this `Intent` is hoping to contribute towards."
   inputOf: ProcessOrTransfer
-  """
-  A `Process` or `Transfer` which this `Intent` will eventuate as a result of.
-  """
+
+  "A `Process` or `Transfer` which this `Intent` will eventuate as a result of."
   outputOf: ProcessOrTransfer
-  """
-  The agent whom the creator of this `Intent` hopes to provide the requested `EconomicResource`.
-  """
+
+  "The economic agent from whom the intended, committed, or actual economic event is initiated."
   provider: Agent
-  """
-  The agent whom the creator of this `Intent` hopes to benefit from the requested `EconomicResource`.
-  """
+
+  "The economic agent whom the intended, committed, or actual economic event is for."
   receiver: Agent
+
+  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
   inScopeOf: Agent #TODO: more than Agent
-  """
-  Description of the type of `EconomicResource` that the `provider` may offer to service the intent later.
-  """
+
+  "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
   resourceClassifiedAs: [URL]
+
+  "The primary resource knowledge specification or definition of an existing or potential resource."
   resourceConformsTo: ResourceSpecification
-  """
-  When a specific `EconomicResource` is known which can service the `Intent`, this defines that resource.
-  """
+
+  "When a specific `EconomicResource` is known which can service the `Intent`, this defines that resource."
   resourceInventoriedAs: EconomicResource
+
   quantifiedAs: QuantityValue
+
   hasBeginning: DateTime
   hasEnd: DateTime
   hasPointInTime: DateTime
   before: DateTime
   after: DateTime
+
   finished: Boolean
-  note: String
-  image: String # url
-  under: ExchangeAgreement # Agreement?
-  ### inverse relationships and queries
-  satisfiedBy: [Satisfaction]
+
   # deletable: Boolean
+
+  note: String
+
+  image: URL
+
+  ##############################################################################
+  # relationship fields; can only be set indirectly
+
+  under: ExchangeAgreement # Agreement?
+
+  ##############################################################################
+  # inverse relationships and queries
+
+  satisfiedBy: [Satisfaction]
 }
 
 union EventOrCommitment = EconomicEvent | Commitment
@@ -85,9 +95,16 @@ A commitment or economic event that partially or fully satisfies an intent.
 """
 type Satisfaction {
   id: ID!
+
+  "An intent satisfied fully or partially by an economic event or commitment."
   satisfies: Intent!
+
+  "A commitment or economic event fully or partially satisfying an intent."
   satisfiedBy: EventOrCommitment!
+
+  "The quantity of the satisfaction of an commitment towards an intent."
   satisfiedQuantity: QuantityValue
+
   note: String
 }
 
@@ -96,54 +113,65 @@ A planned economic flow that has been promised by an agent to another agent.
 """
 type Commitment {
   id: ID!
-  """
-  Type of behaviour that has been committed to
-  """
+
+  "Relates a process input or output to a verb, such as consume, produce, work, improve, etc."
   action: Action
-  """
-  A `Process` or `Transfer` which this `Commitment` will aid in the finalisation of.
-  """
+
+  "A `Process` or `Transfer` which this `Commitment` will aid in the finalisation of."
   inputOf: ProcessOrTransfer
-  """
-  A `Process` or `Transfer` which this `Commitment` has been generated as a result of.
-  """
+
+  "A `Process` or `Transfer` which this `Commitment` has been generated as a result of."
   outputOf: ProcessOrTransfer
-  """
-  The agent who is committing to provide some `EconomicResource`.
-  """
+
+  "The economic agent from whom the intended, committed, or actual economic event is initiated."
   provider: Agent
-  """
-  The agent who will receive any provided `EconomicResource`.
-  """
+
+  "The economic agent whom the intended, committed, or actual economic event is for."
   receiver: Agent
+
+  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
   inScopeOf: Agent
-  """
-  Description of the type of `EconomicResource` that the `provider` may provide
-  to service the `Commitment` later.
-  """
+
+  "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
   resourceClassifiedAs: [URL]
+
+  "The primary resource knowledge specification or definition of an existing or potential resource."
   resourceConformsTo: ResourceSpecification
-  """
-  Defines a specific `EconomicResource` that will be provided by the `provider`
-  to service the `Commitment`.
-  """
+
+  "Economic resource involved in the flow."
   resourceInventoriedAs: EconomicResource
+
   quantifiedAs: QuantityValue
+
   hasBeginning: DateTime
   hasEnd: DateTime
   hasPointInTime: DateTime
   before: DateTime
   after: DateTime
+
   finished: Boolean
+
+  # deletable: Boolean
+
   plan: Plan
   # isPlanDeliverable: Boolean #TODO: define in VF?
   # forPlanDeliverable: Commitment #TODO: define in VF?
+
   note: String
+
+  ##############################################################################
+  # relationship fields; can only be set indirectly
+
   under: ExchangeAgreement # Agreement?
-  # fulfilledBy(requestDistribution: Boolean): [Fulfillment]
+
+  ##############################################################################
+  # inverse relationships and queries
+
+  "The economic event which completely or partially fulfills a commitment."
   fulfilledBy: [Fulfillment]
+  # fulfilledBy(requestDistribution: Boolean): [Fulfillment]
+
   involvedAgents: [Agent]
-  # deletable: Boolean
 }
 
 """
@@ -153,7 +181,10 @@ type ExchangeAgreement {
   id: ID!
   name: String
   agreedTime: DateTime #created?
-  ### inverse relationships and queries
+
+  ##############################################################################
+  # inverse relationships and queries
+
   commitments: [Commitment]
   economicEvents: [EconomicEvent]
   involvedAgents: [Agent]
