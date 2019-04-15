@@ -15,11 +15,17 @@ interface Agent {
   id: ID!
   name: String!
   # type: String
-  image: String
+  image: URL
+
   note: String
+
+  "The main place an agent is located, often an address where activities occur and mail can be sent. This is usually a mappable geographic location.  It also could be a website address, as in the case of agents who have no physical location."
   primaryLocation: String
-  primaryPhone: String
+
   email: String
+
+  ##############################################################################
+  # inverse relationships and queries
 
   inventoriedEconomicResources(
     # category: EconomicResourceCategory,
@@ -69,13 +75,17 @@ type Person implements Agent {
   id: ID!
   name: String!
   # type: String
-  image: String
+  image: URL
   note: String
+
+  "The main place an agent is located, often an address where activities occur and mail can be sent. This is usually a mappable geographic location.  It also could be a website address, as in the case of agents who have no physical location."
   primaryLocation: String
-  primaryPhone: String
+
   email: String
 
-  ### inverse relationships and queries
+  ##############################################################################
+  # inverse relationships and queries
+
   inventoriedEconomicResources(
     # category: EconomicResourceCategory,
     resourceClassification: URL,
@@ -122,13 +132,17 @@ type Organization implements Agent {
   name: String!
   # :TODO: define how people can create further typing of Organization, also might need a different name
   # type: OrganizationClassification
-  image: String
+  image: URL
   note: String
+
+  "The main place an agent is located, often an address where activities occur and mail can be sent. This is usually a mappable geographic location.  It also could be a website address, as in the case of agents who have no physical location."
   primaryLocation: String
-  primaryPhone: String
+
   email: String
 
-  ### inverse relationships and queries
+  ##############################################################################
+  # inverse relationships and queries
+
   inventoriedEconomicResources(
     # category: EconomicResourceCategory,
     resourceClassification: URL,
