@@ -289,7 +289,7 @@ type FulfillmentResponse {
 
 input ProcessCreateParams { # implements ProcessParams
   name: String!
-  plannedDuration: Duration # IDuration?
+  plannedDuration: DateInterval # IDuration?
   planId: String
   inScopeOfId: String
   note: String
@@ -298,7 +298,7 @@ input ProcessCreateParams { # implements ProcessParams
 input ProcessUpdateParams { # implements UpdateParams & ProcessParams
   id: ID!
   name: String
-  plannedDuration: Duration # IDuration?
+  plannedDuration: DateInterval # IDuration?
   planId: String
   inScopeOfId: String
   finished: Boolean

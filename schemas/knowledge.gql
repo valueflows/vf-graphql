@@ -72,7 +72,7 @@ type RecipeProcess {
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
   inScopeOf: Agent
 
-  hasDuration: Duration
+  hasDuration: DateInterval
 
   "The multiplier for duration based on capacities for the recipe."
   durationMultiplier: Float
