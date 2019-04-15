@@ -36,7 +36,7 @@ type Intent {
   """
   Type of behaviour that is desired
   """
-  action: Action
+  action: Action!
   """
   A `Process` or `Transfer` to which this `Intent` is hoping to contribute towards.
   """
@@ -57,18 +57,22 @@ type Intent {
   """
   Description of the type of `EconomicResource` that the `provider` may offer to service the intent later.
   """
-  intendedResourceClassifiedAs: [URL]
-  intendedResourceConformsTo: ResourceSpecification
-  intendedQuantity: QuantityValue
-  intendedTime: DateTime
+  resourceClassifiedAs: [URL]
+  resourceConformsTo: ResourceSpecification
   """
   When a specific `EconomicResource` is known which can service the `Intent`, this defines that resource.
   """
-  involves: EconomicResource
+  resourceInventoriedAs: EconomicResource
+  quantifiedAs: QuantityValue
+  hasBeginning: DateTime
+  hasEnd: DateTime
+  hasPointInTime: DateTime
+  before: DateTime
+  after: DateTime
   finished: Boolean
   note: String
   image: String # url
-  under: ExchangeAgreement
+  under: ExchangeAgreement # Agreement?
   ### inverse relationships and queries
   satisfiedBy: [Satisfaction]
   # deletable: Boolean
@@ -117,21 +121,25 @@ type Commitment {
   Description of the type of `EconomicResource` that the `provider` may provide
   to service the `Commitment` later.
   """
-  committedResourceClassifiedAs: [URL]
-  committedResourceConformsTo: ResourceSpecification
-  committedQuantity: QuantityValue
-  committedTime: DateTime
+  resourceClassifiedAs: [URL]
+  resourceConformsTo: ResourceSpecification
   """
   Defines a specific `EconomicResource` that will be provided by the `provider`
   to service the `Commitment`.
   """
-  involves: EconomicResource
+  resourceInventoriedAs: EconomicResource
+  quantifiedAs: QuantityValue
+  hasBeginning: DateTime
+  hasEnd: DateTime
+  hasPointInTime: DateTime
+  before: DateTime
+  after: DateTime
   finished: Boolean
   plan: Plan
   # isPlanDeliverable: Boolean #TODO: define in VF?
   # forPlanDeliverable: Commitment #TODO: define in VF?
   note: String
-  under: ExchangeAgreement
+  under: ExchangeAgreement # Agreement?
   # fulfilledBy(requestDistribution: Boolean): [Fulfillment]
   fulfilledBy: [Fulfillment]
   involvedAgents: [Agent]
@@ -144,7 +152,7 @@ An agreement to exchange something with another agent(s), containing commitments
 type ExchangeAgreement {
   id: ID!
   name: String
-  agreedTime: DateTime
+  agreedTime: DateTime #created?
   ### inverse relationships and queries
   commitments: [Commitment]
   economicEvents: [EconomicEvent]

@@ -20,20 +20,24 @@ type EconomicEvent {
   provider: Agent
   receiver: Agent
   inScopeOf: Agent #TODO how to loosen this up to be more than Agent? (mostly it is Agents)
-  involves: EconomicResource
+  resourceInventoriedAs: EconomicResource
   resourceClassifiedAs: [URL]
   resourceConformsTo: ResourceSpecification
-  observedQuantity: QuantityValue
-  observedTime: DateTime
+  quantifiedAs: QuantityValue
+  hasBeginning: DateTime
+  hasEnd: DateTime
+  hasPointInTime: DateTime
+  before: DateTime
+  after: DateTime
   note: String
 
   # relationship fields; can only be set indirectly
-  under: ExchangeAgreement
+  under: ExchangeAgreement # or Agreement?
   # requestDistribution: Boolean
   ### inverse relationships and queries
   fulfills: [Fulfillment]
   satisfies: [Satisfaction]
-  appreciationFor: [EconomicEvent] #TODO: might change soon
+  appreciationFor: [EconomicEvent]
   track: [ProductionFlowItem]
   trace: [ProductionFlowItem]
   # validations: [Validation]
@@ -49,13 +53,13 @@ type EconomicResource {
   classifiedAs: [URL]
   conformsTo: ResourceSpecification
   trackingIdentifier: String
-  image: String # url
+  image: String URL
   currentQuantity: QuantityValue
   note: String
   underlyingResource: EconomicResource
   contains: [EconomicResource] #TODO: containedBy and make this the inverse??
   # category: String
-  currentLocation: String
+  currentLocation: String # under discussion
   ### inverse relationships and queries
   trace: [EconomicEvent]
   track: [EconomicEvent]
@@ -121,7 +125,7 @@ type Fulfillment {
   fulfills: Commitment!
   fulfilledQuantity: QuantityValue
   note: String
-  under: ExchangeAgreement
+  under: ExchangeAgreement # Agreement?
 }
 
 

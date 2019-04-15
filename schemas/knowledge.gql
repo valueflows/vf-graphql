@@ -19,7 +19,7 @@ type Action {
   resourceEffect: String! # "+", "-", "0"
 }
 
-# Defined action names: #TODO: how to do this list?  enum?
+# Defined action names: #TODO: how to do this list?  Way to load them up on installation?
 # unload
 # load
 # consume
@@ -48,7 +48,7 @@ type ResourceSpecification {
   # category: String #TODO
   # processCategory: String #TODO
   resourceClassifiedAs: [URL]
-  ### inverse relationships
+  ### inverse relationships and queries
   conformingResources: [EconomicResource]
 }
 
@@ -60,7 +60,7 @@ type RecipeProcess {
   name: String!
   note: String
   inScopeOf: Agent
-  duration: DateInterval
+  hasDuration: Duration
   durationMultiplier: Float
   processClassifiedAs: [URL]
 }
@@ -71,7 +71,7 @@ The linkage between a recipe process, an action that structures a recipe, and a 
 type RecipeFlow {
   id: ID!
   note: String
-  definedQuantity: QuantityValue
+  quantifiedAs: QuantityValue
   resourceConformsTo: ResourceSpecification
   resourceClassifiedAs: [URL]
   action: Action!

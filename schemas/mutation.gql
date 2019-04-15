@@ -169,11 +169,15 @@ input EconomicEventCreateParams { # implements EconomicEventParams
   providerId: ID # Agent
   receiverId: ID # Agent
   inScopeOfId: ID # Agent
-  involvesId: ID # EconomicResource
+  resourceInventoriedAsId: ID # EconomicResource
   resourceClassifiedAs: [URL]
   resourceConformsTo: ID # ResourceSpecification
   observedQuantity: IQuantityValue
-  observedTime: DateTime
+  hasBeginning: DateTime
+  hasEnd: DateTime
+  hasPointInTime: DateTime
+  before: DateTime
+  after: DateTime
   note: String
 }
 
@@ -185,11 +189,15 @@ input EconomicEventUpdateParams { # implements UpdateParams & EconomicEventParam
   providerId: ID
   receiverId: ID
   inScopeOfId: ID
-  involvesId: ID
+  resourceInventoriedAsId: ID
   resourceClassifiedAs: [URL]
   resourceConformsTo: ID
   observedQuantity: IQuantityValue
-  observedTime: DateTime
+  hasBeginning: DateTime
+  hasEnd: DateTime
+  hasPointInTime: DateTime
+  before: DateTime
+  after: DateTime
   note: String
 }
 
@@ -228,7 +236,7 @@ input EconomicResourceUpdateParams { # implements UpdateParams & EconomicResourc
   id: ID!,
   url: String
   classifiedAs: [URL]
-  resourceConformsTo: ID # ResourceSpecification
+  conformsTo: ID # ResourceSpecification
   trackingIdentifier: String
   image: String # url
   currentQuantity: IQuantityValue
@@ -273,7 +281,7 @@ type FulfillmentResponse {
 
 # interface ProcessParams {
 #   name: String
-#   plannedDuration: DateInterval
+#   plannedDuration: Duration # IDuration?
 #   planId: String
 #   inScopeOfId: String
 #   note: String
@@ -281,7 +289,7 @@ type FulfillmentResponse {
 
 input ProcessCreateParams { # implements ProcessParams
   name: String!
-  plannedDuration: DateInterval
+  plannedDuration: Duration # IDuration?
   planId: String
   inScopeOfId: String
   note: String
@@ -290,7 +298,7 @@ input ProcessCreateParams { # implements ProcessParams
 input ProcessUpdateParams { # implements UpdateParams & ProcessParams
   id: ID!
   name: String
-  plannedDuration: DateInterval
+  plannedDuration: Duration # IDuration?
   planId: String
   inScopeOfId: String
   finished: Boolean
@@ -335,13 +343,17 @@ input IntentCreateParams { # implements IntentParams
   providerId: ID
   receiverId: ID
   inScopeOfId: ID
-  involvesId: ID
+  resourceInventoriedAsId: ID
   underId: ID
   planId: ID
-  intendedResourceConformsTo: ID
-  intendedResourceClassifiedAs: URL
-  intendedQuantity: IQuantityValue
-  intendedTime: DateTime
+  resourceConformsTo: ID
+  resourceClassifiedAs: URL
+  quantifiedAs: IQuantityValue
+  hasBeginning: DateTime
+  hasEnd: DateTime
+  hasPointInTime: DateTime
+  before: DateTime
+  after: DateTime
   image: String
   note: String
 }
@@ -354,13 +366,17 @@ input IntentUpdateParams { # implements UpdateParams & IntentParams
   providerId: ID
   receiverId: ID
   inScopeOfId: ID
-  involvesId: ID
+  resourceInventoriedAsId: ID
   underId: ID
   planId: ID
-  intendedResourceConformsTo: ID
-  intendedResourceClassifiedAs: URL
-  intendedQuantity: IQuantityValue
-  intendedTime: DateTime
+  resourceConformsTo: ID
+  resourceClassifiedAs: URL
+  quantifiedAs: IQuantityValue
+  hasBeginning: DateTime
+  hasEnd: DateTime
+  hasPointInTime: DateTime
+  before: DateTime
+  after: DateTime
   image: String
   finished: Boolean
   note: String
@@ -396,14 +412,18 @@ type IntentResponse {
 
 input CommitmentCreateParams { # implements CommitmentParams
   action: ID!
-  committedQuantity: IQuantityValue!
-  committedTime: DateTime!
+  quantifiedAs: IQuantityValue!
+  hasBeginning: DateTime
+  hasEnd: DateTime
+  hasPointInTime: DateTime
+  before: DateTime
+  after: DateTime
   inputOfId: ID
   outputOfId: ID
   providerId: ID
   receiverId: ID
   inScopeOfId: ID
-  involvesId: ID
+  resourceInventoriedAsId: ID
   planId: ID
   isPlanDeliverable: Boolean # :TODO: does this go here, or in `Plan`?
   underId: ID
@@ -413,15 +433,19 @@ input CommitmentCreateParams { # implements CommitmentParams
 input CommitmentUpdateParams { # implements UpdateParams & CommitmentParams
   id: ID!
   action: ID
-  # committedOn: String,  # :TODO: unsure if this is a real field, or errata from Valuenetwork
-  committedQuantity: IQuantityValue
-  committedTime: DateTime
+  created: DateTime
+  quantifiedAs: IQuantityValue
+  hasBeginning: DateTime
+  hasEnd: DateTime
+  hasPointInTime: DateTime
+  before: DateTime
+  after: DateTime
   inputOfId: ID
   outputOfId: ID
   providerId: ID
   receiverId: ID
   inScopeOfId: ID
-  involvesId: ID
+  resourceInventoriedAsId: ID
   planId: ID
   isPlanDeliverable: Boolean # :TODO: does this go here, or in `Plan`?
   underId: ID
@@ -586,7 +610,7 @@ type RecipeProcessResponse {
 
 input RecipeFlowCreateParams { # implements RecipeFlowParams
   action: ID! # Action
-  definedQuantity: IQuantityValue!
+  quantifiedAs: IQuantityValue!
   resourceConformsTo: ID! # ResourceSpecification!
   resourceClassifiedAs: [URL]
   recipeInputOf: ID # RecipeProcess
@@ -597,7 +621,7 @@ input RecipeFlowCreateParams { # implements RecipeFlowParams
 input RecipeFlowUpdateParams { # implements UpdateParams & RecipeFlowParams
   id: ID!
   action: ID # Action
-  definedQuantity: IQuantityValue
+  quantifiedAs: IQuantityValue
   resourceConformsTo: ID # ResourceSpecification
   resourceClassifiedAs: [URL]
   recipeInputOf: ID # RecipeProcess
