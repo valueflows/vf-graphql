@@ -11,10 +11,11 @@
 # - optional fields will be left `null` in the record if ommitted
 #
 # UPDATE:
-# - `id` field is required
+# - `id` field is required & passing no ID is treated as an error
 # - all other fields are optional, if left unchanged they will remain at their
 #   current values
-# - passing no ID is treated as an error
+# - pass `null` as a field value to erase it
+# - when updating array fields, the complete array must be sent; enabling deletion of array elements
 # - no fields being updated is treated as a no-op; clients should optimise
 #   to avoid unnecessary writes
 #
@@ -26,7 +27,6 @@
 # in the field description.
 #
 # :TODO:
-# - ensure we have thought about how to handle field deletion (pass `null` in input params?)
 # - enable validation of shared core record field presence in C&U operations
 #   (@see https://github.com/facebook/graphql/issues/488)
 #
@@ -43,36 +43,31 @@
 
 
 ################################################################################
-# Agent layer                                                                  #
+# Agent module                                                                 #
 ################################################################################
 
 # interface AgentParams {
 #   name: String
-#   image: String
+#   image: URL
 #   email: String
 #   primaryLocation: String
 #   note: String
 # }
 
-
-# interface PersonParams {
-#   primaryPhone: String
-# }
-
-input PersonCreateParams { # implements PersonParams & AgentParams
+input AgentCreateParams { # implements AgentParams
   primaryPhone: String
   name: String!
-  image: String
+  image: URL
   email: String
   primaryLocation: String
   note: String
 }
 
-input PersonUpdateParams { # implements UpdateParams & PersonParams & AgentParams
+input AgentUpdateParams { # implements UpdateParams & AgentParams
   id: ID!
   primaryPhone: String
   name: String
-  image: String
+  image: URL
   email: String
   primaryLocation: String
   note: String
@@ -82,57 +77,30 @@ type PersonResponse {
   agent: Person!
 }
 
-
-# interface OrganizationParams {
-#   primaryPhone: String
-#   type: String
-# }
-
-input OrganizationCreateParams { # implements OrganizationParams & AgentParams
-  primaryPhone: String
-  type: String
-  name: String!
-  image: String
-  email: String
-  primaryLocation: String
-  note: String
-}
-
-input OrganizationUpdateParams { # implements UpdateParams & OrganizationParams & AgentParams
-  id: ID!
-  primaryPhone: String
-  type: String
-  name: String
-  image: String
-  email: String
-  primaryLocation: String
-  note: String
-}
-
 type OrganizationResponse {
   agent: Organization!
 }
 
 
 # interface AgentRelationshipParams {
-#   subjectId: ID
-#   objectId: ID
-#   relationshipId: ID
+#   subject: ID
+#   object: ID
+#   relationship: ID
 #   note: String
 # }
 
 input AgentRelationshipCreateParams { # implements AgentRelationshipParams
-  subjectId: ID! # Agent
-  objectId: ID! # Agent
-  relationshipId: ID! # AgentRelationshipRole
+  subject: ID! # Agent
+  object: ID! # Agent
+  relationship: ID! # AgentRelationshipRole
   note: String
 }
 
 input AgentRelationshipUpdateParams { # implements UpdateParams & AgentRelationshipParams
   id: ID!
-  subjectId: ID
-  objectId: ID
-  relationshipId: ID
+  subject: ID
+  object: ID
+  relationship: ID
   note: String
 }
 
@@ -151,28 +119,28 @@ type AgentRelationshipResponse {
 
 # interface EconomicEventParams {
 #   action: ID!
-#   inputOfId: ID
-#   outputOfId: ID
-#   providerId: ID
-#   receiverId: ID
-#   inScopeOfId: ID
-#   involvesId: ID
-#   observedQuantity: IQuantityValue
-#   observedTime: DateTime
+#   inputOf: ID
+#   outputOf: ID
+#   provider: ID
+#   receiver: ID
+#   affectedQuantity: IQuantityValue
+#   :TODO: time
 #   note: String
+#   inScopeOf: [AnyType!]
 # }
 
 input EconomicEventCreateParams { # implements EconomicEventParams
   action: ID! # Action
-  inputOfId: ID # Process
-  outputOfId: ID # Process
-  providerId: ID # Agent
-  receiverId: ID # Agent
-  inScopeOfId: ID # Agent
-  resourceInventoriedAsId: ID # EconomicResource
+  inputOf: ID # Process | Transfer
+  outputOf: ID # Process | Transfer
+  provider: ID # Agent
+  receiver: ID # Agent
+  inScopeOf: [AnyType!]
+  resourceInventoriedAs: ID # EconomicResource
   resourceClassifiedAs: [URL!]
   resourceConformsTo: ID # ResourceSpecification
-  observedQuantity: IQuantityValue
+  affectedQuantity: IQuantityValue
+  # :TODO: time
   hasBeginning: DateTime
   hasEnd: DateTime
   hasPointInTime: DateTime
@@ -184,15 +152,15 @@ input EconomicEventCreateParams { # implements EconomicEventParams
 input EconomicEventUpdateParams { # implements UpdateParams & EconomicEventParams
   id: ID!
   action: ID
-  inputOfId: ID
-  outputOfId: ID
-  providerId: ID
-  receiverId: ID
-  inScopeOfId: ID
-  resourceInventoriedAsId: ID
+  inputOf: ID
+  outputOf: ID
+  provider: ID
+  receiver: ID
+  inScopeOf: [AnyType!]
+  resourceInventoriedAs: ID
   resourceClassifiedAs: [URL!]
   resourceConformsTo: ID
-  observedQuantity: IQuantityValue
+  affectedQuantity: IQuantityValue
   hasBeginning: DateTime
   hasEnd: DateTime
   hasPointInTime: DateTime
@@ -208,40 +176,40 @@ type EconomicEventResponse {
 
 
 # interface EconomicResourceParams {
-#   url: String
 #   classifiedAs: [URL!]
 #   resourceConformsTo: ID # ResourceSpecification
 #   trackingIdentifier: String
-#   image: String # url
+#   image: URL # url
 #   currentQuantity: IQuantityValue
 #   currentLocation: String
 #   note: String
+#   inScopeOf: [AnyType!]
 # }
 
 """
 Input `EconomicResource` type used when sending events to setup initial resource recordings
 """
 input EconomicResourceCreateParams { # implements EconomicResourceParams
-  url: String
   classifiedAs: [URL!]
   resourceConformsTo: ID # ResourceSpecification
   trackingIdentifier: String
-  image: String # url
+  image: URL # url
   currentQuantity: IQuantityValue
   currentLocation: String
   note: String
+  inScopeOf: [AnyType!]
 }
 
 input EconomicResourceUpdateParams { # implements UpdateParams & EconomicResourceParams
   id: ID!,
-  url: String
   classifiedAs: [URL!]
-  conformsTo: ID # ResourceSpecification
+  resourceConformsTo: ID # ResourceSpecification
   trackingIdentifier: String
-  image: String # url
+  image: URL # url
   currentQuantity: IQuantityValue
   currentLocation: String
   note: String
+  inScopeOf: [AnyType!]
 }
 
 type EconomicResourceResponse {
@@ -253,16 +221,16 @@ type EconomicResourceResponse {
 #   fulfilledBy: ID # EconomicEvent
 #   fulfills: ID # Commmitment
 #   fulfilledQuantity: IQuantityValue
-#   under: ID  # ExchangeAgreement
 #   note: String
+#   inScopeOf: [AnyType!]
 # }
 
 input FulfillmentCreateParams { # implements FulfillmentParams
   fulfilledBy: ID!
   fulfills: ID!
   fulfilledQuantity: IQuantityValue
-  under: ID
   note: String
+  inScopeOf: [AnyType!]
 }
 
 input FulfillmentUpdateParams { # implements UpdateParams & FulfillmentParams
@@ -270,8 +238,8 @@ input FulfillmentUpdateParams { # implements UpdateParams & FulfillmentParams
   fulfilledBy: ID
   fulfills: ID
   fulfilledQuantity: IQuantityValue
-  under: ID
   note: String
+  inScopeOf: [AnyType!]
 }
 
 type FulfillmentResponse {
@@ -281,32 +249,58 @@ type FulfillmentResponse {
 
 # interface ProcessParams {
 #   name: String
+#   :TODO: time
 #   plannedDuration: Duration # IDuration?
-#   planId: String
-#   inScopeOfId: String
 #   note: String
+#   inScopeOf: String
 # }
 
 input ProcessCreateParams { # implements ProcessParams
   name: String!
   plannedDuration: DateInterval # IDuration?
-  planId: String
-  inScopeOfId: String
   note: String
+  inScopeOf: [AnyType!]
 }
 
 input ProcessUpdateParams { # implements UpdateParams & ProcessParams
   id: ID!
   name: String
   plannedDuration: DateInterval # IDuration?
-  planId: String
-  inScopeOfId: String
   finished: Boolean
   note: String
+  inScopeOf: [AnyType!]
 }
 
 type ProcessResponse {
   process: Process
+}
+
+
+# interface TransferParams {
+#   name: String
+#   :TODO: time
+#   plannedDuration: Duration # IDuration?
+#   note: String
+#   inScopeOf: String
+# }
+
+input TransferCreateParams { # implements TransferParams
+  name: String!
+  plannedDuration: DateInterval # IDuration?
+  note: String
+  inScopeOf: [AnyType!]
+}
+
+input TransferUpdateParams { # implements UpdateParams & TransferParams
+  id: ID!
+  name: String
+  plannedDuration: DateInterval # IDuration?
+  note: String
+  inScopeOf: [AnyType!]
+}
+
+type TransferResponse {
+  Transfer: Transfer
 }
 
 
@@ -320,32 +314,26 @@ type ProcessResponse {
 
 # interface IntentParams {
 #   action: ID
-#   inputOfId: ID
-#   outputOfId: ID
-#   providerId: ID
-#   receiverId: ID
-#   inScopeOfId: ID
-#   involvesId: ID
-#   underId: ID
-#   planId: ID
-#   intendedResourceConformsTo: ID
-#   intendedResourceClassifiedAs: [URL!]
-#   intendedQuantity: IQuantityValue
+#   inputOf: ID
+#   outputOf: ID
+#   provider: ID
+#   receiver: ID
+#   resourceConformsTo: ID
+#   resourceClassifiedAs: [URL!]
+#   quantifiedAs: IQuantityValue
+#   :TODO: time
 #   intendedTime: DateTime
-#   image: String
+#   image: URL
 #   note: String
+#   inScopeOf: [AnyType!]
 # }
 
 input IntentCreateParams { # implements IntentParams
   action: ID!
-  inputOfId: ID
-  outputOfId: ID
-  providerId: ID
-  receiverId: ID
-  inScopeOfId: ID
-  resourceInventoriedAsId: ID
-  underId: ID
-  planId: ID
+  inputOf: ID
+  outputOf: ID
+  provider: ID
+  receiver: ID
   resourceConformsTo: ID
   resourceClassifiedAs: [URL!]
   quantifiedAs: IQuantityValue
@@ -354,21 +342,18 @@ input IntentCreateParams { # implements IntentParams
   hasPointInTime: DateTime
   before: DateTime
   after: DateTime
-  image: String
+  image: URL
   note: String
+  inScopeOf: [AnyType!]
 }
 
 input IntentUpdateParams { # implements UpdateParams & IntentParams
   id: ID!
   action: ID
-  inputOfId: ID
-  outputOfId: ID
-  providerId: ID
-  receiverId: ID
-  inScopeOfId: ID
-  resourceInventoriedAsId: ID
-  underId: ID
-  planId: ID
+  inputOf: ID
+  outputOf: ID
+  provider: ID
+  receiver: ID
   resourceConformsTo: ID
   resourceClassifiedAs: [URL!]
   quantifiedAs: IQuantityValue
@@ -377,16 +362,10 @@ input IntentUpdateParams { # implements UpdateParams & IntentParams
   hasPointInTime: DateTime
   before: DateTime
   after: DateTime
-  image: String
+  image: URL
   finished: Boolean
   note: String
-}
-
-type IntentCreateResponse {
-  intent: Intent!
-  # :TODO: should this return a simulated copy of the resource that would be
-  # created, or just the fields needed to create it? (aka classifiedAs / conformsTo)
-  createResourceIntent: EconomicResource
+  inScopeOf: [AnyType!]
 }
 
 type IntentResponse {
@@ -396,61 +375,57 @@ type IntentResponse {
 
 # interface CommitmentParams {
 #   action: ID
-#   committedQuantity: IQuantityValue
+#   inputOf: ID
+#   outputOf: ID
+#   provider: ID
+#   receiver: ID
+#   resourceClassifiedAs: [URL!]
+#   resourceConformsTo: ID
+#   resourceInventoriedAs: ID
+#   quantifiedAs: IQuantityValue
+#   :TODO: time
 #   committedTime: DateTime
-#   inputOfId: ID
-#   outputOfId: ID
-#   providerId: ID
-#   receiverId: ID
-#   inScopeOfId: ID
-#   involvesId: ID
-#   planId: ID
-#   isPlanDeliverable: Boolean # :TODO: does this go here, or in `Plan`?
-#   underId: ID
 #   note: String
+#   inScopeOf: [AnyType!]
 # }
 
 input CommitmentCreateParams { # implements CommitmentParams
   action: ID!
+  inputOf: ID
+  outputOf: ID
+  provider: ID
+  receiver: ID
+  resourceClassifiedAs: [URL!]
+  resourceConformsTo: ID
+  resourceInventoriedAs: ID
   quantifiedAs: IQuantityValue!
   hasBeginning: DateTime
   hasEnd: DateTime
   hasPointInTime: DateTime
   before: DateTime
   after: DateTime
-  inputOfId: ID
-  outputOfId: ID
-  providerId: ID
-  receiverId: ID
-  inScopeOfId: ID
-  resourceInventoriedAsId: ID
-  planId: ID
-  isPlanDeliverable: Boolean # :TODO: does this go here, or in `Plan`?
-  underId: ID
   note: String
+  inScopeOf: [AnyType!]
 }
 
 input CommitmentUpdateParams { # implements UpdateParams & CommitmentParams
   id: ID!
-  action: ID
-  created: DateTime
-  quantifiedAs: IQuantityValue
+  inputOf: ID
+  outputOf: ID
+  provider: ID
+  receiver: ID
+  resourceClassifiedAs: [URL!]
+  resourceConformsTo: ID
+  resourceInventoriedAs: ID
+  quantifiedAs: IQuantityValue!
   hasBeginning: DateTime
   hasEnd: DateTime
   hasPointInTime: DateTime
   before: DateTime
   after: DateTime
-  inputOfId: ID
-  outputOfId: ID
-  providerId: ID
-  receiverId: ID
-  inScopeOfId: ID
-  resourceInventoriedAsId: ID
-  planId: ID
-  isPlanDeliverable: Boolean # :TODO: does this go here, or in `Plan`?
-  underId: ID
   finished: Boolean
   note: String
+  inScopeOf: [AnyType!]
 }
 
 type CommitmentResponse {
@@ -470,6 +445,7 @@ input SatisfactionCreateParams { # implements SatisfactionParams
   satisfiedBy: ID! # Commitment
   satisfiedQuantity: IQuantityValue
   note: String
+  inScopeOf: [AnyType!]
 }
 
 input SatisfactionUpdateParams { # implements UpdateParams & SatisfactionParams
@@ -478,6 +454,7 @@ input SatisfactionUpdateParams { # implements UpdateParams & SatisfactionParams
   satisfiedBy: ID # Commitment
   satisfiedQuantity: IQuantityValue
   note: String
+  inScopeOf: [AnyType!]
 }
 
 type SatisfactionResponse {
@@ -536,18 +513,20 @@ type ExchangeAgreementResponse {
 #   name: String
 #   unit: ID
 #   substitutable: Boolean
-#   image: String
+#   image: URL
 #   resourceClassifiedAs: [URL!]
 #   note: String
+#   inScopeOf: [AnyType!]
 # }
 
 input ResourceSpecificationCreateParams { # implements ResourceSpecificationParams
   name: String!
   unit: ID
   substitutable: Boolean
-  image: String
+  image: URL
   resourceClassifiedAs: [URL!]
   note: String
+  inScopeOf: [AnyType!]
 }
 
 input ResourceSpecificationUpdateParams { # implements UpdateParams & ResourceSpecificationParams
@@ -555,9 +534,10 @@ input ResourceSpecificationUpdateParams { # implements UpdateParams & ResourceSp
   name: String
   unit: ID
   substitutable: Boolean
-  image: String
+  image: URL
   resourceClassifiedAs: [URL!]
   note: String
+  inScopeOf: [AnyType!]
 }
 
 type ResourceSpecificationResponse {
@@ -567,30 +547,30 @@ type ResourceSpecificationResponse {
 
 # interface RecipeProcessParams {
 #   name: String
-#   inScopeOf: Agent
 #   duration: DateInterval
 #   durationMultiplier: Float
 #   processClassifiedAs: [URL!]
 #   note: String
+#   inScopeOf: [AnyType!]
 # }
 
 input RecipeProcessCreateParams { # implements RecipeProcessParams
   name: String!
-  inScopeOf: ID # Agent
   duration: DateInterval
   durationMultiplier: Float
   processClassifiedAs: [URL!]
   note: String
+  inScopeOf: [AnyType!]
 }
 
 input RecipeProcessUpdateParams { # implements UpdateParams & RecipeProcessParams
   id: ID!
   name: String
-  inScopeOf: ID # Agent
   duration: DateInterval
   durationMultiplier: Float
   processClassifiedAs: [URL!]
   note: String
+  inScopeOf: [AnyType!]
 }
 
 type RecipeProcessResponse {
@@ -600,33 +580,36 @@ type RecipeProcessResponse {
 
 # interface RecipeFlowParams {
 #   action: Action
-#   definedQuantity: IQuantityValue
-#   resourceConformsTo: ResourceSpecification
 #   resourceClassifiedAs: [URL!]
+#   resourceConformsTo: ResourceSpecification
+#   quantifiedAs: IQuantityValue
 #   recipeInputOf: RecipeProcess
 #   recipeOutputOf: RecipeProcess
 #   note: String
+#   inScopeOf: [AnyType!]
 # }
 
 input RecipeFlowCreateParams { # implements RecipeFlowParams
   action: ID! # Action
-  quantifiedAs: IQuantityValue!
-  resourceConformsTo: ID! # ResourceSpecification!
   resourceClassifiedAs: [URL!]
+  resourceConformsTo: ID # ResourceSpecification!
+  quantifiedAs: IQuantityValue
   recipeInputOf: ID # RecipeProcess
   recipeOutputOf: ID # RecipeProcess
   note: String
+  inScopeOf: [AnyType!]
 }
 
 input RecipeFlowUpdateParams { # implements UpdateParams & RecipeFlowParams
   id: ID!
   action: ID # Action
-  quantifiedAs: IQuantityValue
-  resourceConformsTo: ID # ResourceSpecification
   resourceClassifiedAs: [URL!]
+  resourceConformsTo: ID # ResourceSpecification
+  quantifiedAs: IQuantityValue
   recipeInputOf: ID # RecipeProcess
   recipeOutputOf: ID # RecipeProcess
   note: String
+  inScopeOf: [AnyType!]
 }
 
 type RecipeFlowResponse {
@@ -670,17 +653,21 @@ type Mutation {
 
   # Agent module
 
-  createPerson(person: PersonCreateParams!): PersonResponse
-  updatePerson(person: PersonUpdateParams!): PersonResponse
+  createPerson(person: AgentCreateParams!): PersonResponse
+  updatePerson(person: AgentUpdateParams!): PersonResponse
   deletePerson(id: String!): PersonResponse
 
-  createOrganization(organization: OrganizationCreateParams!): OrganizationResponse
-  updateOrganization(organization: OrganizationUpdateParams!): OrganizationResponse
+  createOrganization(organization: AgentCreateParams!): OrganizationResponse
+  updateOrganization(organization: AgentUpdateParams!): OrganizationResponse
   deleteOrganization(id: String!): OrganizationResponse
 
   createAgentRelationship(relationship: AgentRelationshipCreateParams!): AgentRelationshipResponse
   updateAgentRelationship(relationship: AgentRelationshipUpdateParams!): AgentRelationshipResponse
   deleteAgentRelationship(id: String!): AgentRelationshipResponse
+
+  createAgentRelationshipRole(agentRelationshipRole: AgentRelationshipRoleCreateParams): AgentRelationshipRoleResponse
+  updateAgentRelationshipRole(agentRelationshipRole: AgentRelationshipRoleUpdateParams): AgentRelationshipRoleResponse
+  deleteAgentRelationshipRole(id: String!): AgentRelationshipRoleResponse
 
   # Observation layer
 
@@ -688,30 +675,34 @@ type Mutation {
   updateEconomicEvent(event: EconomicEventUpdateParams!): EconomicEventResponse
   deleteEconomicEvent(id: String!): EconomicEventResponse
 
-  createFulfillment(fulfillment: FulfillmentCreateParams!): FulfillmentResponse
-  updateFulfillment(fulfillment: FulfillmentUpdateParams!): FulfillmentResponse
-  deleteFulfillment(id: String!): FulfillmentResponse
-
   # :TODO: should this be allowed without an originating event? Or should the event be recorded transparently?
   updateEconomicResource(resource: EconomicResourceUpdateParams!): EconomicResourceResponse
   deleteEconomicResource(id: String!): EconomicResourceResponse
 
-  #createValidation(note: String, economicEventId: String!, validatedById: String!): CreateValidation
+  #createValidation(note: String, economicEvent: String!, validatedBy: String!): CreateValidation
   #deleteValidation(id: String!): DeleteValidation
 
   createProcess(process: ProcessCreateParams!): ProcessResponse
   updateProcess(process: ProcessUpdateParams!): ProcessResponse
   deleteProcess(id: String!): ProcessResponse
 
-  # Planning layer
+  createTransfer(transfer: TransferCreateParams!): TransferResponse
+  updateTransfer(transfer: TransferUpdateParams!): TransferResponse
+  deleteTransfer(id: String!): TransferResponse
 
-  createIntent(intent: IntentCreateParams): IntentCreateResponse
-  updateIntent(intent: IntentUpdateParams): IntentResponse
-  deleteIntent(id: String!): IntentResponse
+  # Planning layer
 
   createCommitment(commitment: CommitmentCreateParams): CommitmentResponse
   updateCommitment(commitment: CommitmentUpdateParams): CommitmentResponse
   deleteCommitment(id: String!): CommitmentResponse
+
+  createFulfillment(fulfillment: FulfillmentCreateParams!): FulfillmentResponse
+  updateFulfillment(fulfillment: FulfillmentUpdateParams!): FulfillmentResponse
+  deleteFulfillment(id: String!): FulfillmentResponse
+
+  createIntent(intent: IntentCreateParams): IntentResponse
+  updateIntent(intent: IntentUpdateParams): IntentResponse
+  deleteIntent(id: String!): IntentResponse
 
   createSatisfaction(satisfaction: SatisfactionCreateParams): SatisfactionResponse
   updateSatisfaction(satisfaction: SatisfactionUpdateParams): SatisfactionResponse # TODO: add EconomicEvent
@@ -723,17 +714,13 @@ type Mutation {
   # updatePlan(): PlanResponse
   # deletePlan(id: String!): PlanResponse
 
-  createExchangeAgreement(exchangeAgreement: ExchangeAgreementCreateParams): ExchangeAgreementResponse
-  updateExchangeAgreement(exchangeAgreement: ExchangeAgreementUpdateParams): ExchangeAgreementResponse
-  deleteExchangeAgreement(id: String!): ExchangeAgreementResponse
+  # createExchangeAgreement(exchangeAgreement: ExchangeAgreementCreateParams): ExchangeAgreementResponse
+  # updateExchangeAgreement(exchangeAgreement: ExchangeAgreementUpdateParams): ExchangeAgreementResponse
+  # deleteExchangeAgreement(id: String!): ExchangeAgreementResponse
 
   # Knowledge layer
 
-  createAgentRelationshipRole(agentRelationshipRole: AgentRelationshipRoleCreateParams): AgentRelationshipRoleResponse
-  updateAgentRelationshipRole(agentRelationshipRole: AgentRelationshipRoleUpdateParams): AgentRelationshipRoleResponse
-  deleteAgentRelationshipRole(id: String!): AgentRelationshipRoleResponse
-
-  #createAgentResourceClassification(resourceClassificationId: String!, agentId: String!): CreateAgentResourceClassification
+  #createAgentResourceClassification(resourceClassification: String!, agent: String!): CreateAgentResourceClassification
   #deleteAgentResourceClassification(id: String!): DeleteAgentResourceClassification
 
   createResourceSpecification(resourceSpecification: ResourceSpecificationCreateParams): ResourceSpecificationResponse
