@@ -67,27 +67,6 @@ type ResourceSpecification {
 }
 
 """
-Specifies the process part of a recipe for use in planning from recipe.
-"""
-type RecipeProcess {
-  id: ID!
-  name: String!
-
-  hasDuration: DateInterval
-
-  "The multiplier for duration based on capacities for the recipe."
-  durationMultiplier: Float
-
-  "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
-  processClassifiedAs: [URL!]
-
-  note: String
-
-  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: Agent
-}
-
-"""
 The linkage between a recipe process, an action that structures a recipe, and a resource specification.
 """
 type RecipeFlow {
@@ -113,4 +92,25 @@ type RecipeFlow {
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
   inScopeOf: [AnyType!]
+}
+
+"""
+Specifies the process part of a recipe for use in planning from recipe.
+"""
+type RecipeProcess {
+  id: ID!
+  name: String!
+
+  hasDuration: DateInterval
+
+  "The multiplier for duration based on capacities for the recipe."
+  durationMultiplier: Float
+
+  "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
+  processClassifiedAs: [URL!]
+
+  note: String
+
+  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
+  inScopeOf: Agent
 }

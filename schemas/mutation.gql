@@ -696,13 +696,13 @@ type Mutation {
   updateCommitment(commitment: CommitmentUpdateParams): CommitmentResponse
   deleteCommitment(id: String!): CommitmentResponse
 
-  createFulfillment(fulfillment: FulfillmentCreateParams!): FulfillmentResponse
-  updateFulfillment(fulfillment: FulfillmentUpdateParams!): FulfillmentResponse
-  deleteFulfillment(id: String!): FulfillmentResponse
-
   createIntent(intent: IntentCreateParams): IntentResponse
   updateIntent(intent: IntentUpdateParams): IntentResponse
   deleteIntent(id: String!): IntentResponse
+
+  createFulfillment(fulfillment: FulfillmentCreateParams!): FulfillmentResponse
+  updateFulfillment(fulfillment: FulfillmentUpdateParams!): FulfillmentResponse
+  deleteFulfillment(id: String!): FulfillmentResponse
 
   createSatisfaction(satisfaction: SatisfactionCreateParams): SatisfactionResponse
   updateSatisfaction(satisfaction: SatisfactionUpdateParams): SatisfactionResponse # TODO: add EconomicEvent
@@ -727,11 +727,11 @@ type Mutation {
   updateResourceSpecification(resourceSpecification: ResourceSpecificationUpdateParams): ResourceSpecificationResponse
   deleteResourceSpecification(id: String!): ResourceSpecificationResponse
 
-  createRecipeProcess(recipeProcess: RecipeProcessCreateParams): RecipeProcessResponse
-  updateRecipeProcess(recipeProcess: RecipeProcessUpdateParams): RecipeProcessResponse
-  deleteRecipeProcess(id: String!): RecipeProcessResponse
-
   createRecipeFlow(recipeFlow: RecipeFlowCreateParams): RecipeFlowResponse
   updateRecipeFlow(recipeFlow: RecipeFlowUpdateParams): RecipeFlowResponse
   deleteRecipeFlow(id: String!): RecipeFlowResponse
+
+  createRecipeProcess(recipeProcess: RecipeProcessCreateParams): RecipeProcessResponse
+  updateRecipeProcess(recipeProcess: RecipeProcessUpdateParams): RecipeProcessResponse
+  deleteRecipeProcess(id: String!): RecipeProcessResponse
 }

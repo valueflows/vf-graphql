@@ -128,36 +128,6 @@ type EconomicResource {
 }
 
 """
-An activity that assigns the rights and responsibilities for an economic resource from one agent to another.
-"""
-type Transfer { #TODO this whole model is under review
-  id: ID!
-  name: String!
-  # under: ExchangeAgreement TODO need to finish this definition
-  plannedTime: DateTime
-  note: String
-
-  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType!]
-
-  ##############################################################################
-  # inverse relationships and queries
-
-  economicEvents: [EconomicEvent!]
-  giveEconomicEvent: EconomicEvent
-  takeEconomicEvent: EconomicEvent
-
-  transferCommitments: [Commitment!]
-  giveCommitment: Commitment
-  takeCommitment: Commitment
-
-  involvedAgents: [Agent!]
-
-  trace: [EconomicEvent!]
-  track: [EconomicEvent!]
-}
-
-"""
 An activity that changes inputs into outputs.  It could transform or transport economic resource(s).
 """
 type Process {
@@ -204,30 +174,33 @@ type Process {
 }
 
 """
-The quantity that the economic event fulfilled towards the commitment.
+An activity that assigns the rights and responsibilities for an economic resource from one agent to another.
 """
-type Fulfillment {
+type Transfer { #TODO this whole model is under review
   id: ID!
-
-  "The economic event which completely or partially fulfills a commitment."
-  fulfilledBy: EconomicEvent!
-
-  "The commitment which is completely or partially fulfilled by an economic event."
-  fulfills: Commitment!
-
-  "The quantity of the fulfillment of an event towards a commitment or an intent."
-  fulfilledQuantity: QuantityValue
-
+  name: String!
+  # under: ExchangeAgreement TODO need to finish this definition
+  plannedTime: DateTime
   note: String
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
   inScopeOf: [AnyType!]
 
   ##############################################################################
-  # relationship fields; can only be set indirectly
+  # inverse relationships and queries
 
-  "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this flow."
-  under: ExchangeAgreement # Agreement?
+  economicEvents: [EconomicEvent!]
+  giveEconomicEvent: EconomicEvent
+  takeEconomicEvent: EconomicEvent
+
+  transferCommitments: [Commitment!]
+  giveCommitment: Commitment
+  takeCommitment: Commitment
+
+  involvedAgents: [Agent!]
+
+  trace: [EconomicEvent!]
+  track: [EconomicEvent!]
 }
 
 #type Validation {
