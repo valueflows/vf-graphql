@@ -45,9 +45,9 @@ interface Agent {
   commitments(action: ID, finished: Boolean): [Commitment]
   searchCommitments(searchString: String, finished: Boolean): [Commitment]
 
-  relationships(roleId: ID, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
-  relationshipsAsSubject(roleId: ID, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
-  relationshipsAsObject(roleId: ID, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
+  relationships(roleId: ID): [AgentRelationship] # :TODO: category filtering
+  relationshipsAsSubject(roleId: ID): [AgentRelationship] # :TODO: category filtering
+  relationshipsAsObject(roleId: ID): [AgentRelationship] # :TODO: category filtering
 
   roles: [AgentRelationshipRole]
 
@@ -104,9 +104,9 @@ type Person implements Agent {
   commitments(action: ID, finished: Boolean): [Commitment]
   searchCommitments(searchString: String, finished: Boolean): [Commitment]
 
-  relationships(roleId: ID, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
-  relationshipsAsSubject(roleId: ID, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
-  relationshipsAsObject(roleId: ID, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
+  relationships(roleId: ID): [AgentRelationship] # :TODO: category filtering
+  relationshipsAsSubject(roleId: ID): [AgentRelationship] # :TODO: category filtering
+  relationshipsAsObject(roleId: ID): [AgentRelationship] # :TODO: category filtering
 
   roles: [AgentRelationshipRole]
 
@@ -161,9 +161,9 @@ type Organization implements Agent {
   commitments(action: ID, finished: Boolean): [Commitment]
   searchCommitments(searchString: String, finished: Boolean): [Commitment]
 
-  relationships(roleId: ID, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
-  relationshipsAsSubject(roleId: ID, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
-  relationshipsAsObject(roleId: ID, category: AgentRelationshipCategory): [AgentRelationship] #TODO: category
+  relationships(roleId: ID): [AgentRelationship] # :TODO: category filtering
+  relationshipsAsSubject(roleId: ID): [AgentRelationship] # :TODO: category filtering
+  relationshipsAsObject(roleId: ID): [AgentRelationship] # :TODO: category filtering
 
   roles: [AgentRelationshipRole]
 
