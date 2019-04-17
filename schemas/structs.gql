@@ -8,6 +8,11 @@
 ##
 
 """
+A type which allows any arbitrary value to be set
+"""
+scalar AnyType
+
+"""
 The `URL` type simply declares a reference to an external web URL.
 """
 scalar URL

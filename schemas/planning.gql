@@ -14,8 +14,11 @@ type Plan { #TODO: this is not yet in VF, and may or may not be named Plan
   due: String
   note: String
   name: String
+
+  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
+  inScopeOf: [AnyType]
+
   # createdBy: Agent
-  inScopeOf: [Agent] #TODO can be more than Agent
   processes(year: Int, month: Int): [Process]
   workingAgents: [Agent]
   plannedNonWorkInputs: [Commitment]
@@ -49,9 +52,6 @@ type Intent {
   "The economic agent whom the intended, committed, or actual economic event is for."
   receiver: Agent
 
-  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: Agent #TODO: more than Agent
-
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
   resourceClassifiedAs: [URL]
 
@@ -73,9 +73,12 @@ type Intent {
 
   # deletable: Boolean
 
+  image: URL
+
   note: String
 
-  image: URL
+  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
+  inScopeOf: [AnyType]
 
   ##############################################################################
   # relationship fields; can only be set indirectly
@@ -106,6 +109,9 @@ type Satisfaction {
   satisfiedQuantity: QuantityValue
 
   note: String
+
+  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
+  inScopeOf: [AnyType]
 }
 
 """
@@ -128,9 +134,6 @@ type Commitment {
 
   "The economic agent whom the intended, committed, or actual economic event is for."
   receiver: Agent
-
-  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: Agent
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
   resourceClassifiedAs: [URL]
@@ -159,6 +162,9 @@ type Commitment {
 
   note: String
 
+  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
+  inScopeOf: [AnyType]
+
   ##############################################################################
   # relationship fields; can only be set indirectly
 
@@ -181,6 +187,9 @@ type ExchangeAgreement {
   id: ID!
   name: String
   agreedTime: DateTime #created?
+
+  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
+  inScopeOf: [AnyType]
 
   ##############################################################################
   # inverse relationships and queries

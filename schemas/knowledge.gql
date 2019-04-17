@@ -54,6 +54,9 @@ type ResourceSpecification {
 
   note: String
 
+  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
+  inScopeOf: [AnyType]
+
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
   resourceClassifiedAs: [URL]
 
@@ -69,10 +72,6 @@ Specifies the process part of a recipe for use in planning from recipe.
 type RecipeProcess {
   id: ID!
   name: String!
-  note: String
-
-  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: Agent
 
   hasDuration: DateInterval
 
@@ -81,6 +80,11 @@ type RecipeProcess {
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
   processClassifiedAs: [URL]
+
+  note: String
+
+  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
+  inScopeOf: Agent
 }
 
 """
@@ -88,7 +92,6 @@ The linkage between a recipe process, an action that structures a recipe, and a 
 """
 type RecipeFlow {
   id: ID!
-  note: String
   quantifiedAs: QuantityValue
 
   "The primary resource knowledge specification or definition of an existing or potential resource."
@@ -105,4 +108,9 @@ type RecipeFlow {
 
   "Relates an output flow to it's node in a recipe."
   recipeOutputOf: RecipeProcess
+
+  note: String
+
+  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
+  inScopeOf: [AnyType]
 }

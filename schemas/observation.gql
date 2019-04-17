@@ -30,9 +30,6 @@ type EconomicEvent {
   "The economic agent whom the intended, committed, or actual economic event is for."
   receiver: Agent
 
-  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: Agent #TODO how to loosen this up to be more than Agent? (mostly it is Agents)
-
   "Economic resource involved in the flow."
   resourceInventoriedAs: EconomicResource
 
@@ -51,6 +48,9 @@ type EconomicEvent {
   before: DateTime
   after: DateTime
   note: String
+
+  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
+  inScopeOf: [AnyType]
 
   ##############################################################################
   # relationship fields; can only be set indirectly
@@ -101,6 +101,9 @@ type EconomicResource {
 
   note: String
 
+  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
+  inScopeOf: [AnyType]
+
   ##############################################################################
   # relationship fields; can only be set indirectly
 
@@ -133,6 +136,9 @@ type Transfer { #TODO this whole model is under review
   plannedTime: DateTime
   note: String
 
+  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
+  inScopeOf: [AnyType]
+
   ##############################################################################
   # inverse relationships and queries
 
@@ -157,9 +163,6 @@ type Process {
   id: ID!
   name: String!
 
-  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: Agent #TODO:
-
   plannedTime: DateTime
 
   # started: Boolean
@@ -172,6 +175,9 @@ type Process {
   classifiedAs: [URL]
 
   note: String
+
+  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
+  inScopeOf: [AnyType]
 
   # deletable: Boolean
 
@@ -212,6 +218,9 @@ type Fulfillment {
   fulfilledQuantity: QuantityValue
 
   note: String
+
+  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
+  inScopeOf: [AnyType]
 
   ##############################################################################
   # relationship fields; can only be set indirectly
