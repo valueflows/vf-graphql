@@ -123,7 +123,7 @@ type AgentRelationshipResponse {
 #   outputOf: ID
 #   provider: ID
 #   receiver: ID
-#   affectedQuantity: IQuantityValue
+#   quantifiedAs: IQuantityValue
 #   :TODO: time
 #   note: String
 #   inScopeOf: [AnyType!]
@@ -139,7 +139,7 @@ input EconomicEventCreateParams { # implements EconomicEventParams
   resourceInventoriedAs: ID # EconomicResource
   resourceClassifiedAs: [URL!]
   resourceConformsTo: ID # ResourceSpecification
-  affectedQuantity: IQuantityValue
+  quantifiedAs: IQuantityValue
   # :TODO: time
   hasBeginning: DateTime
   hasEnd: DateTime
@@ -160,7 +160,7 @@ input EconomicEventUpdateParams { # implements UpdateParams & EconomicEventParam
   resourceInventoriedAs: ID
   resourceClassifiedAs: [URL!]
   resourceConformsTo: ID
-  affectedQuantity: IQuantityValue
+  quantifiedAs: IQuantityValue
   hasBeginning: DateTime
   hasEnd: DateTime
   hasPointInTime: DateTime
@@ -191,26 +191,24 @@ Input `EconomicResource` type used when sending events to setup initial resource
 """
 input EconomicResourceCreateParams { # implements EconomicResourceParams
   classifiedAs: [URL!]
-  resourceConformsTo: ID # ResourceSpecification
+  conformsTo: ID # ResourceSpecification
   trackingIdentifier: String
   image: URL # url
   currentQuantity: IQuantityValue
   currentLocation: String
   note: String
-  inScopeOf: [AnyType!]
 }
 
 input EconomicResourceUpdateParams { # implements UpdateParams & EconomicResourceParams
   id: ID!,
   classifiedAs: [URL!]
-  resourceConformsTo: ID # ResourceSpecification
+  conformsTo: ID # ResourceSpecification
   trackingIdentifier: String
   image: URL # url
   currentQuantity: IQuantityValue
   currentLocation: String
   note: String
-  inScopeOf: [AnyType!]
-}
+  inScopeOf: [AnyType!]}
 
 type EconomicResourceResponse {
   resource: EconomicResource!
@@ -230,7 +228,6 @@ input FulfillmentCreateParams { # implements FulfillmentParams
   fulfills: ID!
   fulfilledQuantity: IQuantityValue
   note: String
-  inScopeOf: [AnyType!]
 }
 
 input FulfillmentUpdateParams { # implements UpdateParams & FulfillmentParams
@@ -239,7 +236,6 @@ input FulfillmentUpdateParams { # implements UpdateParams & FulfillmentParams
   fulfills: ID
   fulfilledQuantity: IQuantityValue
   note: String
-  inScopeOf: [AnyType!]
 }
 
 type FulfillmentResponse {
@@ -250,14 +246,14 @@ type FulfillmentResponse {
 # interface ProcessParams {
 #   name: String
 #   :TODO: time
-#   plannedDuration: Duration # IDuration?
+#   hasDuration: Duration # IDuration?
 #   note: String
 #   inScopeOf: String
 # }
 
 input ProcessCreateParams { # implements ProcessParams
   name: String!
-  plannedDuration: DateInterval # IDuration?
+  hasDuration: DateInterval # IDuration?
   note: String
   inScopeOf: [AnyType!]
 }
@@ -265,7 +261,7 @@ input ProcessCreateParams { # implements ProcessParams
 input ProcessUpdateParams { # implements UpdateParams & ProcessParams
   id: ID!
   name: String
-  plannedDuration: DateInterval # IDuration?
+  hasDuration: DateInterval # IDuration?
   finished: Boolean
   note: String
   inScopeOf: [AnyType!]
@@ -279,24 +275,21 @@ type ProcessResponse {
 # interface TransferParams {
 #   name: String
 #   :TODO: time
-#   plannedDuration: Duration # IDuration?
+#   hasPointInTime: DateTime
 #   note: String
-#   inScopeOf: String
 # }
 
 input TransferCreateParams { # implements TransferParams
   name: String!
-  plannedDuration: DateInterval # IDuration?
+  hasPointInTime: DateTime
   note: String
-  inScopeOf: [AnyType!]
 }
 
 input TransferUpdateParams { # implements UpdateParams & TransferParams
   id: ID!
   name: String
-  plannedDuration: DateInterval # IDuration?
+  hasDuration: DateTime
   note: String
-  inScopeOf: [AnyType!]
 }
 
 type TransferResponse {
@@ -321,8 +314,11 @@ type TransferResponse {
 #   resourceConformsTo: ID
 #   resourceClassifiedAs: [URL!]
 #   quantifiedAs: IQuantityValue
-#   :TODO: time
-#   intendedTime: DateTime
+#   hasBeginning: DateTime
+#   hasEnd: DateTime
+#   hasPointInTime: DateTime
+#   before: DateTime
+#   after: DateTime
 #   image: URL
 #   note: String
 #   inScopeOf: [AnyType!]
@@ -383,8 +379,11 @@ type IntentResponse {
 #   resourceConformsTo: ID
 #   resourceInventoriedAs: ID
 #   quantifiedAs: IQuantityValue
-#   :TODO: time
-#   committedTime: DateTime
+#   hasBeginning: DateTime
+#   hasEnd: DateTime
+#   hasPointInTime: DateTime
+#   before: DateTime
+#   after: DateTime
 #   note: String
 #   inScopeOf: [AnyType!]
 # }
@@ -445,7 +444,6 @@ input SatisfactionCreateParams { # implements SatisfactionParams
   satisfiedBy: ID! # Commitment
   satisfiedQuantity: IQuantityValue
   note: String
-  inScopeOf: [AnyType!]
 }
 
 input SatisfactionUpdateParams { # implements UpdateParams & SatisfactionParams
@@ -454,7 +452,6 @@ input SatisfactionUpdateParams { # implements UpdateParams & SatisfactionParams
   satisfiedBy: ID # Commitment
   satisfiedQuantity: IQuantityValue
   note: String
-  inScopeOf: [AnyType!]
 }
 
 type SatisfactionResponse {
@@ -516,7 +513,6 @@ type ExchangeAgreementResponse {
 #   image: URL
 #   resourceClassifiedAs: [URL!]
 #   note: String
-#   inScopeOf: [AnyType!]
 # }
 
 input ResourceSpecificationCreateParams { # implements ResourceSpecificationParams
@@ -526,7 +522,6 @@ input ResourceSpecificationCreateParams { # implements ResourceSpecificationPara
   image: URL
   resourceClassifiedAs: [URL!]
   note: String
-  inScopeOf: [AnyType!]
 }
 
 input ResourceSpecificationUpdateParams { # implements UpdateParams & ResourceSpecificationParams
@@ -537,7 +532,6 @@ input ResourceSpecificationUpdateParams { # implements UpdateParams & ResourceSp
   image: URL
   resourceClassifiedAs: [URL!]
   note: String
-  inScopeOf: [AnyType!]
 }
 
 type ResourceSpecificationResponse {
@@ -547,30 +541,27 @@ type ResourceSpecificationResponse {
 
 # interface RecipeProcessParams {
 #   name: String
-#   duration: DateInterval
+#   hasDuration: DateInterval
 #   durationMultiplier: Float
 #   processClassifiedAs: [URL!]
 #   note: String
-#   inScopeOf: [AnyType!]
 # }
 
 input RecipeProcessCreateParams { # implements RecipeProcessParams
   name: String!
-  duration: DateInterval
+  hasDuration: DateInterval
   durationMultiplier: Float
   processClassifiedAs: [URL!]
   note: String
-  inScopeOf: [AnyType!]
 }
 
 input RecipeProcessUpdateParams { # implements UpdateParams & RecipeProcessParams
   id: ID!
   name: String
-  duration: DateInterval
+  hasDuration: DateInterval
   durationMultiplier: Float
   processClassifiedAs: [URL!]
   note: String
-  inScopeOf: [AnyType!]
 }
 
 type RecipeProcessResponse {
@@ -586,7 +577,6 @@ type RecipeProcessResponse {
 #   recipeInputOf: RecipeProcess
 #   recipeOutputOf: RecipeProcess
 #   note: String
-#   inScopeOf: [AnyType!]
 # }
 
 input RecipeFlowCreateParams { # implements RecipeFlowParams
@@ -597,7 +587,6 @@ input RecipeFlowCreateParams { # implements RecipeFlowParams
   recipeInputOf: ID # RecipeProcess
   recipeOutputOf: ID # RecipeProcess
   note: String
-  inScopeOf: [AnyType!]
 }
 
 input RecipeFlowUpdateParams { # implements UpdateParams & RecipeFlowParams
@@ -609,7 +598,6 @@ input RecipeFlowUpdateParams { # implements UpdateParams & RecipeFlowParams
   recipeInputOf: ID # RecipeProcess
   recipeOutputOf: ID # RecipeProcess
   note: String
-  inScopeOf: [AnyType!]
 }
 
 type RecipeFlowResponse {
