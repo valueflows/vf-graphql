@@ -209,7 +209,7 @@ type EconomicEventResponse {
 
 # interface EconomicResourceParams {
 #   url: String
-#   classifiedAs: [String]
+#   classifiedAs: [URL]
 #   resourceConformsTo: ID # ResourceSpecification
 #   trackingIdentifier: String
 #   image: String # url
@@ -329,7 +329,7 @@ type ProcessResponse {
 #   underId: ID
 #   planId: ID
 #   intendedResourceConformsTo: ID
-#   intendedResourceClassifiedAs: URL
+#   intendedResourceClassifiedAs: [URL]
 #   intendedQuantity: IQuantityValue
 #   intendedTime: DateTime
 #   image: String
@@ -347,7 +347,7 @@ input IntentCreateParams { # implements IntentParams
   underId: ID
   planId: ID
   resourceConformsTo: ID
-  resourceClassifiedAs: URL
+  resourceClassifiedAs: [URL]
   quantifiedAs: IQuantityValue
   hasBeginning: DateTime
   hasEnd: DateTime
@@ -370,7 +370,7 @@ input IntentUpdateParams { # implements UpdateParams & IntentParams
   underId: ID
   planId: ID
   resourceConformsTo: ID
-  resourceClassifiedAs: URL
+  resourceClassifiedAs: [URL]
   quantifiedAs: IQuantityValue
   hasBeginning: DateTime
   hasEnd: DateTime
