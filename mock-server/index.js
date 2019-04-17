@@ -21,6 +21,7 @@ addMockFunctionsToSchema({ schema, mocks: {
   URL: () => 'http://example.com/thing',
   DateTime: () => new Date().toISOString(),
   DateInterval: () => 'P1Y2M10DT2H30M',
+  AnyType: () => '??????',
 }})
 
 const server = new ApolloServer({ schema })
