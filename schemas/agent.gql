@@ -8,42 +8,70 @@
 #
 ##
 
+"Query parameters for reading `EconomicResource`s related to an `Agent`"
+input agentResourceSearchParams {
+  searchString: String
+  resourceClassification: URL
+  page: Int
+}
+
+"Query parameters for reading `Process`es related to an `Agent`"
+input agentProcessSearchParams {
+  searchString: String
+  finished: Boolean
+}
+
+"Query parameters for reading `Plan`s related to an `Agent`"
+input agentPlanSearchParams {
+  searchString: String
+  finished: Boolean
+  year: Int
+  month: Int
+}
+
+"Query parameters for reading `EconomicEvent`s related to an `Agent`"
+input agentEventSearchParams {
+  searchString: String
+  action: ID
+  year: Int
+  month: Int
+}
+
+"Query parameters for reading `Commitment`s related to an `Agent`"
+input agentCommitmentSearchParams {
+  searchString: String
+  action: ID
+  finished: Boolean
+}
+
 """
 A person or group or organization with economic agency.
 """
 interface Agent {
   id: ID!
+
+  "The name that this agent will be referred to by."
   name: String!
-  # type: String
+
+  "A 'profile image' for this agent."
   image: URL
 
-  note: String
+  "Optional email address contact for this agent."
+  email: String
 
   "The main place an agent is located, often an address where activities occur and mail can be sent. This is usually a mappable geographic location.  It also could be a website address, as in the case of agents who have no physical location."
   primaryLocation: String
 
-  email: String
+  note: String
 
   ##############################################################################
   # inverse relationships and queries
 
-  inventoriedEconomicResources(
-    # category: EconomicResourceCategory,
-    resourceClassification: URL,
-    page: Int
-  ): [EconomicResource]
-  searchInventoriedEconomicResources(searchString: String): [EconomicResource]
-
-  processes(finished: Boolean): [Process]
-  searchProcesses(searchString: String, finished: Boolean): [Process]
-
-  plans(finished: Boolean, year: Int, month: Int): [Plan]
-  searchPlans(searchString: String, finished: Boolean): [Plan]
-
-  economicEvents(action: ID, year: Int, month: Int): [EconomicEvent]
-
-  commitments(action: ID, finished: Boolean): [Commitment]
-  searchCommitments(searchString: String, finished: Boolean): [Commitment]
+  inventoriedEconomicResources(filter: agentResourceSearchParams): [EconomicResource]
+  economicEvents(filter: agentEventSearchParams): [EconomicEvent]
+  processes(filter: agentProcessSearchParams): [Process]
+  commitments(filter: agentCommitmentSearchParams): [Commitment]
+  plans(filter: agentPlanSearchParams): [Plan]
 
   relationships(roleId: ID): [AgentRelationship] # :TODO: category filtering
   relationshipsAsSubject(roleId: ID): [AgentRelationship] # :TODO: category filtering
@@ -73,36 +101,29 @@ A natural person.
 """
 type Person implements Agent {
   id: ID!
+
+  "The name that this agent will be referred to by."
   name: String!
-  # type: String
+
+  "A 'profile image' for this agent."
   image: URL
-  note: String
+
+  "Optional email address contact for this agent."
+  email: String
 
   "The main place an agent is located, often an address where activities occur and mail can be sent. This is usually a mappable geographic location.  It also could be a website address, as in the case of agents who have no physical location."
   primaryLocation: String
 
-  email: String
+  note: String
 
   ##############################################################################
   # inverse relationships and queries
 
-  inventoriedEconomicResources(
-    # category: EconomicResourceCategory,
-    resourceClassification: URL,
-    page: Int
-  ): [EconomicResource]
-  searchInventoriedEconomicResources(searchString: String): [EconomicResource]
-
-  processes(finished: Boolean): [Process]
-  searchProcesses(searchString: String, finished: Boolean): [Process]
-
-  plans(finished: Boolean, year: Int, month: Int): [Plan]
-  searchPlans(searchString: String, finished: Boolean): [Plan]
-
-  economicEvents(action: ID, year: Int, month: Int): [EconomicEvent]
-
-  commitments(action: ID, finished: Boolean): [Commitment]
-  searchCommitments(searchString: String, finished: Boolean): [Commitment]
+  inventoriedEconomicResources(filter: agentResourceSearchParams): [EconomicResource]
+  economicEvents(filter: agentEventSearchParams): [EconomicEvent]
+  processes(filter: agentProcessSearchParams): [Process]
+  commitments(filter: agentCommitmentSearchParams): [Commitment]
+  plans(filter: agentPlanSearchParams): [Plan]
 
   relationships(roleId: ID): [AgentRelationship] # :TODO: category filtering
   relationshipsAsSubject(roleId: ID): [AgentRelationship] # :TODO: category filtering
@@ -129,37 +150,32 @@ A formal or informal group, or legal organization.
 """
 type Organization implements Agent {
   id: ID!
-  name: String!
+
   # :TODO: define how people can create further typing of Organization, also might need a different name
   # type: OrganizationClassification
+
+  "The name that this agent will be referred to by."
+  name: String!
+
+  "A 'profile image' for this agent."
   image: URL
-  note: String
+
+  "Optional email address contact for this agent."
+  email: String
 
   "The main place an agent is located, often an address where activities occur and mail can be sent. This is usually a mappable geographic location.  It also could be a website address, as in the case of agents who have no physical location."
   primaryLocation: String
 
-  email: String
+  note: String
 
   ##############################################################################
   # inverse relationships and queries
 
-  inventoriedEconomicResources(
-    # category: EconomicResourceCategory,
-    resourceClassification: URL,
-    page: Int
-  ): [EconomicResource]
-  searchInventoriedEconomicResources(searchString: String): [EconomicResource]
-
-  processes(finished: Boolean): [Process]
-  searchProcesses(searchString: String, finished: Boolean): [Process]
-
-  plans(finished: Boolean, year: Int, month: Int): [Plan]
-  searchPlans(searchString: String, finished: Boolean): [Plan]
-
-  economicEvents(action: ID, year: Int, month: Int): [EconomicEvent]
-
-  commitments(action: ID, finished: Boolean): [Commitment]
-  searchCommitments(searchString: String, finished: Boolean): [Commitment]
+  inventoriedEconomicResources(filter: agentResourceSearchParams): [EconomicResource]
+  economicEvents(filter: agentEventSearchParams): [EconomicEvent]
+  processes(filter: agentProcessSearchParams): [Process]
+  commitments(filter: agentCommitmentSearchParams): [Commitment]
+  plans(filter: agentPlanSearchParams): [Plan]
 
   relationships(roleId: ID): [AgentRelationship] # :TODO: category filtering
   relationshipsAsSubject(roleId: ID): [AgentRelationship] # :TODO: category filtering
