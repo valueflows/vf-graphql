@@ -12,6 +12,8 @@
 
 """
 An action verb defining the kind of event, commitment, or intent.
+It is recommended that the lowercase action verb should be used as the record ID
+in order that references to `Action`s elsewhere in the system are easily readable.
 """
 type Action {
   id: ID!
@@ -20,19 +22,19 @@ type Action {
 }
 
 # Defined action names: #TODO: how to do this list?  Way to load them up on installation?
-# unload
-# load
-# consume
-# use
-# work
-# cite
-# produce
-# accept
-# improve
-# give
-# receive
-# raise
-# lower
+# unload    # +
+# load      # -
+# consume   # -
+# use       # 0
+# work      # 0
+# cite      # 0
+# produce   # +
+# accept    # 0
+# improve   # 0
+# give      # -
+# receive   # +
+# raise     # +
+# lower     # -
 
 """
 Specification of a kind of resource. Could define a material item, service, digital item, currency account, etc.
