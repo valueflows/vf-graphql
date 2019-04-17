@@ -200,7 +200,9 @@ type AgentRelationshipRole {
   id: ID!
   label: String!
   inverseLabel: String
-  # category: AgentRelationshipCategory #TODO: figure out
+
+  # :TODO: https://github.com/valueflows/valueflows/issues/494
+  # classifiedAs: [URL]
 }
 
 """
