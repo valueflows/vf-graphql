@@ -83,7 +83,6 @@ A resource which is useful to people or the ecosystem.
 """
 type EconomicResource {
   id: ID!
-  url: String
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
   classifiedAs: [URL]
