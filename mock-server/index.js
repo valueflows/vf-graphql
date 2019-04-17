@@ -17,7 +17,11 @@ const SCHEMA_VIEWER_PATH = '/viewer'
 const typeDefs = require('@valueflows/vf-graphql').typeDefs
 
 const schema = makeExecutableSchema({ typeDefs })
-addMockFunctionsToSchema({ schema })
+addMockFunctionsToSchema({ schema, mocks: {
+  URL: () => 'http://example.com/thing',
+  DateTime: () => new Date().toISOString(),
+  DateInterval: () => 'P1Y2M10DT2H30M',
+}})
 
 const server = new ApolloServer({ schema })
 
