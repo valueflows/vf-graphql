@@ -29,8 +29,6 @@ type Plan { #TODO: this is not yet in VF, and may or may not be named Plan
   # deletable: Boolean
 }
 
-union ProcessOrTransfer = Process | Transfer
-
 """
 A planned economic flow, which can lead to economic events (sometimes through commitments).
 """
@@ -41,10 +39,10 @@ type Intent {
   action: Action!
 
   "A `Process` or `Transfer` to which this `Intent` is hoping to contribute towards."
-  inputOf: ProcessOrTransfer
+  inputOf: EconomicActivity
 
   "A `Process` or `Transfer` which this `Intent` will eventuate as a result of."
-  outputOf: ProcessOrTransfer
+  outputOf: EconomicActivity
 
   "The economic agent from whom the intended, committed, or actual economic event is initiated."
   provider: Agent
@@ -124,10 +122,10 @@ type Commitment {
   action: Action
 
   "A `Process` or `Transfer` which this `Commitment` will aid in the finalisation of."
-  inputOf: ProcessOrTransfer
+  inputOf: EconomicActivity
 
   "A `Process` or `Transfer` which this `Commitment` has been generated as a result of."
-  outputOf: ProcessOrTransfer
+  outputOf: EconomicActivity
 
   "The economic agent from whom the intended, committed, or actual economic event is initiated."
   provider: Agent
