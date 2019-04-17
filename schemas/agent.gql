@@ -67,26 +67,26 @@ interface Agent {
   ##############################################################################
   # inverse relationships and queries
 
-  inventoriedEconomicResources(filter: agentResourceSearchParams): [EconomicResource]
-  economicEvents(filter: agentEventSearchParams): [EconomicEvent]
-  processes(filter: agentProcessSearchParams): [Process]
-  commitments(filter: agentCommitmentSearchParams): [Commitment]
-  plans(filter: agentPlanSearchParams): [Plan]
+  inventoriedEconomicResources(filter: agentResourceSearchParams): [EconomicResource!]
+  economicEvents(filter: agentEventSearchParams): [EconomicEvent!]
+  processes(filter: agentProcessSearchParams): [Process!]
+  commitments(filter: agentCommitmentSearchParams): [Commitment!]
+  plans(filter: agentPlanSearchParams): [Plan!]
 
-  relationships(roleId: ID): [AgentRelationship] # :TODO: category filtering
-  relationshipsAsSubject(roleId: ID): [AgentRelationship] # :TODO: category filtering
-  relationshipsAsObject(roleId: ID): [AgentRelationship] # :TODO: category filtering
+  relationships(roleId: ID): [AgentRelationship!] # :TODO: category filtering
+  relationshipsAsSubject(roleId: ID): [AgentRelationship!] # :TODO: category filtering
+  relationshipsAsObject(roleId: ID): [AgentRelationship!] # :TODO: category filtering
 
-  roles: [AgentRelationshipRole]
+  roles: [AgentRelationshipRole!]
 
-  recipes: [ResourceSpecification] #TODO: is this useful or even realistic?
+  recipes: [ResourceSpecification!] #TODO: is this useful or even realistic?
 
-  # memberRelationships: [AgentRelationship]
+  # memberRelationships: [AgentRelationship!]
 
-  # agentSkills: [ResourceClassification] # can get skills by more generic means... do we want this anyhow?
-  # agentSkillRelationships: [AgentResourceClassification] # check this... if keep, rename
+  # agentSkills: [ResourceClassification!] # can get skills by more generic means... do we want this anyhow?
+  # agentSkillRelationships: [AgentResourceClassification!] # check this... if keep, rename
 
-  commitmentsMatchingSkills: [Commitment]
+  commitmentsMatchingSkills: [Commitment!]
 
   # validatedEventsCount(month: Int, year: Int): Int
   eventsCount(year: Int, month: Int): Int #TODO: ??
@@ -119,25 +119,25 @@ type Person implements Agent {
   ##############################################################################
   # inverse relationships and queries
 
-  inventoriedEconomicResources(filter: agentResourceSearchParams): [EconomicResource]
-  economicEvents(filter: agentEventSearchParams): [EconomicEvent]
-  processes(filter: agentProcessSearchParams): [Process]
-  commitments(filter: agentCommitmentSearchParams): [Commitment]
-  plans(filter: agentPlanSearchParams): [Plan]
+  inventoriedEconomicResources(filter: agentResourceSearchParams): [EconomicResource!]
+  economicEvents(filter: agentEventSearchParams): [EconomicEvent!]
+  processes(filter: agentProcessSearchParams): [Process!]
+  commitments(filter: agentCommitmentSearchParams): [Commitment!]
+  plans(filter: agentPlanSearchParams): [Plan!]
 
-  relationships(roleId: ID): [AgentRelationship] # :TODO: category filtering
-  relationshipsAsSubject(roleId: ID): [AgentRelationship] # :TODO: category filtering
-  relationshipsAsObject(roleId: ID): [AgentRelationship] # :TODO: category filtering
+  relationships(roleId: ID): [AgentRelationship!] # :TODO: category filtering
+  relationshipsAsSubject(roleId: ID): [AgentRelationship!] # :TODO: category filtering
+  relationshipsAsObject(roleId: ID): [AgentRelationship!] # :TODO: category filtering
 
-  roles: [AgentRelationshipRole]
+  roles: [AgentRelationshipRole!]
 
-  recipes: [ResourceSpecification] #TODO: is this useful or even realistic?
+  recipes: [ResourceSpecification!] #TODO: is this useful or even realistic?
 
-  # memberRelationships: [AgentRelationship]
-  # agentSkills: [ResourceClassification]
-  # agentSkillRelationships: [AgentResourceClassification]
+  # memberRelationships: [AgentRelationship!]
+  # agentSkills: [ResourceClassification!]
+  # agentSkillRelationships: [AgentResourceClassification!]
 
-  commitmentsMatchingSkills: [Commitment]
+  commitmentsMatchingSkills: [Commitment!]
 
   # validatedEventsCount(month: Int, year: Int): Int
   eventsCount(year: Int, month: Int): Int #TODO: ??
@@ -171,23 +171,23 @@ type Organization implements Agent {
   ##############################################################################
   # inverse relationships and queries
 
-  inventoriedEconomicResources(filter: agentResourceSearchParams): [EconomicResource]
-  economicEvents(filter: agentEventSearchParams): [EconomicEvent]
-  processes(filter: agentProcessSearchParams): [Process]
-  commitments(filter: agentCommitmentSearchParams): [Commitment]
-  plans(filter: agentPlanSearchParams): [Plan]
+  inventoriedEconomicResources(filter: agentResourceSearchParams): [EconomicResource!]
+  economicEvents(filter: agentEventSearchParams): [EconomicEvent!]
+  processes(filter: agentProcessSearchParams): [Process!]
+  commitments(filter: agentCommitmentSearchParams): [Commitment!]
+  plans(filter: agentPlanSearchParams): [Plan!]
 
-  relationships(roleId: ID): [AgentRelationship] # :TODO: category filtering
-  relationshipsAsSubject(roleId: ID): [AgentRelationship] # :TODO: category filtering
-  relationshipsAsObject(roleId: ID): [AgentRelationship] # :TODO: category filtering
+  relationships(roleId: ID): [AgentRelationship!] # :TODO: category filtering
+  relationshipsAsSubject(roleId: ID): [AgentRelationship!] # :TODO: category filtering
+  relationshipsAsObject(roleId: ID): [AgentRelationship!] # :TODO: category filtering
 
-  roles: [AgentRelationshipRole]
+  roles: [AgentRelationshipRole!]
 
-  recipes: [ResourceSpecification] #TODO: is this useful or even realistic?
+  recipes: [ResourceSpecification!] #TODO: is this useful or even realistic?
 
-  # memberRelationships: [AgentRelationship]
+  # memberRelationships: [AgentRelationship!]
 
-  commitmentsMatchingSkills: [Commitment]
+  commitmentsMatchingSkills: [Commitment!]
 
   # validatedEventsCount(month: Int, year: Int): Int
   eventsCount(year: Int, month: Int): Int #TODO: ??
@@ -217,7 +217,7 @@ type AgentRelationshipRole {
   inverseLabel: String
 
   # :TODO: https://github.com/valueflows/valueflows/issues/494
-  # classifiedAs: [URL]
+  # classifiedAs: [URL!]
 }
 
 # :TODO: how do we want to do this concept? (see AgentRelationshipRole.classifiedAs)

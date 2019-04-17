@@ -35,7 +35,7 @@ type EconomicEvent {
   resourceInventoriedAs: EconomicResource
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
-  resourceClassifiedAs: [URL]
+  resourceClassifiedAs: [URL!]
 
   "The primary resource knowledge specification or definition of an existing or potential resource."
   resourceConformsTo: ResourceSpecification
@@ -51,7 +51,7 @@ type EconomicEvent {
   note: String
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType]
+  inScopeOf: [AnyType!]
 
   ##############################################################################
   # relationship fields; can only be set indirectly
@@ -65,17 +65,17 @@ type EconomicEvent {
   # inverse relationships and queries
 
   "The commitment which is completely or partially fulfilled by an economic event."
-  fulfills: [Fulfillment]
+  fulfills: [Fulfillment!]
 
   "An intent satisfied fully or partially by an economic event or commitment."
-  satisfies: [Satisfaction]
+  satisfies: [Satisfaction!]
 
-  # appreciationFor: [EconomicEvent]
+  # appreciationFor: [EconomicEvent!]
 
-  track: [ProductionFlowItem]
-  trace: [ProductionFlowItem]
+  track: [ProductionFlowItem!]
+  trace: [ProductionFlowItem!]
 
-  # validations: [Validation]
+  # validations: [Validation!]
   # isValidated: Boolean
 }
 
@@ -86,7 +86,7 @@ type EconomicResource {
   id: ID!
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
-  classifiedAs: [URL]
+  classifiedAs: [URL!]
 
   "The primary resource knowledge specification or definition of an existing or potential resource."
   resourceConformsTo: ResourceSpecification
@@ -103,7 +103,7 @@ type EconomicResource {
   note: String
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType]
+  inScopeOf: [AnyType!]
 
   ##############################################################################
   # relationship fields; can only be set indirectly
@@ -112,7 +112,7 @@ type EconomicResource {
   underlyingResource: EconomicResource
 
   "Used when a stock economic resource contains units also defined as economic resources."
-  contains: [EconomicResource] #TODO: containedBy and make this the inverse??
+  contains: [EconomicResource!] #TODO: containedBy and make this the inverse??
 
   "The current place an economic resource is located. Could be at any level of granularity, from a town to an address to a warehouse location. Usually mappable."
   currentLocation: String # under discussion
@@ -120,11 +120,11 @@ type EconomicResource {
   ##############################################################################
   # inverse relationships and queries
 
-  trace: [EconomicEvent]
-  track: [EconomicEvent]
+  trace: [EconomicEvent!]
+  track: [EconomicEvent!]
 
-  # resourceContacts: [Agent]
-  # owners: [Agent]  TODO: define agent-resource relationships, if we do need them
+  # resourceContacts: [Agent!]
+  # owners: [Agent!]  TODO: define agent-resource relationships, if we do need them
 }
 
 """
@@ -138,23 +138,23 @@ type Transfer { #TODO this whole model is under review
   note: String
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType]
+  inScopeOf: [AnyType!]
 
   ##############################################################################
   # inverse relationships and queries
 
-  economicEvents: [EconomicEvent]
+  economicEvents: [EconomicEvent!]
   giveEconomicEvent: EconomicEvent
   takeEconomicEvent: EconomicEvent
 
-  transferCommitments: [Commitment]
+  transferCommitments: [Commitment!]
   giveCommitment: Commitment
   takeCommitment: Commitment
 
-  involvedAgents: [Agent]
+  involvedAgents: [Agent!]
 
-  trace: [EconomicEvent]
-  track: [EconomicEvent]
+  trace: [EconomicEvent!]
+  track: [EconomicEvent!]
 }
 
 """
@@ -173,34 +173,34 @@ type Process {
   basedOn: RecipeProcess
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
-  classifiedAs: [URL]
+  classifiedAs: [URL!]
 
   note: String
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType]
+  inScopeOf: [AnyType!]
 
   # deletable: Boolean
 
   ##############################################################################
   # inverse relationships and queries
 
-  inputs(action: ID): [EconomicEvent]
-  outputs(action: ID): [EconomicEvent]
-  unplannedEconomicEvents(action: ID): [EconomicEvent]
+  inputs(action: ID): [EconomicEvent!]
+  outputs(action: ID): [EconomicEvent!]
+  unplannedEconomicEvents(action: ID): [EconomicEvent!]
 
-  committedInputs(action: ID): [Commitment]
-  committedOutputs(action: ID): [Commitment]
+  committedInputs(action: ID): [Commitment!]
+  committedOutputs(action: ID): [Commitment!]
 
-  nextProcesses: [Process]
-  previousProcesses: [Process]
+  nextProcesses: [Process!]
+  previousProcesses: [Process!]
 
-  workingAgents: [Agent]
+  workingAgents: [Agent!]
 
   plan: Plan
 
-  trace: [EconomicEvent]
-  track: [EconomicEvent]
+  trace: [EconomicEvent!]
+  track: [EconomicEvent!]
 }
 
 """
@@ -221,7 +221,7 @@ type Fulfillment {
   note: String
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType]
+  inScopeOf: [AnyType!]
 
   ##############################################################################
   # relationship fields; can only be set indirectly

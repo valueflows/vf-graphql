@@ -65,7 +65,10 @@ type Location { #TODO: ??
   latitude: Float
   longitude: Float
   note: String
-  ### inverse relationships and queries
-  resources: [EconomicResource]
-  agents: [Agent]
+
+  ##############################################################################
+  # inverse relationships and queries
+
+  resources: [EconomicResource!]
+  agents: [Agent!]
 }

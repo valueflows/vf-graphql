@@ -55,15 +55,15 @@ type ResourceSpecification {
   note: String
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType]
+  inScopeOf: [AnyType!]
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
-  resourceClassifiedAs: [URL]
+  resourceClassifiedAs: [URL!]
 
   ##############################################################################
   # inverse relationships and queries
 
-  conformingResources: [EconomicResource]
+  conformingResources: [EconomicResource!]
 }
 
 """
@@ -79,7 +79,7 @@ type RecipeProcess {
   durationMultiplier: Float
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
-  processClassifiedAs: [URL]
+  processClassifiedAs: [URL!]
 
   note: String
 
@@ -98,7 +98,7 @@ type RecipeFlow {
   resourceConformsTo: ResourceSpecification
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
-  resourceClassifiedAs: [URL]
+  resourceClassifiedAs: [URL!]
 
   "Relates a process input or output to a verb, such as consume, produce, work, improve, etc."
   action: Action!
@@ -112,5 +112,5 @@ type RecipeFlow {
   note: String
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType]
+  inScopeOf: [AnyType!]
 }

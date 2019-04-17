@@ -16,15 +16,15 @@ type Plan { #TODO: this is not yet in VF, and may or may not be named Plan
   name: String
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType]
+  inScopeOf: [AnyType!]
 
   # createdBy: Agent
-  processes(year: Int, month: Int): [Process]
-  workingAgents: [Agent]
-  plannedNonWorkInputs: [Commitment]
-  plannedOutputs: [Commitment]
-  nonWorkInputs: [EconomicEvent]
-  outputs: [EconomicEvent]
+  processes(year: Int, month: Int): [Process!]
+  workingAgents: [Agent!]
+  plannedNonWorkInputs: [Commitment!]
+  plannedOutputs: [Commitment!]
+  nonWorkInputs: [EconomicEvent!]
+  outputs: [EconomicEvent!]
   kanbanState: String #TODO: codify this?
   # deletable: Boolean
 }
@@ -51,7 +51,7 @@ type Intent {
   receiver: Agent
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
-  resourceClassifiedAs: [URL]
+  resourceClassifiedAs: [URL!]
 
   "The primary resource knowledge specification or definition of an existing or potential resource."
   resourceConformsTo: ResourceSpecification
@@ -76,7 +76,7 @@ type Intent {
   note: String
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType]
+  inScopeOf: [AnyType!]
 
   ##############################################################################
   # relationship fields; can only be set indirectly
@@ -86,7 +86,7 @@ type Intent {
   ##############################################################################
   # inverse relationships and queries
 
-  satisfiedBy: [Satisfaction]
+  satisfiedBy: [Satisfaction!]
 }
 
 union EventOrCommitment = EconomicEvent | Commitment
@@ -109,7 +109,7 @@ type Satisfaction {
   note: String
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType]
+  inScopeOf: [AnyType!]
 }
 
 """
@@ -134,7 +134,7 @@ type Commitment {
   receiver: Agent
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
-  resourceClassifiedAs: [URL]
+  resourceClassifiedAs: [URL!]
 
   "The primary resource knowledge specification or definition of an existing or potential resource."
   resourceConformsTo: ResourceSpecification
@@ -161,7 +161,7 @@ type Commitment {
   note: String
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType]
+  inScopeOf: [AnyType!]
 
   ##############################################################################
   # relationship fields; can only be set indirectly
@@ -172,10 +172,10 @@ type Commitment {
   # inverse relationships and queries
 
   "The economic event which completely or partially fulfills a commitment."
-  fulfilledBy: [Fulfillment]
-  # fulfilledBy(requestDistribution: Boolean): [Fulfillment]
+  fulfilledBy: [Fulfillment!]
+  # fulfilledBy(requestDistribution: Boolean): [Fulfillment!]
 
-  involvedAgents: [Agent]
+  involvedAgents: [Agent!]
 }
 
 """
@@ -187,12 +187,12 @@ type ExchangeAgreement {
   agreedTime: DateTime #created?
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType]
+  inScopeOf: [AnyType!]
 
   ##############################################################################
   # inverse relationships and queries
 
-  commitments: [Commitment]
-  economicEvents: [EconomicEvent]
-  involvedAgents: [Agent]
+  commitments: [Commitment!]
+  economicEvents: [EconomicEvent!]
+  involvedAgents: [Agent!]
 }
