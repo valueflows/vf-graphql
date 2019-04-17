@@ -206,7 +206,6 @@ type AgentRelationship {
   object: Agent!
   relationship: AgentRelationshipRole!
   note: String
-  # probably need the state (and CUD events)
 }
 
 """
@@ -221,13 +220,14 @@ type AgentRelationshipRole {
   # classifiedAs: [URL]
 }
 
-"""
-Generalized behaviors for agent relationship roles
-"""
-enum AgentRelationshipCategory {  #TODO how do we want to do this concept?
-  LEGALPARTNER
-  MEMBER
-  PART
-  PEER
-  TRADINGPARTNER
-}
+# :TODO: how do we want to do this concept? (see AgentRelationshipRole.classifiedAs)
+# """
+# Generalized behaviors for agent relationship roles
+# """
+# enum AgentRelationshipCategory {
+#   LEGALPARTNER
+#   MEMBER
+#   PART
+#   PEER
+#   TRADINGPARTNER
+# }
