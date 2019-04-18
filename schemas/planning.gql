@@ -164,6 +164,33 @@ type Fulfillment {
 }
 
 """
+A claim for a future economic event(s) in reciprocity for an economic event that already occurred.
+"""
+type Claim {
+  id: ID!
+
+  "Relates a process input or output to a verb, such as consume, produce, work, improve, etc."
+  action: Action
+
+  "The economic agent from whom the intended, committed, or actual economic event is initiated."
+  provider: Agent!
+
+  "The economic agent whom the intended, committed, or actual economic event is for."
+  receiver: Agent!
+
+  "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
+  resourceClassifiedAs: [URL!]
+
+  "The primary resource knowledge specification or definition of an existing or potential resource."
+  resourceConformsTo: ResourceSpecification
+
+  claimedQuantity: QuantityValue
+  triggeredBy: EconomicEvent!
+  created: DateTime
+  finished: Boolean
+  note: String
+
+"""
 A commitment or economic event that partially or fully satisfies an intent.
 """
 type Satisfaction {
