@@ -189,6 +189,7 @@ type Claim {
   created: DateTime
   finished: Boolean
   note: String
+}
 
 """
 A commitment or economic event that partially or fully satisfies an intent.
@@ -218,6 +219,7 @@ type Settlement {
   id: ID!
   settledQuantity: QuantityValue
   note: String
+}
 
 type Plan { #TODO: this is not yet in VF, and may or may not be named Plan
   id: ID!

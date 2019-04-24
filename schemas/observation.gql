@@ -211,3 +211,4 @@ type Appreciation {
   appreciationOf: EconomicEvent
   appreciationWith: EconomicEvent
   note: String
+}
