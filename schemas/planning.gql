@@ -225,7 +225,16 @@ The quantity that the economic event settled of the claim.
 """
 type Settlement {
   id: ID!
+
+  "A `Claim` which is fully or partially settled by an `EconomicEvent`."
+  settles: Claim!
+
+  "The `EconomicEvent` fully or partially settling a `Claim`."
+  settledBy: EconomicEvent!
+
+  "The quantity of the settlement of an `EconomicEvent` towards a `Claim`."
   settledQuantity: QuantityValue
+
   note: String
 }
 
