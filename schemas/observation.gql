@@ -230,7 +230,12 @@ A way to tie an economic event that is given in loose fulfilment for another eco
 """
 type Appreciation {
   id: ID!
-  appreciationOf: EconomicEvent
+
+  "The `EconomicEvent` this appreciation has been given in acknowledgement of"
+  appreciationOf: EconomicEvent # :TODO: should this be required?
+
+  "The `EconomicEvent` provided as a gift in this appreciation"
   appreciationWith: EconomicEvent
+
   note: String
 }
