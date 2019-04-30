@@ -153,9 +153,6 @@ type Fulfillment {
 
   note: String
 
-  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType!]
-
   ##############################################################################
   # relationship fields; can only be set indirectly
 
@@ -207,9 +204,6 @@ type Satisfaction {
   satisfiedQuantity: QuantityValue
 
   note: String
-
-  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType!]
 }
 
 """

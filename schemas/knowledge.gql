@@ -54,9 +54,6 @@ type ResourceSpecification {
 
   note: String
 
-  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType!]
-
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
   resourceClassifiedAs: [URL!]
 
@@ -89,9 +86,6 @@ type RecipeFlow {
   recipeOutputOf: RecipeProcess
 
   note: String
-
-  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType!]
 }
 
 """
