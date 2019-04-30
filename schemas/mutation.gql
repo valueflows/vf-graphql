@@ -246,14 +246,14 @@ type FulfillmentResponse {
 # interface ProcessParams {
 #   name: String
 #   :TODO: time
-#   hasDuration: Duration # IDuration?
+#   hasDuration: IDuration
 #   note: String
 #   inScopeOf: String
 # }
 
 input ProcessCreateParams { # implements ProcessParams
   name: String!
-  hasDuration: DateInterval # IDuration?
+  hasDuration: IDuration
   note: String
   inScopeOf: [AnyType!]
 }
@@ -261,7 +261,7 @@ input ProcessCreateParams { # implements ProcessParams
 input ProcessUpdateParams { # implements UpdateParams & ProcessParams
   id: ID!
   name: String
-  hasDuration: DateInterval # IDuration?
+  hasDuration: IDuration
   finished: Boolean
   note: String
   inScopeOf: [AnyType!]
@@ -541,7 +541,7 @@ type ResourceSpecificationResponse {
 
 # interface RecipeProcessParams {
 #   name: String
-#   hasDuration: DateInterval
+#   hasDuration: IDuration
 #   durationMultiplier: Float
 #   processClassifiedAs: [URL!]
 #   note: String
@@ -549,7 +549,7 @@ type ResourceSpecificationResponse {
 
 input RecipeProcessCreateParams { # implements RecipeProcessParams
   name: String!
-  hasDuration: DateInterval
+  hasDuration: IDuration
   durationMultiplier: Float
   processClassifiedAs: [URL!]
   note: String
@@ -558,7 +558,7 @@ input RecipeProcessCreateParams { # implements RecipeProcessParams
 input RecipeProcessUpdateParams { # implements UpdateParams & RecipeProcessParams
   id: ID!
   name: String
-  hasDuration: DateInterval
+  hasDuration: IDuration
   durationMultiplier: Float
   processClassifiedAs: [URL!]
   note: String

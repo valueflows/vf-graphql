@@ -66,6 +66,14 @@ input IQuantityValue {
 }
 
 """
+Mutation input structure for defining time durations.
+"""
+input IDuration {
+  numericDuration: Float!
+  unitType: TimeUnit!
+}
+
+"""
 A physical location (not defined by ValueFlows)
 """
 type Location { #TODO: ??
