@@ -22,6 +22,7 @@ type Action {
 }
 
 # Core VF action IDs & `resourceEffect`s:
+# @see https://github.com/valueflows/valueflows/issues/487
 #   unload    (+) transported resource leaves the process, the same resource will appear in input with vf:load verb
 #   load      (-) transported resource enters the process, the same resource will appear in output with vf:unload verb
 #   consume   (-) for example an ingredient composed into the output, after the process the ingredient is gone
