@@ -151,30 +151,6 @@ type Intent {
 }
 
 """
-The quantity that the economic event fulfilled towards the commitment.
-"""
-type Fulfillment {
-  id: ID!
-
-  "The economic event which completely or partially fulfills a commitment."
-  fulfilledBy: EconomicEvent!
-
-  "The commitment which is completely or partially fulfilled by an economic event."
-  fulfills: Commitment!
-
-  "The quantity of the fulfillment of an event towards a commitment or an intent."
-  fulfilledQuantity: QuantityValue
-
-  note: String
-
-  ##############################################################################
-  # relationship fields; can only be set indirectly
-
-  "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this flow."
-  under: ExchangeAgreement # Agreement?
-}
-
-"""
 A claim for a future economic event(s) in reciprocity for an economic event that already occurred.
 """
 type Claim {
@@ -200,6 +176,30 @@ type Claim {
   created: DateTime
   finished: Boolean
   note: String
+}
+
+"""
+The quantity that the economic event fulfilled towards the commitment.
+"""
+type Fulfillment {
+  id: ID!
+
+  "The economic event which completely or partially fulfills a commitment."
+  fulfilledBy: EconomicEvent!
+
+  "The commitment which is completely or partially fulfilled by an economic event."
+  fulfills: Commitment!
+
+  "The quantity of the fulfillment of an event towards a commitment or an intent."
+  fulfilledQuantity: QuantityValue
+
+  note: String
+
+  ##############################################################################
+  # relationship fields; can only be set indirectly
+
+  "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this flow."
+  under: ExchangeAgreement # Agreement?
 }
 
 """
