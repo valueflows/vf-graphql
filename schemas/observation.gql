@@ -203,10 +203,12 @@ type Transfer { #TODO this whole model is under review
   track: [EconomicEvent!]
 }
 
-#type Validation {
-#  id: ID!
-#  validationDate: DateTime
-# note: String
-# validatedBy: Agent
-#  economicEvent: EconomicEvent
-#}
+"""
+A way to tie an economic event that is given in loose fulfilment for another economic event, without commitments or expectations. Supports the gift economy.
+"""
+type Appreciation {
+  id: ID!
+  appreciationOf: EconomicEvent
+  appreciationWith: EconomicEvent
+  note: String
+}
