@@ -43,11 +43,19 @@ type EconomicEvent {
   "The amount and unit of the event. This is the quantity that could be used to increment or decrement a resource, depending on the type of resource and type of event."
   affectedQuantity: QuantityValue
 
+  "Specific time marking the exact beginning of flow or process"
   hasBeginning: DateTime
+  "Specific time marking the exact end of flow or process"
   hasEnd: DateTime
+
+  "Specific time marking the exact moment at which the flow or process occurred"
   hasPointInTime: DateTime
+
+  "Indicates the flow or process occurred prior to this specific time"
   before: DateTime
+  "Indicates the flow or process occurred after this specific time"
   after: DateTime
+
   note: String
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
@@ -134,7 +142,18 @@ type Process {
   id: ID!
   name: String!
 
-  plannedTime: DateTime
+  "Specific time marking the exact beginning of flow or process"
+  hasBeginning: DateTime
+  "Specific time marking the exact end of flow or process"
+  hasEnd: DateTime
+
+  "Specific time marking the exact moment at which the flow or process occurred"
+  hasPointInTime: DateTime
+
+  "Indicates the flow or process occurred prior to this specific time"
+  before: DateTime
+  "Indicates the flow or process occurred after this specific time"
+  after: DateTime
 
   # started: Boolean
   finished: Boolean
@@ -180,7 +199,10 @@ type Transfer { #TODO this whole model is under review
   id: ID!
   name: String!
   # under: ExchangeAgreement TODO need to finish this definition
-  plannedTime: DateTime
+
+  "Specific time marking the exact moment at which the flow or process occurred"
+  hasPointInTime: DateTime
+
   note: String
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."

@@ -42,10 +42,17 @@ type Commitment {
 
   quantifiedAs: QuantityValue
 
+  "Specific time marking the exact beginning of flow or process"
   hasBeginning: DateTime
+  "Specific time marking the exact end of flow or process"
   hasEnd: DateTime
+
+  "Specific time marking the exact moment at which the flow or process occurred"
   hasPointInTime: DateTime
+
+  "Indicates the flow or process occurred prior to this specific time"
   before: DateTime
+  "Indicates the flow or process occurred after this specific time"
   after: DateTime
 
   finished: Boolean
@@ -108,10 +115,17 @@ type Intent {
 
   quantifiedAs: QuantityValue
 
+  "Specific time marking the exact beginning of flow or process"
   hasBeginning: DateTime
+  "Specific time marking the exact end of flow or process"
   hasEnd: DateTime
+
+  "Specific time marking the exact moment at which the flow or process occurred"
   hasPointInTime: DateTime
+
+  "Indicates the flow or process occurred prior to this specific time"
   before: DateTime
+  "Indicates the flow or process occurred after this specific time"
   after: DateTime
 
   finished: Boolean
