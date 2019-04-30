@@ -25,22 +25,22 @@ input agentProcessSearchParams {
 input agentPlanSearchParams {
   searchString: String
   finished: Boolean
-  year: Int
-  month: Int
 }
 
 "Query parameters for reading `EconomicEvent`s related to an `Agent`"
 input agentEventSearchParams {
   searchString: String
   action: ID
-  year: Int
-  month: Int
+  startDate: DateTime
+  endDate: DateTime
 }
 
 "Query parameters for reading `Commitment`s related to an `Agent`"
 input agentCommitmentSearchParams {
   searchString: String
   action: ID
+  startDate: DateTime
+  endDate: DateTime
   finished: Boolean
 }
 
@@ -87,11 +87,6 @@ interface Agent {
   # agentSkillRelationships: [AgentResourceClassification!] # check this... if keep, rename
 
   commitmentsMatchingSkills: [Commitment!]
-
-  # validatedEventsCount(month: Int, year: Int): Int
-  eventsCount(year: Int, month: Int): Int #TODO: ??
-  eventHoursCount(year: Int, month: Int): Int #TODO: ??
-  eventPeopleCount(year: Int, month: Int): Int #TODO: ??
 }
 
 # Variants of agents
@@ -138,11 +133,6 @@ type Person implements Agent {
   # agentSkillRelationships: [AgentResourceClassification!]
 
   commitmentsMatchingSkills: [Commitment!]
-
-  # validatedEventsCount(month: Int, year: Int): Int
-  eventsCount(year: Int, month: Int): Int #TODO: ??
-  eventHoursCount(year: Int, month: Int): Int #TODO: ??
-  eventPeopleCount(year: Int, month: Int): Int #TODO: ??
 }
 
 """
@@ -188,11 +178,6 @@ type Organization implements Agent {
   # memberRelationships: [AgentRelationship!]
 
   commitmentsMatchingSkills: [Commitment!]
-
-  # validatedEventsCount(month: Int, year: Int): Int
-  eventsCount(year: Int, month: Int): Int #TODO: ??
-  eventHoursCount(year: Int, month: Int): Int #TODO: ??
-  eventPeopleCount(year: Int, month: Int): Int #TODO: ??
 }
 
 # Relationships between agents

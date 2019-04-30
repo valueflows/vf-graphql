@@ -215,6 +215,15 @@ type Settlement {
   note: String
 }
 
+
+"Query parameters for reading `Process`es related to a `Plan`"
+input planProcessSearchParams {
+  searchString: String
+  startDate: DateTime
+  endDate: DateTime
+  finished: Boolean
+}
+
 type Plan { #TODO: this is not yet in VF, and may or may not be named Plan
   id: ID!
   plannedOn: String
@@ -226,7 +235,7 @@ type Plan { #TODO: this is not yet in VF, and may or may not be named Plan
   inScopeOf: [AnyType!]
 
   # createdBy: Agent
-  processes(year: Int, month: Int): [Process!]
+  processes(filter: planProcessSearchParams): [Process!]
   workingAgents: [Agent!]
   plannedNonWorkInputs: [Commitment!]
   plannedOutputs: [Commitment!]
