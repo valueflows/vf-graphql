@@ -297,6 +297,29 @@ type TransferResponse {
 }
 
 
+# interface AppreciationParams {
+#   appreciationOf: ID
+#   appreciationWith: ID
+#   note: String
+# }
+
+input AppreciationCreateParams {
+  appreciationOf: ID
+  appreciationWith: ID
+  note: String
+}
+
+input AppreciationUpdateParams {
+  id: ID!
+  appreciationOf: ID
+  appreciationWith: ID
+  note: String
+}
+
+type AppreciationResponse {
+  appreciation: Appreciation
+}
+
 
 
 
@@ -497,6 +520,76 @@ type ExchangeAgreementResponse {
 }
 
 
+# type ClaimParams {
+#   id: ID!
+#   action: Action
+#   provider: Agent!
+#   receiver: Agent!
+#   resourceClassifiedAs: [URL!]
+#   resourceConformsTo: ResourceSpecification
+#   claimedQuantity: QuantityValue
+#   triggeredBy: EconomicEvent!
+#   created: DateTime
+#   finished: Boolean
+#   note: String
+# }
+
+input ClaimCreateParams {
+  action: ID # Action
+  provider: ID # Agent
+  receiver: ID # Agent
+  resourceClassifiedAs: [URL!]
+  resourceConformsTo: ID # ResourceSpecification
+  claimedQuantity: IQuantityValue
+  triggeredBy: ID #EconomicEvent
+  note: String
+}
+
+input ClaimUpdateParams {
+  id: ID!
+  action: ID
+  provider: ID
+  receiver: ID
+  resourceClassifiedAs: [URL!]
+  resourceConformsTo: ID
+  claimedQuantity: IQuantityValue
+  triggeredBy: ID
+  finished: Boolean
+  note: String
+}
+
+type ClaimResponse {
+  claim: Claim
+}
+
+
+# type SettlementParams {
+#   id: ID!
+#   settles: ID! # Claim
+#   settledBy: ID! # EconomicEvent
+#   settledQuantity: IQuantityValue
+#   note: String
+# }
+
+input SettlementCreateParams {
+  settles: ID! # Claim
+  settledBy: ID! # EconomicEvent
+  settledQuantity: IQuantityValue
+  note: String
+}
+
+input SettlementUpdateParams {
+  id: ID!
+  settles: ID
+  settledBy: ID
+  settledQuantity: IQuantityValue
+  note: String
+}
+
+type SettlementResponse {
+  settlement: Settlement
+}
+
 
 
 
@@ -678,6 +771,10 @@ type Mutation {
   updateTransfer(transfer: TransferUpdateParams!): TransferResponse
   deleteTransfer(id: String!): TransferResponse
 
+  createAppreciation(appreciation: AppreciationCreateParams!): AppreciationResponse
+  updateAppreciation(appreciation: AppreciationUpdateParams!): AppreciationResponse
+  deleteAppreciation(id: String!): AppreciationResponse
+
   # Planning layer
 
   createCommitment(commitment: CommitmentCreateParams): CommitmentResponse
@@ -702,9 +799,17 @@ type Mutation {
   # updatePlan(): PlanResponse
   # deletePlan(id: String!): PlanResponse
 
-  # createExchangeAgreement(exchangeAgreement: ExchangeAgreementCreateParams): ExchangeAgreementResponse
-  # updateExchangeAgreement(exchangeAgreement: ExchangeAgreementUpdateParams): ExchangeAgreementResponse
-  # deleteExchangeAgreement(id: String!): ExchangeAgreementResponse
+  createExchangeAgreement(exchangeAgreement: ExchangeAgreementCreateParams): ExchangeAgreementResponse
+  updateExchangeAgreement(exchangeAgreement: ExchangeAgreementUpdateParams): ExchangeAgreementResponse
+  deleteExchangeAgreement(id: String!): ExchangeAgreementResponse
+
+  createClaim(claim: ClaimCreateParams!): ClaimResponse
+  updateClaim(claim: ClaimUpdateParams!): ClaimResponse
+  deleteClaim(id: String!): ClaimResponse
+
+  createSettlement(settlement: SettlementCreateParams!): SettlementResponse
+  updateSettlement(s0ettlement: SettlementUpdateParams!): SettlementResponse
+  deleteSettlement(id: String!): SettlementResponse
 
   # Knowledge layer
 
