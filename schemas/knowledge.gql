@@ -96,7 +96,7 @@ type RecipeProcess {
   id: ID!
   name: String!
 
-  hasDuration: DateInterval
+  hasDuration: Duration
 
   "The multiplier for duration based on capacities for the recipe."
   durationMultiplier: Float

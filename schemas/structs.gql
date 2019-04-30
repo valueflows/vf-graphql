@@ -24,10 +24,19 @@ The `DateTime` scalar type represents a DateTime value as specified by
 scalar DateTime
 
 """
-The `DateInterval` scalar type represents an interval between two `DateTime` values
-as specified by [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#Durations).
+Defines the unit of time measured in a temporal `Duration`.
 """
-scalar DateInterval
+enum TimeUnit {
+  year, month, week, day, hour, minute, second
+}
+
+"""
+A `Duration` represents an interval between two `DateTime` values.
+"""
+type Duration {
+  numericDuration: Float!
+  unitType: TimeUnit!
+}
 
 """
 Defines a unit of measurement, along with its display symbol.
