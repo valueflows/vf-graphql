@@ -59,7 +59,6 @@ type Commitment {
 
   # deletable: Boolean
 
-  plan: Plan
   # isPlanDeliverable: Boolean #TODO: define in VF?
   # forPlanDeliverable: Commitment #TODO: define in VF?
 
@@ -68,10 +67,10 @@ type Commitment {
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
   inScopeOf: [AnyType!]
 
-  ##############################################################################
-  # relationship fields; can only be set indirectly
-
-  under: ExchangeAgreement # Agreement?
+  "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this flow."
+  under: Agreement
+  "This commitment is part of the agreement, which could not exist without it."
+  clauseOf: Agreement
 
   ##############################################################################
   # inverse relationships and queries
@@ -81,6 +80,8 @@ type Commitment {
   # fulfilledBy(requestDistribution: Boolean): [Fulfillment!]
 
   involvedAgents: [Agent!]
+
+  plan: Plan
 }
 
 """
@@ -142,7 +143,7 @@ type Intent {
   ##############################################################################
   # relationship fields; can only be set indirectly
 
-  under: ExchangeAgreement # Agreement?
+  under: Agreement
 
   ##############################################################################
   # inverse relationships and queries
@@ -199,7 +200,7 @@ type Fulfillment {
   # relationship fields; can only be set indirectly
 
   "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this flow."
-  under: ExchangeAgreement # Agreement?
+  under: Agreement
 }
 
 """
@@ -271,7 +272,7 @@ type Plan { #TODO: this is not yet in VF, and may or may not be named Plan
 """
 An agreement to exchange something with another agent(s), containing commitments towards that end.
 """
-type ExchangeAgreement {
+type Agreement {
   id: ID!
   name: String
   created: DateTime

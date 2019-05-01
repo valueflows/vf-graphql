@@ -62,8 +62,8 @@ type Query {
   plan(id: ID): Plan
   allPlans: [Plan!]
 
-  exchangeAgreement(id: ID): ExchangeAgreement
-  allExchangeAgreements: [ExchangeAgreement!]
+  agreement(id: ID): Agreement
+  allAgreements: [Agreement!]
 
   # Knowledge layer
   # resourceClassification(id: ID): ResourceClassification

@@ -345,6 +345,7 @@ type AppreciationResponse {
 #   image: URL
 #   note: String
 #   inScopeOf: [AnyType!]
+#   under: Agreement
 # }
 
 input IntentCreateParams { # implements IntentParams
@@ -364,6 +365,7 @@ input IntentCreateParams { # implements IntentParams
   image: URL
   note: String
   inScopeOf: [AnyType!]
+  under: Agreement
 }
 
 input IntentUpdateParams { # implements UpdateParams & IntentParams
@@ -385,6 +387,7 @@ input IntentUpdateParams { # implements UpdateParams & IntentParams
   finished: Boolean
   note: String
   inScopeOf: [AnyType!]
+  under: Agreement
 }
 
 type IntentResponse {
@@ -409,6 +412,8 @@ type IntentResponse {
 #   after: DateTime
 #   note: String
 #   inScopeOf: [AnyType!]
+#   under: Agreement
+#   clauseOf: Agreement
 # }
 
 input CommitmentCreateParams { # implements CommitmentParams
@@ -428,6 +433,8 @@ input CommitmentCreateParams { # implements CommitmentParams
   after: DateTime
   note: String
   inScopeOf: [AnyType!]
+  under: Agreement
+  clauseOf: Agreement
 }
 
 input CommitmentUpdateParams { # implements UpdateParams & CommitmentParams
@@ -448,6 +455,8 @@ input CommitmentUpdateParams { # implements UpdateParams & CommitmentParams
   finished: Boolean
   note: String
   inScopeOf: [AnyType!]
+  under: Agreement
+  clauseOf: Agreement
 }
 
 type CommitmentResponse {
@@ -499,24 +508,24 @@ type SatisfactionResponse {
 # }
 
 
-# interface ExchangeAgreementParams {
+# interface AgreementParams {
 #   name: String
 #   agreedTime: DateTime
 # }
 
-input ExchangeAgreementCreateParams { # implements ExchangeAgreementParams
+input AgreementCreateParams { # implements AgreementParams
   name: String!
   agreedTime: DateTime!
 }
 
-input ExchangeAgreementUpdateParams { # implements UpdateParams & ExchangeAgreementParams
+input AgreementUpdateParams { # implements UpdateParams & AgreementParams
   id: ID!
   name: String
   agreedTime: DateTime
 }
 
-type ExchangeAgreementResponse {
-  exchangeAgreement: ExchangeAgreement
+type AgreementResponse {
+  Agreement: Agreement
 }
 
 
@@ -799,9 +808,9 @@ type Mutation {
   # updatePlan(): PlanResponse
   # deletePlan(id: String!): PlanResponse
 
-  createExchangeAgreement(exchangeAgreement: ExchangeAgreementCreateParams): ExchangeAgreementResponse
-  updateExchangeAgreement(exchangeAgreement: ExchangeAgreementUpdateParams): ExchangeAgreementResponse
-  deleteExchangeAgreement(id: String!): ExchangeAgreementResponse
+  createAgreement(Agreement: AgreementCreateParams): AgreementResponse
+  updateAgreement(Agreement: AgreementUpdateParams): AgreementResponse
+  deleteAgreement(id: String!): AgreementResponse
 
   createClaim(claim: ClaimCreateParams!): ClaimResponse
   updateClaim(claim: ClaimUpdateParams!): ClaimResponse
