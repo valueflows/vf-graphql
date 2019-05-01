@@ -272,9 +272,7 @@ type Agreement {
   id: ID!
   name: String
   created: DateTime
-
-  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType!]
+  note: String
 
   ##############################################################################
   # inverse relationships and queries
