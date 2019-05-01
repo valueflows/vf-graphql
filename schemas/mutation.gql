@@ -345,7 +345,7 @@ type AppreciationResponse {
 #   image: URL
 #   note: String
 #   inScopeOf: [AnyType!]
-#   under: Agreement
+#   under: String
 # }
 
 input IntentCreateParams { # implements IntentParams
@@ -365,7 +365,7 @@ input IntentCreateParams { # implements IntentParams
   image: URL
   note: String
   inScopeOf: [AnyType!]
-  under: Agreement
+  under: String
 }
 
 input IntentUpdateParams { # implements UpdateParams & IntentParams
@@ -387,7 +387,7 @@ input IntentUpdateParams { # implements UpdateParams & IntentParams
   finished: Boolean
   note: String
   inScopeOf: [AnyType!]
-  under: Agreement
+  under: String
 }
 
 type IntentResponse {
@@ -412,7 +412,7 @@ type IntentResponse {
 #   after: DateTime
 #   note: String
 #   inScopeOf: [AnyType!]
-#   under: Agreement
+#   under: String
 #   clauseOf: Agreement
 # }
 
@@ -433,7 +433,7 @@ input CommitmentCreateParams { # implements CommitmentParams
   after: DateTime
   note: String
   inScopeOf: [AnyType!]
-  under: Agreement
+  under: String
   clauseOf: Agreement
 }
 
@@ -455,7 +455,7 @@ input CommitmentUpdateParams { # implements UpdateParams & CommitmentParams
   finished: Boolean
   note: String
   inScopeOf: [AnyType!]
-  under: Agreement
+  under: String
   clauseOf: Agreement
 }
 
@@ -541,7 +541,7 @@ type AgreementResponse {
 #   created: DateTime
 #   finished: Boolean
 #   note: String
-#   under: Agreement
+#   under: String
 # }
 
 input ClaimCreateParams {
@@ -553,7 +553,7 @@ input ClaimCreateParams {
   claimedQuantity: IQuantityValue
   triggeredBy: ID #EconomicEvent
   note: String
-  under: Agreement
+  under: String
 }
 
 input ClaimUpdateParams {
@@ -567,7 +567,7 @@ input ClaimUpdateParams {
   triggeredBy: ID
   finished: Boolean
   note: String
-  under: Agreement
+  under: String
 }
 
 type ClaimResponse {

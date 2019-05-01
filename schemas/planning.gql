@@ -68,7 +68,7 @@ type Commitment {
   inScopeOf: [AnyType!]
 
   "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this flow."
-  under: Agreement
+  under: String
   "This commitment is part of the agreement, which could not exist without it."
   clauseOf: Agreement
 
@@ -141,7 +141,7 @@ type Intent {
   inScopeOf: [AnyType!]
 
   "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this flow."
-  under: Agreement
+  under: String
 
   ##############################################################################
   # inverse relationships and queries
@@ -177,7 +177,7 @@ type Claim {
   note: String
 
   "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this flow."
-  under: Agreement
+  under: String
 }
 
 """
