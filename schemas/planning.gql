@@ -274,7 +274,7 @@ An agreement to exchange something with another agent(s), containing commitments
 type ExchangeAgreement {
   id: ID!
   name: String
-  agreedTime: DateTime #created?
+  created: DateTime
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
   inScopeOf: [AnyType!]
