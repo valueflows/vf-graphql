@@ -541,6 +541,7 @@ type AgreementResponse {
 #   created: DateTime
 #   finished: Boolean
 #   note: String
+#   under: Agreement
 # }
 
 input ClaimCreateParams {
@@ -552,6 +553,7 @@ input ClaimCreateParams {
   claimedQuantity: IQuantityValue
   triggeredBy: ID #EconomicEvent
   note: String
+  under: Agreement
 }
 
 input ClaimUpdateParams {
@@ -565,6 +567,7 @@ input ClaimUpdateParams {
   triggeredBy: ID
   finished: Boolean
   note: String
+  under: Agreement
 }
 
 type ClaimResponse {

@@ -140,9 +140,7 @@ type Intent {
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
   inScopeOf: [AnyType!]
 
-  ##############################################################################
-  # relationship fields; can only be set indirectly
-
+  "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this flow."
   under: Agreement
 
   ##############################################################################
@@ -177,6 +175,9 @@ type Claim {
   created: DateTime
   finished: Boolean
   note: String
+
+  "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this flow."
+  under: Agreement
 }
 
 """
@@ -196,11 +197,6 @@ type Fulfillment {
 
   note: String
 
-  ##############################################################################
-  # relationship fields; can only be set indirectly
-
-  "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this flow."
-  under: Agreement
 }
 
 """
