@@ -811,8 +811,8 @@ type Mutation {
   # updatePlan(): PlanResponse
   # deletePlan(id: String!): PlanResponse
 
-  createAgreement(Agreement: AgreementCreateParams): AgreementResponse
-  updateAgreement(Agreement: AgreementUpdateParams): AgreementResponse
+  createAgreement(agreement: AgreementCreateParams): AgreementResponse
+  updateAgreement(agreement: AgreementUpdateParams): AgreementResponse
   deleteAgreement(id: String!): AgreementResponse
 
   createClaim(claim: ClaimCreateParams!): ClaimResponse
