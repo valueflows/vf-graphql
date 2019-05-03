@@ -191,7 +191,7 @@ Input `EconomicResource` type used when sending events to setup initial resource
 """
 input EconomicResourceCreateParams { # implements EconomicResourceParams
   classifiedAs: [URL!]
-  conformsTo: ID # ResourceSpecification
+  resourceConformsTo: ID # ResourceSpecification
   trackingIdentifier: String
   image: URL # url
   currentQuantity: IQuantityValue
@@ -202,7 +202,7 @@ input EconomicResourceCreateParams { # implements EconomicResourceParams
 input EconomicResourceUpdateParams { # implements UpdateParams & EconomicResourceParams
   id: ID!,
   classifiedAs: [URL!]
-  conformsTo: ID # ResourceSpecification
+  resourceConformsTo: ID # ResourceSpecification
   trackingIdentifier: String
   image: URL # url
   currentQuantity: IQuantityValue
