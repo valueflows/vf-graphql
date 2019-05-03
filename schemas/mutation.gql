@@ -170,8 +170,8 @@ input EconomicEventUpdateParams { # implements UpdateParams & EconomicEventParam
 }
 
 type EconomicEventResponse {
-  event: EconomicEvent!
-  resource: EconomicResource # only for resource creation events
+  economicEvent: EconomicEvent!
+  economicResource: EconomicResource # only for resource creation events
 }
 
 
@@ -211,7 +211,7 @@ input EconomicResourceUpdateParams { # implements UpdateParams & EconomicResourc
   inScopeOf: [AnyType!]}
 
 type EconomicResourceResponse {
-  resource: EconomicResource!
+  economicResource: EconomicResource!
 }
 
 
