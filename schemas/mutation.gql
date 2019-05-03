@@ -256,6 +256,7 @@ input ProcessCreateParams { # implements ProcessParams
   hasDuration: IDuration
   note: String
   inScopeOf: [AnyType!]
+  plannedWithin: Plan
 }
 
 input ProcessUpdateParams { # implements UpdateParams & ProcessParams
@@ -265,6 +266,7 @@ input ProcessUpdateParams { # implements UpdateParams & ProcessParams
   finished: Boolean
   note: String
   inScopeOf: [AnyType!]
+  plannedWithin: Plan
 }
 
 type ProcessResponse {
@@ -428,6 +430,7 @@ input CommitmentCreateParams { # implements CommitmentParams
   after: DateTime
   note: String
   inScopeOf: [AnyType!]
+  independentDemandOf: Plan
 }
 
 input CommitmentUpdateParams { # implements UpdateParams & CommitmentParams
@@ -448,6 +451,7 @@ input CommitmentUpdateParams { # implements UpdateParams & CommitmentParams
   finished: Boolean
   note: String
   inScopeOf: [AnyType!]
+  independentDemandOf: Plan
 }
 
 type CommitmentResponse {

@@ -59,9 +59,8 @@ type Commitment {
 
   # deletable: Boolean
 
-  plan: Plan
-  # isPlanDeliverable: Boolean #TODO: define in VF?
-  # forPlanDeliverable: Commitment #TODO: define in VF?
+  "Represents a desired deliverable to the outside of this plan."
+  independentDemandOf: Plan
 
   note: String
 
@@ -247,18 +246,20 @@ input planProcessSearchParams {
   finished: Boolean
 }
 
-type Plan { #TODO: this is not yet in VF, and may or may not be named Plan
+type Plan {
   id: ID!
-  plannedOn: String
-  due: String
+  created: DateTime
+  before: DateTime
   note: String
   name: String
 
+  ##############################################################################
+  # inverse relationships and queries
+
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
   inScopeOf: [AnyType!]
-
-  # createdBy: Agent
   processes(filter: planProcessSearchParams): [Process!]
+
   workingAgents: [Agent!]
   plannedNonWorkInputs: [Commitment!]
   plannedOutputs: [Commitment!]

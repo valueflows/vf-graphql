@@ -171,6 +171,9 @@ type Process {
 
   # deletable: Boolean
 
+  "The process with its inputs and outputs is part of the plan."
+  plannedWithin: Plan
+
   ##############################################################################
   # inverse relationships and queries
 
@@ -188,8 +191,6 @@ type Process {
   previousProcesses: [Process!]
 
   workingAgents: [Agent!]
-
-  plan: Plan
 
   trace: [EconomicEvent!]
   track: [EconomicEvent!]
