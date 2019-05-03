@@ -181,6 +181,9 @@ type Process {
   committedInputs(action: ID): [Commitment!]
   committedOutputs(action: ID): [Commitment!]
 
+  intendedInputs(action: ID): [Intent!]
+  intendedOutputs(action: ID): [Intent!]
+
   nextProcesses: [Process!]
   previousProcesses: [Process!]
 
