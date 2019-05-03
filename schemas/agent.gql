@@ -44,6 +44,14 @@ input agentCommitmentSearchParams {
   finished: Boolean
 }
 
+input agentIntentSearchParams {
+  searchString: String
+  action: ID
+  startDate: DateTime
+  endDate: DateTime
+  finished: Boolean
+}
+
 """
 A person or group or organization with economic agency.
 """
@@ -71,6 +79,7 @@ interface Agent {
   economicEvents(filter: agentEventSearchParams): [EconomicEvent!]
   processes(filter: agentProcessSearchParams): [Process!]
   commitments(filter: agentCommitmentSearchParams): [Commitment!]
+  intents(filter: agentIntentSearchParams): [Intent!]
   plans(filter: agentPlanSearchParams): [Plan!]
 
   relationships(roleId: ID): [AgentRelationship!] # :TODO: category filtering
@@ -82,11 +91,6 @@ interface Agent {
   recipes: [ResourceSpecification!] #TODO: is this useful or even realistic?
 
   # memberRelationships: [AgentRelationship!]
-
-  # agentSkills: [ResourceClassification!] # can get skills by more generic means... do we want this anyhow?
-  # agentSkillRelationships: [AgentResourceClassification!] # check this... if keep, rename
-
-  commitmentsMatchingSkills: [Commitment!]
 }
 
 # Variants of agents
@@ -118,6 +122,7 @@ type Person implements Agent {
   economicEvents(filter: agentEventSearchParams): [EconomicEvent!]
   processes(filter: agentProcessSearchParams): [Process!]
   commitments(filter: agentCommitmentSearchParams): [Commitment!]
+  intents(filter: agentIntentSearchParams): [Intent!]
   plans(filter: agentPlanSearchParams): [Plan!]
 
   relationships(roleId: ID): [AgentRelationship!] # :TODO: category filtering
@@ -129,10 +134,6 @@ type Person implements Agent {
   recipes: [ResourceSpecification!] #TODO: is this useful or even realistic?
 
   # memberRelationships: [AgentRelationship!]
-  # agentSkills: [ResourceClassification!]
-  # agentSkillRelationships: [AgentResourceClassification!]
-
-  commitmentsMatchingSkills: [Commitment!]
 }
 
 """
@@ -165,6 +166,7 @@ type Organization implements Agent {
   economicEvents(filter: agentEventSearchParams): [EconomicEvent!]
   processes(filter: agentProcessSearchParams): [Process!]
   commitments(filter: agentCommitmentSearchParams): [Commitment!]
+  intents(filter: agentIntentSearchParams): [Intent!]
   plans(filter: agentPlanSearchParams): [Plan!]
 
   relationships(roleId: ID): [AgentRelationship!] # :TODO: category filtering
@@ -176,8 +178,6 @@ type Organization implements Agent {
   recipes: [ResourceSpecification!] #TODO: is this useful or even realistic?
 
   # memberRelationships: [AgentRelationship!]
-
-  commitmentsMatchingSkills: [Commitment!]
 }
 
 # Relationships between agents
