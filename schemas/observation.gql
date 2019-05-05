@@ -62,7 +62,7 @@ type EconomicEvent {
   inScopeOf: [AnyType!]
 
   "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this flow."
-  under: String
+  under: AnyAgreement
   "This economic event occurs as part of this agreement."
   realizationOf: Agreement
 

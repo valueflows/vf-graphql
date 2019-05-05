@@ -68,7 +68,7 @@ type Commitment {
   inScopeOf: [AnyType!]
 
   "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this flow."
-  under: String
+  under: AnyAgreement
   "This commitment is part of the agreement, which could not exist without it."
   clauseOf: Agreement
 
@@ -141,7 +141,7 @@ type Intent {
   inScopeOf: [AnyType!]
 
   "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this flow."
-  under: String
+  under: AnyAgreement
 
   ##############################################################################
   # inverse relationships and queries
@@ -177,7 +177,7 @@ type Claim {
   note: String
 
   "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this flow."
-  under: String
+  under: AnyAgreement
 }
 
 """
@@ -266,7 +266,7 @@ type Plan { #TODO: this is not yet in VF, and may or may not be named Plan
 }
 
 """
-An agreement to exchange something with another agent(s), containing commitments towards that end.
+Any type of agreement among economic agents.
 """
 type Agreement {
   id: ID!
@@ -281,3 +281,17 @@ type Agreement {
   economicEvents: [EconomicEvent!]
   involvedAgents: [Agent!]
 }
+
+"""
+A reference to some external agreement between agents which specifies the rules
+or policies or calculations which govern a flow.
+"""
+type ReferencedAgreement {
+  id: URL!
+}
+
+"""
+References either an agreement formally managed by `Commitment`s & `EconomicEvent`s,
+or an external agreement which is loosely held to govern resource flows.
+"""
+union AnyAgreement = Agreement | ReferencedAgreement

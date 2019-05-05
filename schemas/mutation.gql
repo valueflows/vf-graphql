@@ -33,6 +33,7 @@
 ##
 
 
+
 # Generic parameters
 
 # interface UpdateParams {
@@ -365,7 +366,8 @@ input IntentCreateParams { # implements IntentParams
   image: URL
   note: String
   inScopeOf: [AnyType!]
-  under: String
+  underAgreement: ID
+  underExternalAgreement: URL
 }
 
 input IntentUpdateParams { # implements UpdateParams & IntentParams
@@ -387,7 +389,8 @@ input IntentUpdateParams { # implements UpdateParams & IntentParams
   finished: Boolean
   note: String
   inScopeOf: [AnyType!]
-  under: String
+  underAgreement: ID
+  underExternalAgreement: URL
 }
 
 type IntentResponse {
@@ -433,8 +436,9 @@ input CommitmentCreateParams { # implements CommitmentParams
   after: DateTime
   note: String
   inScopeOf: [AnyType!]
-  under: String
-  clauseOf: Agreement
+  underAgreement: ID
+  underExternalAgreement: URL
+  clauseOf: ID
 }
 
 input CommitmentUpdateParams { # implements UpdateParams & CommitmentParams
@@ -455,8 +459,9 @@ input CommitmentUpdateParams { # implements UpdateParams & CommitmentParams
   finished: Boolean
   note: String
   inScopeOf: [AnyType!]
-  under: String
-  clauseOf: Agreement
+  underAgreement: ID
+  underExternalAgreement: URL
+  clauseOf: ID
 }
 
 type CommitmentResponse {
@@ -553,7 +558,8 @@ input ClaimCreateParams {
   claimedQuantity: IQuantityValue
   triggeredBy: ID #EconomicEvent
   note: String
-  under: String
+  underAgreement: ID
+  underExternalAgreement: URL
 }
 
 input ClaimUpdateParams {
@@ -567,7 +573,8 @@ input ClaimUpdateParams {
   triggeredBy: ID
   finished: Boolean
   note: String
-  under: String
+  underAgreement: ID
+  underExternalAgreement: URL
 }
 
 type ClaimResponse {
