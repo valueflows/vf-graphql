@@ -596,6 +596,28 @@ type SettlementResponse {
 
 
 
+input PlanCreateParams {
+  id: ID!
+  name: String!
+  created: DateTime
+  before: DateTime
+  note: String
+}
+
+input PlanUpdateParams {
+  id: ID!
+  name: String
+  created: DateTime
+  before: DateTime
+  note: String
+}
+
+type PlanResponse {
+  plan: Plan
+}
+
+
+
 
 
 ################################################################################
@@ -797,11 +819,10 @@ type Mutation {
   updateSatisfaction(satisfaction: SatisfactionUpdateParams): SatisfactionResponse # TODO: add EconomicEvent
   deleteSatisfaction(id: String!): SatisfactionResponse
 
-  # :TODO: @see planning.gql
-  # createPlan(): PlanResponse
+  createPlan(plan: PlanCreateParams!): PlanResponse
   # createPlanFromRecipe(): PlanResponse
-  # updatePlan(): PlanResponse
-  # deletePlan(id: String!): PlanResponse
+  updatePlan(plan: PlanUpdateParams!): PlanResponse
+  deletePlan(id: String!): PlanResponse
 
   createExchangeAgreement(exchangeAgreement: ExchangeAgreementCreateParams): ExchangeAgreementResponse
   updateExchangeAgreement(exchangeAgreement: ExchangeAgreementUpdateParams): ExchangeAgreementResponse
