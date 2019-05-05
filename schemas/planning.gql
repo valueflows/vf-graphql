@@ -248,23 +248,32 @@ input planProcessSearchParams {
 
 type Plan {
   id: ID!
-  created: DateTime
-  before: DateTime
-  note: String
   name: String
+
+  "Time at which this plan was authored"
+  created: DateTime
+
+  "Indicates the date this plan must be completed by"
+  before: DateTime
+
+  note: String
 
   ##############################################################################
   # inverse relationships and queries
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
   inScopeOf: [AnyType!]
+
   processes(filter: planProcessSearchParams): [Process!]
 
   workingAgents: [Agent!]
+
   plannedNonWorkInputs: [Commitment!]
   plannedOutputs: [Commitment!]
+
   nonWorkInputs: [EconomicEvent!]
   outputs: [EconomicEvent!]
+
   kanbanState: String #TODO: codify this?
   # deletable: Boolean
 }
