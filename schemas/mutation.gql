@@ -520,13 +520,15 @@ type SatisfactionResponse {
 
 input AgreementCreateParams { # implements AgreementParams
   name: String!
-  agreedTime: DateTime!
+  created: DateTime!
+  note: String
 }
 
 input AgreementUpdateParams { # implements UpdateParams & AgreementParams
   id: ID!
   name: String
-  agreedTime: DateTime
+  created: DateTime
+  note: String
 }
 
 type AgreementResponse {
