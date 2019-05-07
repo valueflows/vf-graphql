@@ -74,7 +74,8 @@ input IDuration {
 }
 
 """
-A physical location (not defined by ValueFlows)
+A physical location.
+Under discussion. See https://github.com/valueflows/vf-graphql/issues/28 https://github.com/valueflows/valueflows/issues/402
 """
 type Location { #TODO: ??
   id: ID!

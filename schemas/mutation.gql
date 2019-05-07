@@ -59,7 +59,7 @@ input AgentCreateParams { # implements AgentParams
   name: String!
   image: URL
   email: String
-  primaryLocation: String
+  primaryLocation: ID
   note: String
 }
 
@@ -69,7 +69,7 @@ input AgentUpdateParams { # implements UpdateParams & AgentParams
   name: String
   image: URL
   email: String
-  primaryLocation: String
+  primaryLocation: ID
   note: String
 }
 
@@ -181,7 +181,7 @@ type EconomicEventResponse {
 #   trackingIdentifier: String
 #   image: URL # url
 #   currentQuantity: IQuantityValue
-#   currentLocation: String
+#   currentLocation: ID
 #   note: String
 #   inScopeOf: [AnyType!]
 # }
@@ -195,7 +195,7 @@ input EconomicResourceCreateParams { # implements EconomicResourceParams
   trackingIdentifier: String
   image: URL # url
   currentQuantity: IQuantityValue
-  currentLocation: String
+  currentLocation: ID
   note: String
 }
 
@@ -206,7 +206,7 @@ input EconomicResourceUpdateParams { # implements UpdateParams & EconomicResourc
   trackingIdentifier: String
   image: URL # url
   currentQuantity: IQuantityValue
-  currentLocation: String
+  currentLocation: ID
   note: String
   inScopeOf: [AnyType!]}
 
