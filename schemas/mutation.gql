@@ -486,23 +486,6 @@ type SatisfactionResponse {
 }
 
 
-# interface PlanParams {
-
-# }
-
-# type PlanCreateParams { # implements PlanParams
-
-# }
-
-# type PlanUpdateParams { # implements UpdateParams & PlanParams
-
-# }
-
-# type PlanResponse {
-#   plan: Plan
-# }
-
-
 # interface ExchangeAgreementParams {
 #   name: String
 #   agreedTime: DateTime
