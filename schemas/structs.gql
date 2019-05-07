@@ -79,7 +79,7 @@ A physical location (not defined by ValueFlows)
 type Location { #TODO: ??
   id: ID!
   name: String!
-  address: String!
+  address: String
   latitude: Float
   longitude: Float
   note: String
