@@ -56,8 +56,8 @@ type EconomicEvent {
   "Indicates the flow or process occurred after this specific time"
   after: DateTime
 
-  "The place an economic event was said to occur at. Could be at any level of granularity, from a town to an address to a warehouse location. Usually mappable. See https://github.com/valueflows/valueflows/issues/486"
-  observedLocation: Location
+  "The place where an economic event occurs.  Usually mappable."
+  atLocation: Location
 
   note: String
 

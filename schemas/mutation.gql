@@ -127,6 +127,7 @@ type AgentRelationshipResponse {
 #   :TODO: time
 #   note: String
 #   inScopeOf: [AnyType!]
+#   atLocation: ID
 # }
 
 input EconomicEventCreateParams { # implements EconomicEventParams
@@ -140,7 +141,7 @@ input EconomicEventCreateParams { # implements EconomicEventParams
   resourceClassifiedAs: [URL!]
   resourceConformsTo: ID # ResourceSpecification
   affectedQuantity: IQuantityValue
-  observedLocation: ID # Location
+  atLocation: ID # Location
   hasBeginning: DateTime
   hasEnd: DateTime
   hasPointInTime: DateTime
@@ -161,7 +162,7 @@ input EconomicEventUpdateParams { # implements UpdateParams & EconomicEventParam
   resourceClassifiedAs: [URL!]
   resourceConformsTo: ID
   affectedQuantity: IQuantityValue
-  observedLocation: ID # Location
+  atLocation: ID # Location
   hasBeginning: DateTime
   hasEnd: DateTime
   hasPointInTime: DateTime
@@ -346,6 +347,7 @@ type AppreciationResponse {
 #   image: URL
 #   note: String
 #   inScopeOf: [AnyType!]
+#   atLocation: ID
 # }
 
 input IntentCreateParams { # implements IntentParams
@@ -365,6 +367,7 @@ input IntentCreateParams { # implements IntentParams
   image: URL
   note: String
   inScopeOf: [AnyType!]
+  atLocation: ID # Location
 }
 
 input IntentUpdateParams { # implements UpdateParams & IntentParams
@@ -386,6 +389,7 @@ input IntentUpdateParams { # implements UpdateParams & IntentParams
   finished: Boolean
   note: String
   inScopeOf: [AnyType!]
+  atLocation: ID # Location
 }
 
 type IntentResponse {
@@ -410,6 +414,7 @@ type IntentResponse {
 #   after: DateTime
 #   note: String
 #   inScopeOf: [AnyType!]
+#   atLocation: ID
 # }
 
 input CommitmentCreateParams { # implements CommitmentParams
@@ -429,6 +434,7 @@ input CommitmentCreateParams { # implements CommitmentParams
   after: DateTime
   note: String
   inScopeOf: [AnyType!]
+  atLocation: ID # Location
 }
 
 input CommitmentUpdateParams { # implements UpdateParams & CommitmentParams
@@ -449,6 +455,7 @@ input CommitmentUpdateParams { # implements UpdateParams & CommitmentParams
   finished: Boolean
   note: String
   inScopeOf: [AnyType!]
+  atLocation: ID # Location
 }
 
 type CommitmentResponse {

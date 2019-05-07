@@ -63,6 +63,9 @@ type Commitment {
   # isPlanDeliverable: Boolean #TODO: define in VF?
   # forPlanDeliverable: Commitment #TODO: define in VF?
 
+  "The place where a commitment occurs.  Usually mappable."
+  atLocation: Location
+
   note: String
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
@@ -129,6 +132,9 @@ type Intent {
   after: DateTime
 
   finished: Boolean
+
+  "The place where an intent would occur.  Usually mappable."
+  atLocation: Location
 
   # deletable: Boolean
 
