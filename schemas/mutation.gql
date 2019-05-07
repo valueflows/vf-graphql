@@ -139,8 +139,8 @@ input EconomicEventCreateParams { # implements EconomicEventParams
   resourceInventoriedAs: ID # EconomicResource
   resourceClassifiedAs: [URL!]
   resourceConformsTo: ID # ResourceSpecification
-  quantifiedAs: IQuantityValue
-  # :TODO: time
+  affectedQuantity: IQuantityValue
+  observedLocation: ID # Location
   hasBeginning: DateTime
   hasEnd: DateTime
   hasPointInTime: DateTime
@@ -160,7 +160,8 @@ input EconomicEventUpdateParams { # implements UpdateParams & EconomicEventParam
   resourceInventoriedAs: ID
   resourceClassifiedAs: [URL!]
   resourceConformsTo: ID
-  quantifiedAs: IQuantityValue
+  affectedQuantity: IQuantityValue
+  observedLocation: ID # Location
   hasBeginning: DateTime
   hasEnd: DateTime
   hasPointInTime: DateTime
