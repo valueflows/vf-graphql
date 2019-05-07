@@ -246,6 +246,18 @@ input planProcessSearchParams {
   finished: Boolean
 }
 
+"Query parameters for filtering independent demands and requirements of a `Plan`"
+input planFlowSearchParams {
+  "Filter results to only include the given action types (eg. 'work')"
+  action: ID
+
+  "Filter results to exclude the given action types (eg. 'work')"
+  notAction: ID
+}
+
+"""
+A logical collection of processes that constitute a body of planned work with defined deliverable(s).
+"""
 type Plan {
   id: ID!
   name: String
@@ -268,11 +280,11 @@ type Plan {
 
   workingAgents: [Agent!]
 
-  plannedNonWorkInputs: [Commitment!]
-  plannedOutputs: [Commitment!]
+  plannedInputs(filter: planFlowSearchParams): [Commitment!]
+  plannedOutputs(filter: planFlowSearchParams): [Commitment!]
 
-  nonWorkInputs: [EconomicEvent!]
-  outputs: [EconomicEvent!]
+  completedInputs(filter: planFlowSearchParams): [EconomicEvent!]
+  completedOutputs(filter: planFlowSearchParams): [EconomicEvent!]
 
   kanbanState: String #TODO: codify this?
   # deletable: Boolean
