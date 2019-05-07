@@ -240,9 +240,24 @@ type Settlement {
 
 "Query parameters for reading `Process`es related to a `Plan`"
 input planProcessSearchParams {
+  "Search by process name or notes"
   searchString: String
+
+  """
+  Starting date range (inclusive) to filter processes.
+  Only processes which begin after this date will be returned.
+  If `endDate` is also provided, processes must also end before the given date.
+  """
   startDate: DateTime
+
+  """
+  Ending date range (inclusive) to filter processes.
+  Only processes which end before this date will be returned.
+  If `startDate` is also provided, processes must also begin after the given date.
+  """
   endDate: DateTime
+
+  "Filter results by whether processes have been completed or not"
   finished: Boolean
 }
 
