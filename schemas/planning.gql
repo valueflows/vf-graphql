@@ -298,8 +298,8 @@ type Plan {
   plannedInputs(filter: planFlowSearchParams): [Commitment!]
   plannedOutputs(filter: planFlowSearchParams): [Commitment!]
 
-  completedInputs(filter: planFlowSearchParams): [EconomicEvent!]
-  completedOutputs(filter: planFlowSearchParams): [EconomicEvent!]
+  observedInputs(filter: planFlowSearchParams): [EconomicEvent!]
+  observedOutputs(filter: planFlowSearchParams): [EconomicEvent!]
 
   kanbanState: String #TODO: codify this?
   # deletable: Boolean
