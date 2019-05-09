@@ -59,7 +59,7 @@ input AgentCreateParams { # implements AgentParams
   name: String!
   image: URL
   email: String
-  primaryLocation: String
+  primaryLocation: ID
   note: String
 }
 
@@ -69,7 +69,7 @@ input AgentUpdateParams { # implements UpdateParams & AgentParams
   name: String
   image: URL
   email: String
-  primaryLocation: String
+  primaryLocation: ID
   note: String
 }
 
@@ -127,6 +127,7 @@ type AgentRelationshipResponse {
 #   :TODO: time
 #   note: String
 #   inScopeOf: [AnyType!]
+#   atLocation: ID
 # }
 
 input EconomicEventCreateParams { # implements EconomicEventParams
@@ -139,8 +140,8 @@ input EconomicEventCreateParams { # implements EconomicEventParams
   resourceInventoriedAs: ID # EconomicResource
   resourceClassifiedAs: [URL!]
   resourceConformsTo: ID # ResourceSpecification
-  quantifiedAs: IQuantityValue
-  # :TODO: time
+  affectedQuantity: IQuantityValue
+  atLocation: ID # Location
   hasBeginning: DateTime
   hasEnd: DateTime
   hasPointInTime: DateTime
@@ -160,7 +161,8 @@ input EconomicEventUpdateParams { # implements UpdateParams & EconomicEventParam
   resourceInventoriedAs: ID
   resourceClassifiedAs: [URL!]
   resourceConformsTo: ID
-  quantifiedAs: IQuantityValue
+  affectedQuantity: IQuantityValue
+  atLocation: ID # Location
   hasBeginning: DateTime
   hasEnd: DateTime
   hasPointInTime: DateTime
@@ -181,7 +183,7 @@ type EconomicEventResponse {
 #   trackingIdentifier: String
 #   image: URL # url
 #   currentQuantity: IQuantityValue
-#   currentLocation: String
+#   currentLocation: ID
 #   note: String
 #   inScopeOf: [AnyType!]
 # }
@@ -195,7 +197,7 @@ input EconomicResourceCreateParams { # implements EconomicResourceParams
   trackingIdentifier: String
   image: URL # url
   currentQuantity: IQuantityValue
-  currentLocation: String
+  currentLocation: ID
   note: String
 }
 
@@ -206,7 +208,7 @@ input EconomicResourceUpdateParams { # implements UpdateParams & EconomicResourc
   trackingIdentifier: String
   image: URL # url
   currentQuantity: IQuantityValue
-  currentLocation: String
+  currentLocation: ID
   note: String
   inScopeOf: [AnyType!]}
 
@@ -347,6 +349,7 @@ type AppreciationResponse {
 #   image: URL
 #   note: String
 #   inScopeOf: [AnyType!]
+#   atLocation: ID
 # }
 
 input IntentCreateParams { # implements IntentParams
@@ -366,6 +369,7 @@ input IntentCreateParams { # implements IntentParams
   image: URL
   note: String
   inScopeOf: [AnyType!]
+  atLocation: ID # Location
 }
 
 input IntentUpdateParams { # implements UpdateParams & IntentParams
@@ -387,6 +391,7 @@ input IntentUpdateParams { # implements UpdateParams & IntentParams
   finished: Boolean
   note: String
   inScopeOf: [AnyType!]
+  atLocation: ID # Location
 }
 
 type IntentResponse {
@@ -411,6 +416,7 @@ type IntentResponse {
 #   after: DateTime
 #   note: String
 #   inScopeOf: [AnyType!]
+#   atLocation: ID
 # }
 
 input CommitmentCreateParams { # implements CommitmentParams
@@ -431,6 +437,7 @@ input CommitmentCreateParams { # implements CommitmentParams
   note: String
   inScopeOf: [AnyType!]
   independentDemandOf: ID #Plan
+  atLocation: ID # Location
 }
 
 input CommitmentUpdateParams { # implements UpdateParams & CommitmentParams
@@ -452,6 +459,7 @@ input CommitmentUpdateParams { # implements UpdateParams & CommitmentParams
   note: String
   inScopeOf: [AnyType!]
   independentDemandOf: ID #Plan
+  atLocation: ID # Location1
 }
 
 type CommitmentResponse {

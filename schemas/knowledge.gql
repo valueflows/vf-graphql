@@ -101,8 +101,11 @@ type RecipeProcess {
   "The multiplier for duration based on capacities for the recipe."
   durationMultiplier: Float
 
-  "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
-  processClassifiedAs: [URL!]
+  # Process classifications under review.
+  # You are probably looking for a "skill RecipeFlow" provided to the process as a 'work' input.
+  # @see https://github.com/valueflows/vf-graphql/issues/25#issuecomment-489429982
+  # "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
+  # processClassifiedAs: [URL!]
 
   note: String
 

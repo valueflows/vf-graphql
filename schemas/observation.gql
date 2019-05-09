@@ -56,6 +56,9 @@ type EconomicEvent {
   "Indicates the flow or process occurred after this specific time"
   after: DateTime
 
+  "The place where an economic event occurs.  Usually mappable."
+  atLocation: Location
+
   note: String
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
@@ -123,7 +126,7 @@ type EconomicResource {
   contains: [EconomicResource!] #TODO: containedBy and make this the inverse??
 
   "The current place an economic resource is located. Could be at any level of granularity, from a town to an address to a warehouse location. Usually mappable."
-  currentLocation: String # under discussion
+  currentLocation: Location
 
   ##############################################################################
   # inverse relationships and queries
@@ -161,8 +164,11 @@ type Process {
   "The recipe definition or specification for a process."
   basedOn: RecipeProcess
 
-  "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
-  classifiedAs: [URL!]
+  # Process classifications under review.
+  # You are probably looking for a "skill EconomicResource" provided to the process as a 'work' action EconomicEvent input.
+  # @see https://github.com/valueflows/vf-graphql/issues/25#issuecomment-489429982
+  # "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
+  # classifiedAs: [URL!]
 
   note: String
 
