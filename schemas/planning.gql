@@ -310,8 +310,11 @@ type Plan {
 
   workingAgents: [Agent!]
 
-  plannedInputs(filter: planFlowSearchParams): [Commitment!]
-  plannedOutputs(filter: planFlowSearchParams): [Commitment!]
+  intendedInputs(filter: planFlowSearchParams): [Intent!]
+  intendedOutputs(filter: planFlowSearchParams): [Intent!]
+
+  committedInputs(filter: planFlowSearchParams): [Commitment!]
+  committedOutputs(filter: planFlowSearchParams): [Commitment!]
 
   observedInputs(filter: planFlowSearchParams): [EconomicEvent!]
   observedOutputs(filter: planFlowSearchParams): [EconomicEvent!]
