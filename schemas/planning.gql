@@ -171,9 +171,18 @@ type Claim {
   "The primary resource knowledge specification or definition of an existing or potential resource."
   resourceConformsTo: ResourceSpecification
 
+  "The amount of the claimed resource desired by the claim."
   claimedQuantity: QuantityValue
+
+  "The economic event which already occurred which this claim has been made against."
   triggeredBy: EconomicEvent!
+
+  "Indicates that the claim must be filled before the given date."
+  before: DateTime
+
+  "The data on which the claim was made."
   created: DateTime
+
   finished: Boolean
   note: String
 }
