@@ -88,6 +88,9 @@ type Location { #TODO: ??
   ##############################################################################
   # inverse relationships and queries
 
-  resources: [EconomicResource!]
+  economicResources: [EconomicResource!]
   agents: [Agent!]
+  economicEvents: [EconomicEvent!]
+  commitments: [Commitment!]
+  intents: [Intent!]
 }
