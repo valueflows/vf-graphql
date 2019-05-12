@@ -33,6 +33,7 @@
 ##
 
 
+
 # Generic parameters
 
 # interface UpdateParams {
@@ -348,6 +349,7 @@ type AppreciationResponse {
 #   note: String
 #   inScopeOf: [AnyType!]
 #   atLocation: ID
+#   under: String
 # }
 
 input IntentCreateParams { # implements IntentParams
@@ -368,6 +370,10 @@ input IntentCreateParams { # implements IntentParams
   note: String
   inScopeOf: [AnyType!]
   atLocation: ID # Location
+
+  # pending review- see https://github.com/valueflows/vf-graphql/issues/26
+  underAgreement: ID # Agreement
+  underExternalAgreement: URL
 }
 
 input IntentUpdateParams { # implements UpdateParams & IntentParams
@@ -390,6 +396,8 @@ input IntentUpdateParams { # implements UpdateParams & IntentParams
   note: String
   inScopeOf: [AnyType!]
   atLocation: ID # Location
+  underAgreement: ID # Agreement
+  underExternalAgreement: URL
 }
 
 type IntentResponse {
@@ -415,6 +423,8 @@ type IntentResponse {
 #   note: String
 #   inScopeOf: [AnyType!]
 #   atLocation: ID
+#   under: String
+#   clauseOf: Agreement
 # }
 
 input CommitmentCreateParams { # implements CommitmentParams
@@ -435,6 +445,9 @@ input CommitmentCreateParams { # implements CommitmentParams
   note: String
   inScopeOf: [AnyType!]
   atLocation: ID # Location
+  underAgreement: ID # Agreement
+  underExternalAgreement: URL
+  clauseOf: ID # Agreement
 }
 
 input CommitmentUpdateParams { # implements UpdateParams & CommitmentParams
@@ -456,6 +469,9 @@ input CommitmentUpdateParams { # implements UpdateParams & CommitmentParams
   note: String
   inScopeOf: [AnyType!]
   atLocation: ID # Location
+  underAgreement: ID # Agreement
+  underExternalAgreement: URL
+  clauseOf: ID # Agreement
 }
 
 type CommitmentResponse {
@@ -507,24 +523,26 @@ type SatisfactionResponse {
 # }
 
 
-# interface ExchangeAgreementParams {
+# interface AgreementParams {
 #   name: String
 #   agreedTime: DateTime
 # }
 
-input ExchangeAgreementCreateParams { # implements ExchangeAgreementParams
+input AgreementCreateParams { # implements AgreementParams
   name: String!
-  agreedTime: DateTime!
+  created: DateTime!
+  note: String
 }
 
-input ExchangeAgreementUpdateParams { # implements UpdateParams & ExchangeAgreementParams
+input AgreementUpdateParams { # implements UpdateParams & AgreementParams
   id: ID!
   name: String
-  agreedTime: DateTime
+  created: DateTime
+  note: String
 }
 
-type ExchangeAgreementResponse {
-  exchangeAgreement: ExchangeAgreement
+type AgreementResponse {
+  Agreement: Agreement
 }
 
 
@@ -540,6 +558,7 @@ type ExchangeAgreementResponse {
 #   created: DateTime
 #   finished: Boolean
 #   note: String
+#   under: String
 # }
 
 input ClaimCreateParams {
@@ -551,6 +570,8 @@ input ClaimCreateParams {
   claimedQuantity: IQuantityValue
   triggeredBy: ID #EconomicEvent
   note: String
+  underAgreement: ID
+  underExternalAgreement: URL
 }
 
 input ClaimUpdateParams {
@@ -564,6 +585,8 @@ input ClaimUpdateParams {
   triggeredBy: ID
   finished: Boolean
   note: String
+  underAgreement: ID
+  underExternalAgreement: URL
 }
 
 type ClaimResponse {
@@ -807,9 +830,9 @@ type Mutation {
   # updatePlan(): PlanResponse
   # deletePlan(id: String!): PlanResponse
 
-  createExchangeAgreement(exchangeAgreement: ExchangeAgreementCreateParams): ExchangeAgreementResponse
-  updateExchangeAgreement(exchangeAgreement: ExchangeAgreementUpdateParams): ExchangeAgreementResponse
-  deleteExchangeAgreement(id: String!): ExchangeAgreementResponse
+  createAgreement(agreement: AgreementCreateParams): AgreementResponse
+  updateAgreement(agreement: AgreementUpdateParams): AgreementResponse
+  deleteAgreement(id: String!): AgreementResponse
 
   createClaim(claim: ClaimCreateParams!): ClaimResponse
   updateClaim(claim: ClaimUpdateParams!): ClaimResponse

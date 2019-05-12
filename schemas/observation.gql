@@ -64,11 +64,10 @@ type EconomicEvent {
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
   inScopeOf: [AnyType!]
 
-  ##############################################################################
-  # relationship fields; can only be set indirectly
-
   "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this flow."
-  under: ExchangeAgreement # or Agreement?
+  under: AnyAgreement
+  "This economic event occurs as part of this agreement."
+  realizationOf: Agreement
 
   # requestDistribution: Boolean
 
@@ -207,7 +206,6 @@ An activity that assigns the rights and responsibilities for an economic resourc
 type Transfer { #TODO this whole model is under review
   id: ID!
   name: String!
-  # under: ExchangeAgreement TODO need to finish this definition
 
   "Specific time marking the exact moment at which the flow or process occurred"
   hasPointInTime: DateTime
