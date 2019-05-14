@@ -142,7 +142,7 @@ input EconomicEventCreateParams { # implements EconomicEventParams
   resourceClassifiedAs: [URL!]
   resourceConformsTo: ID # ResourceSpecification
   affectedQuantity: IQuantityValue
-  atLocation: ID # Location
+  atLocation: ID # SpatialThing
   hasBeginning: DateTime
   hasEnd: DateTime
   hasPointInTime: DateTime
@@ -163,7 +163,7 @@ input EconomicEventUpdateParams { # implements UpdateParams & EconomicEventParam
   resourceClassifiedAs: [URL!]
   resourceConformsTo: ID
   affectedQuantity: IQuantityValue
-  atLocation: ID # Location
+  atLocation: ID # SpatialThing
   hasBeginning: DateTime
   hasEnd: DateTime
   hasPointInTime: DateTime
@@ -369,7 +369,7 @@ input IntentCreateParams { # implements IntentParams
   image: URL
   note: String
   inScopeOf: [AnyType!]
-  atLocation: ID # Location
+  atLocation: ID # SpatialThing
 
   # pending review- see https://github.com/valueflows/vf-graphql/issues/26
   underAgreement: ID # Agreement
@@ -395,7 +395,7 @@ input IntentUpdateParams { # implements UpdateParams & IntentParams
   finished: Boolean
   note: String
   inScopeOf: [AnyType!]
-  atLocation: ID # Location
+  atLocation: ID # SpatialThing
   underAgreement: ID # Agreement
   underExternalAgreement: URL
 }
@@ -444,7 +444,7 @@ input CommitmentCreateParams { # implements CommitmentParams
   after: DateTime
   note: String
   inScopeOf: [AnyType!]
-  atLocation: ID # Location
+  atLocation: ID # SpatialThing
   underAgreement: ID # Agreement
   underExternalAgreement: URL
   clauseOf: ID # Agreement
@@ -468,7 +468,7 @@ input CommitmentUpdateParams { # implements UpdateParams & CommitmentParams
   finished: Boolean
   note: String
   inScopeOf: [AnyType!]
-  atLocation: ID # Location
+  atLocation: ID # SpatialThing
   underAgreement: ID # Agreement
   underExternalAgreement: URL
   clauseOf: ID # Agreement

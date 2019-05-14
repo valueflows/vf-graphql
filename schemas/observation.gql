@@ -57,7 +57,7 @@ type EconomicEvent {
   after: DateTime
 
   "The place where an economic event occurs.  Usually mappable."
-  atLocation: Location
+  atLocation: SpatialThing
 
   note: String
 
@@ -125,7 +125,7 @@ type EconomicResource {
   contains: [EconomicResource!] #TODO: containedBy and make this the inverse??
 
   "The current place an economic resource is located. Could be at any level of granularity, from a town to an address to a warehouse location. Usually mappable."
-  currentLocation: Location
+  currentLocation: SpatialThing
 
   ##############################################################################
   # inverse relationships and queries
