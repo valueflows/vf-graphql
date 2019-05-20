@@ -22,6 +22,7 @@
   },
   "keywords": [
     "ValueFlows",
+    "REA",
     "GraphQL",
     "grammar"
   ],
@@ -32,6 +33,7 @@
   },
   "homepage": "https://github.com/valueflows/vf-graphql#readme",
   "dependencies": {
+    "@valueflows/vf-graphql-schemas": "0.0.1",
     "graphql": "^14.1.1",
     "graphql-tools": "^4.0.4"
   },

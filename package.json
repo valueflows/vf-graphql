@@ -4,6 +4,7 @@
   "private": true,
   "workspaces": [
     "mock-server",
+    "schemas",
     "lib"
   ],
   "description": "ValueFlows reference GraphQL spec, authored in GraphQL SDL; plus validator methods for apps wishing to adhere to the spec.",
