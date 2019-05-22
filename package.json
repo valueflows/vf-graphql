@@ -11,9 +11,11 @@
   "main": "/dev/null",
   "scripts": {
     "preinstall": "npm run clean",
-    "start": "npm-run-all --parallel dev:schema dev:demoUI",
+    "build": "cd schemas && npm run build",
+    "start": "npm-run-all --parallel dev:schema dev:schema2 dev:demoUI",
     "test": "cd lib && npm run test",
     "dev:schema": "cd lib && npm run dev",
+    "dev:schema2": "cd schemas && npm run dev",
     "dev:demoUI": "cd mock-server && npm start",
     "clean": "rm -Rf node_modules; rm -Rf mock-server/node_modules; rm -Rf lib/node_modules"
   },

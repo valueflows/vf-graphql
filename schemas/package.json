@@ -4,7 +4,17 @@
   "description": "GraphQL schema files for ValueFlows reference spec",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "npm-watch",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "graphql-codegen --config codegen.yml; node scripts/build.js"
+  },
+  "watch": {
+    "build": {
+      "patterns": [
+        "./*"
+      ],
+      "extensions": "gql"
+    }
   },
   "repository": {
     "type": "git",
@@ -17,5 +27,14 @@
     "grammar"
   ],
   "author": "ValueFlows contributors",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@graphql-codegen/cli": "^1.2.0",
+    "@graphql-codegen/typescript": "1.2.0",
+    "@graphql-codegen/typescript-graphql-files-modules": "1.2.0",
+    "@graphql-codegen/typescript-operations": "1.2.0",
+    "@graphql-codegen/typescript-react-apollo": "1.2.0",
+    "graphql": "^14.3.0",
+    "npm-watch": "^0.6.0"
+  }
 }
