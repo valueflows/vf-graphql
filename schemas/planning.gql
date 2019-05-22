@@ -63,7 +63,7 @@ type Commitment {
   # forPlanDeliverable: Commitment #TODO: define in VF?
 
   "The place where a commitment occurs.  Usually mappable."
-  atLocation: Location
+  atLocation: SpatialThing
 
   note: String
 
@@ -135,7 +135,7 @@ type Intent {
   finished: Boolean
 
   "The place where an intent would occur.  Usually mappable."
-  atLocation: Location
+  atLocation: SpatialThing
 
   # deletable: Boolean
 
