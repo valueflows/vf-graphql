@@ -41,7 +41,7 @@ type EconomicEvent {
   resourceConformsTo: ResourceSpecification
 
   "The amount and unit of the event. This is the quantity that could be used to increment or decrement a resource, depending on the type of resource and type of event."
-  affectedQuantity: QuantityValue
+  flowQuantity: QuantityValue
 
   "Specific time marking the exact beginning of flow or process"
   hasBeginning: DateTime
