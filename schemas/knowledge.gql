@@ -51,12 +51,12 @@ type ResourceSpecification {
   "Defines if any resource of that type can be freely substituted for any other resource of that type when used, consumed, traded, etc."
   substitutable: Boolean
 
-  image: URL
+  image: URI
 
   note: String
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
-  resourceClassifiedAs: [URL!]
+  resourceClassifiedAs: [URI!]
 
   ##############################################################################
   # inverse relationships and queries
@@ -75,7 +75,7 @@ type RecipeFlow {
   resourceConformsTo: ResourceSpecification
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
-  resourceClassifiedAs: [URL!]
+  resourceClassifiedAs: [URI!]
 
   "Relates a process input or output to a verb, such as consume, produce, work, improve, etc."
   action: Action!
@@ -105,7 +105,7 @@ type RecipeProcess {
   # You are probably looking for a "skill RecipeFlow" provided to the process as a 'work' input.
   # @see https://github.com/valueflows/vf-graphql/issues/25#issuecomment-489429982
   # "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
-  # processClassifiedAs: [URL!]
+  # processClassifiedAs: [URI!]
 
   note: String
 

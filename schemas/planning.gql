@@ -32,7 +32,7 @@ type Commitment {
   receiver: Agent
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
-  resourceClassifiedAs: [URL!]
+  resourceClassifiedAs: [URI!]
 
   "The primary resource knowledge specification or definition of an existing or potential resource."
   resourceConformsTo: ResourceSpecification
@@ -109,7 +109,7 @@ type Intent {
   receiver: Agent
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
-  resourceClassifiedAs: [URL!]
+  resourceClassifiedAs: [URI!]
 
   "The primary resource knowledge specification or definition of an existing or potential resource."
   resourceConformsTo: ResourceSpecification
@@ -139,7 +139,7 @@ type Intent {
 
   # deletable: Boolean
 
-  image: URL
+  image: URI
 
   note: String
 
@@ -171,7 +171,7 @@ type Claim {
   receiver: Agent!
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
-  resourceClassifiedAs: [URL!]
+  resourceClassifiedAs: [URI!]
 
   "The primary resource knowledge specification or definition of an existing or potential resource."
   resourceConformsTo: ResourceSpecification
@@ -302,7 +302,7 @@ A reference to some external agreement between agents which specifies the rules
 or policies or calculations which govern a flow.
 """
 type ReferencedAgreement {
-  id: URL!
+  id: URI!
 }
 
 """
