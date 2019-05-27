@@ -68,7 +68,7 @@ interface Agent {
   email: String
 
   "The main place an agent is located, often an address where activities occur and mail can be sent. This is usually a mappable geographic location.  It also could be a website address, as in the case of agents who have no physical location."
-  primaryLocation: Location
+  primaryLocation: SpatialThing
 
   note: String
 
@@ -111,7 +111,7 @@ type Person implements Agent {
   email: String
 
   "The main place an agent is located, often an address where activities occur and mail can be sent. This is usually a mappable geographic location.  It also could be a website address, as in the case of agents who have no physical location."
-  primaryLocation: Location
+  primaryLocation: SpatialThing
 
   note: String
 
@@ -155,7 +155,7 @@ type Organization implements Agent {
   email: String
 
   "The main place an agent is located, often an address where activities occur and mail can be sent. This is usually a mappable geographic location.  It also could be a website address, as in the case of agents who have no physical location."
-  primaryLocation: Location
+  primaryLocation: SpatialThing
 
   note: String
 
