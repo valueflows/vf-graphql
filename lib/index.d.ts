@@ -517,7 +517,7 @@ export type EconomicEventCreateParams = {
   resourceInventoriedAs?: Maybe<Scalars["ID"]>;
   resourceClassifiedAs?: Maybe<Array<Scalars["URI"]>>;
   resourceConformsTo?: Maybe<Scalars["ID"]>;
-  affectedQuantity?: Maybe<IQuantityValue>;
+  flowQuantity?: Maybe<IQuantityValue>;
   atLocation?: Maybe<Scalars["ID"]>;
   hasBeginning?: Maybe<Scalars["DateTime"]>;
   hasEnd?: Maybe<Scalars["DateTime"]>;
@@ -544,7 +544,7 @@ export type EconomicEventUpdateParams = {
   resourceInventoriedAs?: Maybe<Scalars["ID"]>;
   resourceClassifiedAs?: Maybe<Array<Scalars["URI"]>>;
   resourceConformsTo?: Maybe<Scalars["ID"]>;
-  affectedQuantity?: Maybe<IQuantityValue>;
+  flowQuantity?: Maybe<IQuantityValue>;
   atLocation?: Maybe<Scalars["ID"]>;
   hasBeginning?: Maybe<Scalars["DateTime"]>;
   hasEnd?: Maybe<Scalars["DateTime"]>;

@@ -4,18 +4,16 @@
   "private": true,
   "workspaces": [
     "mock-server",
-    "schemas",
     "lib"
   ],
   "description": "ValueFlows reference GraphQL spec, authored in GraphQL SDL; plus validator methods for apps wishing to adhere to the spec.",
   "main": "/dev/null",
   "scripts": {
     "preinstall": "npm run clean",
-    "build": "cd schemas && npm run build",
-    "start": "npm-run-all --parallel dev:schema dev:schema2 dev:demoUI",
+    "build": "cd lib && npm run build",
+    "start": "npm-run-all --parallel dev:schema dev:demoUI",
     "test": "cd lib && npm run test",
     "dev:schema": "cd lib && npm run dev",
-    "dev:schema2": "cd schemas && npm run dev",
     "dev:demoUI": "cd mock-server && npm start",
     "clean": "rm -Rf node_modules; rm -Rf mock-server/node_modules; rm -Rf lib/node_modules"
   },

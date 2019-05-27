@@ -1,5 +1,5 @@
 overwrite: true
-schema: "./*.gql"
+schema: "./schemas/*.gql"
 # documents: "./ops"
 generates:
   index.d.ts:

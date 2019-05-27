@@ -14,7 +14,7 @@ const { makeExecutableSchema, addMockFunctionsToSchema } = require('graphql-tool
 const SERVER_PORT = 3000
 const SCHEMA_VIEWER_PATH = '/viewer'
 
-const typeDefs = require('@valueflows/vf-graphql').typeDefs
+const typeDefs = require('@valueflows/vf-graphql').typeDefs.all_vf
 
 const schema = makeExecutableSchema({ typeDefs })
 addMockFunctionsToSchema({ schema, mocks: {

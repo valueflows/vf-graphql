@@ -5,15 +5,22 @@
   "main": "index.js",
   "scripts": {
     "dev": "npm-watch",
-    "test": "tape tests/**/*.js | faucet"
+    "test": "tape tests/**/*.js | faucet",
+    "build": "graphql-codegen --config scripts/codegen.yml; node scripts/build.js"
   },
   "watch": {
+    "build": {
+      "patterns": [
+        "schemas"
+      ],
+      "extensions": "gql"
+    },
     "test": {
       "patterns": [
         "tests",
-        "../schemas"
+        "build"
       ],
-      "extensions": "js,gql"
+      "extensions": "js"
     }
   },
   "repository": {
@@ -33,11 +40,15 @@
   },
   "homepage": "https://github.com/valueflows/vf-graphql#readme",
   "dependencies": {
-    "@valueflows/vf-graphql-schemas": "0.0.1",
     "graphql": "^14.3.0",
     "graphql-tools": "^4.0.4"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^1.2.0",
+    "@graphql-codegen/typescript": "1.2.0",
+    "@graphql-codegen/typescript-graphql-files-modules": "1.2.0",
+    "@graphql-codegen/typescript-operations": "1.2.0",
+    "@graphql-codegen/typescript-react-apollo": "1.2.0",
     "faucet": "0.0.1",
     "npm-watch": "^0.6.0",
     "tape": "^4.10.0",
