@@ -73,7 +73,7 @@ The linkage between a recipe process, an action that structures a recipe, and a 
 """
 type RecipeFlow {
   id: ID!
-  quantifiedAs: QuantityValue
+  flowQuantity: QuantityValue
 
   "The primary resource knowledge specification or definition of an existing or potential resource."
   resourceConformsTo: ResourceSpecification

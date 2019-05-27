@@ -44,7 +44,7 @@ type Commitment {
   "Economic resource involved in the flow."
   resourceInventoriedAs: EconomicResource
 
-  quantifiedAs: QuantityValue
+  flowQuantity: QuantityValue
 
   "Specific time marking the exact beginning of flow or process"
   hasBeginning: DateTime
@@ -121,7 +121,7 @@ type Intent {
   "When a specific \`EconomicResource\` is known which can service the \`Intent\`, this defines that resource."
   resourceInventoriedAs: EconomicResource
 
-  quantifiedAs: QuantityValue
+  flowQuantity: QuantityValue
 
   "Specific time marking the exact beginning of flow or process"
   hasBeginning: DateTime

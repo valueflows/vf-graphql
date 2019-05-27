@@ -365,7 +365,7 @@ export type Commitment = {
   resourceConformsTo?: Maybe<ResourceSpecification>;
   /** Economic resource involved in the flow. */
   resourceInventoriedAs?: Maybe<EconomicResource>;
-  quantifiedAs?: Maybe<QuantityValue>;
+  flowQuantity?: Maybe<QuantityValue>;
   /** Specific time marking the exact beginning of flow or process */
   hasBeginning?: Maybe<Scalars["DateTime"]>;
   /** Specific time marking the exact end of flow or process */
@@ -401,7 +401,7 @@ export type CommitmentCreateParams = {
   resourceClassifiedAs?: Maybe<Array<Scalars["URI"]>>;
   resourceConformsTo?: Maybe<Scalars["ID"]>;
   resourceInventoriedAs?: Maybe<Scalars["ID"]>;
-  quantifiedAs: IQuantityValue;
+  flowQuantity: IQuantityValue;
   hasBeginning?: Maybe<Scalars["DateTime"]>;
   hasEnd?: Maybe<Scalars["DateTime"]>;
   hasPointInTime?: Maybe<Scalars["DateTime"]>;
@@ -429,7 +429,7 @@ export type CommitmentUpdateParams = {
   resourceClassifiedAs?: Maybe<Array<Scalars["URI"]>>;
   resourceConformsTo?: Maybe<Scalars["ID"]>;
   resourceInventoriedAs?: Maybe<Scalars["ID"]>;
-  quantifiedAs: IQuantityValue;
+  flowQuantity: IQuantityValue;
   hasBeginning?: Maybe<Scalars["DateTime"]>;
   hasEnd?: Maybe<Scalars["DateTime"]>;
   hasPointInTime?: Maybe<Scalars["DateTime"]>;
@@ -479,7 +479,7 @@ export type EconomicEvent = {
   /** The amount and unit of the event. This is the quantity that could be used to
    * increment or decrement a resource, depending on the type of resource and type of event.
    */
-  affectedQuantity?: Maybe<QuantityValue>;
+  flowQuantity?: Maybe<QuantityValue>;
   /** Specific time marking the exact beginning of flow or process */
   hasBeginning?: Maybe<Scalars["DateTime"]>;
   /** Specific time marking the exact end of flow or process */
@@ -678,7 +678,7 @@ export type Intent = {
   resourceConformsTo?: Maybe<ResourceSpecification>;
   /** When a specific `EconomicResource` is known which can service the `Intent`, this defines that resource. */
   resourceInventoriedAs?: Maybe<EconomicResource>;
-  quantifiedAs?: Maybe<QuantityValue>;
+  flowQuantity?: Maybe<QuantityValue>;
   /** Specific time marking the exact beginning of flow or process */
   hasBeginning?: Maybe<Scalars["DateTime"]>;
   /** Specific time marking the exact end of flow or process */
@@ -709,7 +709,7 @@ export type IntentCreateParams = {
   receiver?: Maybe<Scalars["ID"]>;
   resourceConformsTo?: Maybe<Scalars["ID"]>;
   resourceClassifiedAs?: Maybe<Array<Scalars["URI"]>>;
-  quantifiedAs?: Maybe<IQuantityValue>;
+  flowQuantity?: Maybe<IQuantityValue>;
   hasBeginning?: Maybe<Scalars["DateTime"]>;
   hasEnd?: Maybe<Scalars["DateTime"]>;
   hasPointInTime?: Maybe<Scalars["DateTime"]>;
@@ -737,7 +737,7 @@ export type IntentUpdateParams = {
   receiver?: Maybe<Scalars["ID"]>;
   resourceConformsTo?: Maybe<Scalars["ID"]>;
   resourceClassifiedAs?: Maybe<Array<Scalars["URI"]>>;
-  quantifiedAs?: Maybe<IQuantityValue>;
+  flowQuantity?: Maybe<IQuantityValue>;
   hasBeginning?: Maybe<Scalars["DateTime"]>;
   hasEnd?: Maybe<Scalars["DateTime"]>;
   hasPointInTime?: Maybe<Scalars["DateTime"]>;
@@ -1478,7 +1478,7 @@ export type QuerySpatialThingArgs = {
 export type RecipeFlow = {
   __typename?: "RecipeFlow";
   id: Scalars["ID"];
-  quantifiedAs?: Maybe<QuantityValue>;
+  flowQuantity?: Maybe<QuantityValue>;
   /** The primary resource knowledge specification or definition of an existing or potential resource. */
   resourceConformsTo?: Maybe<ResourceSpecification>;
   /** References a concept in a common taxonomy or other classification scheme for purposes of categorization. */
@@ -1496,7 +1496,7 @@ export type RecipeFlowCreateParams = {
   action: Scalars["ID"];
   resourceClassifiedAs?: Maybe<Array<Scalars["URI"]>>;
   resourceConformsTo?: Maybe<Scalars["ID"]>;
-  quantifiedAs?: Maybe<IQuantityValue>;
+  flowQuantity?: Maybe<IQuantityValue>;
   recipeInputOf?: Maybe<Scalars["ID"]>;
   recipeOutputOf?: Maybe<Scalars["ID"]>;
   note?: Maybe<Scalars["String"]>;
@@ -1512,7 +1512,7 @@ export type RecipeFlowUpdateParams = {
   action?: Maybe<Scalars["ID"]>;
   resourceClassifiedAs?: Maybe<Array<Scalars["URI"]>>;
   resourceConformsTo?: Maybe<Scalars["ID"]>;
-  quantifiedAs?: Maybe<IQuantityValue>;
+  flowQuantity?: Maybe<IQuantityValue>;
   recipeInputOf?: Maybe<Scalars["ID"]>;
   recipeOutputOf?: Maybe<Scalars["ID"]>;
   note?: Maybe<Scalars["String"]>;

@@ -128,7 +128,7 @@ type AgentRelationshipResponse {
 #   outputOf: ID
 #   provider: ID
 #   receiver: ID
-#   quantifiedAs: IQuantityValue
+#   flowQuantity: IQuantityValue
 #   :TODO: time
 #   note: String
 #   inScopeOf: [AnyType!]
@@ -343,7 +343,7 @@ type AppreciationResponse {
 #   receiver: ID
 #   resourceConformsTo: ID
 #   resourceClassifiedAs: [URI!]
-#   quantifiedAs: IQuantityValue
+#   flowQuantity: IQuantityValue
 #   hasBeginning: DateTime
 #   hasEnd: DateTime
 #   hasPointInTime: DateTime
@@ -364,7 +364,7 @@ input IntentCreateParams { # implements IntentParams
   receiver: ID
   resourceConformsTo: ID
   resourceClassifiedAs: [URI!]
-  quantifiedAs: IQuantityValue
+  flowQuantity: IQuantityValue
   hasBeginning: DateTime
   hasEnd: DateTime
   hasPointInTime: DateTime
@@ -389,7 +389,7 @@ input IntentUpdateParams { # implements UpdateParams & IntentParams
   receiver: ID
   resourceConformsTo: ID
   resourceClassifiedAs: [URI!]
-  quantifiedAs: IQuantityValue
+  flowQuantity: IQuantityValue
   hasBeginning: DateTime
   hasEnd: DateTime
   hasPointInTime: DateTime
@@ -418,7 +418,7 @@ type IntentResponse {
 #   resourceClassifiedAs: [URI!]
 #   resourceConformsTo: ID
 #   resourceInventoriedAs: ID
-#   quantifiedAs: IQuantityValue
+#   flowQuantity: IQuantityValue
 #   hasBeginning: DateTime
 #   hasEnd: DateTime
 #   hasPointInTime: DateTime
@@ -440,7 +440,7 @@ input CommitmentCreateParams { # implements CommitmentParams
   resourceClassifiedAs: [URI!]
   resourceConformsTo: ID
   resourceInventoriedAs: ID
-  quantifiedAs: IQuantityValue!
+  flowQuantity: IQuantityValue!
   hasBeginning: DateTime
   hasEnd: DateTime
   hasPointInTime: DateTime
@@ -463,7 +463,7 @@ input CommitmentUpdateParams { # implements UpdateParams & CommitmentParams
   resourceClassifiedAs: [URI!]
   resourceConformsTo: ID
   resourceInventoriedAs: ID
-  quantifiedAs: IQuantityValue!
+  flowQuantity: IQuantityValue!
   hasBeginning: DateTime
   hasEnd: DateTime
   hasPointInTime: DateTime
@@ -701,7 +701,7 @@ type RecipeProcessResponse {
 #   action: Action
 #   resourceClassifiedAs: [URI!]
 #   resourceConformsTo: ResourceSpecification
-#   quantifiedAs: IQuantityValue
+#   flowQuantity: IQuantityValue
 #   recipeInputOf: RecipeProcess
 #   recipeOutputOf: RecipeProcess
 #   note: String
@@ -711,7 +711,7 @@ input RecipeFlowCreateParams { # implements RecipeFlowParams
   action: ID! # Action
   resourceClassifiedAs: [URI!]
   resourceConformsTo: ID # ResourceSpecification!
-  quantifiedAs: IQuantityValue
+  flowQuantity: IQuantityValue
   recipeInputOf: ID # RecipeProcess
   recipeOutputOf: ID # RecipeProcess
   note: String
@@ -722,7 +722,7 @@ input RecipeFlowUpdateParams { # implements UpdateParams & RecipeFlowParams
   action: ID # Action
   resourceClassifiedAs: [URI!]
   resourceConformsTo: ID # ResourceSpecification
-  quantifiedAs: IQuantityValue
+  flowQuantity: IQuantityValue
   recipeInputOf: ID # RecipeProcess
   recipeOutputOf: ID # RecipeProcess
   note: String
