@@ -39,7 +39,7 @@ type EconomicEvent {
   resourceInventoriedAs: EconomicResource
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
-  resourceClassifiedAs: [URL!]
+  resourceClassifiedAs: [URI!]
 
   "The primary resource knowledge specification or definition of an existing or potential resource."
   resourceConformsTo: ResourceSpecification
@@ -61,7 +61,7 @@ type EconomicEvent {
   after: DateTime
 
   "The place where an economic event occurs.  Usually mappable."
-  atLocation: Location
+  atLocation: SpatialThing
 
   note: String
 
@@ -100,7 +100,7 @@ type EconomicResource {
   id: ID!
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
-  classifiedAs: [URL!]
+  classifiedAs: [URI!]
 
   "The primary resource knowledge specification or definition of an existing or potential resource."
   resourceConformsTo: ResourceSpecification
@@ -108,8 +108,8 @@ type EconomicResource {
   "Sometimes called lot number, used for trackable batched resources. Sometimes called serial number, used when each item must have a trackable identifier (like a computer). Could also be used for other unique tracking identifiers needed for resources."
   trackingIdentifier: String
 
-  "URL to a descriptive picture of this item."
-  image: URL
+  "URI to a descriptive picture of this item."
+  image: URI
 
   "The current amount and unit of the economic resource. This can be stored or derived from economic events affecting the resource."
   currentQuantity: QuantityValue
@@ -129,7 +129,7 @@ type EconomicResource {
   contains: [EconomicResource!] #TODO: containedBy and make this the inverse??
 
   "The current place an economic resource is located. Could be at any level of granularity, from a town to an address to a warehouse location. Usually mappable."
-  currentLocation: Location
+  currentLocation: SpatialThing
 
   ##############################################################################
   # inverse relationships and queries
@@ -171,7 +171,7 @@ type Process {
   # You are probably looking for a "skill EconomicResource" provided to the process as a 'work' action EconomicEvent input.
   # @see https://github.com/valueflows/vf-graphql/issues/25#issuecomment-489429982
   # "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
-  # classifiedAs: [URL!]
+  # classifiedAs: [URI!]
 
   note: String
 

@@ -53,7 +53,7 @@ module.exports = `
 
 # interface AgentParams {
 #   name: String
-#   image: URL
+#   image: URI
 #   email: String
 #   primaryLocation: String
 #   note: String
@@ -62,7 +62,7 @@ module.exports = `
 input AgentCreateParams { # implements AgentParams
   primaryPhone: String
   name: String!
-  image: URL
+  image: URI
   email: String
   primaryLocation: ID
   note: String
@@ -72,7 +72,7 @@ input AgentUpdateParams { # implements UpdateParams & AgentParams
   id: ID!
   primaryPhone: String
   name: String
-  image: URL
+  image: URI
   email: String
   primaryLocation: ID
   note: String
@@ -143,10 +143,10 @@ input EconomicEventCreateParams { # implements EconomicEventParams
   receiver: ID # Agent
   inScopeOf: [AnyType!]
   resourceInventoriedAs: ID # EconomicResource
-  resourceClassifiedAs: [URL!]
+  resourceClassifiedAs: [URI!]
   resourceConformsTo: ID # ResourceSpecification
   affectedQuantity: IQuantityValue
-  atLocation: ID # Location
+  atLocation: ID # SpatialThing
   hasBeginning: DateTime
   hasEnd: DateTime
   hasPointInTime: DateTime
@@ -164,10 +164,10 @@ input EconomicEventUpdateParams { # implements UpdateParams & EconomicEventParam
   receiver: ID
   inScopeOf: [AnyType!]
   resourceInventoriedAs: ID
-  resourceClassifiedAs: [URL!]
+  resourceClassifiedAs: [URI!]
   resourceConformsTo: ID
   affectedQuantity: IQuantityValue
-  atLocation: ID # Location
+  atLocation: ID # SpatialThing
   hasBeginning: DateTime
   hasEnd: DateTime
   hasPointInTime: DateTime
@@ -183,10 +183,10 @@ type EconomicEventResponse {
 
 
 # interface EconomicResourceParams {
-#   classifiedAs: [URL!]
+#   classifiedAs: [URI!]
 #   resourceConformsTo: ID # ResourceSpecification
 #   trackingIdentifier: String
-#   image: URL # url
+#   image: URI # URI
 #   currentQuantity: IQuantityValue
 #   currentLocation: ID
 #   note: String
@@ -197,10 +197,10 @@ type EconomicEventResponse {
 Input \`EconomicResource\` type used when sending events to setup initial resource recordings
 """
 input EconomicResourceCreateParams { # implements EconomicResourceParams
-  classifiedAs: [URL!]
+  classifiedAs: [URI!]
   resourceConformsTo: ID # ResourceSpecification
   trackingIdentifier: String
-  image: URL # url
+  image: URI # URI
   currentQuantity: IQuantityValue
   currentLocation: ID
   note: String
@@ -208,10 +208,10 @@ input EconomicResourceCreateParams { # implements EconomicResourceParams
 
 input EconomicResourceUpdateParams { # implements UpdateParams & EconomicResourceParams
   id: ID!,
-  classifiedAs: [URL!]
+  classifiedAs: [URI!]
   resourceConformsTo: ID # ResourceSpecification
   trackingIdentifier: String
-  image: URL # url
+  image: URI # URI
   currentQuantity: IQuantityValue
   currentLocation: ID
   note: String
@@ -342,14 +342,14 @@ type AppreciationResponse {
 #   provider: ID
 #   receiver: ID
 #   resourceConformsTo: ID
-#   resourceClassifiedAs: [URL!]
+#   resourceClassifiedAs: [URI!]
 #   quantifiedAs: IQuantityValue
 #   hasBeginning: DateTime
 #   hasEnd: DateTime
 #   hasPointInTime: DateTime
 #   before: DateTime
 #   after: DateTime
-#   image: URL
+#   image: URI
 #   note: String
 #   inScopeOf: [AnyType!]
 #   atLocation: ID
@@ -363,21 +363,21 @@ input IntentCreateParams { # implements IntentParams
   provider: ID
   receiver: ID
   resourceConformsTo: ID
-  resourceClassifiedAs: [URL!]
+  resourceClassifiedAs: [URI!]
   quantifiedAs: IQuantityValue
   hasBeginning: DateTime
   hasEnd: DateTime
   hasPointInTime: DateTime
   before: DateTime
   after: DateTime
-  image: URL
+  image: URI
   note: String
   inScopeOf: [AnyType!]
-  atLocation: ID # Location
+  atLocation: ID # SpatialThing
 
   # pending review- see https://github.com/valueflows/vf-graphql/issues/26
   underAgreement: ID # Agreement
-  underExternalAgreement: URL
+  underExternalAgreement: URI
 }
 
 input IntentUpdateParams { # implements UpdateParams & IntentParams
@@ -388,20 +388,20 @@ input IntentUpdateParams { # implements UpdateParams & IntentParams
   provider: ID
   receiver: ID
   resourceConformsTo: ID
-  resourceClassifiedAs: [URL!]
+  resourceClassifiedAs: [URI!]
   quantifiedAs: IQuantityValue
   hasBeginning: DateTime
   hasEnd: DateTime
   hasPointInTime: DateTime
   before: DateTime
   after: DateTime
-  image: URL
+  image: URI
   finished: Boolean
   note: String
   inScopeOf: [AnyType!]
-  atLocation: ID # Location
+  atLocation: ID # SpatialThing
   underAgreement: ID # Agreement
-  underExternalAgreement: URL
+  underExternalAgreement: URI
 }
 
 type IntentResponse {
@@ -415,7 +415,7 @@ type IntentResponse {
 #   outputOf: ID
 #   provider: ID
 #   receiver: ID
-#   resourceClassifiedAs: [URL!]
+#   resourceClassifiedAs: [URI!]
 #   resourceConformsTo: ID
 #   resourceInventoriedAs: ID
 #   quantifiedAs: IQuantityValue
@@ -437,7 +437,7 @@ input CommitmentCreateParams { # implements CommitmentParams
   outputOf: ID
   provider: ID
   receiver: ID
-  resourceClassifiedAs: [URL!]
+  resourceClassifiedAs: [URI!]
   resourceConformsTo: ID
   resourceInventoriedAs: ID
   quantifiedAs: IQuantityValue!
@@ -448,9 +448,9 @@ input CommitmentCreateParams { # implements CommitmentParams
   after: DateTime
   note: String
   inScopeOf: [AnyType!]
-  atLocation: ID # Location
+  atLocation: ID # SpatialThing
   underAgreement: ID # Agreement
-  underExternalAgreement: URL
+  underExternalAgreement: URI
   clauseOf: ID # Agreement
 }
 
@@ -460,7 +460,7 @@ input CommitmentUpdateParams { # implements UpdateParams & CommitmentParams
   outputOf: ID
   provider: ID
   receiver: ID
-  resourceClassifiedAs: [URL!]
+  resourceClassifiedAs: [URI!]
   resourceConformsTo: ID
   resourceInventoriedAs: ID
   quantifiedAs: IQuantityValue!
@@ -472,9 +472,9 @@ input CommitmentUpdateParams { # implements UpdateParams & CommitmentParams
   finished: Boolean
   note: String
   inScopeOf: [AnyType!]
-  atLocation: ID # Location
+  atLocation: ID # SpatialThing
   underAgreement: ID # Agreement
-  underExternalAgreement: URL
+  underExternalAgreement: URI
   clauseOf: ID # Agreement
 }
 
@@ -555,7 +555,7 @@ type AgreementResponse {
 #   action: Action
 #   provider: Agent!
 #   receiver: Agent!
-#   resourceClassifiedAs: [URL!]
+#   resourceClassifiedAs: [URI!]
 #   resourceConformsTo: ResourceSpecification
 #   claimedQuantity: QuantityValue
 #   triggeredBy: EconomicEvent!
@@ -569,13 +569,13 @@ input ClaimCreateParams {
   action: ID # Action
   provider: ID # Agent
   receiver: ID # Agent
-  resourceClassifiedAs: [URL!]
+  resourceClassifiedAs: [URI!]
   resourceConformsTo: ID # ResourceSpecification
   claimedQuantity: IQuantityValue
   triggeredBy: ID #EconomicEvent
   note: String
   underAgreement: ID
-  underExternalAgreement: URL
+  underExternalAgreement: URI
 }
 
 input ClaimUpdateParams {
@@ -583,14 +583,14 @@ input ClaimUpdateParams {
   action: ID
   provider: ID
   receiver: ID
-  resourceClassifiedAs: [URL!]
+  resourceClassifiedAs: [URI!]
   resourceConformsTo: ID
   claimedQuantity: IQuantityValue
   triggeredBy: ID
   finished: Boolean
   note: String
   underAgreement: ID
-  underExternalAgreement: URL
+  underExternalAgreement: URI
 }
 
 type ClaimResponse {
@@ -638,8 +638,8 @@ type SettlementResponse {
 #   name: String
 #   unit: ID
 #   substitutable: Boolean
-#   image: URL
-#   resourceClassifiedAs: [URL!]
+#   image: URI
+#   resourceClassifiedAs: [URI!]
 #   note: String
 # }
 
@@ -647,8 +647,8 @@ input ResourceSpecificationCreateParams { # implements ResourceSpecificationPara
   name: String!
   unit: ID
   substitutable: Boolean
-  image: URL
-  resourceClassifiedAs: [URL!]
+  image: URI
+  resourceClassifiedAs: [URI!]
   note: String
 }
 
@@ -657,8 +657,8 @@ input ResourceSpecificationUpdateParams { # implements UpdateParams & ResourceSp
   name: String
   unit: ID
   substitutable: Boolean
-  image: URL
-  resourceClassifiedAs: [URL!]
+  image: URI
+  resourceClassifiedAs: [URI!]
   note: String
 }
 
@@ -671,7 +671,7 @@ type ResourceSpecificationResponse {
 #   name: String
 #   hasDuration: IDuration
 #   durationMultiplier: Float
-#   processClassifiedAs: [URL!]
+#   processClassifiedAs: [URI!]
 #   note: String
 # }
 
@@ -679,7 +679,7 @@ input RecipeProcessCreateParams { # implements RecipeProcessParams
   name: String!
   hasDuration: IDuration
   durationMultiplier: Float
-  processClassifiedAs: [URL!]
+  processClassifiedAs: [URI!]
   note: String
 }
 
@@ -688,7 +688,7 @@ input RecipeProcessUpdateParams { # implements UpdateParams & RecipeProcessParam
   name: String
   hasDuration: IDuration
   durationMultiplier: Float
-  processClassifiedAs: [URL!]
+  processClassifiedAs: [URI!]
   note: String
 }
 
@@ -699,7 +699,7 @@ type RecipeProcessResponse {
 
 # interface RecipeFlowParams {
 #   action: Action
-#   resourceClassifiedAs: [URL!]
+#   resourceClassifiedAs: [URI!]
 #   resourceConformsTo: ResourceSpecification
 #   quantifiedAs: IQuantityValue
 #   recipeInputOf: RecipeProcess
@@ -709,7 +709,7 @@ type RecipeProcessResponse {
 
 input RecipeFlowCreateParams { # implements RecipeFlowParams
   action: ID! # Action
-  resourceClassifiedAs: [URL!]
+  resourceClassifiedAs: [URI!]
   resourceConformsTo: ID # ResourceSpecification!
   quantifiedAs: IQuantityValue
   recipeInputOf: ID # RecipeProcess
@@ -720,7 +720,7 @@ input RecipeFlowCreateParams { # implements RecipeFlowParams
 input RecipeFlowUpdateParams { # implements UpdateParams & RecipeFlowParams
   id: ID!
   action: ID # Action
-  resourceClassifiedAs: [URL!]
+  resourceClassifiedAs: [URI!]
   resourceConformsTo: ID # ResourceSpecification
   quantifiedAs: IQuantityValue
   recipeInputOf: ID # RecipeProcess

@@ -33,7 +33,7 @@ type Query {
   filteredEconomicEvents(
     providerId: ID,
     receiverId: ID,
-    resourceClassifiedAs: [URL!],
+    resourceClassifiedAs: [URI!],
     action: ID,
     startDate: String,
     endDate: String
@@ -106,8 +106,8 @@ type Query {
 
   quantityValue(id: ID): QuantityValue
 
-  location(id: ID): Location #TODO: ??
-  allLocations: [Location!] #TODO: ??
+  spatialThing(id: ID): SpatialThing
+  allSpatialThings: [SpatialThing!]
 
 }
 

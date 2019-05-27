@@ -15,7 +15,7 @@ module.exports = `
 "Query parameters for reading \`EconomicResource\`s related to an \`Agent\`"
 input agentResourceSearchParams {
   searchString: String
-  resourceClassification: URL
+  resourceClassification: URI
   page: Int
 }
 
@@ -66,13 +66,13 @@ interface Agent {
   name: String!
 
   "A 'profile image' for this agent."
-  image: URL
+  image: URI
 
   "Optional email address contact for this agent."
   email: String
 
   "The main place an agent is located, often an address where activities occur and mail can be sent. This is usually a mappable geographic location.  It also could be a website address, as in the case of agents who have no physical location."
-  primaryLocation: Location
+  primaryLocation: SpatialThing
 
   note: String
 
@@ -109,13 +109,13 @@ type Person implements Agent {
   name: String!
 
   "A 'profile image' for this agent."
-  image: URL
+  image: URI
 
   "Optional email address contact for this agent."
   email: String
 
   "The main place an agent is located, often an address where activities occur and mail can be sent. This is usually a mappable geographic location.  It also could be a website address, as in the case of agents who have no physical location."
-  primaryLocation: Location
+  primaryLocation: SpatialThing
 
   note: String
 
@@ -153,13 +153,13 @@ type Organization implements Agent {
   name: String!
 
   "A 'profile image' for this agent."
-  image: URL
+  image: URI
 
   "Optional email address contact for this agent."
   email: String
 
   "The main place an agent is located, often an address where activities occur and mail can be sent. This is usually a mappable geographic location.  It also could be a website address, as in the case of agents who have no physical location."
-  primaryLocation: Location
+  primaryLocation: SpatialThing
 
   note: String
 
@@ -206,7 +206,7 @@ type AgentRelationshipRole {
   inverseLabel: String
 
   # :TODO: https://github.com/valueflows/valueflows/issues/494
-  # classifiedAs: [URL!]
+  # classifiedAs: [URI!]
 }
 
 # :TODO: how do we want to do this concept? (see AgentRelationshipRole.classifiedAs)

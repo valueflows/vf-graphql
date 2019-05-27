@@ -6,8 +6,8 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  /** The `URL` type simply declares a reference to an external web URL. */
-  URL: any;
+  /** The `URI` type simply declares a reference to an external web URL, Holochain entry or other resource. */
+  URI: any;
   /** A type which allows any arbitrary value to be set */
   AnyType: any;
   /** The `DateTime` scalar type represents a DateTime value as specified by
@@ -34,14 +34,14 @@ export type Agent = {
   /** The name that this agent will be referred to by. */
   name: Scalars["String"];
   /** A 'profile image' for this agent. */
-  image?: Maybe<Scalars["URL"]>;
+  image?: Maybe<Scalars["URI"]>;
   /** Optional email address contact for this agent. */
   email?: Maybe<Scalars["String"]>;
   /** The main place an agent is located, often an address where activities occur
    * and mail can be sent. This is usually a mappable geographic location.  It also
    * could be a website address, as in the case of agents who have no physical location.
    */
-  primaryLocation?: Maybe<Location>;
+  primaryLocation?: Maybe<SpatialThing>;
   note?: Maybe<Scalars["String"]>;
   inventoriedEconomicResources?: Maybe<Array<EconomicResource>>;
   economicEvents?: Maybe<Array<EconomicEvent>>;
@@ -113,7 +113,7 @@ export type AgentCommitmentSearchParams = {
 export type AgentCreateParams = {
   primaryPhone?: Maybe<Scalars["String"]>;
   name: Scalars["String"];
-  image?: Maybe<Scalars["URL"]>;
+  image?: Maybe<Scalars["URI"]>;
   email?: Maybe<Scalars["String"]>;
   primaryLocation?: Maybe<Scalars["ID"]>;
   note?: Maybe<Scalars["String"]>;
@@ -204,7 +204,7 @@ export type AgentRelationshipUpdateParams = {
 /** Query parameters for reading `EconomicResource`s related to an `Agent` */
 export type AgentResourceSearchParams = {
   searchString?: Maybe<Scalars["String"]>;
-  resourceClassification?: Maybe<Scalars["URL"]>;
+  resourceClassification?: Maybe<Scalars["URI"]>;
   page?: Maybe<Scalars["Int"]>;
 };
 
@@ -212,7 +212,7 @@ export type AgentUpdateParams = {
   id: Scalars["ID"];
   primaryPhone?: Maybe<Scalars["String"]>;
   name?: Maybe<Scalars["String"]>;
-  image?: Maybe<Scalars["URL"]>;
+  image?: Maybe<Scalars["URI"]>;
   email?: Maybe<Scalars["String"]>;
   primaryLocation?: Maybe<Scalars["ID"]>;
   note?: Maybe<Scalars["String"]>;
@@ -295,7 +295,7 @@ export type Claim = {
   /** The economic agent whom the intended, committed, or actual economic event is for. */
   receiver: Agent;
   /** References a concept in a common taxonomy or other classification scheme for purposes of categorization. */
-  resourceClassifiedAs?: Maybe<Array<Scalars["URL"]>>;
+  resourceClassifiedAs?: Maybe<Array<Scalars["URI"]>>;
   /** The primary resource knowledge specification or definition of an existing or potential resource. */
   resourceConformsTo?: Maybe<ResourceSpecification>;
   /** The amount of the claimed resource desired by the claim. */
@@ -316,13 +316,13 @@ export type ClaimCreateParams = {
   action?: Maybe<Scalars["ID"]>;
   provider?: Maybe<Scalars["ID"]>;
   receiver?: Maybe<Scalars["ID"]>;
-  resourceClassifiedAs?: Maybe<Array<Scalars["URL"]>>;
+  resourceClassifiedAs?: Maybe<Array<Scalars["URI"]>>;
   resourceConformsTo?: Maybe<Scalars["ID"]>;
   claimedQuantity?: Maybe<IQuantityValue>;
   triggeredBy?: Maybe<Scalars["ID"]>;
   note?: Maybe<Scalars["String"]>;
   underAgreement?: Maybe<Scalars["ID"]>;
-  underExternalAgreement?: Maybe<Scalars["URL"]>;
+  underExternalAgreement?: Maybe<Scalars["URI"]>;
 };
 
 export type ClaimResponse = {
@@ -335,14 +335,14 @@ export type ClaimUpdateParams = {
   action?: Maybe<Scalars["ID"]>;
   provider?: Maybe<Scalars["ID"]>;
   receiver?: Maybe<Scalars["ID"]>;
-  resourceClassifiedAs?: Maybe<Array<Scalars["URL"]>>;
+  resourceClassifiedAs?: Maybe<Array<Scalars["URI"]>>;
   resourceConformsTo?: Maybe<Scalars["ID"]>;
   claimedQuantity?: Maybe<IQuantityValue>;
   triggeredBy?: Maybe<Scalars["ID"]>;
   finished?: Maybe<Scalars["Boolean"]>;
   note?: Maybe<Scalars["String"]>;
   underAgreement?: Maybe<Scalars["ID"]>;
-  underExternalAgreement?: Maybe<Scalars["URL"]>;
+  underExternalAgreement?: Maybe<Scalars["URI"]>;
 };
 
 /** A planned economic flow that has been promised by an agent to another agent. */
@@ -360,7 +360,7 @@ export type Commitment = {
   /** The economic agent whom the intended, committed, or actual economic event is for. */
   receiver?: Maybe<Agent>;
   /** References a concept in a common taxonomy or other classification scheme for purposes of categorization. */
-  resourceClassifiedAs?: Maybe<Array<Scalars["URL"]>>;
+  resourceClassifiedAs?: Maybe<Array<Scalars["URI"]>>;
   /** The primary resource knowledge specification or definition of an existing or potential resource. */
   resourceConformsTo?: Maybe<ResourceSpecification>;
   /** Economic resource involved in the flow. */
@@ -378,7 +378,7 @@ export type Commitment = {
   after?: Maybe<Scalars["DateTime"]>;
   finished?: Maybe<Scalars["Boolean"]>;
   /** The place where a commitment occurs.  Usually mappable. */
-  atLocation?: Maybe<Location>;
+  atLocation?: Maybe<SpatialThing>;
   note?: Maybe<Scalars["String"]>;
   /** Grouping around something to create a boundary or context, used for documenting, accounting, planning. */
   inScopeOf?: Maybe<Array<Scalars["AnyType"]>>;
@@ -398,7 +398,7 @@ export type CommitmentCreateParams = {
   outputOf?: Maybe<Scalars["ID"]>;
   provider?: Maybe<Scalars["ID"]>;
   receiver?: Maybe<Scalars["ID"]>;
-  resourceClassifiedAs?: Maybe<Array<Scalars["URL"]>>;
+  resourceClassifiedAs?: Maybe<Array<Scalars["URI"]>>;
   resourceConformsTo?: Maybe<Scalars["ID"]>;
   resourceInventoriedAs?: Maybe<Scalars["ID"]>;
   quantifiedAs: IQuantityValue;
@@ -411,7 +411,7 @@ export type CommitmentCreateParams = {
   inScopeOf?: Maybe<Array<Scalars["AnyType"]>>;
   atLocation?: Maybe<Scalars["ID"]>;
   underAgreement?: Maybe<Scalars["ID"]>;
-  underExternalAgreement?: Maybe<Scalars["URL"]>;
+  underExternalAgreement?: Maybe<Scalars["URI"]>;
   clauseOf?: Maybe<Scalars["ID"]>;
 };
 
@@ -426,7 +426,7 @@ export type CommitmentUpdateParams = {
   outputOf?: Maybe<Scalars["ID"]>;
   provider?: Maybe<Scalars["ID"]>;
   receiver?: Maybe<Scalars["ID"]>;
-  resourceClassifiedAs?: Maybe<Array<Scalars["URL"]>>;
+  resourceClassifiedAs?: Maybe<Array<Scalars["URI"]>>;
   resourceConformsTo?: Maybe<Scalars["ID"]>;
   resourceInventoriedAs?: Maybe<Scalars["ID"]>;
   quantifiedAs: IQuantityValue;
@@ -440,7 +440,7 @@ export type CommitmentUpdateParams = {
   inScopeOf?: Maybe<Array<Scalars["AnyType"]>>;
   atLocation?: Maybe<Scalars["ID"]>;
   underAgreement?: Maybe<Scalars["ID"]>;
-  underExternalAgreement?: Maybe<Scalars["URL"]>;
+  underExternalAgreement?: Maybe<Scalars["URI"]>;
   clauseOf?: Maybe<Scalars["ID"]>;
 };
 
@@ -473,7 +473,7 @@ export type EconomicEvent = {
   /** Economic resource involved in the flow. */
   resourceInventoriedAs?: Maybe<EconomicResource>;
   /** References a concept in a common taxonomy or other classification scheme for purposes of categorization. */
-  resourceClassifiedAs?: Maybe<Array<Scalars["URL"]>>;
+  resourceClassifiedAs?: Maybe<Array<Scalars["URI"]>>;
   /** The primary resource knowledge specification or definition of an existing or potential resource. */
   resourceConformsTo?: Maybe<ResourceSpecification>;
   /** The amount and unit of the event. This is the quantity that could be used to
@@ -491,7 +491,7 @@ export type EconomicEvent = {
   /** Indicates the flow or process occurred after this specific time */
   after?: Maybe<Scalars["DateTime"]>;
   /** The place where an economic event occurs.  Usually mappable. */
-  atLocation?: Maybe<Location>;
+  atLocation?: Maybe<SpatialThing>;
   note?: Maybe<Scalars["String"]>;
   /** Grouping around something to create a boundary or context, used for documenting, accounting, planning. */
   inScopeOf?: Maybe<Array<Scalars["AnyType"]>>;
@@ -515,7 +515,7 @@ export type EconomicEventCreateParams = {
   receiver?: Maybe<Scalars["ID"]>;
   inScopeOf?: Maybe<Array<Scalars["AnyType"]>>;
   resourceInventoriedAs?: Maybe<Scalars["ID"]>;
-  resourceClassifiedAs?: Maybe<Array<Scalars["URL"]>>;
+  resourceClassifiedAs?: Maybe<Array<Scalars["URI"]>>;
   resourceConformsTo?: Maybe<Scalars["ID"]>;
   affectedQuantity?: Maybe<IQuantityValue>;
   atLocation?: Maybe<Scalars["ID"]>;
@@ -542,7 +542,7 @@ export type EconomicEventUpdateParams = {
   receiver?: Maybe<Scalars["ID"]>;
   inScopeOf?: Maybe<Array<Scalars["AnyType"]>>;
   resourceInventoriedAs?: Maybe<Scalars["ID"]>;
-  resourceClassifiedAs?: Maybe<Array<Scalars["URL"]>>;
+  resourceClassifiedAs?: Maybe<Array<Scalars["URI"]>>;
   resourceConformsTo?: Maybe<Scalars["ID"]>;
   affectedQuantity?: Maybe<IQuantityValue>;
   atLocation?: Maybe<Scalars["ID"]>;
@@ -559,7 +559,7 @@ export type EconomicResource = {
   __typename?: "EconomicResource";
   id: Scalars["ID"];
   /** References a concept in a common taxonomy or other classification scheme for purposes of categorization. */
-  classifiedAs?: Maybe<Array<Scalars["URL"]>>;
+  classifiedAs?: Maybe<Array<Scalars["URI"]>>;
   /** The primary resource knowledge specification or definition of an existing or potential resource. */
   resourceConformsTo?: Maybe<ResourceSpecification>;
   /** Sometimes called lot number, used for trackable batched resources. Sometimes
@@ -568,8 +568,8 @@ export type EconomicResource = {
    * needed for resources.
    */
   trackingIdentifier?: Maybe<Scalars["String"]>;
-  /** URL to a descriptive picture of this item. */
-  image?: Maybe<Scalars["URL"]>;
+  /** URI to a descriptive picture of this item. */
+  image?: Maybe<Scalars["URI"]>;
   /** The current amount and unit of the economic resource. This can be stored or
    * derived from economic events affecting the resource.
    */
@@ -584,17 +584,17 @@ export type EconomicResource = {
   /** The current place an economic resource is located. Could be at any level of
    * granularity, from a town to an address to a warehouse location. Usually mappable.
    */
-  currentLocation?: Maybe<Location>;
+  currentLocation?: Maybe<SpatialThing>;
   trace?: Maybe<Array<EconomicEvent>>;
   track?: Maybe<Array<EconomicEvent>>;
 };
 
 /** Input `EconomicResource` type used when sending events to setup initial resource recordings */
 export type EconomicResourceCreateParams = {
-  classifiedAs?: Maybe<Array<Scalars["URL"]>>;
+  classifiedAs?: Maybe<Array<Scalars["URI"]>>;
   resourceConformsTo?: Maybe<Scalars["ID"]>;
   trackingIdentifier?: Maybe<Scalars["String"]>;
-  image?: Maybe<Scalars["URL"]>;
+  image?: Maybe<Scalars["URI"]>;
   currentQuantity?: Maybe<IQuantityValue>;
   currentLocation?: Maybe<Scalars["ID"]>;
   note?: Maybe<Scalars["String"]>;
@@ -607,10 +607,10 @@ export type EconomicResourceResponse = {
 
 export type EconomicResourceUpdateParams = {
   id: Scalars["ID"];
-  classifiedAs?: Maybe<Array<Scalars["URL"]>>;
+  classifiedAs?: Maybe<Array<Scalars["URI"]>>;
   resourceConformsTo?: Maybe<Scalars["ID"]>;
   trackingIdentifier?: Maybe<Scalars["String"]>;
-  image?: Maybe<Scalars["URL"]>;
+  image?: Maybe<Scalars["URI"]>;
   currentQuantity?: Maybe<IQuantityValue>;
   currentLocation?: Maybe<Scalars["ID"]>;
   note?: Maybe<Scalars["String"]>;
@@ -673,7 +673,7 @@ export type Intent = {
   /** The economic agent whom the intended, committed, or actual economic event is for. */
   receiver?: Maybe<Agent>;
   /** References a concept in a common taxonomy or other classification scheme for purposes of categorization. */
-  resourceClassifiedAs?: Maybe<Array<Scalars["URL"]>>;
+  resourceClassifiedAs?: Maybe<Array<Scalars["URI"]>>;
   /** The primary resource knowledge specification or definition of an existing or potential resource. */
   resourceConformsTo?: Maybe<ResourceSpecification>;
   /** When a specific `EconomicResource` is known which can service the `Intent`, this defines that resource. */
@@ -691,8 +691,8 @@ export type Intent = {
   after?: Maybe<Scalars["DateTime"]>;
   finished?: Maybe<Scalars["Boolean"]>;
   /** The place where an intent would occur.  Usually mappable. */
-  atLocation?: Maybe<Location>;
-  image?: Maybe<Scalars["URL"]>;
+  atLocation?: Maybe<SpatialThing>;
+  image?: Maybe<Scalars["URI"]>;
   note?: Maybe<Scalars["String"]>;
   /** Grouping around something to create a boundary or context, used for documenting, accounting, planning. */
   inScopeOf?: Maybe<Array<Scalars["AnyType"]>>;
@@ -708,19 +708,19 @@ export type IntentCreateParams = {
   provider?: Maybe<Scalars["ID"]>;
   receiver?: Maybe<Scalars["ID"]>;
   resourceConformsTo?: Maybe<Scalars["ID"]>;
-  resourceClassifiedAs?: Maybe<Array<Scalars["URL"]>>;
+  resourceClassifiedAs?: Maybe<Array<Scalars["URI"]>>;
   quantifiedAs?: Maybe<IQuantityValue>;
   hasBeginning?: Maybe<Scalars["DateTime"]>;
   hasEnd?: Maybe<Scalars["DateTime"]>;
   hasPointInTime?: Maybe<Scalars["DateTime"]>;
   before?: Maybe<Scalars["DateTime"]>;
   after?: Maybe<Scalars["DateTime"]>;
-  image?: Maybe<Scalars["URL"]>;
+  image?: Maybe<Scalars["URI"]>;
   note?: Maybe<Scalars["String"]>;
   inScopeOf?: Maybe<Array<Scalars["AnyType"]>>;
   atLocation?: Maybe<Scalars["ID"]>;
   underAgreement?: Maybe<Scalars["ID"]>;
-  underExternalAgreement?: Maybe<Scalars["URL"]>;
+  underExternalAgreement?: Maybe<Scalars["URI"]>;
 };
 
 export type IntentResponse = {
@@ -736,44 +736,26 @@ export type IntentUpdateParams = {
   provider?: Maybe<Scalars["ID"]>;
   receiver?: Maybe<Scalars["ID"]>;
   resourceConformsTo?: Maybe<Scalars["ID"]>;
-  resourceClassifiedAs?: Maybe<Array<Scalars["URL"]>>;
+  resourceClassifiedAs?: Maybe<Array<Scalars["URI"]>>;
   quantifiedAs?: Maybe<IQuantityValue>;
   hasBeginning?: Maybe<Scalars["DateTime"]>;
   hasEnd?: Maybe<Scalars["DateTime"]>;
   hasPointInTime?: Maybe<Scalars["DateTime"]>;
   before?: Maybe<Scalars["DateTime"]>;
   after?: Maybe<Scalars["DateTime"]>;
-  image?: Maybe<Scalars["URL"]>;
+  image?: Maybe<Scalars["URI"]>;
   finished?: Maybe<Scalars["Boolean"]>;
   note?: Maybe<Scalars["String"]>;
   inScopeOf?: Maybe<Array<Scalars["AnyType"]>>;
   atLocation?: Maybe<Scalars["ID"]>;
   underAgreement?: Maybe<Scalars["ID"]>;
-  underExternalAgreement?: Maybe<Scalars["URL"]>;
+  underExternalAgreement?: Maybe<Scalars["URI"]>;
 };
 
 /** Mutation input structure for defining measurements. Should be nulled if not present, rather than empty. */
 export type IQuantityValue = {
   numericValue: Scalars["Float"];
   unit: Scalars["ID"];
-};
-
-/** A physical location.
- * Under discussion. See https://github.com/valueflows/vf-graphql/issues/28 https://github.com/valueflows/valueflows/issues/402
- */
-export type Location = {
-  __typename?: "Location";
-  id: Scalars["ID"];
-  name: Scalars["String"];
-  address?: Maybe<Scalars["String"]>;
-  latitude?: Maybe<Scalars["Float"]>;
-  longitude?: Maybe<Scalars["Float"]>;
-  note?: Maybe<Scalars["String"]>;
-  economicResources?: Maybe<Array<EconomicResource>>;
-  agents?: Maybe<Array<Agent>>;
-  economicEvents?: Maybe<Array<EconomicEvent>>;
-  commitments?: Maybe<Array<Commitment>>;
-  intents?: Maybe<Array<Intent>>;
 };
 
 export type Mutation = {
@@ -1068,14 +1050,14 @@ export type Organization = Agent & {
   /** The name that this agent will be referred to by. */
   name: Scalars["String"];
   /** A 'profile image' for this agent. */
-  image?: Maybe<Scalars["URL"]>;
+  image?: Maybe<Scalars["URI"]>;
   /** Optional email address contact for this agent. */
   email?: Maybe<Scalars["String"]>;
   /** The main place an agent is located, often an address where activities occur
    * and mail can be sent. This is usually a mappable geographic location.  It also
    * could be a website address, as in the case of agents who have no physical location.
    */
-  primaryLocation?: Maybe<Location>;
+  primaryLocation?: Maybe<SpatialThing>;
   note?: Maybe<Scalars["String"]>;
   inventoriedEconomicResources?: Maybe<Array<EconomicResource>>;
   economicEvents?: Maybe<Array<EconomicEvent>>;
@@ -1147,14 +1129,14 @@ export type Person = Agent & {
   /** The name that this agent will be referred to by. */
   name: Scalars["String"];
   /** A 'profile image' for this agent. */
-  image?: Maybe<Scalars["URL"]>;
+  image?: Maybe<Scalars["URI"]>;
   /** Optional email address contact for this agent. */
   email?: Maybe<Scalars["String"]>;
   /** The main place an agent is located, often an address where activities occur
    * and mail can be sent. This is usually a mappable geographic location.  It also
    * could be a website address, as in the case of agents who have no physical location.
    */
-  primaryLocation?: Maybe<Location>;
+  primaryLocation?: Maybe<SpatialThing>;
   note?: Maybe<Scalars["String"]>;
   inventoriedEconomicResources?: Maybe<Array<EconomicResource>>;
   economicEvents?: Maybe<Array<EconomicEvent>>;
@@ -1395,8 +1377,8 @@ export type Query = {
   unit?: Maybe<Unit>;
   allUnits?: Maybe<Array<Unit>>;
   quantityValue?: Maybe<QuantityValue>;
-  location?: Maybe<Location>;
-  allLocations?: Maybe<Array<Location>>;
+  spatialThing?: Maybe<SpatialThing>;
+  allSpatialThings?: Maybe<Array<SpatialThing>>;
 };
 
 export type QueryAgentArgs = {
@@ -1426,7 +1408,7 @@ export type QueryEconomicEventArgs = {
 export type QueryFilteredEconomicEventsArgs = {
   providerId?: Maybe<Scalars["ID"]>;
   receiverId?: Maybe<Scalars["ID"]>;
-  resourceClassifiedAs?: Maybe<Array<Scalars["URL"]>>;
+  resourceClassifiedAs?: Maybe<Array<Scalars["URI"]>>;
   action?: Maybe<Scalars["ID"]>;
   startDate?: Maybe<Scalars["String"]>;
   endDate?: Maybe<Scalars["String"]>;
@@ -1488,7 +1470,7 @@ export type QueryQuantityValueArgs = {
   id?: Maybe<Scalars["ID"]>;
 };
 
-export type QueryLocationArgs = {
+export type QuerySpatialThingArgs = {
   id?: Maybe<Scalars["ID"]>;
 };
 
@@ -1500,7 +1482,7 @@ export type RecipeFlow = {
   /** The primary resource knowledge specification or definition of an existing or potential resource. */
   resourceConformsTo?: Maybe<ResourceSpecification>;
   /** References a concept in a common taxonomy or other classification scheme for purposes of categorization. */
-  resourceClassifiedAs?: Maybe<Array<Scalars["URL"]>>;
+  resourceClassifiedAs?: Maybe<Array<Scalars["URI"]>>;
   /** Relates a process input or output to a verb, such as consume, produce, work, improve, etc. */
   action: Action;
   /** Relates an input flow to it's node in a recipe. */
@@ -1512,7 +1494,7 @@ export type RecipeFlow = {
 
 export type RecipeFlowCreateParams = {
   action: Scalars["ID"];
-  resourceClassifiedAs?: Maybe<Array<Scalars["URL"]>>;
+  resourceClassifiedAs?: Maybe<Array<Scalars["URI"]>>;
   resourceConformsTo?: Maybe<Scalars["ID"]>;
   quantifiedAs?: Maybe<IQuantityValue>;
   recipeInputOf?: Maybe<Scalars["ID"]>;
@@ -1528,7 +1510,7 @@ export type RecipeFlowResponse = {
 export type RecipeFlowUpdateParams = {
   id: Scalars["ID"];
   action?: Maybe<Scalars["ID"]>;
-  resourceClassifiedAs?: Maybe<Array<Scalars["URL"]>>;
+  resourceClassifiedAs?: Maybe<Array<Scalars["URI"]>>;
   resourceConformsTo?: Maybe<Scalars["ID"]>;
   quantifiedAs?: Maybe<IQuantityValue>;
   recipeInputOf?: Maybe<Scalars["ID"]>;
@@ -1553,7 +1535,7 @@ export type RecipeProcessCreateParams = {
   name: Scalars["String"];
   hasDuration?: Maybe<IDuration>;
   durationMultiplier?: Maybe<Scalars["Float"]>;
-  processClassifiedAs?: Maybe<Array<Scalars["URL"]>>;
+  processClassifiedAs?: Maybe<Array<Scalars["URI"]>>;
   note?: Maybe<Scalars["String"]>;
 };
 
@@ -1567,7 +1549,7 @@ export type RecipeProcessUpdateParams = {
   name?: Maybe<Scalars["String"]>;
   hasDuration?: Maybe<IDuration>;
   durationMultiplier?: Maybe<Scalars["Float"]>;
-  processClassifiedAs?: Maybe<Array<Scalars["URL"]>>;
+  processClassifiedAs?: Maybe<Array<Scalars["URI"]>>;
   note?: Maybe<Scalars["String"]>;
 };
 
@@ -1576,7 +1558,7 @@ export type RecipeProcessUpdateParams = {
  */
 export type ReferencedAgreement = {
   __typename?: "ReferencedAgreement";
-  id: Scalars["URL"];
+  id: Scalars["URI"];
 };
 
 /** Specification of a kind of resource. Could define a material item, service, digital item, currency account, etc.
@@ -1592,10 +1574,10 @@ export type ResourceSpecification = {
    * resource of that type when used, consumed, traded, etc.
    */
   substitutable?: Maybe<Scalars["Boolean"]>;
-  image?: Maybe<Scalars["URL"]>;
+  image?: Maybe<Scalars["URI"]>;
   note?: Maybe<Scalars["String"]>;
   /** References a concept in a common taxonomy or other classification scheme for purposes of categorization. */
-  resourceClassifiedAs?: Maybe<Array<Scalars["URL"]>>;
+  resourceClassifiedAs?: Maybe<Array<Scalars["URI"]>>;
   conformingResources?: Maybe<Array<EconomicResource>>;
 };
 
@@ -1603,8 +1585,8 @@ export type ResourceSpecificationCreateParams = {
   name: Scalars["String"];
   unit?: Maybe<Scalars["ID"]>;
   substitutable?: Maybe<Scalars["Boolean"]>;
-  image?: Maybe<Scalars["URL"]>;
-  resourceClassifiedAs?: Maybe<Array<Scalars["URL"]>>;
+  image?: Maybe<Scalars["URI"]>;
+  resourceClassifiedAs?: Maybe<Array<Scalars["URI"]>>;
   note?: Maybe<Scalars["String"]>;
 };
 
@@ -1618,8 +1600,8 @@ export type ResourceSpecificationUpdateParams = {
   name?: Maybe<Scalars["String"]>;
   unit?: Maybe<Scalars["ID"]>;
   substitutable?: Maybe<Scalars["Boolean"]>;
-  image?: Maybe<Scalars["URL"]>;
-  resourceClassifiedAs?: Maybe<Array<Scalars["URL"]>>;
+  image?: Maybe<Scalars["URI"]>;
+  resourceClassifiedAs?: Maybe<Array<Scalars["URI"]>>;
   note?: Maybe<Scalars["String"]>;
 };
 
@@ -1687,6 +1669,23 @@ export type SettlementUpdateParams = {
   settledBy?: Maybe<Scalars["ID"]>;
   settledQuantity?: Maybe<IQuantityValue>;
   note?: Maybe<Scalars["String"]>;
+};
+
+/** A physical mappable location. */
+export type SpatialThing = {
+  __typename?: "SpatialThing";
+  id: Scalars["ID"];
+  name: Scalars["String"];
+  mappableAddress?: Maybe<Scalars["String"]>;
+  lat?: Maybe<Scalars["Float"]>;
+  long?: Maybe<Scalars["Float"]>;
+  alt?: Maybe<Scalars["Float"]>;
+  note?: Maybe<Scalars["String"]>;
+  economicResources?: Maybe<Array<EconomicResource>>;
+  agents?: Maybe<Array<Agent>>;
+  economicEvents?: Maybe<Array<EconomicEvent>>;
+  commitments?: Maybe<Array<Commitment>>;
+  intents?: Maybe<Array<Intent>>;
 };
 
 /** Defines the unit of time measured in a temporal `Duration`. */

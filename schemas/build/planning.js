@@ -36,7 +36,7 @@ type Commitment {
   receiver: Agent
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
-  resourceClassifiedAs: [URL!]
+  resourceClassifiedAs: [URI!]
 
   "The primary resource knowledge specification or definition of an existing or potential resource."
   resourceConformsTo: ResourceSpecification
@@ -67,7 +67,7 @@ type Commitment {
   # forPlanDeliverable: Commitment #TODO: define in VF?
 
   "The place where a commitment occurs.  Usually mappable."
-  atLocation: Location
+  atLocation: SpatialThing
 
   note: String
 
@@ -113,7 +113,7 @@ type Intent {
   receiver: Agent
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
-  resourceClassifiedAs: [URL!]
+  resourceClassifiedAs: [URI!]
 
   "The primary resource knowledge specification or definition of an existing or potential resource."
   resourceConformsTo: ResourceSpecification
@@ -139,11 +139,11 @@ type Intent {
   finished: Boolean
 
   "The place where an intent would occur.  Usually mappable."
-  atLocation: Location
+  atLocation: SpatialThing
 
   # deletable: Boolean
 
-  image: URL
+  image: URI
 
   note: String
 
@@ -175,7 +175,7 @@ type Claim {
   receiver: Agent!
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
-  resourceClassifiedAs: [URL!]
+  resourceClassifiedAs: [URI!]
 
   "The primary resource knowledge specification or definition of an existing or potential resource."
   resourceConformsTo: ResourceSpecification
@@ -306,7 +306,7 @@ A reference to some external agreement between agents which specifies the rules
 or policies or calculations which govern a flow.
 """
 type ReferencedAgreement {
-  id: URL!
+  id: URI!
 }
 
 """
