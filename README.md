@@ -12,6 +12,7 @@ Some fields & structures still subject to change and may evolve until the spec s
 	- [Initialising for development](#initialising-for-development)
 	- [Available commands](#available-commands)
 - [Contributing](#contributing)
+	- [Directory structure](#directory-structure)
 - [Implementing](#implementing)
 
 <!-- /MarkdownTOC -->
@@ -41,7 +42,17 @@ See `scripts` in `package.json` for the available commands. For quickly spinning
 
 ## Contributing
 
-The recommended way to contribute to this repo is via the `npm run dev:schema` command (also run as part of `npm start`). This will watch the code for changes and run tests every time you save a file. It's best to do it this way as the errors from the GraphQL parser can be hard to track down- more frequent feedback means you will catch any errors sooner.
+The recommended way to contribute to this repo is via the `npm run dev:schema` command (also run as part of `npm start`). This will watch the code for changes and build & run tests every time you save a file. It's best to do it this way as the errors from the GraphQL parser can be hard to track down- more frequent feedback means you will catch any errors sooner.
+
+### Directory structure
+
+The `lib/` directory contains all source of the reference schema & validation helpers:
+
+- `index.js` is the main entrypoint to the module, used by other packages wishing to validate schemas against the spec.
+- `typeDefs.js` contains only the schemas themselves (as strings); packages wishing to *implement* APIs using the reference spec can reference this file instead of the main module entrypoint to skip some initialisation logic only needed for validation.
+- `tests/` contains tests for ensuring the schemas compile successfully.
+- `schemas/` contains the actual GraphQL schema definition files. **These are the files you should edit.**
+- `build/` and `index.d.ts` are generated from the schema files, using helper code in `lib/scripts/`.
 
 
 
