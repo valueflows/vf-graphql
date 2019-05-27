@@ -18,7 +18,7 @@ const typeDefs = require('@valueflows/vf-graphql').typeDefs.all_vf
 
 const schema = makeExecutableSchema({ typeDefs })
 addMockFunctionsToSchema({ schema, mocks: {
-  URL: () => 'http://example.com/thing',
+  URI: () => 'http://example.com/thing',
   DateTime: () => new Date().toISOString(),
   DateInterval: () => 'P1Y2M10DT2H30M',
   AnyType: () => '??????',
