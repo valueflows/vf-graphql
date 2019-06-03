@@ -82,6 +82,9 @@ type Commitment {
   fulfilledBy: [Fulfillment!]
   # fulfilledBy(requestDistribution: Boolean): [Fulfillment!]
 
+  "An intent satisfied fully or partially by an economic event or commitment."
+  satisfies: [Satisfaction!]
+
   involvedAgents: [Agent!]
 
   plan: Plan
