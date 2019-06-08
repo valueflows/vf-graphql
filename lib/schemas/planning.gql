@@ -122,6 +122,12 @@ type Intent {
 
   flowQuantity: QuantityValue
 
+  "The base quantity of the offer or request, which can be multipied for an actual commitment.  Used for example for a price list."
+  exchangeRateQuantity: QuantityValue
+
+  "The total quantity of the offered or requested resource available."
+  availableQuantity: QuantityValue
+
   "Specific time marking the exact beginning of flow or process"
   hasBeginning: DateTime
   "Specific time marking the exact end of flow or process"
@@ -156,6 +162,7 @@ type Intent {
   # inverse relationships and queries
 
   satisfiedBy: [Satisfaction!]
+  publishedIn: [ProposedIntent!]
 }
 
 """
@@ -313,3 +320,46 @@ References either an agreement formally managed by `Commitment`s & `EconomicEven
 or an external agreement which is loosely held to govern resource flows.
 """
 union AnyAgreement = Agreement | ReferencedAgreement
+
+
+"""
+Published requests or offers, sometimes with what is expected in return.
+"""
+type Proposal {
+  id: ID!
+  name: String
+
+  "Specific time marking the exact beginning of proposal publication."
+  hasBeginning: DateTime
+  "Specific time marking the exact end of proposal publication."
+  hasEnd: DateTime
+
+  eligibleLocation: SpatialThing
+
+  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
+  inScopeOf: [AnyType!]
+
+  created: DateTime
+  note: String
+
+  ##############################################################################
+  # inverse relationships and queries
+
+  publishes: [ProposedIntent!]
+}
+
+"""
+Supports including intents in multiple proposals, as well as a proposal including multiple intents.
+"""
+type ProposedIntent {
+  id: ID!
+
+  "This is a reciprocal intent of this proposal, not primary. Not meant to be part of intent matching."
+  reciprocal: Boolean
+
+  "The intent which is part of this published proposal."
+  publishes: Intent!
+
+  "The published proposal which this intent is part of."
+  publishedIn: Proposal!
+}
