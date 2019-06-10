@@ -264,29 +264,37 @@ type Settlement {
 "Query parameters for reading `Process`es related to a `Plan`"
 input planProcessSearchParams {
   searchString: String
-  startDate: DateTime
-  endDate: DateTime
+  after: DateTime
+  before: DateTime
   finished: Boolean
 }
 
-type Plan { #TODO: this is not yet in VF, and may or may not be named Plan
+"""
+A logical collection of processes that constitute a body of planned work with defined deliverable(s).
+NOTE: Not accepted in VF.  Other option is to be a high level process.
+"""
+type Plan {
   id: ID!
-  plannedOn: String
-  due: String
-  note: String
   name: String
+  created: DateTime
+  before: DateTime
+  note: String
+
+  ##############################################################################
+  # inverse relationships and queries
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
   inScopeOf: [AnyType!]
 
-  # createdBy: Agent
   processes(filter: planProcessSearchParams): [Process!]
-  workingAgents: [Agent!]
-  plannedNonWorkInputs: [Commitment!]
-  plannedOutputs: [Commitment!]
-  nonWorkInputs: [EconomicEvent!]
-  outputs: [EconomicEvent!]
-  kanbanState: String #TODO: codify this?
+  independentDemands: [Commitment!]
+
+  # leaving the following until something is needed
+  # plannedNonWorkInputs: [Commitment!]
+  # plannedOutputs: [Commitment!]
+  # nonWorkInputs: [EconomicEvent!]
+  # outputs: [EconomicEvent!]
+  # kanbanState: String #TODO: codify this?
   # deletable: Boolean
 }
 
