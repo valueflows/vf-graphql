@@ -324,6 +324,7 @@ union AnyAgreement = Agreement | ReferencedAgreement
 
 """
 Published requests or offers, sometimes with what is expected in return.
+NOTE: Not approved in VF.
 """
 type Proposal {
   id: ID!
@@ -350,6 +351,7 @@ type Proposal {
 
 """
 Supports including intents in multiple proposals, as well as a proposal including multiple intents.
+NOTE: Not approved in VF.
 """
 type ProposedIntent {
   id: ID!
