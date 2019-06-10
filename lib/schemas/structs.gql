@@ -13,9 +13,9 @@ A type which allows any arbitrary value to be set
 scalar AnyType
 
 """
-The `URL` type simply declares a reference to an external web URL.
+The `URI` type simply declares a reference to an external web URL, Holochain entry or other resource.
 """
-scalar URL
+scalar URI
 
 """
 The `DateTime` scalar type represents a DateTime value as specified by
@@ -74,15 +74,15 @@ input IDuration {
 }
 
 """
-A physical location.
-Under discussion. See https://github.com/valueflows/vf-graphql/issues/28 https://github.com/valueflows/valueflows/issues/402
+A physical mappable location.
 """
-type Location { #TODO: ??
+type SpatialThing {
   id: ID!
   name: String!
-  address: String
-  latitude: Float
-  longitude: Float
+  mappableAddress: String
+  lat: Float
+  long: Float
+  alt: Float
   note: String
 
   ##############################################################################

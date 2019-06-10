@@ -27,7 +27,7 @@
     "@valueflows/vf-graphql": "0.0.1",
     "apollo-server-express": "^2.4.8",
     "express": "^4.16.4",
-    "graphql": "^14.1.1",
+    "graphql": "^14.3.0",
     "graphql-voyager": "^1.0.0-rc.26"
   }
 }

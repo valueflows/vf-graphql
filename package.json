@@ -10,6 +10,7 @@
   "main": "/dev/null",
   "scripts": {
     "preinstall": "npm run clean",
+    "build": "cd lib && npm run build",
     "start": "npm-run-all --parallel dev:schema dev:demoUI",
     "test": "cd lib && npm run test",
     "dev:schema": "cd lib && npm run dev",

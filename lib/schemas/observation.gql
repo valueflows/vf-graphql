@@ -1,0 +1,249 @@
+##
+#
+# Observation layer
+#
+# Record of what actually happened affecting the economic ecosystem.
+#
+#
+##
+
+union EconomicActivity = Process | Transfer
+union ProductionFlowItem = Process | Transfer | EconomicResource
+
+"""
+An observed economic flow, as opposed to a flow planned to happen in the future. This could reflect a change in the quantity of an economic resource. It is also defined by its behavior in relation to the economic resource (see `Action`)
+"""
+type EconomicEvent {
+  id: ID!
+
+  "Relates a process input or output to a verb, such as consume, produce, work, improve, etc."
+  action: Action!
+
+  "Defines the activity to which this event is an input"
+  inputOf: EconomicActivity
+
+  "Defines the activity for which this event is an output"
+  outputOf: EconomicActivity
+
+  "The economic agent from whom the intended, committed, or actual economic event is initiated."
+  provider: Agent
+
+  "The economic agent whom the intended, committed, or actual economic event is for."
+  receiver: Agent
+
+  "Economic resource involved in the flow."
+  resourceInventoriedAs: EconomicResource
+
+  "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
+  resourceClassifiedAs: [URI!]
+
+  "The primary resource knowledge specification or definition of an existing or potential resource."
+  resourceConformsTo: ResourceSpecification
+
+  "The amount and unit of the event. This is the quantity that could be used to increment or decrement a resource, depending on the type of resource and type of event."
+  flowQuantity: QuantityValue
+
+  "Specific time marking the exact beginning of flow or process"
+  hasBeginning: DateTime
+  "Specific time marking the exact end of flow or process"
+  hasEnd: DateTime
+
+  "Specific time marking the exact moment at which the flow or process occurred"
+  hasPointInTime: DateTime
+
+  "Indicates the flow or process occurred prior to this specific time"
+  before: DateTime
+  "Indicates the flow or process occurred after this specific time"
+  after: DateTime
+
+  "The place where an economic event occurs.  Usually mappable."
+  atLocation: SpatialThing
+
+  note: String
+
+  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
+  inScopeOf: [AnyType!]
+
+  "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this flow."
+  under: AnyAgreement
+  "This economic event occurs as part of this agreement."
+  realizationOf: Agreement
+
+  # requestDistribution: Boolean
+
+  ##############################################################################
+  # inverse relationships and queries
+
+  "The commitment which is completely or partially fulfilled by an economic event."
+  fulfills: [Fulfillment!]
+
+  "An intent satisfied fully or partially by an economic event or commitment."
+  satisfies: [Satisfaction!]
+
+  # appreciationFor: [EconomicEvent!]
+
+  track: [ProductionFlowItem!]
+  trace: [ProductionFlowItem!]
+
+  # validations: [Validation!]
+  # isValidated: Boolean
+}
+
+"""
+A resource which is useful to people or the ecosystem.
+"""
+type EconomicResource {
+  id: ID!
+
+  "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
+  classifiedAs: [URI!]
+
+  "The primary resource knowledge specification or definition of an existing or potential resource."
+  resourceConformsTo: ResourceSpecification
+
+  "Sometimes called lot number, used for trackable batched resources. Sometimes called serial number, used when each item must have a trackable identifier (like a computer). Could also be used for other unique tracking identifiers needed for resources."
+  trackingIdentifier: String
+
+  "URI to a descriptive picture of this item."
+  image: URI
+
+  "The current amount and unit of the economic resource. This can be stored or derived from economic events affecting the resource."
+  currentQuantity: QuantityValue
+
+  note: String
+
+  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
+  inScopeOf: [AnyType!]
+
+  ##############################################################################
+  # relationship fields; can only be set indirectly
+
+  "A more concrete resource upon which a resource is based."
+  underlyingResource: EconomicResource
+
+  "Used when a stock economic resource contains units also defined as economic resources."
+  contains: [EconomicResource!] #TODO: containedBy and make this the inverse??
+
+  "The current place an economic resource is located. Could be at any level of granularity, from a town to an address to a warehouse location. Usually mappable."
+  currentLocation: SpatialThing
+
+  ##############################################################################
+  # inverse relationships and queries
+
+  trace: [EconomicEvent!]
+  track: [EconomicEvent!]
+
+  # resourceContacts: [Agent!]
+  # owners: [Agent!]  TODO: define agent-resource relationships, if we do need them
+}
+
+"""
+An activity that changes inputs into outputs.  It could transform or transport economic resource(s).
+"""
+type Process {
+  id: ID!
+  name: String!
+
+  "Specific time marking the exact beginning of flow or process"
+  hasBeginning: DateTime
+  "Specific time marking the exact end of flow or process"
+  hasEnd: DateTime
+
+  "Specific time marking the exact moment at which the flow or process occurred"
+  hasPointInTime: DateTime
+
+  "Indicates the flow or process occurred prior to this specific time"
+  before: DateTime
+  "Indicates the flow or process occurred after this specific time"
+  after: DateTime
+
+  # started: Boolean
+  finished: Boolean
+
+  "The recipe definition or specification for a process."
+  basedOn: RecipeProcess
+
+  # Process classifications under review.
+  # You are possibly looking for a "skill EconomicResource" provided to the process as a 'work' action EconomicEvent input.
+  # @see https://github.com/valueflows/vf-graphql/issues/25#issuecomment-489429982
+  "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
+  classifiedAs: [URI!]
+
+  note: String
+
+  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
+  inScopeOf: [AnyType!]
+
+  # deletable: Boolean
+
+  "The process with its inputs and outputs is part of the plan."
+  plannedWithin: Plan
+
+  ##############################################################################
+  # inverse relationships and queries
+
+  inputs(action: ID): [EconomicEvent!]
+  outputs(action: ID): [EconomicEvent!]
+  unplannedEconomicEvents(action: ID): [EconomicEvent!]
+
+  committedInputs(action: ID): [Commitment!]
+  committedOutputs(action: ID): [Commitment!]
+
+  intendedInputs(action: ID): [Intent!]
+  intendedOutputs(action: ID): [Intent!]
+
+  nextProcesses: [Process!]
+  previousProcesses: [Process!]
+
+  workingAgents: [Agent!]
+
+  trace: [EconomicEvent!]
+  track: [EconomicEvent!]
+}
+
+"""
+An activity that assigns the rights and responsibilities for an economic resource from one agent to another.
+"""
+type Transfer { #TODO this whole model is under review
+  id: ID!
+  name: String!
+
+  "Specific time marking the exact moment at which the flow or process occurred"
+  hasPointInTime: DateTime
+
+  note: String
+
+  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
+  inScopeOf: [AnyType!]
+
+  ##############################################################################
+  # inverse relationships and queries
+
+  economicEvents: [EconomicEvent!]
+  giveEconomicEvent: EconomicEvent
+  takeEconomicEvent: EconomicEvent
+
+  transferCommitments: [Commitment!]
+  giveCommitment: Commitment
+  takeCommitment: Commitment
+
+  involvedAgents: [Agent!]
+
+  trace: [EconomicEvent!]
+  track: [EconomicEvent!]
+}
+
+"""
+A way to tie an economic event that is given in loose fulfilment for another economic event, without commitments or expectations. Supports the gift economy.
+"""
+type Appreciation {
+  id: ID!
+
+  "The `EconomicEvent` this appreciation has been given in acknowledgement of"
+  appreciationOf: EconomicEvent # :TODO: should this be required?
+
+  "The `EconomicEvent` provided as a gift in this appreciation"
+  appreciationWith: EconomicEvent
+
+  note: String
+}

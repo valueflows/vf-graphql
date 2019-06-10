@@ -1,0 +1,14 @@
+overwrite: true
+schema: "./schemas/*.gql"
+# documents: "./ops"
+generates:
+  index.d.ts:
+    plugins:
+      - "typescript"
+  #build/graphql.tsx:
+    #plugins:
+      #- "typescript-react-apollo"
+      #- "typescript-operations"
+  #build/graphql.d.ts:
+    #plugins:
+      #- "typescript-graphql-files-modules"
