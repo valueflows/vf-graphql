@@ -289,7 +289,7 @@ export type Claim = {
   __typename?: "Claim";
   id: Scalars["ID"];
   /** Relates a process input or output to a verb, such as consume, produce, work, improve, etc. */
-  action?: Maybe<Action>;
+  action: Action;
   /** The economic agent from whom the intended, committed, or actual economic event is initiated. */
   provider: Agent;
   /** The economic agent whom the intended, committed, or actual economic event is for. */
@@ -350,7 +350,7 @@ export type Commitment = {
   __typename?: "Commitment";
   id: Scalars["ID"];
   /** Relates a process input or output to a verb, such as consume, produce, work, improve, etc. */
-  action?: Maybe<Action>;
+  action: Action;
   /** A `Process` or `Transfer` which this `Commitment` will aid in the finalisation of. */
   inputOf?: Maybe<EconomicActivity>;
   /** A `Process` or `Transfer` which this `Commitment` has been generated as a result of. */
@@ -388,6 +388,8 @@ export type Commitment = {
   clauseOf?: Maybe<Agreement>;
   /** The economic event which completely or partially fulfills a commitment. */
   fulfilledBy?: Maybe<Array<Fulfillment>>;
+  /** An intent satisfied fully or partially by an economic event or commitment. */
+  satisfies?: Maybe<Array<Satisfaction>>;
   involvedAgents?: Maybe<Array<Agent>>;
   plan?: Maybe<Plan>;
 };
@@ -409,6 +411,7 @@ export type CommitmentCreateParams = {
   after?: Maybe<Scalars["DateTime"]>;
   note?: Maybe<Scalars["String"]>;
   inScopeOf?: Maybe<Array<Scalars["AnyType"]>>;
+  independentDemandOf?: Maybe<Scalars["ID"]>;
   atLocation?: Maybe<Scalars["ID"]>;
   underAgreement?: Maybe<Scalars["ID"]>;
   underExternalAgreement?: Maybe<Scalars["URI"]>;
@@ -438,6 +441,7 @@ export type CommitmentUpdateParams = {
   finished?: Maybe<Scalars["Boolean"]>;
   note?: Maybe<Scalars["String"]>;
   inScopeOf?: Maybe<Array<Scalars["AnyType"]>>;
+  independentDemandOf?: Maybe<Scalars["ID"]>;
   atLocation?: Maybe<Scalars["ID"]>;
   underAgreement?: Maybe<Scalars["ID"]>;
   underExternalAgreement?: Maybe<Scalars["URI"]>;
@@ -679,6 +683,12 @@ export type Intent = {
   /** When a specific `EconomicResource` is known which can service the `Intent`, this defines that resource. */
   resourceInventoriedAs?: Maybe<EconomicResource>;
   flowQuantity?: Maybe<QuantityValue>;
+  /** The base quantity of the offer or request, which can be multipied for an
+   * actual commitment.  Used for example for a price list.
+   */
+  exchangeRateQuantity?: Maybe<QuantityValue>;
+  /** The total quantity of the offered or requested resource available. */
+  availableQuantity?: Maybe<QuantityValue>;
   /** Specific time marking the exact beginning of flow or process */
   hasBeginning?: Maybe<Scalars["DateTime"]>;
   /** Specific time marking the exact end of flow or process */
@@ -699,6 +709,7 @@ export type Intent = {
   /** Reference to an agreement between agents which specifies the rules or policies or calculations which govern this flow. */
   under?: Maybe<AnyAgreement>;
   satisfiedBy?: Maybe<Array<Satisfaction>>;
+  publishedIn?: Maybe<Array<ProposedIntent>>;
 };
 
 export type IntentCreateParams = {
@@ -798,6 +809,9 @@ export type Mutation = {
   createSatisfaction?: Maybe<SatisfactionResponse>;
   updateSatisfaction?: Maybe<SatisfactionResponse>;
   deleteSatisfaction?: Maybe<SatisfactionResponse>;
+  createPlan?: Maybe<PlanResponse>;
+  updatePlan?: Maybe<PlanResponse>;
+  deletePlan?: Maybe<PlanResponse>;
   createAgreement?: Maybe<AgreementResponse>;
   updateAgreement?: Maybe<AgreementResponse>;
   deleteAgreement?: Maybe<AgreementResponse>;
@@ -968,6 +982,18 @@ export type MutationUpdateSatisfactionArgs = {
 };
 
 export type MutationDeleteSatisfactionArgs = {
+  id: Scalars["String"];
+};
+
+export type MutationCreatePlanArgs = {
+  plan: PlanCreateParams;
+};
+
+export type MutationUpdatePlanArgs = {
+  plan: PlanUpdateParams;
+};
+
+export type MutationDeletePlanArgs = {
   id: Scalars["String"];
 };
 
@@ -1223,12 +1249,33 @@ export type PlanProcessesArgs = {
   filter?: Maybe<PlanProcessSearchParams>;
 };
 
+export type PlanCreateParams = {
+  id: Scalars["ID"];
+  name: Scalars["String"];
+  created?: Maybe<Scalars["DateTime"]>;
+  before?: Maybe<Scalars["DateTime"]>;
+  note?: Maybe<Scalars["String"]>;
+};
+
 /** Query parameters for reading `Process`es related to a `Plan` */
 export type PlanProcessSearchParams = {
   searchString?: Maybe<Scalars["String"]>;
   startDate?: Maybe<Scalars["DateTime"]>;
   endDate?: Maybe<Scalars["DateTime"]>;
   finished?: Maybe<Scalars["Boolean"]>;
+};
+
+export type PlanResponse = {
+  __typename?: "PlanResponse";
+  plan?: Maybe<Plan>;
+};
+
+export type PlanUpdateParams = {
+  id: Scalars["ID"];
+  name?: Maybe<Scalars["String"]>;
+  created?: Maybe<Scalars["DateTime"]>;
+  before?: Maybe<Scalars["DateTime"]>;
+  note?: Maybe<Scalars["String"]>;
 };
 
 /** An activity that changes inputs into outputs.  It could transform or transport economic resource(s). */
@@ -1249,9 +1296,13 @@ export type Process = {
   finished?: Maybe<Scalars["Boolean"]>;
   /** The recipe definition or specification for a process. */
   basedOn?: Maybe<RecipeProcess>;
+  /** References a concept in a common taxonomy or other classification scheme for purposes of categorization. */
+  classifiedAs?: Maybe<Array<Scalars["URI"]>>;
   note?: Maybe<Scalars["String"]>;
   /** Grouping around something to create a boundary or context, used for documenting, accounting, planning. */
   inScopeOf?: Maybe<Array<Scalars["AnyType"]>>;
+  /** The process with its inputs and outputs is part of the plan. */
+  plannedWithin?: Maybe<Plan>;
   inputs?: Maybe<Array<EconomicEvent>>;
   outputs?: Maybe<Array<EconomicEvent>>;
   unplannedEconomicEvents?: Maybe<Array<EconomicEvent>>;
@@ -1262,7 +1313,6 @@ export type Process = {
   nextProcesses?: Maybe<Array<Process>>;
   previousProcesses?: Maybe<Array<Process>>;
   workingAgents?: Maybe<Array<Agent>>;
-  plan?: Maybe<Plan>;
   trace?: Maybe<Array<EconomicEvent>>;
   track?: Maybe<Array<EconomicEvent>>;
 };
@@ -1307,6 +1357,7 @@ export type ProcessCreateParams = {
   hasDuration?: Maybe<IDuration>;
   note?: Maybe<Scalars["String"]>;
   inScopeOf?: Maybe<Array<Scalars["AnyType"]>>;
+  plannedWithin?: Maybe<Scalars["ID"]>;
 };
 
 export type ProcessResponse = {
@@ -1321,9 +1372,39 @@ export type ProcessUpdateParams = {
   finished?: Maybe<Scalars["Boolean"]>;
   note?: Maybe<Scalars["String"]>;
   inScopeOf?: Maybe<Array<Scalars["AnyType"]>>;
+  plannedWithin?: Maybe<Scalars["ID"]>;
 };
 
 export type ProductionFlowItem = Process | Transfer | EconomicResource;
+
+/** Published requests or offers, sometimes with what is expected in return. */
+export type Proposal = {
+  __typename?: "Proposal";
+  id: Scalars["ID"];
+  name?: Maybe<Scalars["String"]>;
+  /** Specific time marking the exact beginning of proposal publication. */
+  hasBeginning?: Maybe<Scalars["DateTime"]>;
+  /** Specific time marking the exact end of proposal publication. */
+  hasEnd?: Maybe<Scalars["DateTime"]>;
+  eligibleLocation?: Maybe<SpatialThing>;
+  /** Grouping around something to create a boundary or context, used for documenting, accounting, planning. */
+  inScopeOf?: Maybe<Array<Scalars["AnyType"]>>;
+  created?: Maybe<Scalars["DateTime"]>;
+  note?: Maybe<Scalars["String"]>;
+  publishes?: Maybe<Array<ProposedIntent>>;
+};
+
+/** Supports including intents in multiple proposals, as well as a proposal including multiple intents. */
+export type ProposedIntent = {
+  __typename?: "ProposedIntent";
+  id: Scalars["ID"];
+  /** This is a reciprocal intent of this proposal, not primary. Not meant to be part of intent matching. */
+  reciprocal?: Maybe<Scalars["Boolean"]>;
+  /** The intent which is part of this published proposal. */
+  publishes: Intent;
+  /** The published proposal which this intent is part of. */
+  publishedIn: Proposal;
+};
 
 /** Semantic meaning for measurements: binds a quantity to its measurement unit.
  * See http://www.qudt.org/pages/QUDToverviewPage.html

@@ -259,6 +259,7 @@ input ProcessCreateParams { # implements ProcessParams
   hasDuration: IDuration
   note: String
   inScopeOf: [AnyType!]
+  plannedWithin: ID # Plan
 }
 
 input ProcessUpdateParams { # implements UpdateParams & ProcessParams
@@ -268,6 +269,7 @@ input ProcessUpdateParams { # implements UpdateParams & ProcessParams
   finished: Boolean
   note: String
   inScopeOf: [AnyType!]
+  plannedWithin: ID # Plan
 }
 
 type ProcessResponse {
@@ -444,6 +446,7 @@ input CommitmentCreateParams { # implements CommitmentParams
   after: DateTime
   note: String
   inScopeOf: [AnyType!]
+  independentDemandOf: ID #Plan
   atLocation: ID # SpatialThing
   underAgreement: ID # Agreement
   underExternalAgreement: URI
@@ -468,6 +471,7 @@ input CommitmentUpdateParams { # implements UpdateParams & CommitmentParams
   finished: Boolean
   note: String
   inScopeOf: [AnyType!]
+  independentDemandOf: ID #Plan
   atLocation: ID # SpatialThing
   underAgreement: ID # Agreement
   underExternalAgreement: URI
@@ -619,6 +623,28 @@ input SettlementUpdateParams {
 
 type SettlementResponse {
   settlement: Settlement
+}
+
+
+
+input PlanCreateParams {
+  id: ID!
+  name: String!
+  created: DateTime
+  before: DateTime
+  note: String
+}
+
+input PlanUpdateParams {
+  id: ID!
+  name: String
+  created: DateTime
+  before: DateTime
+  note: String
+}
+
+type PlanResponse {
+  plan: Plan
 }
 
 
@@ -824,11 +850,10 @@ type Mutation {
   updateSatisfaction(satisfaction: SatisfactionUpdateParams): SatisfactionResponse # TODO: add EconomicEvent
   deleteSatisfaction(id: String!): SatisfactionResponse
 
-  # :TODO: @see planning.gql
-  # createPlan(): PlanResponse
+  createPlan(plan: PlanCreateParams!): PlanResponse
   # createPlanFromRecipe(): PlanResponse
-  # updatePlan(): PlanResponse
-  # deletePlan(id: String!): PlanResponse
+  updatePlan(plan: PlanUpdateParams!): PlanResponse
+  deletePlan(id: String!): PlanResponse
 
   createAgreement(agreement: AgreementCreateParams): AgreementResponse
   updateAgreement(agreement: AgreementUpdateParams): AgreementResponse
