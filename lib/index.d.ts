@@ -1227,24 +1227,25 @@ export type PersonResponse = {
   agent: Person;
 };
 
+/** A logical collection of processes that constitute a body of planned work with defined deliverable(s).
+ * NOTE: Not accepted in VF.  Other option is to be a high level process.
+ */
 export type Plan = {
   __typename?: "Plan";
   id: Scalars["ID"];
-  plannedOn?: Maybe<Scalars["String"]>;
-  due?: Maybe<Scalars["String"]>;
-  note?: Maybe<Scalars["String"]>;
   name?: Maybe<Scalars["String"]>;
+  created?: Maybe<Scalars["DateTime"]>;
+  before?: Maybe<Scalars["DateTime"]>;
+  note?: Maybe<Scalars["String"]>;
   /** Grouping around something to create a boundary or context, used for documenting, accounting, planning. */
   inScopeOf?: Maybe<Array<Scalars["AnyType"]>>;
   processes?: Maybe<Array<Process>>;
-  workingAgents?: Maybe<Array<Agent>>;
-  plannedNonWorkInputs?: Maybe<Array<Commitment>>;
-  plannedOutputs?: Maybe<Array<Commitment>>;
-  nonWorkInputs?: Maybe<Array<EconomicEvent>>;
-  outputs?: Maybe<Array<EconomicEvent>>;
-  kanbanState?: Maybe<Scalars["String"]>;
+  independentDemands?: Maybe<Array<Commitment>>;
 };
 
+/** A logical collection of processes that constitute a body of planned work with defined deliverable(s).
+ * NOTE: Not accepted in VF.  Other option is to be a high level process.
+ */
 export type PlanProcessesArgs = {
   filter?: Maybe<PlanProcessSearchParams>;
 };
@@ -1260,8 +1261,8 @@ export type PlanCreateParams = {
 /** Query parameters for reading `Process`es related to a `Plan` */
 export type PlanProcessSearchParams = {
   searchString?: Maybe<Scalars["String"]>;
-  startDate?: Maybe<Scalars["DateTime"]>;
-  endDate?: Maybe<Scalars["DateTime"]>;
+  after?: Maybe<Scalars["DateTime"]>;
+  before?: Maybe<Scalars["DateTime"]>;
   finished?: Maybe<Scalars["Boolean"]>;
 };
 
@@ -1377,7 +1378,9 @@ export type ProcessUpdateParams = {
 
 export type ProductionFlowItem = Process | Transfer | EconomicResource;
 
-/** Published requests or offers, sometimes with what is expected in return. */
+/** Published requests or offers, sometimes with what is expected in return.
+ * NOTE: Not approved in VF.
+ */
 export type Proposal = {
   __typename?: "Proposal";
   id: Scalars["ID"];
@@ -1394,7 +1397,9 @@ export type Proposal = {
   publishes?: Maybe<Array<ProposedIntent>>;
 };
 
-/** Supports including intents in multiple proposals, as well as a proposal including multiple intents. */
+/** Supports including intents in multiple proposals, as well as a proposal including multiple intents.
+ * NOTE: Not approved in VF.
+ */
 export type ProposedIntent = {
   __typename?: "ProposedIntent";
   id: Scalars["ID"];
