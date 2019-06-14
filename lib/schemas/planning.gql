@@ -123,10 +123,7 @@ type Intent {
   flowQuantity: QuantityValue
 
   "The base quantity of the offer or request, which can be multipied for an actual commitment.  Used for example for a price list."
-  exchangeRateQuantity: QuantityValue
-
-  "The total quantity of the offered or requested resource available."
-  availableQuantity: QuantityValue
+  unitQuantity: QuantityValue
 
   "Specific time marking the exact beginning of flow or process"
   hasBeginning: DateTime

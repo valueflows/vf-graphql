@@ -340,6 +340,7 @@ type AppreciationResponse {
 #   resourceConformsTo: ID
 #   resourceClassifiedAs: [URI!]
 #   flowQuantity: IQuantityValue
+#   unitQuantity: IQuantityValue
 #   hasBeginning: DateTime
 #   hasEnd: DateTime
 #   hasPointInTime: DateTime
@@ -361,6 +362,7 @@ input IntentCreateParams { # implements IntentParams
   resourceConformsTo: ID
   resourceClassifiedAs: [URI!]
   flowQuantity: IQuantityValue
+  unitQuantity: IQuantityValue
   hasBeginning: DateTime
   hasEnd: DateTime
   hasPointInTime: DateTime
@@ -386,6 +388,7 @@ input IntentUpdateParams { # implements UpdateParams & IntentParams
   resourceConformsTo: ID
   resourceClassifiedAs: [URI!]
   flowQuantity: IQuantityValue
+  unitQuantity: IQuantityValue
   hasBeginning: DateTime
   hasEnd: DateTime
   hasPointInTime: DateTime
