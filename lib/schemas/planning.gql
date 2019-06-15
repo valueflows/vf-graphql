@@ -125,6 +125,9 @@ type Intent {
   "The base quantity of the offer or request, which can be multipied for an actual commitment.  Used for example for a price list."
   unitQuantity: QuantityValue
 
+  "The total quantity of the offered or requested resource available."
+  availableQuantity: QuantityValue
+
   "Specific time marking the exact beginning of flow or process"
   hasBeginning: DateTime
   "Specific time marking the exact end of flow or process"
