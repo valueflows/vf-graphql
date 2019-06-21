@@ -10,6 +10,12 @@ generates:
   index.d.ts:
     plugins:
       - "typescript"
+  # :TODO: does not support interface types yet
+  # index.re:
+  #   - reason-client
+  index.flow.js:
+    plugins:
+      - flow
   #build/graphql.tsx:
     #plugins:
       #- "typescript-react-apollo"
