@@ -7,13 +7,13 @@ export type Scalars = {
   Int: number;
   Float: number;
   /** The `URI` type simply declares a reference to an external web URL, Holochain entry or other resource. */
-  URI: any;
+  URI: string;
   /** A type which allows any arbitrary value to be set */
   AnyType: any;
   /** The `DateTime` scalar type represents a DateTime value as specified by
    * [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601).
    */
-  DateTime: any;
+  DateTime: Date;
 };
 
 /** An action verb defining the kind of event, commitment, or intent.
