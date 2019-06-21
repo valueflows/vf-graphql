@@ -199,6 +199,15 @@
     graphql-toolkit "0.2.12"
     tslib "1.9.3"
 
+"@graphql-codegen/flow@^1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@graphql-codegen/flow/-/flow-1.3.0.tgz#bb7259aa5a9f200d1e21a00ae24d3f2e01850313"
+  integrity sha512-Yk0ev2TQrSHcnut1vfPOA3gy+B8uZAOXLlO2e7vMM+A+PQYmAQ0luoy/kqVAJjqezIiXg0+xohXEUI0dGMQonA==
+  dependencies:
+    "@graphql-codegen/plugin-helpers" "1.3.0"
+    "@graphql-codegen/visitor-plugin-common" "1.3.0"
+    tslib "1.10.0"
+
 "@graphql-codegen/plugin-helpers@1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@graphql-codegen/plugin-helpers/-/plugin-helpers-1.2.0.tgz#a5011f9d90767cbbe20ad9b4f6c8080bf79ba2fa"
@@ -208,6 +217,16 @@
     common-tags "1.8.0"
     import-from "3.0.0"
     tslib "1.9.3"
+
+"@graphql-codegen/plugin-helpers@1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@graphql-codegen/plugin-helpers/-/plugin-helpers-1.3.0.tgz#106d8c452af4835e83adae2e3e4042a631054de2"
+  integrity sha512-7CKcYAlLzcKSFoSWofOVHbrZ9c5i77ak8/a0JJrsP4Yho0ZD9NtSLPWp1wK3gIp1AP2sTgAPlYffOPy0QCckgA==
+  dependencies:
+    change-case "3.1.0"
+    common-tags "1.8.0"
+    import-from "3.0.0"
+    tslib "1.10.0"
 
 "@graphql-codegen/typescript-graphql-files-modules@1.2.0":
   version "1.2.0"
@@ -255,6 +274,17 @@
     dependency-graph "0.8.0"
     graphql-tag "2.10.1"
     tslib "1.9.3"
+
+"@graphql-codegen/visitor-plugin-common@1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@graphql-codegen/visitor-plugin-common/-/visitor-plugin-common-1.3.0.tgz#429ae1dc5daa94fe9b39b6285a50bd0cb08862a2"
+  integrity sha512-gq7ukEK+ehiYr6dMivlyEd55bOXZ8Zvzrb7Z7QwRGH/ptfZQg3yy6oiRYbNwTRphVFi3zSRlcHAMvJDv0V9VpQ==
+  dependencies:
+    "@graphql-codegen/plugin-helpers" "1.3.0"
+    auto-bind "2.0.0"
+    dependency-graph "0.8.0"
+    graphql-tag "2.10.1"
+    tslib "1.10.0"
 
 "@material-ui/core@^3.9.2":
   version "3.9.3"
@@ -4642,6 +4672,11 @@ ts-log@2.1.4:
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/ts-log/-/ts-log-2.1.4.tgz#063c5ad1cbab5d49d258d18015963489fb6fb59a"
   integrity sha512-P1EJSoyV+N3bR/IWFeAqXzKPZwHpnLY6j7j58mAvewHRipo+BQM2Y1f9Y9BjEQznKwgqqZm7H8iuixmssU7tYQ==
+
+tslib@1.10.0:
+  version "1.10.0"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.10.0.tgz#c3c19f95973fb0a62973fb09d90d961ee43e5c8a"
+  integrity sha512-qOebF53frne81cf0S9B41ByenJ3/IuH8yJKngAX35CmiZySA0khhkovshKK+jGCaMnVomla7gVlIcc3EvKPbTQ==
 
 tslib@1.9.3, tslib@^1.9.0, tslib@^1.9.3:
   version "1.9.3"
