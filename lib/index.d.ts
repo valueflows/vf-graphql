@@ -686,7 +686,7 @@ export type Intent = {
   /** The base quantity of the offer or request, which can be multipied for an
    * actual commitment.  Used for example for a price list.
    */
-  exchangeRateQuantity?: Maybe<QuantityValue>;
+  unitQuantity?: Maybe<QuantityValue>;
   /** The total quantity of the offered or requested resource available. */
   availableQuantity?: Maybe<QuantityValue>;
   /** Specific time marking the exact beginning of flow or process */
@@ -721,6 +721,8 @@ export type IntentCreateParams = {
   resourceConformsTo?: Maybe<Scalars["ID"]>;
   resourceClassifiedAs?: Maybe<Array<Scalars["URI"]>>;
   flowQuantity?: Maybe<IQuantityValue>;
+  unitQuantity?: Maybe<IQuantityValue>;
+  availableQuantity?: Maybe<IQuantityValue>;
   hasBeginning?: Maybe<Scalars["DateTime"]>;
   hasEnd?: Maybe<Scalars["DateTime"]>;
   hasPointInTime?: Maybe<Scalars["DateTime"]>;
@@ -749,6 +751,8 @@ export type IntentUpdateParams = {
   resourceConformsTo?: Maybe<Scalars["ID"]>;
   resourceClassifiedAs?: Maybe<Array<Scalars["URI"]>>;
   flowQuantity?: Maybe<IQuantityValue>;
+  unitQuantity?: Maybe<IQuantityValue>;
+  availableQuantity?: Maybe<IQuantityValue>;
   hasBeginning?: Maybe<Scalars["DateTime"]>;
   hasEnd?: Maybe<Scalars["DateTime"]>;
   hasPointInTime?: Maybe<Scalars["DateTime"]>;
