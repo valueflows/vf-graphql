@@ -1,6 +1,11 @@
 overwrite: true
 schema: "./schemas/*.gql"
 # documents: "./ops"
+config:
+  scalars:
+    DateTime: Date
+    AnyType: any
+    URI: string
 generates:
   index.d.ts:
     plugins:
