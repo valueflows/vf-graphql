@@ -228,33 +228,6 @@
     import-from "3.0.0"
     tslib "1.10.0"
 
-"@graphql-codegen/typescript-graphql-files-modules@1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@graphql-codegen/typescript-graphql-files-modules/-/typescript-graphql-files-modules-1.2.0.tgz#221d5c91167bb4c3fa709b3cc1040aa5196bdbda"
-  integrity sha512-wtyyV4wFWmg5Cr2z2WCOoUCceGhyvfL+hYDq4tDtzETFxa5xLMUhn9yE+dmFU/xV9wzIz54mPvbgwZk9+jJ5Wg==
-  dependencies:
-    "@graphql-codegen/plugin-helpers" "1.2.0"
-    tslib "1.9.3"
-
-"@graphql-codegen/typescript-operations@1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@graphql-codegen/typescript-operations/-/typescript-operations-1.2.0.tgz#44ce7808edeab066e119358012b93ed3737f7ed3"
-  integrity sha512-9HGQt/qaWkrBLPrHtAsRjLqLpFwVPJqgozP1h39l3iLXhFYlHtxcXGc6zKGqXSLHdlXFREWu6cfCeaSdYDZV8g==
-  dependencies:
-    "@graphql-codegen/plugin-helpers" "1.2.0"
-    "@graphql-codegen/typescript" "1.2.0"
-    "@graphql-codegen/visitor-plugin-common" "1.2.0"
-    tslib "1.9.3"
-
-"@graphql-codegen/typescript-react-apollo@1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@graphql-codegen/typescript-react-apollo/-/typescript-react-apollo-1.2.0.tgz#dd6bb04b9f2e66819e8bed12b4e0131228a42c83"
-  integrity sha512-iFp0jm3q6onapgfzLhoM1Mswj6ltNq4r/UXGhmcefwiTs/mH/fP5D7bOQuCY3At3EWEKXUzpsXjzLeYvLwB99A==
-  dependencies:
-    "@graphql-codegen/plugin-helpers" "1.2.0"
-    "@graphql-codegen/visitor-plugin-common" "1.2.0"
-    tslib "1.9.3"
-
 "@graphql-codegen/typescript@1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@graphql-codegen/typescript/-/typescript-1.2.0.tgz#c336394c175aebbde47dc8b9709e0a4d2adb8153"
