@@ -40,6 +40,7 @@ type Commitment {
   "Economic resource involved in the flow."
   resourceInventoriedAs: EconomicResource
 
+  "The numeric value and unit of the commitment."
   flowQuantity: QuantityValue
 
   "Specific time marking the exact beginning of flow or process"
@@ -56,8 +57,6 @@ type Commitment {
   after: DateTime
 
   finished: Boolean
-
-  # deletable: Boolean
 
   # isPlanDeliverable: Boolean #TODO: define in VF?
   # forPlanDeliverable: Commitment #TODO: define in VF?
@@ -88,6 +87,9 @@ type Commitment {
   involvedAgents: [Agent!]
 
   plan: Plan
+
+  "The commitment can be safely deleted, has no dependent information."
+  deletable: Boolean
 }
 
 """
@@ -120,6 +122,7 @@ type Intent {
   "When a specific `EconomicResource` is known which can service the `Intent`, this defines that resource."
   resourceInventoriedAs: EconomicResource
 
+  "The full numeric value and unit of the intent."
   flowQuantity: QuantityValue
 
   "The base quantity of the offer or request, which can be multipied for an actual commitment.  Used for example for a price list."
@@ -141,12 +144,11 @@ type Intent {
   "Indicates the flow or process occurred after this specific time"
   after: DateTime
 
+  "The intent is complete or not, irrespective of commitments that satisfy the intent."
   finished: Boolean
 
   "The place where an intent would occur.  Usually mappable."
   atLocation: SpatialThing
-
-  # deletable: Boolean
 
   note: String
 
@@ -161,6 +163,9 @@ type Intent {
 
   satisfiedBy: [Satisfaction!]
   publishedIn: [ProposedIntent!]
+
+  "The intent can be safely deleted, has no dependent information."
+  deletable: Boolean
 }
 
 """

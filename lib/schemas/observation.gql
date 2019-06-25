@@ -80,13 +80,17 @@ type EconomicEvent {
   "An intent satisfied fully or partially by an economic event or commitment."
   satisfies: [Satisfaction!]
 
-  # appreciationFor: [EconomicEvent!]
+  appreciationOf: [EconomicEvent!]
+  appreciatedBy: [EconomicEvent!]
 
   track: [ProductionFlowItem!]
   trace: [ProductionFlowItem!]
 
   # validations: [Validation!]
   # isValidated: Boolean
+
+  "The economic event can be safely deleted, has no dependent information."
+  deletable: Boolean
 }
 
 """
@@ -174,8 +178,6 @@ type Process {
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
   inScopeOf: [AnyType!]
 
-  # deletable: Boolean
-
   "The process with its inputs and outputs is part of the plan."
   plannedWithin: Plan
 
@@ -199,6 +201,9 @@ type Process {
 
   trace: [EconomicEvent!]
   track: [EconomicEvent!]
+
+  "The process can be safely deleted, has no dependent information."
+  deletable: Boolean
 }
 
 """
@@ -240,10 +245,10 @@ type Appreciation {
   id: ID!
 
   "The `EconomicEvent` this appreciation has been given in acknowledgement of"
-  appreciationOf: EconomicEvent # :TODO: should this be required?
+  appreciationOf: EconomicEvent!
 
   "The `EconomicEvent` provided as a gift in this appreciation"
-  appreciationWith: EconomicEvent
+  appreciationWith: EconomicEvent!
 
   note: String
 }
