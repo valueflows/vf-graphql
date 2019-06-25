@@ -148,8 +148,6 @@ type Intent {
 
   # deletable: Boolean
 
-  image: URI
-
   note: String
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
