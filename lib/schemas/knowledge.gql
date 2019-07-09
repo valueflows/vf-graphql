@@ -32,8 +32,8 @@ type Action {
 #   produce   (+) new resource created in that process or an existing stock resource added to
 #   accept    (0) in processes like repair or maintentance, the same resource will appear in output with vf:improve verb
 #   improve   (0) in processes like repair or maintentance, the same resource will appear in input with vf:accept verb
-#   give      (-) give rights and responsibilities for the resource
-#   receive   (+) receive rights and responsibilites for the resource
+#   transfer  (-+) give rights and/or possession of a resource from one agent to another
+#   move      (-+) change location and/or identity of a resource with no change of agent
 #   raise     (+) adjusts a quantity up based on a beginning balance or inventory count
 #   lower     (-) adjusts a quantity down based on a beginning balance or inventory count
 
