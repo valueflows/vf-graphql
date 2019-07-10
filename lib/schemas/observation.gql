@@ -34,10 +34,10 @@ type EconomicEvent {
   "Economic resource involved in the flow."
   resourceInventoriedAs: EconomicResource
 
-  "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
+  "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   resourceClassifiedAs: [URI!]
 
-  "The primary resource knowledge specification or definition of an existing or potential resource."
+  "The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
   resourceConformsTo: ResourceSpecification
 
   "The amount and unit of the event. This is the quantity that could be used to increment or decrement a resource, depending on the type of resource and type of event."
@@ -95,10 +95,10 @@ A resource which is useful to people or the ecosystem.
 type EconomicResource {
   id: ID!
 
-  "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
+  "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   classifiedAs: [URI!]
 
-  "The primary resource knowledge specification or definition of an existing or potential resource."
+  "The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
   resourceConformsTo: ResourceSpecification
 
   "Sometimes called serial number, used when each item must have a traceable identifier (like a computer). Could also be used for other unique tracking identifiers needed for resources."
@@ -180,7 +180,7 @@ type Process {
   # Process classifications under review.
   # You are possibly looking for a "skill EconomicResource" provided to the process as a 'work' action EconomicEvent input.
   # @see https://github.com/valueflows/vf-graphql/issues/25#issuecomment-489429982
-  "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
+  "References a concept in a common taxonomy or other classification scheme for purposes of categorizatio or grouping."
   classifiedAs: [URI!]
 
   note: String

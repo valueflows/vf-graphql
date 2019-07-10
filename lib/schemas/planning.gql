@@ -31,10 +31,10 @@ type Commitment {
   "The economic agent whom the intended, committed, or actual economic event is for."
   receiver: Agent
 
-  "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
+  "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   resourceClassifiedAs: [URI!]
 
-  "The primary resource knowledge specification or definition of an existing or potential resource."
+  "The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
   resourceConformsTo: ResourceSpecification
 
   "Economic resource involved in the flow."
@@ -111,10 +111,10 @@ type Intent {
   "The economic agent whom the intended, committed, or actual economic event is for."
   receiver: Agent
 
-  "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
+  "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   resourceClassifiedAs: [URI!]
 
-  "The primary resource knowledge specification or definition of an existing or potential resource."
+  "The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
   resourceConformsTo: ResourceSpecification
 
   "When a specific `EconomicResource` is known which can service the `Intent`, this defines that resource."
@@ -178,10 +178,10 @@ type Claim {
   "The economic agent whom the intended, committed, or actual economic event is for."
   receiver: Agent!
 
-  "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
+  "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   resourceClassifiedAs: [URI!]
 
-  "The primary resource knowledge specification or definition of an existing or potential resource."
+  "The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
   resourceConformsTo: ResourceSpecification
 
   "The amount of the claimed resource desired by the claim."
