@@ -101,8 +101,11 @@ type EconomicResource {
   "The primary resource knowledge specification or definition of an existing or potential resource."
   resourceConformsTo: ResourceSpecification
 
-  "Sometimes called lot number, used for trackable batched resources. Sometimes called serial number, used when each item must have a trackable identifier (like a computer). Could also be used for other unique tracking identifiers needed for resources."
+  "Sometimes called serial number, used when each item must have a traceable identifier (like a computer). Could also be used for other unique tracking identifiers needed for resources."
   trackingIdentifier: String
+
+  "Lot or batch of an economic resource, used to track forward or backwards to all occurrences of resources of that lot. Note more than one resource can be of the same lot."
+  lot: ProductBatch
 
   "URI to a descriptive picture of this item."
   image: URI
@@ -135,6 +138,17 @@ type EconomicResource {
 
   # resourceContacts: [Agent!]
   # owners: [Agent!]  TODO: define agent-resource relationships, if we do need them
+}
+
+"""
+A lot or batch, defining a resource produced at the same time in the same way.
+From DataFoodConsortium vocabulary https://datafoodconsortium.gitbook.io/dfc-standard-documentation/.
+"""
+type ProductBatch {
+  id: ID!
+  batchNumber: String!
+  expiryDate: DateTime
+  productionDate: DateTime
 }
 
 """
