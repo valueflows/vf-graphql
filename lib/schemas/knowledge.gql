@@ -92,6 +92,8 @@ The linkage between a recipe process, an action that structures a recipe, and a 
 """
 type RecipeFlow {
   id: ID!
+
+  "The amount and unit of the flow."
   flowQuantity: QuantityValue
 
   "The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
