@@ -34,10 +34,10 @@ type EconomicEvent {
   "Economic resource involved in the flow."
   resourceInventoriedAs: EconomicResource
 
-  "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
+  "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   resourceClassifiedAs: [URI!]
 
-  "The primary resource knowledge specification or definition of an existing or potential resource."
+  "The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
   resourceConformsTo: ResourceSpecification
 
   "The amount and unit of the event. This is the quantity that could be used to increment or decrement a resource, depending on the type of resource and type of event."
@@ -95,14 +95,17 @@ A resource which is useful to people or the ecosystem.
 type EconomicResource {
   id: ID!
 
-  "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
+  "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   classifiedAs: [URI!]
 
-  "The primary resource knowledge specification or definition of an existing or potential resource."
+  "The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
   resourceConformsTo: ResourceSpecification
 
-  "Sometimes called lot number, used for trackable batched resources. Sometimes called serial number, used when each item must have a trackable identifier (like a computer). Could also be used for other unique tracking identifiers needed for resources."
+  "Sometimes called serial number, used when each item must have a traceable identifier (like a computer). Could also be used for other unique tracking identifiers needed for resources."
   trackingIdentifier: String
+
+  "Lot or batch of an economic resource, used to track forward or backwards to all occurrences of resources of that lot. Note more than one resource can be of the same lot."
+  lot: ProductBatch
 
   "URI to a descriptive picture of this item."
   image: URI
@@ -138,6 +141,17 @@ type EconomicResource {
 }
 
 """
+A lot or batch, defining a resource produced at the same time in the same way.
+From DataFoodConsortium vocabulary https://datafoodconsortium.gitbook.io/dfc-standard-documentation/.
+"""
+type ProductBatch {
+  id: ID!
+  batchNumber: String!
+  expiryDate: DateTime
+  productionDate: DateTime
+}
+
+"""
 An activity that changes inputs into outputs.  It could transform or transport economic resource(s).
 """
 type Process {
@@ -166,7 +180,7 @@ type Process {
   # Process classifications under review.
   # You are possibly looking for a "skill EconomicResource" provided to the process as a 'work' action EconomicEvent input.
   # @see https://github.com/valueflows/vf-graphql/issues/25#issuecomment-489429982
-  "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
+  "References a concept in a common taxonomy or other classification scheme for purposes of categorizatio or grouping."
   classifiedAs: [URI!]
 
   note: String
