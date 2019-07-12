@@ -30,8 +30,9 @@ type Action {
 #   work      (0) labor power towards a process
 #   cite      (0) for example a design file, neither used nor consumed, the file remains available at all times
 #   produce   (+) new resource created in that process or an existing stock resource added to
-#   accept    (0) in processes like repair or maintentance, the same resource will appear in output with vf:improve verb
-#   improve   (0) in processes like repair or maintentance, the same resource will appear in input with vf:accept verb
+#   accept    (0) in processes like repair or maintentance, the same resource will appear in output with vf:modify verb
+#   modify    (0) in processes like repair or maintentance, the same resource will appear in input with vf:accept verb
+#   service   (0) new service produced and delivered (being a service implies that an agent actively receives the service)
 #   give      (-) give rights and responsibilities for the resource
 #   receive   (+) receive rights and responsibilites for the resource
 #   raise     (+) adjusts a quantity up based on a beginning balance or inventory count
@@ -99,7 +100,7 @@ type RecipeFlow {
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   resourceClassifiedAs: [URI!]
 
-  "Relates a process input or output to a verb, such as consume, produce, work, improve, etc."
+  "Relates a process input or output to a verb, such as consume, produce, work, modify, etc."
   action: Action!
 
   "Relates an input flow to it's node in a recipe."
