@@ -46,7 +46,7 @@ type ResourceSpecification {
   name: String!
 
   "The unit expected for this resource specification as a default."
-  unit: Unit
+  defaultUnit: Unit
 
   "Defines if any resource of that type can be freely substituted for any other resource of that type when used, consumed, traded, etc."
   substitutable: Boolean
@@ -55,13 +55,35 @@ type ResourceSpecification {
 
   note: String
 
-  "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
-  resourceClassifiedAs: [URI!]
-
   ##############################################################################
   # inverse relationships and queries
 
   conformingResources: [EconomicResource!]
+}
+
+"""
+Specifies the resource as part of a recipe, for use in planning from recipe.
+"""
+type RecipeResource {
+  id: ID!
+  name: String!
+
+  "The unit used for this resource in the recipe."
+  unit: Unit
+
+  image: URI
+
+  note: String
+
+  "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
+  resourceClassifiedAs: [URI!]
+
+  "The resource definition referenced by this flow in the recipe."
+  recipeFlowResource: RecipeResource
+
+  ##############################################################################
+  # inverse relationships and queries
+
 }
 
 """
@@ -96,19 +118,26 @@ type RecipeProcess {
   id: ID!
   name: String!
 
+  "The planned calendar duration of the process as defined for the recipe batch."
   hasDuration: Duration
 
   "The multiplier for duration based on capacities for the recipe."
   durationMultiplier: Float
 
-  # Process classifications under review.
-  # You are probably looking for a "skill RecipeFlow" provided to the process as a 'work' input.
-  # @see https://github.com/valueflows/vf-graphql/issues/25#issuecomment-489429982
-  # "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
-  # processClassifiedAs: [URI!]
+  "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
+  processClassifiedAs: [URI!]
+
+  "The standard specification or definition of a process."
+  processConformsTo: ProcessSpecification!
 
   note: String
+}
 
-  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: Agent
+"""
+Specifies the kind of process.
+"""
+type ProcessSpecification {
+  id: ID!
+  name: String!
+  note: String
 }
