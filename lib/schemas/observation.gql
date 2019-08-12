@@ -34,6 +34,9 @@ type EconomicEvent {
   "Economic resource involved in the flow."
   resourceInventoriedAs: EconomicResource
 
+  "Additional economic resource on the economic event when needed for receipt. Used when a transfer or move, or sometimes other actions, requires explicitly identifying an economic resource on the receiving side."
+  toResourceInventoriedAs: EconomicResource
+
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   resourceClassifiedAs: [URI!]
 
@@ -68,6 +71,9 @@ type EconomicEvent {
   under: AnyAgreement
   "This economic event occurs as part of this agreement."
   realizationOf: Agreement
+
+  "References another economic event that implied this economic event, often based on a prior agreement."
+  triggeredBy: EconomicEvent
 
   # requestDistribution: Boolean
 
@@ -218,38 +224,6 @@ type Process {
 
   "The process can be safely deleted, has no dependent information."
   deletable: Boolean
-}
-
-"""
-An activity that assigns the rights and responsibilities for an economic resource from one agent to another.
-"""
-type Transfer { #TODO this whole model is under review
-  id: ID!
-  name: String!
-
-  "Specific time marking the exact moment at which the flow or process occurred"
-  hasPointInTime: DateTime
-
-  note: String
-
-  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType!]
-
-  ##############################################################################
-  # inverse relationships and queries
-
-  economicEvents: [EconomicEvent!]
-  giveEconomicEvent: EconomicEvent
-  takeEconomicEvent: EconomicEvent
-
-  transferCommitments: [Commitment!]
-  giveCommitment: Commitment
-  takeCommitment: Commitment
-
-  involvedAgents: [Agent!]
-
-  trace: [EconomicEvent!]
-  track: [EconomicEvent!]
 }
 
 """

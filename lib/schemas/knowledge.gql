@@ -33,8 +33,8 @@ type Action {
 #   accept    (0) in processes like repair or maintentance, the same resource will appear in output with vf:modify verb
 #   modify    (0) in processes like repair or maintentance, the same resource will appear in input with vf:accept verb
 #   service   (0) new service produced and delivered (being a service implies that an agent actively receives the service)
-#   give      (-) give rights and responsibilities for the resource
-#   receive   (+) receive rights and responsibilites for the resource
+#   transfer  (-+) give rights and/or possession of a resource from one agent to another
+#   move      (-+) change location and/or identity of a resource with no change of agent
 #   raise     (+) adjusts a quantity up based on a beginning balance or inventory count
 #   lower     (-) adjusts a quantity down based on a beginning balance or inventory count
 
