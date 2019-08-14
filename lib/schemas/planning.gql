@@ -40,8 +40,17 @@ type Commitment {
   "Economic resource involved in the flow."
   resourceInventoriedAs: EconomicResource
 
-  "The numeric value and unit of the commitment."
-  flowQuantity: QuantityValue
+  "The last stage the desired economic resource went through."
+  stage: ProcessSpecification
+
+  "The state of the desired economic resource (pass or fail), after coming out of a test or review process."
+  state: Action
+
+  "The amount and unit of the economic resource counted or inventoried."
+  resourceQuantity: QuantityValue
+
+  "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
+  effortQuantity: QuantityValue
 
   "Specific time marking the exact beginning of flow or process"
   hasBeginning: DateTime
@@ -70,7 +79,7 @@ type Commitment {
   inScopeOf: [AnyType!]
 
   "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this flow."
-  under: AnyAgreement
+  agreedIn: AnyAgreement
   "This commitment is part of the agreement, which could not exist without it."
   clauseOf: Agreement
 
@@ -122,11 +131,11 @@ type Intent {
   "When a specific `EconomicResource` is known which can service the `Intent`, this defines that resource."
   resourceInventoriedAs: EconomicResource
 
-  "The full numeric value and unit of the intent."
-  flowQuantity: QuantityValue
+  "The amount and unit of the economic resource counted or inventoried."
+  resourceQuantity: QuantityValue
 
-  "The base quantity of the offer or request, which can be multipied for an actual commitment.  Used for example for a price list."
-  unitQuantity: QuantityValue
+  "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
+  effortQuantity: QuantityValue
 
   "The total quantity of the offered or requested resource available."
   availableQuantity: QuantityValue
@@ -156,7 +165,7 @@ type Intent {
   inScopeOf: [AnyType!]
 
   "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this flow."
-  under: AnyAgreement
+  agreedIn: AnyAgreement
 
   ##############################################################################
   # inverse relationships and queries
@@ -189,8 +198,11 @@ type Claim {
   "The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
   resourceConformsTo: ResourceSpecification
 
-  "The amount of the claimed resource desired by the claim."
-  claimedQuantity: QuantityValue
+  "The amount and unit of the economic resource counted or inventoried."
+  resourceQuantity: QuantityValue
+
+  "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
+  effortQuantity: QuantityValue
 
   "The economic event which already occurred which this claim has been made against."
   triggeredBy: EconomicEvent!
@@ -205,7 +217,7 @@ type Claim {
   note: String
 
   "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this flow."
-  under: AnyAgreement
+  agreedIn: AnyAgreement
 }
 
 """
@@ -220,8 +232,11 @@ type Fulfillment {
   "The commitment which is completely or partially fulfilled by an economic event."
   fulfills: Commitment!
 
-  "The quantity of the fulfillment of an event towards a commitment or an intent."
-  fulfilledQuantity: QuantityValue
+  "The amount and unit of the economic resource counted or inventoried."
+  resourceQuantity: QuantityValue
+
+  "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
+  effortQuantity: QuantityValue
 
   note: String
 
@@ -239,8 +254,11 @@ type Satisfaction {
   "A commitment or economic event fully or partially satisfying an intent."
   satisfiedBy: EventOrCommitment!
 
-  "The quantity of the satisfaction of an commitment towards an intent."
-  satisfiedQuantity: QuantityValue
+  "The amount and unit of the economic resource counted or inventoried."
+  resourceQuantity: QuantityValue
+
+  "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
+  effortQuantity: QuantityValue
 
   note: String
 }
@@ -257,8 +275,11 @@ type Settlement {
   "The `EconomicEvent` fully or partially settling a `Claim`."
   settledBy: EconomicEvent!
 
-  "The quantity of the settlement of an `EconomicEvent` towards a `Claim`."
-  settledQuantity: QuantityValue
+  "The amount and unit of the economic resource counted or inventoried."
+  resourceQuantity: QuantityValue
+
+  "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
+  effortQuantity: QuantityValue
 
   note: String
 }
@@ -282,6 +303,9 @@ type Plan {
   created: DateTime
   before: DateTime
   note: String
+
+  "This plan refines a scenario, making it operational."
+  refinementOf: Scenario
 
   ##############################################################################
   # inverse relationships and queries
@@ -335,7 +359,6 @@ union AnyAgreement = Agreement | ReferencedAgreement
 
 """
 Published requests or offers, sometimes with what is expected in return.
-NOTE: Not approved in VF.
 """
 type Proposal {
   id: ID!
@@ -351,6 +374,9 @@ type Proposal {
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
   inScopeOf: [AnyType!]
 
+  "This proposal contains unit based quantities, which can be multipied to create commitments; commonly seen in a price list or e-commerce."
+  unitBased: Boolean
+
   created: DateTime
   note: String
 
@@ -362,7 +388,6 @@ type Proposal {
 
 """
 Supports including intents in multiple proposals, as well as a proposal including multiple intents.
-NOTE: Not approved in VF.
 """
 type ProposedIntent {
   id: ID!
@@ -375,4 +400,25 @@ type ProposedIntent {
 
   "The published proposal which this intent is part of."
   publishedIn: Proposal!
+}
+
+"""
+Supports including intents in multiple proposals, as well as a proposal including multiple intents.
+"""
+type Scenario {
+  id: ID!
+  name: String!
+
+  "Specific time marking the exact beginning of the scenario."
+  hasBeginning: DateTime
+  "Specific time marking the exact end of the scenario."
+  hasEnd: DateTime
+
+  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
+  inScopeOf: [AnyType!]
+
+  "This scenario refines another scenario, often as time moves closer or for more detail."
+  refinementOf: Scenario
+
+  note: String
 }

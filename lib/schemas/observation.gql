@@ -43,8 +43,11 @@ type EconomicEvent {
   "The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
   resourceConformsTo: ResourceSpecification
 
-  "The amount and unit of the event. This is the quantity that could be used to increment or decrement a resource, depending on the type of resource and type of event."
-  flowQuantity: QuantityValue
+  "The amount and unit of the economic resource counted or inventoried."
+  resourceQuantity: QuantityValue
+
+  "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
+  effortQuantity: QuantityValue
 
   "Specific time marking the exact beginning of flow or process"
   hasBeginning: DateTime
@@ -68,7 +71,8 @@ type EconomicEvent {
   inScopeOf: [AnyType!]
 
   "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this flow."
-  under: AnyAgreement
+  agreedIn: AnyAgreement
+
   "This economic event occurs as part of this agreement."
   realizationOf: Agreement
 
@@ -127,6 +131,15 @@ type EconomicResource {
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
   inScopeOf: [AnyType!]
+
+  "The unit used for use or work or cite actions for this resource.  Can be derived from the last event if a pass or fail event."
+  unitOfEffort: Unit
+
+  "The last stage the economic resource went through. Can be derived from the most recent process with this resource as an output."
+  stage: ProcessSpecification
+
+  "The state of the desired economic resource (pass or fail), after coming out of a test or review process."
+  state: Action
 
   ##############################################################################
   # relationship fields; can only be set indirectly

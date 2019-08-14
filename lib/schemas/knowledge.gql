@@ -46,8 +46,11 @@ type ResourceSpecification {
   id: ID!
   name: String!
 
-  "The unit expected for this resource specification as a default."
-  defaultUnit: Unit
+  "The unit of inventory expected for this resource specification, as a default."
+  unitOfResource: Unit
+
+  "The unit used for use or work actions expected for this resource specification, as a default."
+  unitOfEffort: Unit
 
   "Defines if any resource of that type can be freely substituted for any other resource of that type when used, consumed, traded, etc."
   substitutable: Boolean
@@ -69,8 +72,11 @@ type RecipeResource {
   id: ID!
   name: String!
 
-  "The unit used for this resource in the recipe."
-  unit: Unit
+  "The unit of inventory used for this resource in the recipe."
+  unitOfResource: Unit
+
+  "The unit used for use action on this resource or work action in the recipe."
+  unitOfEffort: Unit
 
   image: URI
 
@@ -93,14 +99,23 @@ The linkage between a recipe process, an action that structures a recipe, and a 
 type RecipeFlow {
   id: ID!
 
-  "The amount and unit of the flow."
-  flowQuantity: QuantityValue
+  "The amount and unit of the economic resource counted or inventoried."
+  resourceQuantity: QuantityValue
+
+  "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
+  effortQuantity: QuantityValue
 
   "The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
   resourceConformsTo: ResourceSpecification
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   resourceClassifiedAs: [URI!]
+
+  "The last stage the desired economic resource went through."
+  stage: ProcessSpecification
+
+  "The state of the desired economic resource (pass or fail), after coming out of a test or review process."
+  state: Action
 
   "Relates a process input or output to a verb, such as consume, produce, work, modify, etc."
   action: Action!
@@ -142,5 +157,18 @@ Specifies the kind of process.
 type ProcessSpecification {
   id: ID!
   name: String!
+  note: String
+}
+
+"""
+The type definition of one or more scenarios, such as Yearly Budget.
+"""
+type ScenarioDefinition {
+  id: ID!
+  name: String!
+
+  "The duration of the scenario, often an accounting period."
+  hasDuration: Duration
+
   note: String
 }
