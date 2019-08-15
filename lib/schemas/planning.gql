@@ -19,11 +19,11 @@ type Commitment {
   "Relates a process input or output to a verb, such as consume, produce, work, improve, etc."
   action: Action!
 
-  "A `Process` or `Transfer` which this `Commitment` will aid in the finalisation of."
-  inputOf: EconomicActivity
+  "A `Process` which this `Commitment` will aid in the finalisation of."
+  inputOf: Process
 
-  "A `Process` or `Transfer` which this `Commitment` has been generated as a result of."
-  outputOf: EconomicActivity
+  "A `Process` which this `Commitment` has been generated as a result of."
+  outputOf: Process
 
   "The economic agent from whom the intended, committed, or actual economic event is initiated."
   provider: Agent
@@ -67,8 +67,8 @@ type Commitment {
 
   finished: Boolean
 
-  # isPlanDeliverable: Boolean #TODO: define in VF?
-  # forPlanDeliverable: Commitment #TODO: define in VF?
+  "Represents a desired deliverable to the outside of this plan."
+  independentDemandOf
 
   "The place where a commitment occurs.  Usually mappable."
   atLocation: SpatialThing
@@ -110,11 +110,11 @@ type Intent {
   "Relates a process input or output to a verb, such as consume, produce, work, improve, etc."
   action: Action!
 
-  "A `Process` or `Transfer` to which this `Intent` is hoping to contribute towards."
-  inputOf: EconomicActivity
+  "A `Process` to which this `Intent` is hoping to contribute towards."
+  inputOf: Process
 
-  "A `Process` or `Transfer` which this `Intent` will eventuate as a result of."
-  outputOf: EconomicActivity
+  "A `Process` which this `Intent` will eventuate as a result of."
+  outputOf: Process
 
   "The economic agent from whom the intended, committed, or actual economic event is initiated."
   provider: Agent

@@ -7,8 +7,7 @@
 #
 ##
 
-union EconomicActivity = Process | Transfer
-union ProductionFlowItem = Process | Transfer | EconomicResource
+union ProductionFlowItem = Process | EconomicResource
 
 """
 An observed economic flow, as opposed to a flow planned to happen in the future. This could reflect a change in the quantity of an economic resource. It is also defined by its behavior in relation to the economic resource (see `Action`)
@@ -20,10 +19,10 @@ type EconomicEvent {
   action: Action!
 
   "Defines the activity to which this event is an input"
-  inputOf: EconomicActivity
+  inputOf: Process
 
   "Defines the activity for which this event is an output"
-  outputOf: EconomicActivity
+  outputOf: Process
 
   "The economic agent from whom the intended, committed, or actual economic event is initiated."
   provider: Agent
@@ -124,8 +123,10 @@ type EconomicResource {
   "URI to a descriptive picture of this item."
   image: URI
 
-  "The current amount and unit of the economic resource. This can be stored or derived from economic events affecting the resource."
-  currentQuantity: QuantityValue
+  "The amount and unit of the economic resource counted or inventoried."
+  accountingQuantity: QuantityValue
+  "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
+  effortQuantity: QuantityValue
 
   note: String
 
