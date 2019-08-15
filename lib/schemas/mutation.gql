@@ -124,7 +124,8 @@ type AgentRelationshipResponse {
 #   outputOf: ID
 #   provider: ID
 #   receiver: ID
-#   flowQuantity: IQuantityValue
+#   resourceQuantity: IQuantityValue
+#   effortQuantity: IQuantityValue
 #   :TODO: time
 #   note: String
 #   inScopeOf: [AnyType!]
@@ -141,7 +142,8 @@ input EconomicEventCreateParams { # implements EconomicEventParams
   resourceInventoriedAs: ID # EconomicResource
   resourceClassifiedAs: [URI!]
   resourceConformsTo: ID # ResourceSpecification
-  flowQuantity: IQuantityValue
+  resourceQuantity: IQuantityValue
+  effortQuantity: IQuantityValue
   atLocation: ID # SpatialThing
   hasBeginning: DateTime
   hasEnd: DateTime
@@ -162,7 +164,8 @@ input EconomicEventUpdateParams { # implements UpdateParams & EconomicEventParam
   resourceInventoriedAs: ID
   resourceClassifiedAs: [URI!]
   resourceConformsTo: ID
-  flowQuantity: IQuantityValue
+  resourceQuantity: IQuantityValue
+  effortQuantity: IQuantityValue
   atLocation: ID # SpatialThing
   hasBeginning: DateTime
   hasEnd: DateTime
@@ -183,7 +186,8 @@ type EconomicEventResponse {
 #   resourceConformsTo: ID # ResourceSpecification
 #   trackingIdentifier: String
 #   image: URI # URI
-#   currentQuantity: IQuantityValue
+#   accountingQuantity: IQuantityValue
+#   onhandQuantity: IQuantityValue
 #   currentLocation: ID
 #   note: String
 #   inScopeOf: [AnyType!]
@@ -197,7 +201,8 @@ input EconomicResourceCreateParams { # implements EconomicResourceParams
   resourceConformsTo: ID # ResourceSpecification
   trackingIdentifier: String
   image: URI # URI
-  currentQuantity: IQuantityValue
+  accountingQuantity: IQuantityValue
+  onhandQuantity: IQuantityValue
   currentLocation: ID
   note: String
 }
@@ -208,7 +213,8 @@ input EconomicResourceUpdateParams { # implements UpdateParams & EconomicResourc
   resourceConformsTo: ID # ResourceSpecification
   trackingIdentifier: String
   image: URI # URI
-  currentQuantity: IQuantityValue
+  accountingQuantity: IQuantityValue
+  onhandQuantity: IQuantityValue
   currentLocation: ID
   note: String
   inScopeOf: [AnyType!]}
@@ -221,7 +227,8 @@ type EconomicResourceResponse {
 # interface FulfillmentParams {
 #   fulfilledBy: ID # EconomicEvent
 #   fulfills: ID # Commmitment
-#   fulfilledQuantity: IQuantityValue
+#   resourceQuantity: IQuantityValue
+#   effortQuantity: IQuantityValue
 #   note: String
 #   inScopeOf: [AnyType!]
 # }
@@ -229,7 +236,8 @@ type EconomicResourceResponse {
 input FulfillmentCreateParams { # implements FulfillmentParams
   fulfilledBy: ID!
   fulfills: ID!
-  fulfilledQuantity: IQuantityValue
+  resourceQuantity: IQuantityValue
+  effortQuantity: IQuantityValue
   note: String
 }
 
@@ -237,7 +245,8 @@ input FulfillmentUpdateParams { # implements UpdateParams & FulfillmentParams
   id: ID!
   fulfilledBy: ID
   fulfills: ID
-  fulfilledQuantity: IQuantityValue
+  resourceQuantity: IQuantityValue
+  effortQuantity: IQuantityValue
   note: String
 }
 
@@ -284,24 +293,6 @@ type ProcessResponse {
 #   note: String
 # }
 
-input TransferCreateParams { # implements TransferParams
-  name: String!
-  hasPointInTime: DateTime
-  note: String
-}
-
-input TransferUpdateParams { # implements UpdateParams & TransferParams
-  id: ID!
-  name: String
-  hasPointInTime: DateTime
-  note: String
-}
-
-type TransferResponse {
-  Transfer: Transfer
-}
-
-
 # interface AppreciationParams {
 #   appreciationOf: ID
 #   appreciationWith: ID
@@ -341,8 +332,8 @@ type AppreciationResponse {
 #   receiver: ID
 #   resourceConformsTo: ID
 #   resourceClassifiedAs: [URI!]
-#   flowQuantity: IQuantityValue
-#   unitQuantity: IQuantityValue
+#   resourceQuantity: IQuantityValue
+#   effortQuantity: IQuantityValue
 #   availableQuantity: IQuantityValue
 #   hasBeginning: DateTime
 #   hasEnd: DateTime
@@ -353,7 +344,7 @@ type AppreciationResponse {
 #   note: String
 #   inScopeOf: [AnyType!]
 #   atLocation: ID
-#   under: String
+#   agreedIn: String
 # }
 
 input IntentCreateParams { # implements IntentParams
@@ -378,7 +369,8 @@ input IntentCreateParams { # implements IntentParams
   atLocation: ID # SpatialThing
 
   # pending review- see https://github.com/valueflows/vf-graphql/issues/26
-  underAgreement: ID # Agreement
+  # LF 2019-9-15 didn't totally fix this, unclear what needs to happen
+  agreedIn: ID # Agreement
   underExternalAgreement: URI
 }
 
@@ -391,8 +383,8 @@ input IntentUpdateParams { # implements UpdateParams & IntentParams
   receiver: ID
   resourceConformsTo: ID
   resourceClassifiedAs: [URI!]
-  flowQuantity: IQuantityValue
-  unitQuantity: IQuantityValue
+  resourceQuantity: IQuantityValue
+  effortQuantity: IQuantityValue
   availableQuantity: IQuantityValue
   hasBeginning: DateTime
   hasEnd: DateTime
@@ -404,7 +396,7 @@ input IntentUpdateParams { # implements UpdateParams & IntentParams
   note: String
   inScopeOf: [AnyType!]
   atLocation: ID # SpatialThing
-  underAgreement: ID # Agreement
+  agreedIn: ID # Agreement
   underExternalAgreement: URI
 }
 
@@ -422,7 +414,8 @@ type IntentResponse {
 #   resourceClassifiedAs: [URI!]
 #   resourceConformsTo: ID
 #   resourceInventoriedAs: ID
-#   flowQuantity: IQuantityValue
+#   resourceQuantity: IQuantityValue
+#   effortQuantity: IQuantityValue
 #   hasBeginning: DateTime
 #   hasEnd: DateTime
 #   hasPointInTime: DateTime
@@ -431,7 +424,7 @@ type IntentResponse {
 #   note: String
 #   inScopeOf: [AnyType!]
 #   atLocation: ID
-#   under: String
+#   agreedIn: String
 #   clauseOf: Agreement
 # }
 
@@ -444,7 +437,8 @@ input CommitmentCreateParams { # implements CommitmentParams
   resourceClassifiedAs: [URI!]
   resourceConformsTo: ID
   resourceInventoriedAs: ID
-  flowQuantity: IQuantityValue!
+  resourceQuantity: IQuantityValue
+  effortQuantity: IQuantityValue
   hasBeginning: DateTime
   hasEnd: DateTime
   hasPointInTime: DateTime
@@ -454,7 +448,7 @@ input CommitmentCreateParams { # implements CommitmentParams
   inScopeOf: [AnyType!]
   independentDemandOf: ID #Plan
   atLocation: ID # SpatialThing
-  underAgreement: ID # Agreement
+  agreedIn: ID # Agreement
   underExternalAgreement: URI
   clauseOf: ID # Agreement
 }
@@ -468,7 +462,8 @@ input CommitmentUpdateParams { # implements UpdateParams & CommitmentParams
   resourceClassifiedAs: [URI!]
   resourceConformsTo: ID
   resourceInventoriedAs: ID
-  flowQuantity: IQuantityValue!
+  resourceQuantity: IQuantityValue
+  effortQuantity: IQuantityValue
   hasBeginning: DateTime
   hasEnd: DateTime
   hasPointInTime: DateTime
@@ -479,7 +474,7 @@ input CommitmentUpdateParams { # implements UpdateParams & CommitmentParams
   inScopeOf: [AnyType!]
   independentDemandOf: ID #Plan
   atLocation: ID # SpatialThing
-  underAgreement: ID # Agreement
+  agreedIn: ID # Agreement
   underExternalAgreement: URI
   clauseOf: ID # Agreement
 }
@@ -492,14 +487,16 @@ type CommitmentResponse {
 # interface SatisfactionParams {
 #   satisfies: Intent
 #   satisfiedBy: Commitment
-#   satisfiedQuantity: QuantityValue
+#   resourceQuantity: IQuantityValue
+#   effortQuantity: IQuantityValue
 #   note: String
 # }
 
 input SatisfactionCreateParams { # implements SatisfactionParams
   satisfies: ID! # Intent
   satisfiedBy: ID! # Commitment
-  satisfiedQuantity: IQuantityValue
+  resourceQuantity: IQuantityValue
+  effortQuantity: IQuantityValue
   note: String
 }
 
@@ -507,7 +504,8 @@ input SatisfactionUpdateParams { # implements UpdateParams & SatisfactionParams
   id: ID!
   satisfies: ID # Intent
   satisfiedBy: ID # Commitment
-  satisfiedQuantity: IQuantityValue
+  resourceQuantity: IQuantityValue
+  effortQuantity: IQuantityValue
   note: String
 }
 
@@ -563,12 +561,13 @@ type AgreementResponse {
 #   receiver: Agent!
 #   resourceClassifiedAs: [URI!]
 #   resourceConformsTo: ResourceSpecification
-#   claimedQuantity: QuantityValue
+#   resourceQuantity: IQuantityValue
+#   effortQuantity: IQuantityValue
 #   triggeredBy: EconomicEvent!
 #   created: DateTime
 #   finished: Boolean
 #   note: String
-#   under: String
+#   agreedIn: String
 # }
 
 input ClaimCreateParams {
@@ -577,10 +576,11 @@ input ClaimCreateParams {
   receiver: ID # Agent
   resourceClassifiedAs: [URI!]
   resourceConformsTo: ID # ResourceSpecification
-  claimedQuantity: IQuantityValue
+  resourceQuantity: IQuantityValue
+  effortQuantity: IQuantityValue
   triggeredBy: ID #EconomicEvent
   note: String
-  underAgreement: ID
+  agreedIn: ID
   underExternalAgreement: URI
 }
 
@@ -591,11 +591,12 @@ input ClaimUpdateParams {
   receiver: ID
   resourceClassifiedAs: [URI!]
   resourceConformsTo: ID
-  claimedQuantity: IQuantityValue
+  resourceQuantity: IQuantityValue
+  effortQuantity: IQuantityValue
   triggeredBy: ID
   finished: Boolean
   note: String
-  underAgreement: ID
+  agreedIn: ID
   underExternalAgreement: URI
 }
 
@@ -608,14 +609,16 @@ type ClaimResponse {
 #   id: ID!
 #   settles: ID! # Claim
 #   settledBy: ID! # EconomicEvent
-#   settledQuantity: IQuantityValue
+#   resourceQuantity: IQuantityValue
+#   effortQuantity: IQuantityValue
 #   note: String
 # }
 
 input SettlementCreateParams {
   settles: ID! # Claim
   settledBy: ID! # EconomicEvent
-  settledQuantity: IQuantityValue
+  resourceQuantity: IQuantityValue
+  effortQuantity: IQuantityValue
   note: String
 }
 
@@ -623,7 +626,8 @@ input SettlementUpdateParams {
   id: ID!
   settles: ID
   settledBy: ID
-  settledQuantity: IQuantityValue
+  resourceQuantity: IQuantityValue
+  effortQuantity: IQuantityValue
   note: String
 }
 

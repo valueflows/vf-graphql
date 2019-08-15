@@ -126,7 +126,7 @@ type EconomicResource {
   "The amount and unit of the economic resource counted or inventoried."
   accountingQuantity: QuantityValue
   "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
-  effortQuantity: QuantityValue
+  onhandQuantity: QuantityValue
 
   note: String
 
