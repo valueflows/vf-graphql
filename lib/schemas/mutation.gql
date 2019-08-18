@@ -668,8 +668,6 @@ type PlanResponse {
 
 # interface ResourceSpecificationParams {
 #   name: String
-#   unit: ID
-#   substitutable: Boolean
 #   image: URI
 #   resourceClassifiedAs: [URI!]
 #   note: String
@@ -677,8 +675,6 @@ type PlanResponse {
 
 input ResourceSpecificationCreateParams { # implements ResourceSpecificationParams
   name: String!
-  unit: ID
-  substitutable: Boolean
   image: URI
   resourceClassifiedAs: [URI!]
   note: String
@@ -687,8 +683,6 @@ input ResourceSpecificationCreateParams { # implements ResourceSpecificationPara
 input ResourceSpecificationUpdateParams { # implements UpdateParams & ResourceSpecificationParams
   id: ID!
   name: String
-  unit: ID
-  substitutable: Boolean
   image: URI
   resourceClassifiedAs: [URI!]
   note: String
@@ -696,6 +690,41 @@ input ResourceSpecificationUpdateParams { # implements UpdateParams & ResourceSp
 
 type ResourceSpecificationResponse {
   resourceSpecification: ResourceSpecification
+}
+
+# interface RecipeResourceParams {
+#   name: String
+#   image: URI
+#   unitOfResource: ID
+#   unitOfEffort: ID
+#   resourceClassifiedAs: [URI!]
+#   substitutable: Boolean
+#   note: String
+# }
+
+input RecipeResourceCreateParams { # implements RecipeResourceParams
+  name: String!
+  unitOfResource: ID
+  unitOfEffort: ID
+  substitutable: Boolean
+  image: URI
+  resourceClassifiedAs: [URI!]
+  note: String
+}
+
+input RecipeResourceUpdateParams { # implements UpdateParams & RecipeResourceParams
+  id: ID!
+  name: String
+  unitOfResource: ID
+  unitOfEffort: ID
+  substitutable: Boolean
+  image: URI
+  resourceClassifiedAs: [URI!]
+  note: String
+}
+
+type RecipeResourceResponse {
+  recipeResource: RecipeResource
 }
 
 
@@ -729,23 +758,50 @@ type RecipeProcessResponse {
 }
 
 
+# interface ProcessSpecificationParams {
+#   name: String
+#   note: String
+# }
+
+input ProcessSpecificationCreateParams { # implements ProcessSpecificationParams
+  name: String!
+  note: String
+}
+
+input ProcessSpecificationUpdateParams { # implements UpdateParams & ProcessSpecificationParams
+  id: ID!
+  name: String
+  note: String
+}
+
+type ProcessSpecificationResponse {
+  processSpecification: ProcessSpecification
+}
+
+
 # interface RecipeFlowParams {
 #   action: Action
 #   resourceClassifiedAs: [URI!]
-#   resourceConformsTo: ResourceSpecification
-#   flowQuantity: IQuantityValue
+#   recipeFlowResource: RecipeResource
+#   resourceQuantity: IQuantityValue
+#   effortQuantity: IQuantityValue
 #   recipeInputOf: RecipeProcess
 #   recipeOutputOf: RecipeProcess
+#   stage: ProcessSpecification
+#   state: Action
 #   note: String
 # }
 
 input RecipeFlowCreateParams { # implements RecipeFlowParams
   action: ID! # Action
   resourceClassifiedAs: [URI!]
-  resourceConformsTo: ID # ResourceSpecification!
-  flowQuantity: IQuantityValue
+  recipeFlowResource: ID # RecipeResource!
+  resourceQuantity: IQuantityValue
+  effortQuantity: IQuantityValue
   recipeInputOf: ID # RecipeProcess
   recipeOutputOf: ID # RecipeProcess
+  stage: ProcessSpecification
+  state: Action
   note: String
 }
 
@@ -753,10 +809,13 @@ input RecipeFlowUpdateParams { # implements UpdateParams & RecipeFlowParams
   id: ID!
   action: ID # Action
   resourceClassifiedAs: [URI!]
-  resourceConformsTo: ID # ResourceSpecification
-  flowQuantity: IQuantityValue
+  recipeFlowResource: ID # RecipeResource
+  resourceQuantity: IQuantityValue
+  effortQuantity: IQuantityValue
   recipeInputOf: ID # RecipeProcess
   recipeOutputOf: ID # RecipeProcess
+  stage: ProcessSpecification
+  state: Action
   note: String
 }
 
