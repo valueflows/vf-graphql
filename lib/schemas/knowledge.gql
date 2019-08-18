@@ -50,15 +50,6 @@ type ResourceSpecification {
   id: ID!
   name: String!
 
-  "The unit of inventory expected for this resource specification, as a default."
-  unitOfResource: Unit
-
-  "The unit used for use or work actions expected for this resource specification, as a default."
-  unitOfEffort: Unit
-
-  "Defines if any resource of that type can be freely substituted for any other resource of that type when used, consumed, traded, etc."
-  substitutable: Boolean
-
   image: URI
 
   note: String
@@ -88,6 +79,9 @@ type RecipeResource {
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   resourceClassifiedAs: [URI!]
+
+  "Defines if any resource of that type can be freely substituted for any other resource of that type when used, consumed, traded, etc."
+  substitutable: Boolean
 
   "The resource definition referenced by this flow in the recipe."
   recipeFlowResource: RecipeResource
