@@ -123,9 +123,10 @@ type EconomicResource {
   "URI to a descriptive picture of this item."
   image: URI
 
-  "The amount and unit of the economic resource counted or inventoried."
+  "The current amount and unit of the economic resource for which the agent has primary rights and responsibilities, sometimes thought of as ownership. This can be either stored or derived from economic events affecting the resource."
   accountingQuantity: QuantityValue
-  "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
+
+  "The current amount and unit of the economic resource which is under direct control of the agent.  It may be more or less than the accounting quantity. This can be either stored or derived from economic events affecting the resource."
   onhandQuantity: QuantityValue
 
   note: String
