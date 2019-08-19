@@ -70,6 +70,7 @@ interface Agent {
   "The main place an agent is located, often an address where activities occur and mail can be sent. This is usually a mappable geographic location.  It also could be a website address, as in the case of agents who have no physical location."
   primaryLocation: SpatialThing
 
+  "A textual description or comment."
   note: String
 
   ##############################################################################
@@ -113,6 +114,7 @@ type Person implements Agent {
   "The main place an agent is located, often an address where activities occur and mail can be sent. This is usually a mappable geographic location.  It also could be a website address, as in the case of agents who have no physical location."
   primaryLocation: SpatialThing
 
+  "A textual description or comment."
   note: String
 
   ##############################################################################
@@ -148,7 +150,7 @@ type Organization implements Agent {
   "The name that this agent will be referred to by."
   name: String!
 
-  "A 'profile image' for this agent."
+  "A logo or image for this agent."
   image: URI
 
   "Optional email address contact for this agent."
@@ -157,6 +159,7 @@ type Organization implements Agent {
   "The main place an agent is located, often an address where activities occur and mail can be sent. This is usually a mappable geographic location.  It also could be a website address, as in the case of agents who have no physical location."
   primaryLocation: SpatialThing
 
+  "A textual description or comment."
   note: String
 
   ##############################################################################
@@ -187,9 +190,17 @@ An ongoing voluntary association between 2 agents of any kind.
 """
 type AgentRelationship {
   id: ID!
+
+  "The subject of a relationship between 2 agents."
   subject: Agent!
+
+  The object of a relationship between 2 agents.
   object: Agent!
+
+  "A kind of relationship that exists between 2 agents."
   relationship: AgentRelationshipRole!
+
+  "A textual description or comment."
   note: String
 }
 
@@ -198,7 +209,11 @@ A relationship role defining the kind of association one agent can have with ano
 """
 type AgentRelationshipRole {
   id: ID!
+
+  "The human readable name of the role, from the subject to the object."
   label: String!
+
+  "The human readable name of the role, from the object to the subject."
   inverseLabel: String
 
   # :TODO: https://github.com/valueflows/valueflows/issues/494

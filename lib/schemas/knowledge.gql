@@ -17,8 +17,12 @@ in order that references to `Action`s elsewhere in the system are easily readabl
 """
 type Action {
   id: ID!
+
+  "An informal or formal textual identifier for an object. Does not imply uniqueness."
   name: String!
-  resourceEffect: String! # "+", "-", "0"
+
+  "The effect of an economic event on a resource, increment, decrement, no effect, or decrement resource and increment 'to' resource."
+  resourceEffect: String! # "+", "-", "0", "-+"
 }
 
 # Core VF action IDs & `resourceEffect`s:
@@ -44,6 +48,8 @@ Used instead of a classification when more information is needed, particularly f
 """
 type ResourceSpecification {
   id: ID!
+
+  "An informal or formal textual identifier for an object. Does not imply uniqueness."
   name: String!
 
   "The unit expected for this resource specification as a default."
@@ -52,8 +58,10 @@ type ResourceSpecification {
   "Defines if any resource of that type can be freely substituted for any other resource of that type when used, consumed, traded, etc."
   substitutable: Boolean
 
+  "The web address relevant to the entity."
   image: URI
 
+  "A textual description or comment."
   note: String
 
   ##############################################################################
@@ -67,13 +75,17 @@ Specifies the resource as part of a recipe, for use in planning from recipe.
 """
 type RecipeResource {
   id: ID!
+
+  "An informal or formal textual identifier for an object. Does not imply uniqueness."
   name: String!
 
   "The unit used for this resource in the recipe."
   unit: Unit
 
+  "The web address relevant to the entity."
   image: URI
 
+  "A textual description or comment."
   note: String
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
@@ -111,6 +123,7 @@ type RecipeFlow {
   "Relates an output flow to it's node in a recipe."
   recipeOutputOf: RecipeProcess
 
+  "A textual description or comment."
   note: String
 }
 
@@ -119,6 +132,8 @@ Specifies the process part of a recipe for use in planning from recipe.
 """
 type RecipeProcess {
   id: ID!
+
+  "An informal or formal textual identifier for an object. Does not imply uniqueness."
   name: String!
 
   "The planned calendar duration of the process as defined for the recipe batch."
@@ -133,6 +148,7 @@ type RecipeProcess {
   "The standard specification or definition of a process."
   processConformsTo: ProcessSpecification!
 
+  "A textual description or comment."
   note: String
 }
 
@@ -141,6 +157,10 @@ Specifies the kind of process.
 """
 type ProcessSpecification {
   id: ID!
+
+  "An informal or formal textual identifier for an object. Does not imply uniqueness."
   name: String!
+
+  "A textual description or comment."
   note: String
 }

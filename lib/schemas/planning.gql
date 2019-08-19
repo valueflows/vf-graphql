@@ -56,6 +56,7 @@ type Commitment {
   "Indicates the flow or process occurred after this specific time"
   after: DateTime
 
+  "The commitment is complete or not, irrespective of fulfilling events."
   finished: Boolean
 
   # isPlanDeliverable: Boolean #TODO: define in VF?
@@ -64,6 +65,7 @@ type Commitment {
   "The place where a commitment occurs.  Usually mappable."
   atLocation: SpatialThing
 
+  "A textual description or comment."
   note: String
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
@@ -128,7 +130,7 @@ type Intent {
   "The base quantity of the offer or request, which can be multipied for an actual commitment.  Used for example for a price list."
   unitQuantity: QuantityValue
 
-  "The total quantity of the offered or requested resource available."
+  "The total quantity of the offered resource available."
   availableQuantity: QuantityValue
 
   "Specific time marking the exact beginning of flow or process"
@@ -150,6 +152,7 @@ type Intent {
   "The place where an intent would occur.  Usually mappable."
   atLocation: SpatialThing
 
+  "A textual description or comment."
   note: String
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
@@ -177,10 +180,10 @@ type Claim {
   "Relates a process input or output to a verb, such as consume, produce, work, improve, etc."
   action: Action!
 
-  "The economic agent from whom the intended, committed, or actual economic event is initiated."
+  "The economic agent from whom the claim is initiated."
   provider: Agent!
 
-  "The economic agent whom the intended, committed, or actual economic event is for."
+  "The economic agent whom the claim is for."
   receiver: Agent!
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
@@ -201,7 +204,10 @@ type Claim {
   "The data on which the claim was made."
   created: DateTime
 
+  "The claim is complete or not, irrespective of settling events."
   finished: Boolean
+
+  "A textual description or comment."
   note: String
 
   "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this flow."
@@ -223,6 +229,7 @@ type Fulfillment {
   "The quantity of the fulfillment of an event towards a commitment or an intent."
   fulfilledQuantity: QuantityValue
 
+  "A textual description or comment."
   note: String
 
 }
@@ -242,6 +249,7 @@ type Satisfaction {
   "The quantity of the satisfaction of an commitment towards an intent."
   satisfiedQuantity: QuantityValue
 
+  "A textual description or comment."
   note: String
 }
 
@@ -260,6 +268,7 @@ type Settlement {
   "The quantity of the settlement of an `EconomicEvent` towards a `Claim`."
   settledQuantity: QuantityValue
 
+  "A textual description or comment."
   note: String
 }
 
@@ -278,9 +287,17 @@ NOTE: Not accepted in VF.  Other option is to be a high level process.
 """
 type Plan {
   id: ID!
+
+  "An informal or formal textual identifier for an object. Does not imply uniqueness."
   name: String
+
+  "The date and time the plan was created."
   created: DateTime
+
+  "The due date and time of the plan."
   before: DateTime
+
+  "A textual description or comment."
   note: String
 
   ##############################################################################
@@ -306,8 +323,14 @@ Any type of agreement among economic agents.
 """
 type Agreement {
   id: ID!
+
+  "An informal or formal textual identifier for an object. Does not imply uniqueness."
   name: String
+
+  "The date and time the agreement was created."
   created: DateTime
+
+  "A textual description or comment."
   note: String
 
   ##############################################################################
@@ -339,6 +362,8 @@ NOTE: Not approved in VF.
 """
 type Proposal {
   id: ID!
+
+  "An informal or formal textual identifier for an object. Does not imply uniqueness."
   name: String
 
   "Specific time marking the exact beginning of proposal publication."
@@ -346,12 +371,16 @@ type Proposal {
   "Specific time marking the exact end of proposal publication."
   hasEnd: DateTime
 
+  "Location or area where the proposal is valid."
   eligibleLocation: SpatialThing
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
   inScopeOf: [AnyType!]
 
+  "The date and time the proposal was created."
   created: DateTime
+
+  "A textual description or comment."
   note: String
 
   ##############################################################################

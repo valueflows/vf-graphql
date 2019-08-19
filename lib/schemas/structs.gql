@@ -83,6 +83,8 @@ type SpatialThing {
   lat: Float
   long: Float
   alt: Float
+
+  "A textual description or comment."
   note: String
 
   ##############################################################################

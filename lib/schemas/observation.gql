@@ -62,6 +62,7 @@ type EconomicEvent {
   "The place where an economic event occurs.  Usually mappable."
   atLocation: SpatialThing
 
+  "A textual description or comment."
   note: String
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
@@ -69,6 +70,7 @@ type EconomicEvent {
 
   "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this flow."
   under: AnyAgreement
+
   "This economic event occurs as part of this agreement."
   realizationOf: Agreement
 
@@ -123,6 +125,7 @@ type EconomicResource {
   "The current amount and unit of the economic resource. This can be stored or derived from economic events affecting the resource."
   currentQuantity: QuantityValue
 
+  "A textual description or comment."
   note: String
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
@@ -156,8 +159,14 @@ From DataFoodConsortium vocabulary https://datafoodconsortium.gitbook.io/dfc-sta
 """
 type ProductBatch {
   id: ID!
+
+  "The standard unique identifier of the batch."
   batchNumber: String!
+
+  "Expiration date of the batch, commonly used for food."
   expiryDate: DateTime
+
+  "Date the batch was produced.  Can be derived from the economic event of production."
   productionDate: DateTime
 }
 
@@ -166,6 +175,8 @@ An activity that changes inputs into outputs.  It could transform or transport e
 """
 type Process {
   id: ID!
+
+  "An informal or formal textual identifier for an object. Does not imply uniqueness."
   name: String!
 
   "Specific time marking the exact beginning of flow or process"
@@ -181,7 +192,7 @@ type Process {
   "Indicates the flow or process occurred after this specific time"
   after: DateTime
 
-  # started: Boolean
+  "The process is complete or not."
   finished: Boolean
 
   "The recipe definition or specification for a process."
@@ -193,6 +204,7 @@ type Process {
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   classifiedAs: [URI!]
 
+  "A textual description or comment."
   note: String
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
@@ -238,5 +250,6 @@ type Appreciation {
   "The `EconomicEvent` provided as a gift in this appreciation"
   appreciationWith: EconomicEvent!
 
+  "A textual description or comment."
   note: String
 }
