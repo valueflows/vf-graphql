@@ -56,7 +56,7 @@ type Commitment {
   "Indicates the flow or process occurred after this specific time"
   after: DateTime
 
-  "The commitment is complete or not, irrespective of fulfilling events."
+  "The commitment is complete or not.  This is irrespective of if the original goal has been met, and indicates that no more will be done."
   finished: Boolean
 
   # isPlanDeliverable: Boolean #TODO: define in VF?
@@ -73,8 +73,12 @@ type Commitment {
 
   "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this flow."
   under: AnyAgreement
-  "This commitment is part of the agreement, which could not exist without it."
+
+  "This commitment is part of the agreement."
   clauseOf: Agreement
+
+  "Represents a desired deliverable expected from this plan."
+  independentDemandOf: Plan
 
   ##############################################################################
   # inverse relationships and queries
@@ -146,7 +150,7 @@ type Intent {
   "Indicates the flow or process occurred after this specific time"
   after: DateTime
 
-  "The intent is complete or not, irrespective of commitments that satisfy the intent."
+  "The intent is complete or not.  This is irrespective of if the original goal has been met, and indicates that no more will be done." .
   finished: Boolean
 
   "The place where an intent would occur.  Usually mappable."
@@ -172,7 +176,7 @@ type Intent {
 }
 
 """
-A claim for a future economic event(s) in reciprocity for an economic event that already occurred.
+A claim for a future economic event(s) in reciprocity for an economic event that already occurred. For example, a claim for payment for goods received.
 """
 type Claim {
   id: ID!
@@ -204,7 +208,7 @@ type Claim {
   "The data on which the claim was made."
   created: DateTime
 
-  "The claim is complete or not, irrespective of settling events."
+  "The claim is complete or not.  This is irrespective of if the original goal has been met, and indicates that no more will be done." .
   finished: Boolean
 
   "A textual description or comment."
@@ -215,7 +219,7 @@ type Claim {
 }
 
 """
-The quantity that the economic event fulfilled towards the commitment.
+Represents many-to-many relationships between commitments and economic events that fully or partially satisfy one or more commitments.
 """
 type Fulfillment {
   id: ID!
@@ -235,7 +239,7 @@ type Fulfillment {
 }
 
 """
-A commitment or economic event that partially or fully satisfies an intent.
+Represents many-to-many relationships between intents and commitments or events that partially or full satisfy one or more intents.
 """
 type Satisfaction {
   id: ID!
@@ -254,7 +258,7 @@ type Satisfaction {
 }
 
 """
-The quantity that the economic event settled of the claim.
+Represents many-to-many relationships between claim and economic events that uflly or parially settle the one or more claims.
 """
 type Settlement {
   id: ID!
@@ -390,13 +394,12 @@ type Proposal {
 }
 
 """
-Supports including intents in multiple proposals, as well as a proposal including multiple intents.
-NOTE: Not approved in VF.
+Represents many-to-many relationships between Proposals and Intents, supporting including intents in multiple proposals, as well as a proposal including multiple intents.
 """
 type ProposedIntent {
   id: ID!
 
-  "This is a reciprocal intent of this proposal, not primary. Not meant to be part of intent matching."
+  "This is a reciprocal intent of this proposal, not primary. Not meant to be used for intent matching."
   reciprocal: Boolean
 
   "The intent which is part of this published proposal."

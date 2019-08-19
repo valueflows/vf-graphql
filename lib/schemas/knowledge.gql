@@ -58,7 +58,7 @@ type ResourceSpecification {
   "Defines if any resource of that type can be freely substituted for any other resource of that type when used, consumed, traded, etc."
   substitutable: Boolean
 
-  "The web address relevant to the entity."
+  "The uri to an image relevant to the entity, such as a photo, diagram, etc."
   image: URI
 
   "A textual description or comment."
@@ -82,7 +82,7 @@ type RecipeResource {
   "The unit used for this resource in the recipe."
   unit: Unit
 
-  "The web address relevant to the entity."
+  "The uri to an image relevant to the entity, such as a photo, diagram, etc."
   image: URI
 
   "A textual description or comment."
@@ -117,10 +117,10 @@ type RecipeFlow {
   "Relates a process input or output to a verb, such as consume, produce, work, modify, etc."
   action: Action!
 
-  "Relates an input flow to it's node in a recipe."
+  "Relates an input flow to it's process in a recipe."
   recipeInputOf: RecipeProcess
 
-  "Relates an output flow to it's node in a recipe."
+  "Relates an output flow to it's process in a recipe."
   recipeOutputOf: RecipeProcess
 
   "A textual description or comment."
@@ -138,9 +138,6 @@ type RecipeProcess {
 
   "The planned calendar duration of the process as defined for the recipe batch."
   hasDuration: Duration
-
-  "The multiplier for duration based on capacities for the recipe."
-  durationMultiplier: Float
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
   processClassifiedAs: [URI!]

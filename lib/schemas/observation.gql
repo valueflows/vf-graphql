@@ -19,11 +19,11 @@ type EconomicEvent {
   "Relates a process input or output to a verb, such as consume, produce, work, improve, etc."
   action: Action!
 
-  "Defines the activity to which this event is an input"
-  inputOf: EconomicActivity
+  "Defines the process to which this event is an input."
+  inputOf: Process
 
-  "Defines the activity for which this event is an output"
-  outputOf: EconomicActivity
+  "Defines the process for which this event is an output."
+  outputOf: Process
 
   "The economic agent from whom the intended, committed, or actual economic event is initiated."
   provider: Agent
@@ -34,7 +34,7 @@ type EconomicEvent {
   "Economic resource involved in the flow."
   resourceInventoriedAs: EconomicResource
 
-  "Additional economic resource on the economic event when needed for receipt. Used when a transfer or move, or sometimes other actions, requires explicitly identifying an economic resource on the receiving side."
+  "Additional economic resource on the economic event when needed by the receiver. Used when a transfer or move, or sometimes other actions, requires explicitly identifying an economic resource on the receiving side."
   toResourceInventoriedAs: EconomicResource
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
@@ -107,7 +107,7 @@ A resource which is useful to people or the ecosystem.
 type EconomicResource {
   id: ID!
 
-  "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
+  "References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   classifiedAs: [URI!]
 
   "The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
@@ -119,7 +119,7 @@ type EconomicResource {
   "Lot or batch of an economic resource, used to track forward or backwards to all occurrences of resources of that lot. Note more than one resource can be of the same lot."
   lot: ProductBatch
 
-  "URI to a descriptive picture of this item."
+  "The uri to an image relevant to the resource, such as a photo, diagram, etc."
   image: URI
 
   "The current amount and unit of the economic resource. This can be stored or derived from economic events affecting the resource."
@@ -192,7 +192,7 @@ type Process {
   "Indicates the flow or process occurred after this specific time"
   after: DateTime
 
-  "The process is complete or not."
+  "The process is complete or not.  This is irrespective of if the original goal has been met, and indicates that no more will be done." .
   finished: Boolean
 
   "The recipe definition or specification for a process."
@@ -201,7 +201,7 @@ type Process {
   # Process classifications under review.
   # You are possibly looking for a "skill EconomicResource" provided to the process as a 'work' action EconomicEvent input.
   # @see https://github.com/valueflows/vf-graphql/issues/25#issuecomment-489429982
-  "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
+  "References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   classifiedAs: [URI!]
 
   "A textual description or comment."
