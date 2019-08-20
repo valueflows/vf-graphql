@@ -65,6 +65,7 @@ type Commitment {
   "Indicates the flow or process occurred after this specific time"
   after: DateTime
 
+  "The commitment is complete or not.  This is irrespective of if the original goal has been met, and indicates that no more will be done."
   finished: Boolean
 
   "Represents a desired deliverable to the outside of this plan."
@@ -73,6 +74,7 @@ type Commitment {
   "The place where a commitment occurs.  Usually mappable."
   atLocation: SpatialThing
 
+  "A textual description or comment."
   note: String
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
@@ -80,8 +82,12 @@ type Commitment {
 
   "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this flow."
   agreedIn: AnyAgreement
-  "This commitment is part of the agreement, which could not exist without it."
+
+  "This commitment is part of the agreement."
   clauseOf: Agreement
+
+  "Represents a desired deliverable expected from this plan."
+  independentDemandOf: Plan
 
   ##############################################################################
   # inverse relationships and queries
@@ -137,7 +143,7 @@ type Intent {
   "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
   effortQuantity: QuantityValue
 
-  "The total quantity of the offered or requested resource available."
+  "The total quantity of the offered resource available."
   availableQuantity: QuantityValue
 
   "Specific time marking the exact beginning of flow or process"
@@ -153,12 +159,13 @@ type Intent {
   "Indicates the flow or process occurred after this specific time"
   after: DateTime
 
-  "The intent is complete or not, irrespective of commitments that satisfy the intent."
+  "The intent is complete or not.  This is irrespective of if the original goal has been met, and indicates that no more will be done." .
   finished: Boolean
 
   "The place where an intent would occur.  Usually mappable."
   atLocation: SpatialThing
 
+  "A textual description or comment."
   note: String
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
@@ -178,7 +185,7 @@ type Intent {
 }
 
 """
-A claim for a future economic event(s) in reciprocity for an economic event that already occurred.
+A claim for a future economic event(s) in reciprocity for an economic event that already occurred. For example, a claim for payment for goods received.
 """
 type Claim {
   id: ID!
@@ -186,10 +193,10 @@ type Claim {
   "Relates a process input or output to a verb, such as consume, produce, work, improve, etc."
   action: Action!
 
-  "The economic agent from whom the intended, committed, or actual economic event is initiated."
+  "The economic agent from whom the claim is initiated."
   provider: Agent!
 
-  "The economic agent whom the intended, committed, or actual economic event is for."
+  "The economic agent whom the claim is for."
   receiver: Agent!
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
@@ -213,7 +220,10 @@ type Claim {
   "The data on which the claim was made."
   created: DateTime
 
+  "The claim is complete or not.  This is irrespective of if the original goal has been met, and indicates that no more will be done." .
   finished: Boolean
+
+  "A textual description or comment."
   note: String
 
   "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this flow."
@@ -221,7 +231,7 @@ type Claim {
 }
 
 """
-The quantity that the economic event fulfilled towards the commitment.
+Represents many-to-many relationships between commitments and economic events that fully or partially satisfy one or more commitments.
 """
 type Fulfillment {
   id: ID!
@@ -238,12 +248,13 @@ type Fulfillment {
   "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
   effortQuantity: QuantityValue
 
+  "A textual description or comment."
   note: String
 
 }
 
 """
-A commitment or economic event that partially or fully satisfies an intent.
+Represents many-to-many relationships between intents and commitments or events that partially or full satisfy one or more intents.
 """
 type Satisfaction {
   id: ID!
@@ -260,11 +271,12 @@ type Satisfaction {
   "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
   effortQuantity: QuantityValue
 
+  "A textual description or comment."
   note: String
 }
 
 """
-The quantity that the economic event settled of the claim.
+Represents many-to-many relationships between claim and economic events that uflly or parially settle the one or more claims.
 """
 type Settlement {
   id: ID!
@@ -281,6 +293,7 @@ type Settlement {
   "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
   effortQuantity: QuantityValue
 
+  "A textual description or comment."
   note: String
 }
 
@@ -299,9 +312,17 @@ NOTE: Not accepted in VF.  Other option is to be a high level process.
 """
 type Plan {
   id: ID!
+
+  "An informal or formal textual identifier for an object. Does not imply uniqueness."
   name: String
+
+  "The date and time the plan was created."
   created: DateTime
+
+  "The due date and time of the plan."
   before: DateTime
+
+  "A textual description or comment."
   note: String
 
   "This plan refines a scenario, making it operational."
@@ -330,8 +351,14 @@ Any type of agreement among economic agents.
 """
 type Agreement {
   id: ID!
+
+  "An informal or formal textual identifier for an object. Does not imply uniqueness."
   name: String
+
+  "The date and time the agreement was created."
   created: DateTime
+
+  "A textual description or comment."
   note: String
 
   ##############################################################################
@@ -362,6 +389,8 @@ Published requests or offers, sometimes with what is expected in return.
 """
 type Proposal {
   id: ID!
+
+  "An informal or formal textual identifier for an object. Does not imply uniqueness."
   name: String
 
   "Specific time marking the exact beginning of proposal publication."
@@ -369,6 +398,7 @@ type Proposal {
   "Specific time marking the exact end of proposal publication."
   hasEnd: DateTime
 
+  "Location or area where the proposal is valid."
   eligibleLocation: SpatialThing
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
@@ -377,7 +407,10 @@ type Proposal {
   "This proposal contains unit based quantities, which can be multipied to create commitments; commonly seen in a price list or e-commerce."
   unitBased: Boolean
 
+  "The date and time the proposal was created."
   created: DateTime
+
+  "A textual description or comment."
   note: String
 
   ##############################################################################
@@ -387,12 +420,12 @@ type Proposal {
 }
 
 """
-Supports including intents in multiple proposals, as well as a proposal including multiple intents.
+Represents many-to-many relationships between Proposals and Intents, supporting including intents in multiple proposals, as well as a proposal including multiple intents.
 """
 type ProposedIntent {
   id: ID!
 
-  "This is a reciprocal intent of this proposal, not primary. Not meant to be part of intent matching."
+  "This is a reciprocal intent of this proposal, not primary. Not meant to be used for intent matching."
   reciprocal: Boolean
 
   "The intent which is part of this published proposal."

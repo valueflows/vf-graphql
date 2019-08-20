@@ -17,8 +17,12 @@ in order that references to `Action`s elsewhere in the system are easily readabl
 """
 type Action {
   id: ID!
+
+  "An informal or formal textual identifier for an object. Does not imply uniqueness."
   name: String!
-  resourceEffect: String! # "+", "-", "0"
+
+  "The effect of an economic event on a resource, increment, decrement, no effect, or decrement resource and increment 'to' resource."
+  resourceEffect: String! # "+", "-", "0", "-+"
 }
 
 # Core VF action IDs & `resourceEffect`s:
@@ -48,10 +52,14 @@ Used instead of a classification when more information is needed, particularly f
 """
 type ResourceSpecification {
   id: ID!
+
+  "An informal or formal textual identifier for an object. Does not imply uniqueness."
   name: String!
 
+  "The uri to an image relevant to the entity, such as a photo, diagram, etc."
   image: URI
 
+  "A textual description or comment."
   note: String
 
   ##############################################################################
@@ -65,6 +73,8 @@ Specifies the resource as part of a recipe, for use in planning from recipe.
 """
 type RecipeResource {
   id: ID!
+
+  "An informal or formal textual identifier for an object. Does not imply uniqueness."
   name: String!
 
   "The unit of inventory used for this resource in the recipe."
@@ -73,8 +83,10 @@ type RecipeResource {
   "The unit used for use action on this resource or work action in the recipe."
   unitOfEffort: Unit
 
+  "The uri to an image relevant to the entity, such as a photo, diagram, etc."
   image: URI
 
+  "A textual description or comment."
   note: String
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
@@ -106,10 +118,10 @@ type RecipeFlow {
   "Relates a process input or output to a verb, such as consume, produce, work, modify, etc."
   action: Action!
 
-  "Relates an input flow to it's node in a recipe."
+  "Relates an input flow to it's process in a recipe."
   recipeInputOf: RecipeProcess
 
-  "Relates an output flow to it's node in a recipe."
+  "Relates an output flow to it's process in a recipe."
   recipeOutputOf: RecipeProcess
 
   "The last stage the desired economic resource went through."
@@ -118,6 +130,7 @@ type RecipeFlow {
   "The state of the desired economic resource (pass or fail), after coming out of a test or review process."
   state: Action
 
+  "A textual description or comment."
   note: String
 }
 
@@ -126,13 +139,12 @@ Specifies the process part of a recipe for use in planning from recipe.
 """
 type RecipeProcess {
   id: ID!
+
+  "An informal or formal textual identifier for an object. Does not imply uniqueness."
   name: String!
 
   "The planned calendar duration of the process as defined for the recipe batch."
   hasDuration: Duration
-
-  "The multiplier for duration based on capacities for the recipe."
-  durationMultiplier: Float
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
   processClassifiedAs: [URI!]
@@ -140,6 +152,7 @@ type RecipeProcess {
   "The standard specification or definition of a process."
   processConformsTo: ProcessSpecification!
 
+  "A textual description or comment."
   note: String
 }
 
@@ -148,7 +161,11 @@ Specifies the kind of process.
 """
 type ProcessSpecification {
   id: ID!
+
+  "An informal or formal textual identifier for an object. Does not imply uniqueness."
   name: String!
+
+  "A textual description or comment."
   note: String
 }
 
