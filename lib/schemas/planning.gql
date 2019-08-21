@@ -83,7 +83,7 @@ type Commitment {
   "This commitment is part of the agreement."
   clauseOf: Agreement
 
-  "Represents a desired deliverable expected from this plan."
+  "Represents a desired deliverable to the outside of this plan."
   independentDemandOf: Plan
 
   ##############################################################################
