@@ -61,7 +61,7 @@ interface Agent {
   "The name that this agent will be referred to by."
   name: String!
 
-  "The uri to an image relevant to the agent, such as a logo, avatar, photo, etc." .
+  "The uri to an image relevant to the agent, such as a logo, avatar, photo, etc."
   image: URI
 
   "Optional email address contact for this agent."
@@ -194,7 +194,8 @@ type AgentRelationship {
   "The subject of a relationship between 2 agents.  For example, if Mary is a member of a group, then Mary is the subject."
   subject: Agent!
 
-  The object of a relationship between 2 agents.  For example, if Mary is a member of a group, then the group is the object.  object: Agent!
+  "The object of a relationship between 2 agents.  For example, if Mary is a member of a group, then the group is the object."
+  object: Agent!
 
   "A kind of relationship that exists between 2 agents."
   relationship: AgentRelationshipRole!

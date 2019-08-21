@@ -47,9 +47,6 @@ type Query {
   process(id: ID): Process
   allProcesses: [Process!]
 
-  transfer(id: ID): Transfer
-  allTransfers: [Transfer!]
-
   # Planning layer
   # allRecipes: [Recipe!]
 

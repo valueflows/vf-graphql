@@ -68,9 +68,6 @@ type Commitment {
   "The commitment is complete or not.  This is irrespective of if the original goal has been met, and indicates that no more will be done."
   finished: Boolean
 
-  "Represents a desired deliverable to the outside of this plan."
-  independentDemandOf
-
   "The place where a commitment occurs.  Usually mappable."
   atLocation: SpatialThing
 
@@ -159,7 +156,7 @@ type Intent {
   "Indicates the flow or process occurred after this specific time"
   after: DateTime
 
-  "The intent is complete or not.  This is irrespective of if the original goal has been met, and indicates that no more will be done." .
+  "The intent is complete or not.  This is irrespective of if the original goal has been met, and indicates that no more will be done."
   finished: Boolean
 
   "The place where an intent would occur.  Usually mappable."
@@ -220,7 +217,7 @@ type Claim {
   "The data on which the claim was made."
   created: DateTime
 
-  "The claim is complete or not.  This is irrespective of if the original goal has been met, and indicates that no more will be done." .
+  "The claim is complete or not.  This is irrespective of if the original goal has been met, and indicates that no more will be done."
   finished: Boolean
 
   "A textual description or comment."

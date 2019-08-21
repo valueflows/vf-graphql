@@ -206,7 +206,7 @@ type Process {
   "Indicates the flow or process occurred after this specific time"
   after: DateTime
 
-  "The process is complete or not.  This is irrespective of if the original goal has been met, and indicates that no more will be done." .
+  "The process is complete or not.  This is irrespective of if the original goal has been met, and indicates that no more will be done."
   finished: Boolean
 
   "The recipe definition or specification for a process."

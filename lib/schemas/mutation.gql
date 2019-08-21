@@ -134,8 +134,8 @@ type AgentRelationshipResponse {
 
 input EconomicEventCreateParams { # implements EconomicEventParams
   action: ID! # Action
-  inputOf: ID # Process | Transfer
-  outputOf: ID # Process | Transfer
+  inputOf: ID # Process
+  outputOf: ID # Process
   provider: ID # Agent
   receiver: ID # Agent
   inScopeOf: [AnyType!]
@@ -285,13 +285,6 @@ type ProcessResponse {
   process: Process
 }
 
-
-# interface TransferParams {
-#   name: String
-#   :TODO: time
-#   hasPointInTime: DateTime
-#   note: String
-# }
 
 # interface AppreciationParams {
 #   appreciationOf: ID
@@ -892,10 +885,6 @@ type Mutation {
   createProcess(process: ProcessCreateParams!): ProcessResponse
   updateProcess(process: ProcessUpdateParams!): ProcessResponse
   deleteProcess(id: String!): Boolean
-
-  createTransfer(transfer: TransferCreateParams!): TransferResponse
-  updateTransfer(transfer: TransferUpdateParams!): TransferResponse
-  deleteTransfer(id: String!): Boolean
 
   createAppreciation(appreciation: AppreciationCreateParams!): AppreciationResponse
   updateAppreciation(appreciation: AppreciationUpdateParams!): AppreciationResponse
