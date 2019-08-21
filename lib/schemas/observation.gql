@@ -15,7 +15,7 @@ An observed economic flow, as opposed to a flow planned to happen in the future.
 type EconomicEvent {
   id: ID!
 
-  "Relates a process input or output to a verb, such as consume, produce, work, improve, etc."
+  "Relates an economic event to a verb, such as consume, produce, work, improve, etc."
   action: Action!
 
   "Defines the process to which this event is an input."
@@ -42,7 +42,7 @@ type EconomicEvent {
   "The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
   resourceConformsTo: ResourceSpecification
 
-  "The amount and unit of the economic resource counted or inventoried."
+  "The amount and unit of the economic resource counted or inventoried. This is the quantity that could be used to increment or decrement a resource, depending on the type of resource and resource effect of action."
   resourceQuantity: QuantityValue
 
   "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
@@ -54,7 +54,7 @@ type EconomicEvent {
   "The end of the economic event."
   hasEnd: DateTime
 
-  "The date/time at which the economic event occurred."
+  "The date/time at which the economic event occurred. Can be used instead of beginning and end."
   hasPointInTime: DateTime
 
   "The economic event occurred prior to this date/time."
@@ -138,7 +138,7 @@ type EconomicResource {
   "The unit used for use or work or cite actions for this resource."
   unitOfEffort: Unit
 
-  "The last stage the economic resource went through. Can be derived from the most recent process with this resource as an output."
+  "References the ProcessSpecification of the last process the desired economic resource went through. Stage is used when the last process is important for finding proper resources, such as where the publishing process wants only documents that have gone through the editing process."
   stage: ProcessSpecification
 
   "The state of the desired economic resource (pass or fail), after coming out of a test or review process. Can be derived from the last event if a pass or fail event."

@@ -16,7 +16,7 @@ A planned economic flow that has been promised by an agent to another agent.
 type Commitment {
   id: ID!
 
-  "Relates a process input or output to a verb, such as consume, produce, work, improve, etc."
+  "Relates a commitment to a verb, such as consume, produce, work, improve, etc."
   action: Action!
 
   "Defines the process to which this commitment is an input."
@@ -40,7 +40,7 @@ type Commitment {
   "Economic resource involved in the commitment."
   resourceInventoriedAs: EconomicResource
 
-  "The last stage the desired economic resource went through."
+  "References the ProcessSpecification of the last process the desired economic resource went through. Stage is used when the last process is important for finding proper resources, such as where the publishing process wants only documents that have gone through the editing process."
   stage: ProcessSpecification
 
   "The state of the desired economic resource (pass or fail), after coming out of a test or review process."
@@ -58,7 +58,7 @@ type Commitment {
   "The planned end of the commitment."
   hasEnd: DateTime
 
-  "The planned date/time for the commitment."
+  "The planned date/time for the commitment. Can be used instead of beginning and end."
   hasPointInTime: DateTime
 
   "The due date/time of the commitment."
@@ -112,7 +112,7 @@ A planned economic flow, which can lead to economic events (sometimes through co
 type Intent {
   id: ID!
 
-  "Relates a process input or output to a verb, such as consume, produce, work, improve, etc."
+  "Relates an intent to a verb, such as consume, produce, work, improve, etc."
   action: Action!
 
   "A `Process` to which this `Intent` is hoping to contribute towards."
@@ -136,7 +136,7 @@ type Intent {
   "When a specific `EconomicResource` is known which can service the `Intent`, this defines that resource."
   resourceInventoriedAs: EconomicResource
 
-  "The amount and unit of the economic resource counted or inventoried."
+  "The amount and unit of the economic resource counted or inventoried. This is the quantity that could be used to increment or decrement a resource, depending on the type of resource and resource effect of action."
   resourceQuantity: QuantityValue
 
   "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
@@ -151,7 +151,7 @@ type Intent {
   "The planned end of the intent."
   hasEnd: DateTime
 
-  "The planned date/time for the intent."
+  "The planned date/time for the intent. Can be used instead of beginning and end."
   hasPointInTime: DateTime
 
   "The due date/time of the intent."
@@ -191,7 +191,7 @@ A claim for a future economic event(s) in reciprocity for an economic event that
 type Claim {
   id: ID!
 
-  "Relates a process input or output to a verb, such as consume, produce, work, improve, etc."
+  "Relates a claim to a verb, such as consume, produce, work, improve, etc."
   action: Action!
 
   "The economic agent from whom the claim is initiated."
@@ -441,7 +441,7 @@ type ProposedIntent {
 }
 
 """
-Supports including intents in multiple proposals, as well as a proposal including multiple intents.
+An estimated or analytical logical collection of higher level processes used for budgeting, analysis, plan refinement, etc.
 """
 type Scenario {
   id: ID!

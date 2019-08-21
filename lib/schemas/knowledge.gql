@@ -104,7 +104,7 @@ type RecipeResource {
 }
 
 """
-The linkage between a recipe process, an action that structures a recipe, and a resource specification.
+The specification of a resource inflow to, or outflow from, a recipe process.
 """
 type RecipeFlow {
   id: ID!
@@ -127,7 +127,7 @@ type RecipeFlow {
   "Relates an output flow to its process in a recipe."
   recipeOutputOf: RecipeProcess
 
-  "The last stage the desired economic resource went through."
+  "References the ProcessSpecification of the last process the desired economic resource went through. Stage is used when the last process is important for finding proper resources, such as where the publishing process wants only documents that have gone through the editing process."
   stage: ProcessSpecification
 
   "The state of the desired economic resource (pass or fail), after coming out of a test or review process."
@@ -138,7 +138,7 @@ type RecipeFlow {
 }
 
 """
-Specifies the process part of a recipe for use in planning from recipe.
+Specifies a process in a recipe for use in planning from recipe.
 """
 type RecipeProcess {
   id: ID!
