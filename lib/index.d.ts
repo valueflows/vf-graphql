@@ -1774,8 +1774,8 @@ export type RecipeFlowCreateParams = {
   effortQuantity?: Maybe<IQuantityValue>;
   recipeInputOf?: Maybe<Scalars["ID"]>;
   recipeOutputOf?: Maybe<Scalars["ID"]>;
-  stage?: Maybe<ProcessSpecification>;
-  state?: Maybe<Action>;
+  stage?: Maybe<Scalars["ID"]>;
+  state?: Maybe<Scalars["ID"]>;
   note?: Maybe<Scalars["String"]>;
 };
 
@@ -1793,8 +1793,8 @@ export type RecipeFlowUpdateParams = {
   effortQuantity?: Maybe<IQuantityValue>;
   recipeInputOf?: Maybe<Scalars["ID"]>;
   recipeOutputOf?: Maybe<Scalars["ID"]>;
-  stage?: Maybe<ProcessSpecification>;
-  state?: Maybe<Action>;
+  stage?: Maybe<Scalars["ID"]>;
+  state?: Maybe<Scalars["ID"]>;
   note?: Maybe<Scalars["String"]>;
 };
 
