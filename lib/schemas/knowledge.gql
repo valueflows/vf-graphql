@@ -38,7 +38,7 @@ type Action {
 #   modify    (0) in processes like repair or maintentance, the same resource will appear in input with vf:accept verb
 #   pass      (0) possible output of a testing or reviewing process, indicating the resource passed, the same resource will appear in input with *vf:accept* verb
 #   fail      (0) possible output of a testing or reviewing process, indicating the resource failed, the same resource will appear in input with *vf:accept* verb
-#   service   (0) new service produced and delivered (being a service implies that an agent actively receives the service)
+#   deliver-service     (0) new service produced and delivered (being a service implies that an agent actively receives the service)
 #   transfer-all-rights (-+) give full (in the human realm) rights and responsibilities to another agent, without transferring physical custody
 #   transfer-custody    (-+) give physical custody and control of a resource, without full accounting or ownership rights
 #   transfer-complete   (-+) give full rights and responsibilities plus physical custody
@@ -89,6 +89,9 @@ type RecipeResource {
   "A textual description or comment."
   note: String
 
+  "The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
+  resourceConformsTo: ResourceSpecification
+
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   resourceClassifiedAs: [URI!]
 
@@ -118,10 +121,10 @@ type RecipeFlow {
   "Relates a process input or output to a verb, such as consume, produce, work, modify, etc."
   action: Action!
 
-  "Relates an input flow to it's process in a recipe."
+  "Relates an input flow to its process in a recipe."
   recipeInputOf: RecipeProcess
 
-  "Relates an output flow to it's process in a recipe."
+  "Relates an output flow to its process in a recipe."
   recipeOutputOf: RecipeProcess
 
   "The last stage the desired economic resource went through."
@@ -140,7 +143,7 @@ Specifies the process part of a recipe for use in planning from recipe.
 type RecipeProcess {
   id: ID!
 
-  "An informal or formal textual identifier for an object. Does not imply uniqueness."
+  "An informal or formal textual identifier for an item. Does not imply uniqueness."
   name: String!
 
   "The planned calendar duration of the process as defined for the recipe batch."
@@ -162,7 +165,7 @@ Specifies the kind of process.
 type ProcessSpecification {
   id: ID!
 
-  "An informal or formal textual identifier for an object. Does not imply uniqueness."
+  "An informal or formal textual identifier for an item. Does not imply uniqueness."
   name: String!
 
   "A textual description or comment."
@@ -174,10 +177,13 @@ The type definition of one or more scenarios, such as Yearly Budget.
 """
 type ScenarioDefinition {
   id: ID!
+
+  "An informal or formal textual identifier for an item. Does not imply uniqueness."
   name: String!
 
   "The duration of the scenario, often an accounting period."
   hasDuration: Duration
 
+  "A textual description or comment."
   note: String
 }
