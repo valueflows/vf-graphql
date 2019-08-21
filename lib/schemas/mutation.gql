@@ -793,8 +793,8 @@ input RecipeFlowCreateParams { # implements RecipeFlowParams
   effortQuantity: IQuantityValue
   recipeInputOf: ID # RecipeProcess
   recipeOutputOf: ID # RecipeProcess
-  stage: ProcessSpecification
-  state: Action
+  stage: ID # ProcessSpecification
+  state: ID # Action
   note: String
 }
 
@@ -807,8 +807,8 @@ input RecipeFlowUpdateParams { # implements UpdateParams & RecipeFlowParams
   effortQuantity: IQuantityValue
   recipeInputOf: ID # RecipeProcess
   recipeOutputOf: ID # RecipeProcess
-  stage: ProcessSpecification
-  state: Action
+  stage: ID # ProcessSpecification
+  state: ID # Action
   note: String
 }
 
