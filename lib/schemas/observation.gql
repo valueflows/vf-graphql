@@ -145,7 +145,7 @@ type EconomicResource {
   state: Action
 
   "Used when a stock economic resource contains items also defined as economic resources."
-  containedIn
+  containedIn: EconomicResource
 
   "The current place an economic resource is located. Could be at any level of granularity, from a town to an address to a warehouse location. Usually mappable."
   currentLocation: SpatialThing
