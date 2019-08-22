@@ -35,7 +35,7 @@ export type Action = {
 export type Agent = {
   __typename?: "Agent";
   id: Scalars["ID"];
-  /** The name that this agent will be referred to by. */
+  /** An informal or formal textual identifier for an agent. Does not imply uniqueness. */
   name: Scalars["String"];
   /** The uri to an image relevant to the agent, such as a logo, avatar, photo, etc. */
   image?: Maybe<Scalars["URI"]>;
@@ -233,7 +233,7 @@ export type AgentUpdateParams = {
 export type Agreement = {
   __typename?: "Agreement";
   id: Scalars["ID"];
-  /** An informal or formal textual identifier for an object. Does not imply uniqueness. */
+  /** An informal or formal textual identifier for an item. Does not imply uniqueness. */
   name?: Maybe<Scalars["String"]>;
   /** The date and time the agreement was created. */
   created?: Maybe<Scalars["DateTime"]>;
@@ -305,7 +305,7 @@ export type AppreciationUpdateParams = {
 export type Claim = {
   __typename?: "Claim";
   id: Scalars["ID"];
-  /** Relates a process input or output to a verb, such as consume, produce, work, improve, etc. */
+  /** Relates a claim to a verb, such as consume, produce, work, improve, etc. */
   action: Action;
   /** The economic agent from whom the claim is initiated. */
   provider: Agent;
@@ -337,8 +337,10 @@ export type Claim = {
   finished?: Maybe<Scalars["Boolean"]>;
   /** A textual description or comment. */
   note?: Maybe<Scalars["String"]>;
-  /** Reference to an agreement between agents which specifies the rules or policies or calculations which govern this flow. */
+  /** Reference to an agreement between agents which specifies the rules or policies or calculations which govern this claim. */
   agreedIn?: Maybe<AnyAgreement>;
+  /** Grouping around something to create a boundary or context, used for documenting, accounting, planning. */
+  inScopeOf?: Maybe<Array<Scalars["AnyType"]>>;
 };
 
 export type ClaimCreateParams = {
@@ -380,15 +382,15 @@ export type ClaimUpdateParams = {
 export type Commitment = {
   __typename?: "Commitment";
   id: Scalars["ID"];
-  /** Relates a process input or output to a verb, such as consume, produce, work, improve, etc. */
+  /** Relates a commitment to a verb, such as consume, produce, work, improve, etc. */
   action: Action;
-  /** A `Process` which this `Commitment` will aid in the finalisation of. */
+  /** Defines the process to which this commitment is an input. */
   inputOf?: Maybe<Process>;
-  /** A `Process` which this `Commitment` has been generated as a result of. */
+  /** Defines the process for which this commitment is an output. */
   outputOf?: Maybe<Process>;
-  /** The economic agent from whom the intended, committed, or actual economic event is initiated. */
+  /** The economic agent from whom the commitment is initiated. */
   provider?: Maybe<Agent>;
-  /** The economic agent whom the intended, committed, or actual economic event is for. */
+  /** The economic agent whom the commitment is for. */
   receiver?: Maybe<Agent>;
   /** References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping. */
   resourceClassifiedAs?: Maybe<Array<Scalars["URI"]>>;
@@ -397,9 +399,13 @@ export type Commitment = {
    * what the resource is.
    */
   resourceConformsTo?: Maybe<ResourceSpecification>;
-  /** Economic resource involved in the flow. */
+  /** Economic resource involved in the commitment. */
   resourceInventoriedAs?: Maybe<EconomicResource>;
-  /** The last stage the desired economic resource went through. */
+  /** References the ProcessSpecification of the last process the desired economic
+   * resource went through. Stage is used when the last process is important for
+   * finding proper resources, such as where the publishing process wants only
+   * documents that have gone through the editing process.
+   */
   stage?: Maybe<ProcessSpecification>;
   /** The state of the desired economic resource (pass or fail), after coming out of a test or review process. */
   state?: Maybe<Action>;
@@ -410,15 +416,15 @@ export type Commitment = {
    * effort or usefulness.
    */
   effortQuantity?: Maybe<QuantityValue>;
-  /** Specific time marking the exact beginning of flow or process */
+  /** The planned beginning of the commitment. */
   hasBeginning?: Maybe<Scalars["DateTime"]>;
-  /** Specific time marking the exact end of flow or process */
+  /** The planned end of the commitment. */
   hasEnd?: Maybe<Scalars["DateTime"]>;
-  /** Specific time marking the exact moment at which the flow or process occurred */
+  /** The planned date/time for the commitment. Can be used instead of beginning and end. */
   hasPointInTime?: Maybe<Scalars["DateTime"]>;
-  /** Indicates the flow or process occurred prior to this specific time */
+  /** The due date/time of the commitment. */
   before?: Maybe<Scalars["DateTime"]>;
-  /** Indicates the flow or process occurred after this specific time */
+  /** The commitment can start after this date/time. */
   after?: Maybe<Scalars["DateTime"]>;
   /** The commitment is complete or not.  This is irrespective of if the original
    * goal has been met, and indicates that no more will be done.
@@ -430,7 +436,9 @@ export type Commitment = {
   note?: Maybe<Scalars["String"]>;
   /** Grouping around something to create a boundary or context, used for documenting, accounting, planning. */
   inScopeOf?: Maybe<Array<Scalars["AnyType"]>>;
-  /** Reference to an agreement between agents which specifies the rules or policies or calculations which govern this flow. */
+  /** Reference to an agreement between agents which specifies the rules or policies
+   * or calculations which govern this commitment.
+   */
   agreedIn?: Maybe<AnyAgreement>;
   /** This commitment is part of the agreement. */
   clauseOf?: Maybe<Agreement>;
@@ -516,17 +524,17 @@ export type Duration = {
 export type EconomicEvent = {
   __typename?: "EconomicEvent";
   id: Scalars["ID"];
-  /** Relates a process input or output to a verb, such as consume, produce, work, improve, etc. */
+  /** Relates an economic event to a verb, such as consume, produce, work, improve, etc. */
   action: Action;
   /** Defines the process to which this event is an input. */
   inputOf?: Maybe<Process>;
   /** Defines the process for which this event is an output. */
   outputOf?: Maybe<Process>;
-  /** The economic agent from whom the intended, committed, or actual economic event is initiated. */
+  /** The economic agent from whom the actual economic event is initiated. */
   provider?: Maybe<Agent>;
-  /** The economic agent whom the intended, committed, or actual economic event is for. */
+  /** The economic agent whom the actual economic event is for. */
   receiver?: Maybe<Agent>;
-  /** Economic resource involved in the flow. */
+  /** Economic resource involved in the economic event. */
   resourceInventoriedAs?: Maybe<EconomicResource>;
   /** Additional economic resource on the economic event when needed by the
    * receiver. Used when a transfer or move, or sometimes other actions, requires
@@ -540,22 +548,25 @@ export type EconomicEvent = {
    * what the resource is.
    */
   resourceConformsTo?: Maybe<ResourceSpecification>;
-  /** The amount and unit of the economic resource counted or inventoried. */
+  /** The amount and unit of the economic resource counted or inventoried. This is
+   * the quantity that could be used to increment or decrement a resource,
+   * depending on the type of resource and resource effect of action.
+   */
   resourceQuantity?: Maybe<QuantityValue>;
   /** The amount and unit of the work or use or citation effort-based action. This
    * is often a time duration, but also could be cycle counts or other measures of
    * effort or usefulness.
    */
   effortQuantity?: Maybe<QuantityValue>;
-  /** Specific time marking the exact beginning of flow or process */
+  /** The beginning of the economic event. */
   hasBeginning?: Maybe<Scalars["DateTime"]>;
-  /** Specific time marking the exact end of flow or process */
+  /** The end of the economic event. */
   hasEnd?: Maybe<Scalars["DateTime"]>;
-  /** Specific time marking the exact moment at which the flow or process occurred */
+  /** The date/time at which the economic event occurred. Can be used instead of beginning and end. */
   hasPointInTime?: Maybe<Scalars["DateTime"]>;
-  /** Indicates the flow or process occurred prior to this specific time */
+  /** The economic event occurred prior to this date/time. */
   before?: Maybe<Scalars["DateTime"]>;
-  /** Indicates the flow or process occurred after this specific time */
+  /** The economic event occurred after this date/time. */
   after?: Maybe<Scalars["DateTime"]>;
   /** The place where an economic event occurs.  Usually mappable. */
   atLocation?: Maybe<SpatialThing>;
@@ -563,7 +574,9 @@ export type EconomicEvent = {
   note?: Maybe<Scalars["String"]>;
   /** Grouping around something to create a boundary or context, used for documenting, accounting, planning. */
   inScopeOf?: Maybe<Array<Scalars["AnyType"]>>;
-  /** Reference to an agreement between agents which specifies the rules or policies or calculations which govern this flow. */
+  /** Reference to an agreement between agents which specifies the rules or policies
+   * or calculations which govern this economic event.
+   */
   agreedIn?: Maybe<AnyAgreement>;
   /** This economic event occurs as part of this agreement. */
   realizationOf?: Maybe<Agreement>;
@@ -642,7 +655,7 @@ export type EconomicResource = {
    * economic resource. A resource will have only one, as this specifies exactly
    * what the resource is.
    */
-  resourceConformsTo?: Maybe<ResourceSpecification>;
+  conformsTo: ResourceSpecification;
   /** Sometimes called serial number, used when each item must have a traceable
    * identifier (like a computer). Could also be used for other unique tracking
    * identifiers needed for resources.
@@ -667,26 +680,26 @@ export type EconomicResource = {
   onhandQuantity?: Maybe<QuantityValue>;
   /** A textual description or comment. */
   note?: Maybe<Scalars["String"]>;
-  /** Grouping around something to create a boundary or context, used for documenting, accounting, planning. */
-  inScopeOf?: Maybe<Array<Scalars["AnyType"]>>;
-  /** The unit used for use or work or cite actions for this resource.  Can be
-   * derived from the last event if a pass or fail event.
-   */
+  /** The unit used for use or work or cite actions for this resource. */
   unitOfEffort?: Maybe<Unit>;
-  /** The last stage the economic resource went through. Can be derived from the
-   * most recent process with this resource as an output.
+  /** References the ProcessSpecification of the last process the desired economic
+   * resource went through. Stage is used when the last process is important for
+   * finding proper resources, such as where the publishing process wants only
+   * documents that have gone through the editing process.
    */
   stage?: Maybe<ProcessSpecification>;
-  /** The state of the desired economic resource (pass or fail), after coming out of a test or review process. */
+  /** The state of the desired economic resource (pass or fail), after coming out of
+   * a test or review process. Can be derived from the last event if a pass or fail event.
+   */
   state?: Maybe<Action>;
-  /** A more concrete resource upon which a resource is based. */
-  underlyingResource?: Maybe<EconomicResource>;
-  /** Used when a stock economic resource contains units also defined as economic resources. */
-  contains?: Maybe<Array<EconomicResource>>;
+  /** Used when a stock economic resource contains items also defined as economic resources. */
+  containedIn?: Maybe<EconomicResource>;
   /** The current place an economic resource is located. Could be at any level of
    * granularity, from a town to an address to a warehouse location. Usually mappable.
    */
   currentLocation?: Maybe<SpatialThing>;
+  /** Used when a stock economic resource contains units also defined as economic resources. */
+  contains?: Maybe<Array<EconomicResource>>;
   trace?: Maybe<Array<EconomicEvent>>;
   track?: Maybe<Array<EconomicEvent>>;
 };
@@ -776,15 +789,15 @@ export type IDuration = {
 export type Intent = {
   __typename?: "Intent";
   id: Scalars["ID"];
-  /** Relates a process input or output to a verb, such as consume, produce, work, improve, etc. */
+  /** Relates an intent to a verb, such as consume, produce, work, improve, etc. */
   action: Action;
   /** A `Process` to which this `Intent` is hoping to contribute towards. */
   inputOf?: Maybe<Process>;
   /** A `Process` which this `Intent` will eventuate as a result of. */
   outputOf?: Maybe<Process>;
-  /** The economic agent from whom the intended, committed, or actual economic event is initiated. */
+  /** The economic agent from whom the intent is initiated. This implies that the intent is an offer. */
   provider?: Maybe<Agent>;
-  /** The economic agent whom the intended, committed, or actual economic event is for. */
+  /** The economic agent whom the intent is for.  This implies that the intent is a request */
   receiver?: Maybe<Agent>;
   /** References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping. */
   resourceClassifiedAs?: Maybe<Array<Scalars["URI"]>>;
@@ -795,7 +808,10 @@ export type Intent = {
   resourceConformsTo?: Maybe<ResourceSpecification>;
   /** When a specific `EconomicResource` is known which can service the `Intent`, this defines that resource. */
   resourceInventoriedAs?: Maybe<EconomicResource>;
-  /** The amount and unit of the economic resource counted or inventoried. */
+  /** The amount and unit of the economic resource counted or inventoried. This is
+   * the quantity that could be used to increment or decrement a resource,
+   * depending on the type of resource and resource effect of action.
+   */
   resourceQuantity?: Maybe<QuantityValue>;
   /** The amount and unit of the work or use or citation effort-based action. This
    * is often a time duration, but also could be cycle counts or other measures of
@@ -804,15 +820,15 @@ export type Intent = {
   effortQuantity?: Maybe<QuantityValue>;
   /** The total quantity of the offered resource available. */
   availableQuantity?: Maybe<QuantityValue>;
-  /** Specific time marking the exact beginning of flow or process */
+  /** The planned beginning of the intent. */
   hasBeginning?: Maybe<Scalars["DateTime"]>;
-  /** Specific time marking the exact end of flow or process */
+  /** The planned end of the intent. */
   hasEnd?: Maybe<Scalars["DateTime"]>;
-  /** Specific time marking the exact moment at which the flow or process occurred */
+  /** The planned date/time for the intent. Can be used instead of beginning and end. */
   hasPointInTime?: Maybe<Scalars["DateTime"]>;
-  /** Indicates the flow or process occurred prior to this specific time */
+  /** The due date/time of the intent. */
   before?: Maybe<Scalars["DateTime"]>;
-  /** Indicates the flow or process occurred after this specific time */
+  /** The intent can start after this date/time. */
   after?: Maybe<Scalars["DateTime"]>;
   /** The intent is complete or not.  This is irrespective of if the original goal
    * has been met, and indicates that no more will be done.
@@ -824,7 +840,7 @@ export type Intent = {
   note?: Maybe<Scalars["String"]>;
   /** Grouping around something to create a boundary or context, used for documenting, accounting, planning. */
   inScopeOf?: Maybe<Array<Scalars["AnyType"]>>;
-  /** Reference to an agreement between agents which specifies the rules or policies or calculations which govern this flow. */
+  /** Reference to an agreement between agents which specifies the rules or policies or calculations which govern this intent. */
   agreedIn?: Maybe<AnyAgreement>;
   satisfiedBy?: Maybe<Array<Satisfaction>>;
   publishedIn?: Maybe<Array<ProposedIntent>>;
@@ -1344,9 +1360,9 @@ export type PersonResponse = {
 export type Plan = {
   __typename?: "Plan";
   id: Scalars["ID"];
-  /** An informal or formal textual identifier for an object. Does not imply uniqueness. */
+  /** An informal or formal textual identifier for an item. Does not imply uniqueness. */
   name?: Maybe<Scalars["String"]>;
-  /** The date and time the plan was created. */
+  /** The date and time the plan was made. */
   created?: Maybe<Scalars["DateTime"]>;
   /** The due date and time of the plan. */
   before?: Maybe<Scalars["DateTime"]>;
@@ -1400,24 +1416,22 @@ export type PlanUpdateParams = {
 export type Process = {
   __typename?: "Process";
   id: Scalars["ID"];
-  /** An informal or formal textual identifier for an object. Does not imply uniqueness. */
+  /** An informal or formal textual identifier for an item. Does not imply uniqueness. */
   name: Scalars["String"];
-  /** Specific time marking the exact beginning of flow or process */
+  /** The planned beginning of the process. */
   hasBeginning?: Maybe<Scalars["DateTime"]>;
-  /** Specific time marking the exact end of flow or process */
+  /** The planned end of the process. */
   hasEnd?: Maybe<Scalars["DateTime"]>;
-  /** Specific time marking the exact moment at which the flow or process occurred */
-  hasPointInTime?: Maybe<Scalars["DateTime"]>;
-  /** Indicates the flow or process occurred prior to this specific time */
+  /** The due date/time of the process. */
   before?: Maybe<Scalars["DateTime"]>;
-  /** Indicates the flow or process occurred after this specific time */
+  /** The process can start after this date/time. */
   after?: Maybe<Scalars["DateTime"]>;
   /** The process is complete or not.  This is irrespective of if the original goal
    * has been met, and indicates that no more will be done.
    */
   finished?: Maybe<Scalars["Boolean"]>;
-  /** The recipe definition or specification for a process. */
-  basedOn?: Maybe<RecipeProcess>;
+  /** The definition or specification for a process. */
+  basedOn?: Maybe<ProcessSpecification>;
   /** References one or more concepts in a common taxonomy or other classification
    * scheme for purposes of categorization or grouping.
    */
@@ -1496,7 +1510,7 @@ export type ProcessResponse = {
 export type ProcessSpecification = {
   __typename?: "ProcessSpecification";
   id: Scalars["ID"];
-  /** An informal or formal textual identifier for an object. Does not imply uniqueness. */
+  /** An informal or formal textual identifier for an item. Does not imply uniqueness. */
   name: Scalars["String"];
   /** A textual description or comment. */
   note?: Maybe<Scalars["String"]>;
@@ -1548,11 +1562,11 @@ export type ProductionFlowItem = Process | EconomicResource;
 export type Proposal = {
   __typename?: "Proposal";
   id: Scalars["ID"];
-  /** An informal or formal textual identifier for an object. Does not imply uniqueness. */
+  /** An informal or formal textual identifier for an item. Does not imply uniqueness. */
   name?: Maybe<Scalars["String"]>;
-  /** Specific time marking the exact beginning of proposal publication. */
+  /** The beginning date/time of proposal publication. */
   hasBeginning?: Maybe<Scalars["DateTime"]>;
-  /** Specific time marking the exact end of proposal publication. */
+  /** The end date/time of proposal publication. */
   hasEnd?: Maybe<Scalars["DateTime"]>;
   /** Location or area where the proposal is valid. */
   eligibleLocation?: Maybe<SpatialThing>;
@@ -1582,6 +1596,16 @@ export type ProposedIntent = {
   publishes: Intent;
   /** The published proposal which this intent is part of. */
   publishedIn: Proposal;
+};
+
+/** An agent to which the proposal is to be published.  A proposal can be published to many agents. */
+export type ProposedTo = {
+  __typename?: "ProposedTo";
+  id: Scalars["ID"];
+  /** The agent to which the proposal is published. */
+  proposedTo: Agent;
+  /** The proposal that is published to a specific agent. */
+  proposed: Proposal;
 };
 
 /** Semantic meaning for measurements: binds a quantity to its measurement unit.
@@ -1739,7 +1763,7 @@ export type QuerySpatialThingArgs = {
   id?: Maybe<Scalars["ID"]>;
 };
 
-/** The linkage between a recipe process, an action that structures a recipe, and a resource specification. */
+/** The specification of a resource inflow to, or outflow from, a recipe process. */
 export type RecipeFlow = {
   __typename?: "RecipeFlow";
   id: Scalars["ID"];
@@ -1754,11 +1778,15 @@ export type RecipeFlow = {
   recipeFlowResource?: Maybe<RecipeResource>;
   /** Relates a process input or output to a verb, such as consume, produce, work, modify, etc. */
   action: Action;
-  /** Relates an input flow to it's process in a recipe. */
+  /** Relates an input flow to its process in a recipe. */
   recipeInputOf?: Maybe<RecipeProcess>;
-  /** Relates an output flow to it's process in a recipe. */
+  /** Relates an output flow to its process in a recipe. */
   recipeOutputOf?: Maybe<RecipeProcess>;
-  /** The last stage the desired economic resource went through. */
+  /** References the ProcessSpecification of the last process the desired economic
+   * resource went through. Stage is used when the last process is important for
+   * finding proper resources, such as where the publishing process wants only
+   * documents that have gone through the editing process.
+   */
   stage?: Maybe<ProcessSpecification>;
   /** The state of the desired economic resource (pass or fail), after coming out of a test or review process. */
   state?: Maybe<Action>;
@@ -1798,11 +1826,11 @@ export type RecipeFlowUpdateParams = {
   note?: Maybe<Scalars["String"]>;
 };
 
-/** Specifies the process part of a recipe for use in planning from recipe. */
+/** Specifies a process in a recipe for use in planning from recipe. */
 export type RecipeProcess = {
   __typename?: "RecipeProcess";
   id: Scalars["ID"];
-  /** An informal or formal textual identifier for an object. Does not imply uniqueness. */
+  /** An informal or formal textual identifier for an item. Does not imply uniqueness. */
   name: Scalars["String"];
   /** The planned calendar duration of the process as defined for the recipe batch. */
   hasDuration?: Maybe<Duration>;
@@ -1850,6 +1878,11 @@ export type RecipeResource = {
   image?: Maybe<Scalars["URI"]>;
   /** A textual description or comment. */
   note?: Maybe<Scalars["String"]>;
+  /** The primary resource specification or definition of an existing or potential
+   * economic resource. A resource will have only one, as this specifies exactly
+   * what the resource is.
+   */
+  resourceConformsTo?: Maybe<ResourceSpecification>;
   /** References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping. */
   resourceClassifiedAs?: Maybe<Array<Scalars["URI"]>>;
   /** Defines if any resource of that type can be freely substituted for any other
@@ -1970,14 +2003,15 @@ export type SatisfactionUpdateParams = {
   note?: Maybe<Scalars["String"]>;
 };
 
-/** Supports including intents in multiple proposals, as well as a proposal including multiple intents. */
+/** An estimated or analytical logical collection of higher level processes used for budgeting, analysis, plan refinement, etc. */
 export type Scenario = {
   __typename?: "Scenario";
   id: Scalars["ID"];
+  /** An informal or formal textual identifier for an item. Does not imply uniqueness. */
   name: Scalars["String"];
-  /** Specific time marking the exact beginning of the scenario. */
+  /** The beginning date/time of the scenario, often the beginning of an accounting period. */
   hasBeginning?: Maybe<Scalars["DateTime"]>;
-  /** Specific time marking the exact end of the scenario. */
+  /** The ending date/time of the scenario, often the end of an accounting period. */
   hasEnd?: Maybe<Scalars["DateTime"]>;
   /** Grouping around something to create a boundary or context, used for documenting, accounting, planning. */
   inScopeOf?: Maybe<Array<Scalars["AnyType"]>>;
@@ -1990,15 +2024,15 @@ export type Scenario = {
 export type ScenarioDefinition = {
   __typename?: "ScenarioDefinition";
   id: Scalars["ID"];
+  /** An informal or formal textual identifier for an item. Does not imply uniqueness. */
   name: Scalars["String"];
   /** The duration of the scenario, often an accounting period. */
   hasDuration?: Maybe<Duration>;
+  /** A textual description or comment. */
   note?: Maybe<Scalars["String"]>;
 };
 
-/** Represents many-to-many relationships between claim and economic events that
- * uflly or parially settle the one or more claims.
- */
+/** Represents many-to-many relationships between claim and economic events that fully or partially settle one or more claims. */
 export type Settlement = {
   __typename?: "Settlement";
   id: Scalars["ID"];
