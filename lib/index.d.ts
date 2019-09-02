@@ -1641,6 +1641,8 @@ export type Query = {
   allProcesses?: Maybe<Array<Process>>;
   commitment?: Maybe<Commitment>;
   allCommitments?: Maybe<Array<Commitment>>;
+  intent?: Maybe<Intent>;
+  allIntents?: Maybe<Array<Intent>>;
   satisfaction?: Maybe<Satisfaction>;
   allSatisfactions?: Maybe<Array<Satisfaction>>;
   plan?: Maybe<Plan>;
@@ -1712,6 +1714,10 @@ export type QueryProcessArgs = {
 };
 
 export type QueryCommitmentArgs = {
+  id?: Maybe<Scalars["ID"]>;
+};
+
+export type QueryIntentArgs = {
   id?: Maybe<Scalars["ID"]>;
 };
 
