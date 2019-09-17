@@ -706,12 +706,14 @@ export type EconomicResource = {
 
 /** Input `EconomicResource` type used when sending events to setup initial resource recordings */
 export type EconomicResourceCreateParams = {
-  classifiedAs?: Maybe<Array<Scalars["URI"]>>;
-  resourceConformsTo?: Maybe<Scalars["ID"]>;
+  conformsTo: Scalars["ID"];
+  unitOfEffort?: Maybe<Scalars["ID"]>;
   trackingIdentifier?: Maybe<Scalars["String"]>;
+  lot?: Maybe<Scalars["ID"]>;
   image?: Maybe<Scalars["URI"]>;
   accountingQuantity?: Maybe<IQuantityValue>;
   onhandQuantity?: Maybe<IQuantityValue>;
+  containedIn?: Maybe<Scalars["ID"]>;
   currentLocation?: Maybe<Scalars["ID"]>;
   note?: Maybe<Scalars["String"]>;
 };
@@ -724,14 +726,16 @@ export type EconomicResourceResponse = {
 export type EconomicResourceUpdateParams = {
   id: Scalars["ID"];
   classifiedAs?: Maybe<Array<Scalars["URI"]>>;
-  resourceConformsTo?: Maybe<Scalars["ID"]>;
+  conformsTo?: Maybe<Scalars["ID"]>;
+  unitOfEffort?: Maybe<Scalars["ID"]>;
   trackingIdentifier?: Maybe<Scalars["String"]>;
+  lot?: Maybe<Scalars["ID"]>;
   image?: Maybe<Scalars["URI"]>;
   accountingQuantity?: Maybe<IQuantityValue>;
   onhandQuantity?: Maybe<IQuantityValue>;
+  containedIn?: Maybe<Scalars["ID"]>;
   currentLocation?: Maybe<Scalars["ID"]>;
   note?: Maybe<Scalars["String"]>;
-  inScopeOf?: Maybe<Array<Scalars["AnyType"]>>;
 };
 
 export type EventOrCommitment = EconomicEvent | Commitment;
