@@ -197,27 +197,34 @@ type EconomicEventResponse {
 Input `EconomicResource` type used when sending events to setup initial resource recordings
 """
 input EconomicResourceCreateParams { # implements EconomicResourceParams
-  classifiedAs: [URI!]
-  resourceConformsTo: ID # ResourceSpecification
+  conformsTo: ID! # ResourceSpecification
+  unitOfEffort: ID # Unit
   trackingIdentifier: String
+  lot: ID # ProductBatch
   image: URI # URI
   accountingQuantity: IQuantityValue
   onhandQuantity: IQuantityValue
-  currentLocation: ID
+  containedIn: ID # EconomicResource
+  currentLocation: ID # SpatialThing
   note: String
+  # inScopeOf: [AnyType!] :TODO: are resources supposed to have this separately to events?
 }
 
 input EconomicResourceUpdateParams { # implements UpdateParams & EconomicResourceParams
   id: ID!,
   classifiedAs: [URI!]
-  resourceConformsTo: ID # ResourceSpecification
+  conformsTo: ID # ResourceSpecification
+  unitOfEffort: ID # Unit
   trackingIdentifier: String
+  lot: ID # ProductBatch
   image: URI # URI
   accountingQuantity: IQuantityValue
   onhandQuantity: IQuantityValue
-  currentLocation: ID
+  containedIn: ID # EconomicResource
+  currentLocation: ID # SpatialThing
   note: String
-  inScopeOf: [AnyType!]}
+  # inScopeOf: [AnyType!] :TODO: are resources supposed to have this separately to events?
+}
 
 type EconomicResourceResponse {
   economicResource: EconomicResource!
