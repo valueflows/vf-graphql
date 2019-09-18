@@ -878,7 +878,7 @@ type Mutation {
 
   # Observation layer
 
-  createEconomicEvent(event: EconomicEventCreateParams!, createResource: EconomicResourceCreateParams): EconomicEventResponse
+  createEconomicEvent(event: EconomicEventCreateParams!, newInventoriedResource: EconomicResourceCreateParams): EconomicEventResponse
   updateEconomicEvent(event: EconomicEventUpdateParams!): EconomicEventResponse
   deleteEconomicEvent(id: String!): Boolean
 
