@@ -67,6 +67,9 @@ type Commitment {
   "The commitment can start after this date/time."
   after: DateTime
 
+  "The creation time of the commitment."
+  created: DateTime
+
   "The commitment is complete or not.  This is irrespective of if the original goal has been met, and indicates that no more will be done."
   finished: Boolean
 
@@ -111,6 +114,9 @@ A planned economic flow, which can lead to economic events (sometimes through co
 """
 type Intent {
   id: ID!
+
+  "An informal or formal textual identifier for an item. Does not imply uniqueness."
+  name: String
 
   "Relates an intent to a verb, such as consume, produce, work, improve, etc."
   action: Action!
@@ -165,6 +171,9 @@ type Intent {
 
   "The place where an intent would occur.  Usually mappable."
   atLocation: SpatialThing
+
+  "The uri to an image relevant to the intent, such as a photo."
+  image: URI
 
   "A textual description or comment."
   note: String
