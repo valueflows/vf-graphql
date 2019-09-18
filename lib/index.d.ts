@@ -1023,7 +1023,7 @@ export type MutationDeleteAgentRelationshipRoleArgs = {
 
 export type MutationCreateEconomicEventArgs = {
   event: EconomicEventCreateParams;
-  createResource?: Maybe<EconomicResourceCreateParams>;
+  newInventoriedResource?: Maybe<EconomicResourceCreateParams>;
 };
 
 export type MutationUpdateEconomicEventArgs = {
