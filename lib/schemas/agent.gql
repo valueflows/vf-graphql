@@ -61,6 +61,9 @@ interface Agent {
   "An informal or formal textual identifier for an agent. Does not imply uniqueness."
   name: String!
 
+  "The uri to an image relevant to the agent, such as a logo, avatar, photo, etc."
+  image: URI
+
   "The main place an agent is located, often an address where activities occur and mail can be sent. This is usually a mappable geographic location.  It also could be a website address, as in the case of agents who have no physical location."
   primaryLocation: SpatialThing
 
@@ -99,8 +102,8 @@ type Person implements Agent {
   "The name that this agent will be referred to by."
   name: String!
 
-  "Optional email address contact for this agent."
-  email: String
+  "The uri to an image relevant to the agent, such as a logo, avatar, photo, etc."
+  image: URI
 
   "The main place an agent is located, often an address where activities occur and mail can be sent. This is usually a mappable geographic location.  It also could be a website address, as in the case of agents who have no physical location."
   primaryLocation: SpatialThing
@@ -141,8 +144,8 @@ type Organization implements Agent {
   "The name that this agent will be referred to by."
   name: String!
 
-  "Optional email address contact for this agent."
-  email: String
+  "The uri to an image relevant to the agent, such as a logo, avatar, photo, etc."
+  image: URI
 
   "The main place an agent is located, often an address where activities occur and mail can be sent. This is usually a mappable geographic location.  It also could be a website address, as in the case of agents who have no physical location."
   primaryLocation: SpatialThing
