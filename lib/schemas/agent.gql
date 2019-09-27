@@ -64,9 +64,6 @@ interface Agent {
   "The uri to an image relevant to the agent, such as a logo, avatar, photo, etc."
   image: URI
 
-  "Optional email address contact for this agent."
-  email: String
-
   "The main place an agent is located, often an address where activities occur and mail can be sent. This is usually a mappable geographic location.  It also could be a website address, as in the case of agents who have no physical location."
   primaryLocation: SpatialThing
 
@@ -107,9 +104,6 @@ type Person implements Agent {
 
   "The uri to an image relevant to the agent, such as a logo, avatar, photo, etc."
   image: URI
-
-  "Optional email address contact for this agent."
-  email: String
 
   "The main place an agent is located, often an address where activities occur and mail can be sent. This is usually a mappable geographic location.  It also could be a website address, as in the case of agents who have no physical location."
   primaryLocation: SpatialThing
@@ -152,9 +146,6 @@ type Organization implements Agent {
 
   "The uri to an image relevant to the agent, such as a logo, avatar, photo, etc."
   image: URI
-
-  "Optional email address contact for this agent."
-  email: String
 
   "The main place an agent is located, often an address where activities occur and mail can be sent. This is usually a mappable geographic location.  It also could be a website address, as in the case of agents who have no physical location."
   primaryLocation: SpatialThing
@@ -200,6 +191,9 @@ type AgentRelationship {
   "A kind of relationship that exists between 2 agents."
   relationship: AgentRelationshipRole!
 
+  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
+  inScopeOf: [AnyType!]
+
   "A textual description or comment."
   note: String
 }
@@ -215,6 +209,9 @@ type AgentRelationshipRole {
 
   "The human readable name of the role, from the object to the subject."
   inverseLabel: String
+
+  "A textual description or comment."
+  note: String
 
   # :TODO: https://github.com/valueflows/valueflows/issues/494
   # classifiedAs: [URI!]
