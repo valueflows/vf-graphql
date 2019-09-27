@@ -85,10 +85,6 @@ interface Agent {
   relationshipsAsObject(roleId: ID): [AgentRelationship!] # :TODO: category filtering
 
   roles: [AgentRelationshipRole!]
-
-  recipes: [ResourceSpecification!] #TODO: is this useful or even realistic?
-
-  # memberRelationships: [AgentRelationship!]
 }
 
 # Variants of agents
@@ -126,10 +122,6 @@ type Person implements Agent {
   relationshipsAsObject(roleId: ID): [AgentRelationship!] # :TODO: category filtering
 
   roles: [AgentRelationshipRole!]
-
-  recipes: [ResourceSpecification!] #TODO: is this useful or even realistic?
-
-  # memberRelationships: [AgentRelationship!]
 }
 
 """
@@ -138,7 +130,7 @@ A formal or informal group, or legal organization.
 type Organization implements Agent {
   id: ID!
 
-  # :TODO: define how people can create further typing of Organization, also might need a different name
+  # :TODO: define how people can create further typing of Organization
   # type: OrganizationClassification
 
   "The name that this agent will be referred to by."
@@ -168,10 +160,6 @@ type Organization implements Agent {
   relationshipsAsObject(roleId: ID): [AgentRelationship!] # :TODO: category filtering
 
   roles: [AgentRelationshipRole!]
-
-  recipes: [ResourceSpecification!] #TODO: is this useful or even realistic?
-
-  # memberRelationships: [AgentRelationship!]
 }
 
 # Relationships between agents
@@ -214,10 +202,9 @@ type AgentRelationshipRole {
   note: String
 
   # :TODO: https://github.com/valueflows/valueflows/issues/494
-  # classifiedAs: [URI!]
 }
 
-# :TODO: how do we want to do this concept? (see AgentRelationshipRole.classifiedAs)
+# :TODO: how do we want to do this concept?
 # """
 # Generalized behaviors for agent relationship roles
 # """
