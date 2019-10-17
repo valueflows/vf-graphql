@@ -40,7 +40,7 @@
   },
   "homepage": "https://github.com/valueflows/vf-graphql#readme",
   "dependencies": {
-    "graphql": "^14.3.0",
+    "graphql": "14.5.8",
     "graphql-tools": "^4.0.4"
   },
   "devDependencies": {
