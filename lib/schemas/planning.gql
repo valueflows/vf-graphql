@@ -26,10 +26,10 @@ type Commitment {
   outputOf: Process
 
   "The economic agent from whom the commitment is initiated."
-  provider: Agent
+  provider: Agent!
 
   "The economic agent whom the commitment is for."
-  receiver: Agent
+  receiver: Agent!
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   resourceClassifiedAs: [URI!]
@@ -37,7 +37,7 @@ type Commitment {
   "The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
   resourceConformsTo: ResourceSpecification
 
-  "Economic resource involved in the commitment."
+  "Exact economic resource involved in the commitment."
   resourceInventoriedAs: EconomicResource
 
   "References the ProcessSpecification of the last process the desired economic resource went through. Stage is used when the last process is important for finding proper resources, such as where the publishing process wants only documents that have gone through the editing process."
@@ -83,9 +83,9 @@ type Commitment {
   inScopeOf: [AnyType!]
 
   "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this commitment."
-  agreedIn: AnyAgreement
+  agreedIn: URI
 
-  "This commitment is part of the agreement."
+  "This commitment is part of the exchange agreement."
   clauseOf: Agreement
 
   "Represents a desired deliverable expected from this plan."
@@ -96,7 +96,6 @@ type Commitment {
 
   "The economic event which completely or partially fulfills a commitment."
   fulfilledBy: [Fulfillment!]
-  # fulfilledBy(requestDistribution: Boolean): [Fulfillment!]
 
   "An intent satisfied fully or partially by an economic event or commitment."
   satisfies: [Satisfaction!]
@@ -110,7 +109,7 @@ type Commitment {
 }
 
 """
-A planned economic flow, which can lead to economic events (sometimes through commitments).
+A planned economic flow which has not been committed to, which can lead to economic events (sometimes through commitments).
 """
 type Intent {
   id: ID!
@@ -121,16 +120,16 @@ type Intent {
   "Relates an intent to a verb, such as consume, produce, work, improve, etc."
   action: Action!
 
-  "A `Process` to which this `Intent` is hoping to contribute towards."
+  "Defines the process to which this intent is an input."
   inputOf: Process
 
-  "A `Process` which this `Intent` will eventuate as a result of."
+  "Defines the process to which this intent is an output."
   outputOf: Process
 
   "The economic agent from whom the intent is initiated. This implies that the intent is an offer."
   provider: Agent
 
-  "The economic agent whom the intent is for.  This implies that the intent is a request"
+  "The economic agent whom the intent is for.  This implies that the intent is a request."
   receiver: Agent
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
@@ -182,7 +181,7 @@ type Intent {
   inScopeOf: [AnyType!]
 
   "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this intent."
-  agreedIn: AnyAgreement
+  agreedIn: URI
 
   ##############################################################################
   # inverse relationships and queries
@@ -237,7 +236,7 @@ type Claim {
   note: String
 
   "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this claim."
-  agreedIn: AnyAgreement
+  agreedIn: URI
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
   inScopeOf: [AnyType!]
@@ -321,7 +320,6 @@ input planProcessSearchParams {
 
 """
 A logical collection of processes that constitute a body of planned work with defined deliverable(s).
-NOTE: Not accepted in VF.  Other option is to be a high level process.
 """
 type Plan {
   id: ID!
@@ -350,13 +348,7 @@ type Plan {
   processes(filter: planProcessSearchParams): [Process!]
   independentDemands: [Commitment!]
 
-  # leaving the following until something is needed
-  # plannedNonWorkInputs: [Commitment!]
-  # plannedOutputs: [Commitment!]
-  # nonWorkInputs: [EconomicEvent!]
-  # outputs: [EconomicEvent!]
-  # kanbanState: String #TODO: codify this?
-  # deletable: Boolean
+  deletable: Boolean
 }
 
 """
@@ -389,12 +381,6 @@ or policies or calculations which govern a flow.
 type ReferencedAgreement {
   id: URI!
 }
-
-"""
-References either an agreement formally managed by `Commitment`s & `EconomicEvent`s,
-or an external agreement which is loosely held to govern resource flows.
-"""
-union AnyAgreement = Agreement | ReferencedAgreement
 
 
 """
