@@ -382,12 +382,6 @@ type ReferencedAgreement {
   id: URI!
 }
 
-"""
-References either an agreement formally managed by `Commitment`s & `EconomicEvent`s,
-or an external agreement which is loosely held to govern resource flows.
-"""
-union AnyAgreement = Agreement | ReferencedAgreement
-
 
 """
 Published requests or offers, sometimes with what is expected in return.
