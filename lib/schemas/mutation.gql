@@ -688,7 +688,7 @@ type PlanResponse {
 
 input ScenarioCreateParams { # implements ScenarioParams
   name: String!
-  definedAs: ScenarioDefinition
+  definedAs: ID! #ScenarioDefinition
   hasBeginning: DateTime
   hasEnd: DateTime
   inScopeOf: [AnyType!]
@@ -698,7 +698,7 @@ input ScenarioCreateParams { # implements ScenarioParams
 input ScenarioUpdateParams { # implements UpdateParams & ScenarioParams
   id: ID!
   name: String
-  definedAs: ScenarioDefinition
+  definedAs: ID! #ScenarioDefinition
   hasBeginning: DateTime
   hasEnd: DateTime
   inScopeOf: [AnyType!]
