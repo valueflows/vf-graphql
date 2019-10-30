@@ -2232,7 +2232,7 @@ export type Scenario = {
 
 export type ScenarioCreateParams = {
   name: Scalars['String'],
-  definedAs?: Maybe<ScenarioDefinition>,
+  definedAs: Scalars['ID'],
   hasBeginning?: Maybe<Scalars['DateTime']>,
   hasEnd?: Maybe<Scalars['DateTime']>,
   inScopeOf?: Maybe<Array<Scalars['AnyType']>>,
@@ -2277,7 +2277,7 @@ export type ScenarioResponse = {
 export type ScenarioUpdateParams = {
   id: Scalars['ID'],
   name?: Maybe<Scalars['String']>,
-  definedAs?: Maybe<ScenarioDefinition>,
+  definedAs: Scalars['ID'],
   hasBeginning?: Maybe<Scalars['DateTime']>,
   hasEnd?: Maybe<Scalars['DateTime']>,
   inScopeOf?: Maybe<Array<Scalars['AnyType']>>,
