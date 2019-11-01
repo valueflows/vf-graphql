@@ -40,12 +40,6 @@ type Commitment {
   "Exact economic resource involved in the commitment."
   resourceInventoriedAs: EconomicResource
 
-  "References the ProcessSpecification of the last process the desired economic resource went through. Stage is used when the last process is important for finding proper resources, such as where the publishing process wants only documents that have gone through the editing process."
-  stage: ProcessSpecification
-
-  "The state of the desired economic resource (pass or fail), after coming out of a test or review process."
-  state: Action
-
   "The amount and unit of the economic resource counted or inventoried."
   resourceQuantity: QuantityValue
 

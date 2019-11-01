@@ -125,12 +125,6 @@ type RecipeFlow {
   "Relates an output flow to its process in a recipe."
   recipeOutputOf: RecipeProcess
 
-  "References the ProcessSpecification of the last process the desired economic resource went through. Stage is used when the last process is important for finding proper resources, such as where the publishing process wants only documents that have gone through the editing process."
-  stage: ProcessSpecification
-
-  "The state of the desired economic resource (pass or fail), after coming out of a test or review process."
-  state: Action
-
   "A textual description or comment."
   note: String
 }
