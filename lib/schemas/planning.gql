@@ -41,10 +41,10 @@ type Commitment {
   resourceInventoriedAs: EconomicResource
 
   "The amount and unit of the economic resource counted or inventoried."
-  resourceQuantity: QuantityValue
+  resourceQuantity: Measure
 
   "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
-  effortQuantity: QuantityValue
+  effortQuantity: Measure
 
   "The planned beginning of the commitment."
   hasBeginning: DateTime
@@ -55,11 +55,8 @@ type Commitment {
   "The planned date/time for the commitment. Can be used instead of beginning and end."
   hasPointInTime: DateTime
 
-  "The due date/time of the commitment."
-  before: DateTime
-
-  "The commitment can start after this date/time."
-  after: DateTime
+  "The time something is expected to be complete."
+  due: DateTime
 
   "The creation time of the commitment."
   created: DateTime
@@ -136,13 +133,13 @@ type Intent {
   resourceInventoriedAs: EconomicResource
 
   "The amount and unit of the economic resource counted or inventoried. This is the quantity that could be used to increment or decrement a resource, depending on the type of resource and resource effect of action."
-  resourceQuantity: QuantityValue
+  resourceQuantity: Measure
 
   "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
-  effortQuantity: QuantityValue
+  effortQuantity: Measure
 
   "The total quantity of the offered resource available."
-  availableQuantity: QuantityValue
+  availableQuantity: Measure
 
   "The planned beginning of the intent."
   hasBeginning: DateTime
@@ -153,11 +150,8 @@ type Intent {
   "The planned date/time for the intent. Can be used instead of beginning and end."
   hasPointInTime: DateTime
 
-  "The due date/time of the intent."
-  before: DateTime
-
-  "The intent can start after this date/time."
-  after: DateTime
+  "The time something is expected to be complete."
+  due: DateTime
 
   "The intent is complete or not.  This is irrespective of if the original goal has been met, and indicates that no more will be done."
   finished: Boolean
@@ -209,16 +203,16 @@ type Claim {
   resourceConformsTo: ResourceSpecification
 
   "The amount and unit of the economic resource counted or inventoried."
-  resourceQuantity: QuantityValue
+  resourceQuantity: Measure
 
   "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
-  effortQuantity: QuantityValue
+  effortQuantity: Measure
 
   "The economic event which already occurred which this claim has been made against."
   triggeredBy: EconomicEvent!
 
-  "Indicates that the claim must be filled before the given date."
-  before: DateTime
+  "The time the claim is expected to be settled."
+  due: DateTime
 
   "The data on which the claim was made."
   created: DateTime
@@ -249,10 +243,10 @@ type Fulfillment {
   fulfills: Commitment!
 
   "The amount and unit of the economic resource counted or inventoried."
-  resourceQuantity: QuantityValue
+  resourceQuantity: Measure
 
   "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
-  effortQuantity: QuantityValue
+  effortQuantity: Measure
 
   "A textual description or comment."
   note: String
@@ -272,10 +266,10 @@ type Satisfaction {
   satisfiedBy: EventOrCommitment!
 
   "The amount and unit of the economic resource counted or inventoried."
-  resourceQuantity: QuantityValue
+  resourceQuantity: Measure
 
   "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
-  effortQuantity: QuantityValue
+  effortQuantity: Measure
 
   "A textual description or comment."
   note: String
@@ -294,10 +288,10 @@ type Settlement {
   settledBy: EconomicEvent!
 
   "The amount and unit of the economic resource counted or inventoried."
-  resourceQuantity: QuantityValue
+  resourceQuantity: Measure
 
   "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
-  effortQuantity: QuantityValue
+  effortQuantity: Measure
 
   "A textual description or comment."
   note: String
@@ -324,8 +318,8 @@ type Plan {
   "The date and time the plan was made."
   created: DateTime
 
-  "The due date and time of the plan."
-  before: DateTime
+  "The time the plan is expected to be complete."
+  due: DateTime
 
   "A textual description or comment."
   note: String

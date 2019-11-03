@@ -43,10 +43,10 @@ type EconomicEvent {
   resourceConformsTo: ResourceSpecification
 
   "The amount and unit of the economic resource counted or inventoried. This is the quantity that could be used to increment or decrement a resource, depending on the type of resource and resource effect of action."
-  resourceQuantity: QuantityValue
+  resourceQuantity: Measure
 
   "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
-  effortQuantity: QuantityValue
+  effortQuantity: Measure
 
   "The beginning of the economic event."
   hasBeginning: DateTime
@@ -119,10 +119,10 @@ type EconomicResource {
   image: URI
 
   "The current amount and unit of the economic resource for which the agent has primary rights and responsibilities, sometimes thought of as ownership. This can be either stored or derived from economic events affecting the resource."
-  accountingQuantity: QuantityValue
+  accountingQuantity: Measure
 
   "The current amount and unit of the economic resource which is under direct control of the agent.  It may be more or less than the accounting quantity. This can be either stored or derived from economic events affecting the resource."
-  onhandQuantity: QuantityValue
+  onhandQuantity: Measure
 
   "A textual description or comment."
   note: String

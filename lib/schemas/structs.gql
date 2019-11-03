@@ -40,11 +40,11 @@ type Duration {
 
 """
 Defines a unit of measurement, along with its display symbol.
-See http://qudt.org/1.1/vocab/unit
+From OM2 vocabulary.
 """
 type Unit {
   id: ID!
-  name: String!
+  label: String!
   symbol: String!
 }
 
@@ -52,24 +52,24 @@ type Unit {
 Semantic meaning for measurements: binds a quantity to its measurement unit.
 See http://www.qudt.org/pages/QUDToverviewPage.html
 """
-type QuantityValue {
-  numericValue: Float!
-  unit: Unit
+type Measure {
+  hasNumericalValue: Decimal! # we now allow Decimal, Double, Float, or Integer - let's discuss!
+  hasUnit: Unit
 }
 
 """
 Mutation input structure for defining measurements. Should be nulled if not present, rather than empty.
 """
-input IQuantityValue {
-  numericValue: Float!
-  unit: ID!
+input IMeasure {
+  hasNumericalValue: Decimal! # we now allow Decimal, Double, Float, or Integer - let's discuss!
+  hasUnit: Unit
 }
 
 """
 Mutation input structure for defining time durations.
 """
 input IDuration {
-  numericDuration: Float!
+  numericDuration: Decimal!
   unitType: TimeUnit!
 }
 

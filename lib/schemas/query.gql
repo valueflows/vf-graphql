@@ -89,7 +89,7 @@ type Query {
   unit(id: ID): Unit
   allUnits: [Unit!]
 
-  quantityValue(id: ID): QuantityValue
+  Measure(id: ID): Measure
 
   spatialThing(id: ID): SpatialThing
   allSpatialThings: [SpatialThing!]
