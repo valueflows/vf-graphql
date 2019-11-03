@@ -22,7 +22,13 @@ type Action {
   label: String!
 
   "The effect of an economic event on a resource, increment, decrement, no effect, or decrement resource and increment 'to' resource."
-  resourceEffect: String! # "+", "-", "0", "-+"
+  resourceEffect: String! # "increment", "decrement", "noEffect", "decrementIncrement"
+
+  "Denotes if a process input or output, or not related to a process."
+  inputOutput: String # "input", "output", "notApplicable"
+
+  "The action that should be included on the other direction of the process, for example accept with modify."
+  pairsWith: String # "notApplicable", (any of the action labels) TODO: do we want to do this as an actual Action (optional)? In the VF spec they are NamedIndividuals defined in the spec, including "notApplicable".
 }
 
 # Core VF action IDs & `resourceEffect`s:

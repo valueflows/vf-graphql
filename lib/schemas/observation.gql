@@ -57,12 +57,6 @@ type EconomicEvent {
   "The date/time at which the economic event occurred. Can be used instead of beginning and end."
   hasPointInTime: DateTime
 
-  "The economic event occurred prior to this date/time."
-  before: DateTime
-
-  "The economic event occurred after this date/time."
-  after: DateTime
-
   "The place where an economic event occurs.  Usually mappable."
   atLocation: SpatialThing
 
@@ -194,12 +188,6 @@ type Process {
 
   "The planned end of the process."
   hasEnd: DateTime
-
-  "The due date/time of the process."
-  before: DateTime
-
-  "The process can start after this date/time."
-  after: DateTime
 
   "The process is complete or not.  This is irrespective of if the original goal has been met, and indicates that no more will be done."
   finished: Boolean
