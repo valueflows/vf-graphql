@@ -4,8 +4,6 @@
 #
 # Provides functionality for classifying and organising other parts of the system, including recipes.
 #
-# :TODO: need to figure out a way of making these enums extensible while
-#        still validating implementations
 #
 ##
 
@@ -33,24 +31,24 @@ type Action {
 
 # Core VF action IDs & `resourceEffect`s:
 # @see https://github.com/valueflows/valueflows/issues/487
-#   dropoff   (+) transported resource or person leaves the process, the same resource will appear in input with vf:pickup verb
-#   pickup    (-) transported resource or person enters the process, the same resource will appear in output with vf:dropoff verb
-#   consume   (-) for example an ingredient composed into the output, after the process the ingredient is gone
-#   use       (0) for example a tool used in process, after the process, the tool still exists
-#   work      (0) labor power towards a process
-#   cite      (0) for example a design file, neither used nor consumed, the file remains available at all times
-#   produce   (+) new resource created in that process or an existing stock resource added to
-#   accept    (0) in processes like repair or maintentance, the same resource will appear in output with vf:modify verb
-#   modify    (0) in processes like repair or maintentance, the same resource will appear in input with vf:accept verb
-#   pass      (0) possible output of a testing or reviewing process, indicating the resource passed, the same resource will appear in input with *vf:accept* verb
-#   fail      (0) possible output of a testing or reviewing process, indicating the resource failed, the same resource will appear in input with *vf:accept* verb
+#   dropoff             (+) transported resource or person leaves the process, the same resource will appear in input with vf:pickup verb
+#   pickup              (-) transported resource or person enters the process, the same resource will appear in output with vf:dropoff verb
+#   consume             (-) for example an ingredient composed into the output, after the process the ingredient is gone
+#   use                 (0) for example a tool used in process, after the process, the tool still exists
+#   work                (0) labor power towards a process
+#   cite                (0) for example a design file, neither used nor consumed, the file remains available at all times
+#   produce             (+) new resource created in that process or an existing stock resource added to
+#   accept              (0) in processes like repair or maintentance, the same resource will appear in output with vf:modify verb
+#   modify              (0) in processes like repair or maintentance, the same resource will appear in input with vf:accept verb
+#   pass                (0) possible output of a testing or reviewing process, indicating the resource passed, the same resource will appear in input with *vf:accept* verb
+#   fail                (0) possible output of a testing or reviewing process, indicating the resource failed, the same resource will appear in input with *vf:accept* verb
 #   deliver-service     (0) new service produced and delivered (being a service implies that an agent actively receives the service)
 #   transfer-all-rights (-+) give full (in the human realm) rights and responsibilities to another agent, without transferring physical custody
 #   transfer-custody    (-+) give physical custody and control of a resource, without full accounting or ownership rights
 #   transfer-complete   (-+) give full rights and responsibilities plus physical custody
-#   move      (-+) change location and/or identity of a resource with no change of agent
-#   raise     (+) adjusts a quantity up based on a beginning balance or inventory count
-#   lower     (-) adjusts a quantity down based on a beginning balance or inventory count
+#   move                (-+) change location and/or identity of a resource with no change of agent
+#   raise               (+) adjusts a quantity up based on a beginning balance or inventory count
+#   lower               (-) adjusts a quantity down based on a beginning balance or inventory count
 
 """
 Specification of a kind of resource. Could define a material item, service, digital item, currency account, etc.
@@ -132,12 +130,6 @@ type RecipeFlow {
 
   "Relates an output flow to its process in a recipe."
   recipeOutputOf: RecipeProcess
-
-  "References the ProcessSpecification of the last process the desired economic resource went through. Stage is used when the last process is important for finding proper resources, such as where the publishing process wants only documents that have gone through the editing process."
-  stage: ProcessSpecification
-
-  "The state of the desired economic resource (pass or fail), after coming out of a test or review process."
-  state: Action
 
   "A textual description or comment."
   note: String

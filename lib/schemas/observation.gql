@@ -25,10 +25,10 @@ type EconomicEvent {
   outputOf: Process
 
   "The economic agent from whom the actual economic event is initiated."
-  provider: Agent
+  provider: Agent!
 
   "The economic agent whom the actual economic event is for."
-  receiver: Agent
+  receiver: Agent!
 
   "Economic resource involved in the economic event."
   resourceInventoriedAs: EconomicResource
@@ -67,15 +67,13 @@ type EconomicEvent {
   inScopeOf: [AnyType!]
 
   "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this economic event."
-  agreedIn: AnyAgreement
+  agreedIn: URI
 
   "This economic event occurs as part of this agreement."
   realizationOf: Agreement
 
   "References another economic event that implied this economic event, often based on a prior agreement."
   triggeredBy: EconomicEvent
-
-  # requestDistribution: Boolean
 
   ##############################################################################
   # inverse relationships and queries
@@ -92,9 +90,6 @@ type EconomicEvent {
   track: [ProductionFlowItem!]
   trace: [ProductionFlowItem!]
 
-  # validations: [Validation!]
-  # isValidated: Boolean
-
   "The economic event can be safely deleted, has no dependent information."
   deletable: Boolean
 }
@@ -104,6 +99,9 @@ A resource which is useful to people or the ecosystem.
 """
 type EconomicResource {
   id: ID!
+
+  "An informal or formal textual identifier for an item. Does not imply uniqueness."
+  name: String
 
   "References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   classifiedAs: [URI!]
@@ -152,9 +150,6 @@ type EconomicResource {
 
   trace: [EconomicEvent!]
   track: [EconomicEvent!]
-
-  # resourceContacts: [Agent!]
-  # owners: [Agent!]  TODO: define agent-resource relationships, if we do need them
 }
 
 """
