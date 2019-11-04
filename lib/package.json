@@ -34,7 +34,7 @@
     "grammar"
   ],
   "author": "ValueFlows contributors",
-  "license": "MIT",
+  "license": "Apache2",
   "bugs": {
     "url": "https://github.com/valueflows/vf-graphql/issues"
   },
