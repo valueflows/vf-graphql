@@ -53,7 +53,7 @@ Semantic meaning for measurements: binds a quantity to its measurement unit.
 See http://www.qudt.org/pages/QUDToverviewPage.html
 """
 type Measure {
-  hasNumericalValue: Decimal! # we now allow Decimal, Double, Float, or Integer - let's discuss!
+  hasNumericalValue: Float! # we now allow Decimal, Double, Float, or Integer - let's discuss!
   hasUnit: Unit
 }
 
@@ -61,7 +61,7 @@ type Measure {
 Mutation input structure for defining measurements. Should be nulled if not present, rather than empty.
 """
 input IMeasure {
-  hasNumericalValue: Decimal! # we now allow Decimal, Double, Float, or Integer - let's discuss!
+  hasNumericalValue: Float! # we now allow Decimal, Double, Float, or Integer - let's discuss!
   hasUnit: Unit
 }
 
