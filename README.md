@@ -2,9 +2,6 @@
 
 Reference GraphQL implementation of the ValueFlows spec
 
-**WORK IN PROGRESS!**  
-Some fields & structures still subject to change and may evolve until the spec settles.
-
 <!-- MarkdownTOC -->
 
 - [Setup](#setup)
