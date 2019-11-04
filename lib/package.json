@@ -3,6 +3,7 @@
   "version": "0.3.0",
   "description": "Reference GraphQL implementation of the ValueFlows spec",
   "main": "index.js",
+  "types": "index.d.ts",
   "scripts": {
     "dev": "npm-watch",
     "test": "tape tests/**/*.js | faucet",
