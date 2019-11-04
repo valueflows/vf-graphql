@@ -11,7 +11,7 @@
   "scripts": {
     "preinstall": "npm run clean",
     "build": "cd lib && npm run build",
-    "publish": "cd lib && npm publish",
+    "publish": "cd lib && npm publish --access public",
     "start": "npm-run-all --parallel dev:schema dev:demoUI",
     "test": "cd lib && npm run test",
     "dev:schema": "cd lib && npm run dev",
