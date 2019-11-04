@@ -4,10 +4,20 @@
   "description": "Reference GraphQL implementation of the ValueFlows spec",
   "main": "index.js",
   "types": "index.d.ts",
+  "files": [
+    "build/*",
+    "schemas/*",
+    "index.d.ts",
+    "index.flow.js",
+    "index.js",
+    "package.json",
+    "typeDefs.js"
+  ],
   "scripts": {
     "dev": "npm-watch",
     "test": "tape tests/**/*.js | faucet",
-    "build": "graphql-codegen --config scripts/codegen.yml; node scripts/build.js"
+    "build": "mkdir build; graphql-codegen --config scripts/codegen.yml; node scripts/build.js",
+    "prepublish": "npm run build"
   },
   "watch": {
     "build": {
