@@ -89,8 +89,6 @@ type Query {
   unit(id: ID): Unit
   allUnits: [Unit!]
 
-  Measure(id: ID): Measure
-
   spatialThing(id: ID): SpatialThing
   allSpatialThings: [SpatialThing!]
 
