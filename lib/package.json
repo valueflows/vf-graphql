@@ -1,12 +1,25 @@
 {
   "name": "@valueflows/vf-graphql",
-  "version": "0.0.1",
+  "version": "0.3.0",
   "description": "Reference GraphQL implementation of the ValueFlows spec",
   "main": "index.js",
+  "types": "index.d.ts",
+  "files": [
+    "build/*",
+    "schemas/*",
+    "index.d.ts",
+    "index.flow.js",
+    "index.js",
+    "package.json",
+    "typeDefs.js",
+    "LICENSE",
+    "README.md"
+  ],
   "scripts": {
     "dev": "npm-watch",
     "test": "tape tests/**/*.js | faucet",
-    "build": "graphql-codegen --config scripts/codegen.yml; node scripts/build.js"
+    "build": "mkdir build; graphql-codegen --config scripts/codegen.yml; node scripts/build.js",
+    "prepublish": "npm run build"
   },
   "watch": {
     "build": {
@@ -34,7 +47,7 @@
     "grammar"
   ],
   "author": "ValueFlows contributors",
-  "license": "MIT",
+  "license": "Apache2",
   "bugs": {
     "url": "https://github.com/valueflows/vf-graphql/issues"
   },

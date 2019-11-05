@@ -2,9 +2,6 @@
 
 Reference GraphQL implementation of the ValueFlows spec
 
-**WORK IN PROGRESS!**  
-Some fields & structures still subject to change and may evolve until the spec settles.
-
 <!-- MarkdownTOC -->
 
 - [Setup](#setup)
@@ -13,7 +10,9 @@ Some fields & structures still subject to change and may evolve until the spec s
 	- [Available commands](#available-commands)
 - [Contributing](#contributing)
 	- [Directory structure](#directory-structure)
+	- [Publishing to NPM](#publishing-to-npm)
 - [Implementing](#implementing)
+- [License](#license)
 
 <!-- /MarkdownTOC -->
 
@@ -54,6 +53,13 @@ The `lib/` directory contains all source of the reference schema & validation he
 - `schemas/` contains the actual GraphQL schema definition files. **These are the files you should edit.**
 - `build/` and `index.d.ts` are generated from the schema files, using helper code in `lib/scripts/`.
 
+### Publishing to NPM
+
+- You will need to be given access to the [VF NPM org](https://www.npmjs.com/org/valueflows) in order to update the module on the registry. You can request access in https://gitter.im/valueflows/welcome
+- Bump the version in `lib/package.json` & commit to the repository
+- Run `npm run publish` from this directory
+- Tag the current release in git and push the tag to `master`
+
 
 
 ## Implementing
@@ -64,3 +70,10 @@ To implement a system gateway compatible with the ValueFlows spec, you will need
 - [Scalar type resolvers](https://www.apollographql.com/docs/graphql-tools/scalars.html) for the ISO8601 `DateTime` & `DateInterval` types
 
 For a more detailed example, see the project in `./mock-server/`.
+
+
+
+
+## License
+
+Released under an Apache 2.0 license.
