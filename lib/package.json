@@ -11,7 +11,9 @@
     "index.flow.js",
     "index.js",
     "package.json",
-    "typeDefs.js"
+    "typeDefs.js",
+    "LICENSE",
+    "README.md"
   ],
   "scripts": {
     "dev": "npm-watch",

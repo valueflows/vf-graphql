@@ -2,3 +2,5 @@ node_modules/
 lib/build/
 lib/index.d.ts
 lib/index.flow.js
+lib/LICENSE
+lib/README.md
