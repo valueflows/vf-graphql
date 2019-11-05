@@ -62,7 +62,7 @@ Mutation input structure for defining measurements. Should be nulled if not pres
 """
 input IMeasure {
   hasNumericalValue: Float! # we now allow Decimal, Double, Float, or Integer - let's discuss!
-  hasUnit: Unit
+  hasUnit: ID # Unit
 }
 
 """
