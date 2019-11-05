@@ -62,14 +62,14 @@ Mutation input structure for defining measurements. Should be nulled if not pres
 """
 input IMeasure {
   hasNumericalValue: Float!
-  hasUnit: Unit
+  hasUnit: ID # Unit
 }
 
 """
 Mutation input structure for defining time durations.
 """
 input IDuration {
-  numericDuration: Decimal!
+  numericDuration: Float!
   unitType: TimeUnit!
 }
 
