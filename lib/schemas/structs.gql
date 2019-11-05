@@ -69,7 +69,7 @@ input IMeasure {
 Mutation input structure for defining time durations.
 """
 input IDuration {
-  numericDuration: Decimal!
+  numericDuration: Float!
   unitType: TimeUnit!
 }
 
