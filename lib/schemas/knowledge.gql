@@ -20,7 +20,13 @@ type Action {
   label: String!
 
   "The effect of an economic event on a resource, increment, decrement, no effect, or decrement resource and increment 'to' resource."
-  resourceEffect: String! # "+", "-", "0", "-+"
+  resourceEffect: String! # "increment", "decrement", "noEffect", "decrementIncrement"
+
+  "Denotes if a process input or output, or not related to a process."
+  inputOutput: String # "input", "output", "notApplicable"
+
+  "The action that should be included on the other direction of the process, for example accept with modify."
+  pairsWith: String # "notApplicable", (any of the action labels) TODO: do we want to do this as an actual Action (optional)? In the VF spec they are NamedIndividuals defined in the spec, including "notApplicable".
 }
 
 # Core VF action IDs & `resourceEffect`s:
@@ -108,10 +114,10 @@ type RecipeFlow {
   id: ID!
 
   "The amount and unit of the economic resource counted or inventoried."
-  resourceQuantity: QuantityValue
+  resourceQuantity: Measure
 
   "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
-  effortQuantity: QuantityValue
+  effortQuantity: Measure
 
   "The resource definition referenced by this flow in the recipe."
   recipeFlowResource: RecipeResource

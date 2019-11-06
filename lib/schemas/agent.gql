@@ -193,10 +193,10 @@ type AgentRelationshipRole {
   id: ID!
 
   "The human readable name of the role, from the subject to the object."
-  label: String!
+  roleLabel: String!
 
   "The human readable name of the role, from the object to the subject."
-  inverseLabel: String
+  inverseRoleLabel: String
 
   "A textual description or comment."
   note: String

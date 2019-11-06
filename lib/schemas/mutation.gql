@@ -119,13 +119,11 @@ type AgentRelationshipResponse {
 #   outputOf: ID
 #   provider: ID
 #   receiver: ID
-#   resourceQuantity: IQuantityValue
-#   effortQuantity: IQuantityValue
+#   resourceQuantity: IMeasure
+#   effortQuantity: IMeasure
 #   hasBeginning: DateTime
 #   hasEnd: DateTime
 #   hasPointInTime: DateTime
-#   before: DateTime
-#   after: DateTime
 #   note: String
 #   inScopeOf: [AnyType!]
 #   atLocation: ID
@@ -145,14 +143,12 @@ input EconomicEventCreateParams { # implements EconomicEventParams
   resourceInventoriedAs: ID # EconomicResource
   resourceClassifiedAs: [URI!]
   resourceConformsTo: ID # ResourceSpecification
-  resourceQuantity: IQuantityValue
-  effortQuantity: IQuantityValue
+  resourceQuantity: IMeasure
+  effortQuantity: IMeasure
   atLocation: ID # SpatialThing
   hasBeginning: DateTime
   hasEnd: DateTime
   hasPointInTime: DateTime
-  before: DateTime
-  after: DateTime
   note: String
   agreedIn: URI
   realizationOf: ID # Agreement
@@ -171,14 +167,12 @@ input EconomicEventUpdateParams { # implements UpdateParams & EconomicEventParam
   resourceInventoriedAs: ID
   resourceClassifiedAs: [URI!]
   resourceConformsTo: ID
-  resourceQuantity: IQuantityValue
-  effortQuantity: IQuantityValue
+  resourceQuantity: IMeasure
+  effortQuantity: IMeasure
   atLocation: ID # SpatialThing
   hasBeginning: DateTime
   hasEnd: DateTime
   hasPointInTime: DateTime
-  before: DateTime
-  after: DateTime
   note: String
   agreedIn: URI
   realizationOf: ID # Agreement
@@ -199,12 +193,14 @@ type EconomicEventResponse {
 #   trackingIdentifier: String
 #   lot: ID # ProductBatch
 #   image: URI # URI
-#   accountingQuantity: IQuantityValue
-#   onhandQuantity: IQuantityValue
+#   accountingQuantity: IMeasure
+#   onhandQuantity: IMeasure
 #   currentLocation: ID
 #   note: String
 #   containedIn: ID # EconomicResource
 #   unitOfEffort: ID # Unit
+#   state: ID # Action
+#   stage: ID # ProcessSpecification
 # }
 
 """
@@ -218,10 +214,12 @@ input EconomicResourceCreateParams { # implements EconomicResourceParams
   trackingIdentifier: String
   lot: ID # ProductBatch
   image: URI # URI
-  accountingQuantity: IQuantityValue
-  onhandQuantity: IQuantityValue
+  accountingQuantity: IMeasure
+  onhandQuantity: IMeasure
   containedIn: ID # EconomicResource
   currentLocation: ID # SpatialThing
+  state: ID # Action
+  stage: ID # Processspecification
   note: String
 }
 
@@ -233,10 +231,12 @@ input EconomicResourceUpdateParams { # implements UpdateParams & EconomicResourc
   trackingIdentifier: String
   lot: ID # ProductBatch
   image: URI # URI
-  accountingQuantity: IQuantityValue
-  onhandQuantity: IQuantityValue
+  accountingQuantity: IMeasure
+  onhandQuantity: IMeasure
   containedIn: ID # EconomicResource
   currentLocation: ID # SpatialThing
+  state: ID # Action
+  stage: ID # Processspecification
   note: String
 }
 
@@ -248,16 +248,16 @@ type EconomicResourceResponse {
 # interface FulfillmentParams {
 #   fulfilledBy: ID # EconomicEvent
 #   fulfills: ID # Commmitment
-#   resourceQuantity: IQuantityValue
-#   effortQuantity: IQuantityValue
+#   resourceQuantity: IMeasure
+#   effortQuantity: IMeasure
 #   note: String
 # }
 
 input FulfillmentCreateParams { # implements FulfillmentParams
   fulfilledBy: ID!
   fulfills: ID!
-  resourceQuantity: IQuantityValue
-  effortQuantity: IQuantityValue
+  resourceQuantity: IMeasure
+  effortQuantity: IMeasure
   note: String
 }
 
@@ -265,8 +265,8 @@ input FulfillmentUpdateParams { # implements UpdateParams & FulfillmentParams
   id: ID!
   fulfilledBy: ID
   fulfills: ID
-  resourceQuantity: IQuantityValue
-  effortQuantity: IQuantityValue
+  resourceQuantity: IMeasure
+  effortQuantity: IMeasure
   note: String
 }
 
@@ -279,8 +279,6 @@ type FulfillmentResponse {
 #   name: String
 #   hasBeginning: DateTime
 #   hasEnd: DateTime
-#   before: DateTime
-#   after: DateTime
 #   note: String
 #   inScopeOf: String
 #   plannedWithin: ID # Plan
@@ -291,8 +289,6 @@ input ProcessCreateParams { # implements ProcessParams
   name: String!
   hasBeginning: DateTime
   hasEnd: DateTime
-  before: DateTime
-  after: DateTime
   finished: Boolean
   note: String
   inScopeOf: [AnyType!]
@@ -304,8 +300,6 @@ input ProcessUpdateParams { # implements UpdateParams & ProcessParams
   name: String
   hasBeginning: DateTime
   hasEnd: DateTime
-  before: DateTime
-  after: DateTime
   finished: Boolean
   note: String
   inScopeOf: [AnyType!]
@@ -358,14 +352,13 @@ type AppreciationResponse {
 #   resourceConformsTo: ID
 #   resourceClassifiedAs: [URI!]
 #   resourceInventoriedAs: ID
-#   resourceQuantity: IQuantityValue
-#   effortQuantity: IQuantityValue
-#   availableQuantity: IQuantityValue
+#   resourceQuantity: IMeasure
+#   effortQuantity: IMeasure
+#   availableQuantity: IMeasure
 #   hasBeginning: DateTime
 #   hasEnd: DateTime
 #   hasPointInTime: DateTime
-#   before: DateTime
-#   after: DateTime
+#   due: DateTime
 #   image: URI
 #   note: String
 #   inScopeOf: [AnyType!]
@@ -384,14 +377,13 @@ input IntentCreateParams { # implements IntentParams
   resourceConformsTo: ID
   resourceClassifiedAs: [URI!]
   resourceInventoriedAs: ID
-  resourceQuantity: IQuantityValue
-  effortQuantity: IQuantityValue
-  availableQuantity: IQuantityValue
+  resourceQuantity: IMeasure
+  effortQuantity: IMeasure
+  availableQuantity: IMeasure
   hasBeginning: DateTime
   hasEnd: DateTime
   hasPointInTime: DateTime
-  before: DateTime
-  after: DateTime
+  due: DateTime
   image: URI
   note: String
   inScopeOf: [AnyType!]
@@ -411,14 +403,13 @@ input IntentUpdateParams { # implements UpdateParams & IntentParams
   resourceConformsTo: ID
   resourceClassifiedAs: [URI!]
   resourceInventoriedAs: ID
-  resourceQuantity: IQuantityValue
-  effortQuantity: IQuantityValue
-  availableQuantity: IQuantityValue
+  resourceQuantity: IMeasure
+  effortQuantity: IMeasure
+  availableQuantity: IMeasure
   hasBeginning: DateTime
   hasEnd: DateTime
   hasPointInTime: DateTime
-  before: DateTime
-  after: DateTime
+  due: DateTime
   image: URI
   finished: Boolean
   note: String
@@ -441,13 +432,12 @@ type IntentResponse {
 #   resourceClassifiedAs: [URI!]
 #   resourceConformsTo: ID
 #   resourceInventoriedAs: ID
-#   resourceQuantity: IQuantityValue
-#   effortQuantity: IQuantityValue
+#   resourceQuantity: IMeasure
+#   effortQuantity: IMeasure
 #   hasBeginning: DateTime
 #   hasEnd: DateTime
 #   hasPointInTime: DateTime
-#   before: DateTime
-#   after: DateTime
+#   due: DateTime
 #   finished: Boolean
 #   note: String
 #   inScopeOf: [AnyType!]
@@ -466,13 +456,12 @@ input CommitmentCreateParams { # implements CommitmentParams
   resourceClassifiedAs: [URI!]
   resourceConformsTo: ID
   resourceInventoriedAs: ID
-  resourceQuantity: IQuantityValue
-  effortQuantity: IQuantityValue
+  resourceQuantity: IMeasure
+  effortQuantity: IMeasure
   hasBeginning: DateTime
   hasEnd: DateTime
   hasPointInTime: DateTime
-  before: DateTime
-  after: DateTime
+  due: DateTime
   finished: Boolean
   note: String
   inScopeOf: [AnyType!]
@@ -491,13 +480,12 @@ input CommitmentUpdateParams { # implements UpdateParams & CommitmentParams
   resourceClassifiedAs: [URI!]
   resourceConformsTo: ID
   resourceInventoriedAs: ID
-  resourceQuantity: IQuantityValue
-  effortQuantity: IQuantityValue
+  resourceQuantity: IMeasure
+  effortQuantity: IMeasure
   hasBeginning: DateTime
   hasEnd: DateTime
   hasPointInTime: DateTime
-  before: DateTime
-  after: DateTime
+  due: DateTime
   finished: Boolean
   note: String
   inScopeOf: [AnyType!]
@@ -515,16 +503,16 @@ type CommitmentResponse {
 # interface SatisfactionParams {
 #   satisfies: Intent
 #   satisfiedBy: Commitment
-#   resourceQuantity: IQuantityValue
-#   effortQuantity: IQuantityValue
+#   resourceQuantity: IMeasure
+#   effortQuantity: IMeasure
 #   note: String
 # }
 
 input SatisfactionCreateParams { # implements SatisfactionParams
   satisfies: ID! # Intent
   satisfiedBy: ID! # Commitment
-  resourceQuantity: IQuantityValue
-  effortQuantity: IQuantityValue
+  resourceQuantity: IMeasure
+  effortQuantity: IMeasure
   note: String
 }
 
@@ -532,8 +520,8 @@ input SatisfactionUpdateParams { # implements UpdateParams & SatisfactionParams
   id: ID!
   satisfies: ID # Intent
   satisfiedBy: ID # Commitment
-  resourceQuantity: IQuantityValue
-  effortQuantity: IQuantityValue
+  resourceQuantity: IMeasure
+  effortQuantity: IMeasure
   note: String
 }
 
@@ -572,8 +560,9 @@ type AgreementResponse {
 #   receiver: Agent
 #   resourceClassifiedAs: [URI!]
 #   resourceConformsTo: ResourceSpecification
-#   resourceQuantity: IQuantityValue
-#   effortQuantity: IQuantityValue
+#   resourceQuantity: IMeasure
+#   effortQuantity: IMeasure
+#   due: DateTime
 #   triggeredBy: EconomicEvent!
 #   created: DateTime
 #   finished: Boolean
@@ -588,8 +577,9 @@ input ClaimCreateParams {
   receiver: ID! # Agent
   resourceClassifiedAs: [URI!]
   resourceConformsTo: ID # ResourceSpecification
-  resourceQuantity: IQuantityValue
-  effortQuantity: IQuantityValue
+  resourceQuantity: IMeasure
+  effortQuantity: IMeasure
+  due: DateTime
   triggeredBy: ID # EconomicEvent
   created: DateTime
   finished: Boolean
@@ -605,8 +595,9 @@ input ClaimUpdateParams {
   receiver: ID
   resourceClassifiedAs: [URI!]
   resourceConformsTo: ID
-  resourceQuantity: IQuantityValue
-  effortQuantity: IQuantityValue
+  resourceQuantity: IMeasure
+  effortQuantity: IMeasure
+  due: DateTime
   triggeredBy: ID
   created: DateTime
   finished: Boolean
@@ -623,16 +614,16 @@ type ClaimResponse {
 # type SettlementParams {
 #   settles: ID! # Claim
 #   settledBy: ID! # EconomicEvent
-#   resourceQuantity: IQuantityValue
-#   effortQuantity: IQuantityValue
+#   resourceQuantity: IMeasure
+#   effortQuantity: IMeasure
 #   note: String
 # }
 
 input SettlementCreateParams {
   settles: ID! # Claim
   settledBy: ID! # EconomicEvent
-  resourceQuantity: IQuantityValue
-  effortQuantity: IQuantityValue
+  resourceQuantity: IMeasure
+  effortQuantity: IMeasure
   note: String
 }
 
@@ -640,8 +631,8 @@ input SettlementUpdateParams {
   id: ID!
   settles: ID
   settledBy: ID
-  resourceQuantity: IQuantityValue
-  effortQuantity: IQuantityValue
+  resourceQuantity: IMeasure
+  effortQuantity: IMeasure
   note: String
 }
 
@@ -653,14 +644,14 @@ type SettlementResponse {
 # interface PlanParams {
 #   name: String
 #   created: DateTime
-#   before: DateTime
+#   due: DateTime
 #   note: String
 # }
 
 input PlanCreateParams { # implements PlanParams
   name: String!
   created: DateTime
-  before: DateTime
+  due: DateTime
   note: String
 }
 
@@ -668,7 +659,7 @@ input PlanUpdateParams { # implements UpdateParams & PlanParams
   id: ID!
   name: String
   created: DateTime
-  before: DateTime
+  due: DateTime
   note: String
 }
 
@@ -827,8 +818,8 @@ type ProcessSpecificationResponse {
 # interface RecipeFlowParams {
 #   action: Action
 #   recipeFlowResource: RecipeResource
-#   resourceQuantity: IQuantityValue
-#   effortQuantity: IQuantityValue
+#   resourceQuantity: IMeasure
+#   effortQuantity: IMeasure
 #   recipeInputOf: RecipeProcess
 #   recipeOutputOf: RecipeProcess
 #   stage: ProcessSpecification
@@ -839,8 +830,8 @@ type ProcessSpecificationResponse {
 input RecipeFlowCreateParams { # implements RecipeFlowParams
   action: ID! # Action
   recipeFlowResource: ID # RecipeResource!
-  resourceQuantity: IQuantityValue
-  effortQuantity: IQuantityValue
+  resourceQuantity: IMeasure
+  effortQuantity: IMeasure
   recipeInputOf: ID # RecipeProcess
   recipeOutputOf: ID # RecipeProcess
   stage: ID # ProcessSpecification
@@ -852,8 +843,8 @@ input RecipeFlowUpdateParams { # implements UpdateParams & RecipeFlowParams
   id: ID!
   action: ID # Action
   recipeFlowResource: ID # RecipeResource
-  resourceQuantity: IQuantityValue
-  effortQuantity: IQuantityValue
+  resourceQuantity: IMeasure
+  effortQuantity: IMeasure
   recipeInputOf: ID # RecipeProcess
   recipeOutputOf: ID # RecipeProcess
   stage: ID # ProcessSpecification
@@ -867,21 +858,21 @@ type RecipeFlowResponse {
 
 
 # interface AgentRelationshipRoleParams {
-#   label: String
-#   inverseLabel: String
+#   roleLabel: String
+#   inverseRoleLabel: String
 #   note: String
 # }
 
 input AgentRelationshipRoleCreateParams { # implements AgentRelationshipRoleParams
-  label: String!
-  inverseLabel: String
+  roleLabel: String!
+  inverseRoleLabel: String
   note: String
 }
 
 input AgentRelationshipRoleUpdateParams { # implements UpdateParams & AgentRelationshipRoleParams
   id: ID!
-  label: String
-  inverseLabel: String
+  roleLabel: String
+  inverseRoleLabel: String
   note: String
 }
 
@@ -905,8 +896,7 @@ input ScenarioDefinitionCreateParams { # implements ScenarioDefinitionParams
 
 input ScenarioDefinitionUpdateParams { # implements UpdateParams & ScenarioDefinitionParams
   id: ID!
-  label: String
-  inverseLabel: String
+  hasDuration: IDuration
   note: String
 }
 

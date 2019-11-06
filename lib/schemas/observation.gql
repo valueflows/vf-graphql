@@ -43,10 +43,10 @@ type EconomicEvent {
   resourceConformsTo: ResourceSpecification
 
   "The amount and unit of the economic resource counted or inventoried. This is the quantity that could be used to increment or decrement a resource, depending on the type of resource and resource effect of action."
-  resourceQuantity: QuantityValue
+  resourceQuantity: Measure
 
   "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
-  effortQuantity: QuantityValue
+  effortQuantity: Measure
 
   "The beginning of the economic event."
   hasBeginning: DateTime
@@ -56,12 +56,6 @@ type EconomicEvent {
 
   "The date/time at which the economic event occurred. Can be used instead of beginning and end."
   hasPointInTime: DateTime
-
-  "The economic event occurred prior to this date/time."
-  before: DateTime
-
-  "The economic event occurred after this date/time."
-  after: DateTime
 
   "The place where an economic event occurs.  Usually mappable."
   atLocation: SpatialThing
@@ -125,10 +119,10 @@ type EconomicResource {
   image: URI
 
   "The current amount and unit of the economic resource for which the agent has primary rights and responsibilities, sometimes thought of as ownership. This can be either stored or derived from economic events affecting the resource."
-  accountingQuantity: QuantityValue
+  accountingQuantity: Measure
 
   "The current amount and unit of the economic resource which is under direct control of the agent.  It may be more or less than the accounting quantity. This can be either stored or derived from economic events affecting the resource."
-  onhandQuantity: QuantityValue
+  onhandQuantity: Measure
 
   "A textual description or comment."
   note: String
@@ -189,12 +183,6 @@ type Process {
 
   "The planned end of the process."
   hasEnd: DateTime
-
-  "The due date/time of the process."
-  before: DateTime
-
-  "The process can start after this date/time."
-  after: DateTime
 
   "The process is complete or not.  This is irrespective of if the original goal has been met, and indicates that no more will be done."
   finished: Boolean
