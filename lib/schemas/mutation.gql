@@ -708,6 +708,27 @@ type ScenarioResponse {
 ################################################################################
 
 
+# interface UnitParams {
+#   label: String
+#   symbol: String
+# }
+
+input UnitCreateParams { # implements UnitParams
+  label: String!
+  symbol: String!
+}
+
+input UnitUpdateParams { # implements UpdateParams & UnitParams
+  id: ID!
+  label: String
+  symbol: String
+}
+
+type UnitResponse {
+  unit: Unit
+}
+
+
 # interface ResourceSpecificationParams {
 #   name: String
 #   image: URI
@@ -729,6 +750,27 @@ input ResourceSpecificationUpdateParams { # implements UpdateParams & ResourceSp
 
 type ResourceSpecificationResponse {
   resourceSpecification: ResourceSpecification
+}
+
+
+# interface ProcessSpecificationParams {
+#   name: String
+#   note: String
+# }
+
+input ProcessSpecificationCreateParams { # implements ProcessSpecificationParams
+  name: String!
+  note: String
+}
+
+input ProcessSpecificationUpdateParams { # implements UpdateParams & ProcessSpecificationParams
+  id: ID!
+  name: String
+  note: String
+}
+
+type ProcessSpecificationResponse {
+  processSpecification: ProcessSpecification
 }
 
 # interface RecipeResourceParams {
@@ -791,27 +833,6 @@ input RecipeProcessUpdateParams { # implements UpdateParams & RecipeProcessParam
 
 type RecipeProcessResponse {
   recipeProcess: RecipeProcess
-}
-
-
-# interface ProcessSpecificationParams {
-#   name: String
-#   note: String
-# }
-
-input ProcessSpecificationCreateParams { # implements ProcessSpecificationParams
-  name: String!
-  note: String
-}
-
-input ProcessSpecificationUpdateParams { # implements UpdateParams & ProcessSpecificationParams
-  id: ID!
-  name: String
-  note: String
-}
-
-type ProcessSpecificationResponse {
-  processSpecification: ProcessSpecification
 }
 
 
@@ -999,9 +1020,17 @@ type Mutation {
   #createAgentResourceClassification(resourceClassification: String!, agent: String!): CreateAgentResourceClassification
   #deleteAgentResourceClassification(id: String!): DeleteAgentResourceClassification
 
+  createUnit(unit: UnitCreateParams): UnitResponse
+  updateUnit(unit: UnitUpdateParams): UnitResponse
+  deleteUnit(id: String!): Boolean
+
   createResourceSpecification(resourceSpecification: ResourceSpecificationCreateParams): ResourceSpecificationResponse
   updateResourceSpecification(resourceSpecification: ResourceSpecificationUpdateParams): ResourceSpecificationResponse
   deleteResourceSpecification(id: String!): Boolean
+
+  createProcessSpecification(processSpecification: ProcessSpecificationCreateParams): ProcessSpecificationResponse
+  updateProcessSpecification(processSpecification: ProcessSpecificationUpdateParams): ProcessSpecificationResponse
+  deleteProcessSpecification(id: String!): Boolean
 
   createRecipeFlow(recipeFlow: RecipeFlowCreateParams): RecipeFlowResponse
   updateRecipeFlow(recipeFlow: RecipeFlowUpdateParams): RecipeFlowResponse
