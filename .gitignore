@@ -1,6 +1,11 @@
 node_modules/
+
+# build artifacts used only during packaging
 lib/build/
 lib/index.d.ts
 lib/index.flow.js
 lib/LICENSE
 lib/README.md
+
+# https://github.com/maxlath/backup-github-repo
+/repo-backup
