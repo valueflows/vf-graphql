@@ -208,35 +208,21 @@ Input `EconomicResource` type used when sending events to setup initial resource
 """
 input EconomicResourceCreateParams { # implements EconomicResourceParams
   name: String
-  classifiedAs: [URI!]
-  conformsTo: ID! # ResourceSpecification
-  unitOfEffort: ID # Unit
+  conformsTo: ID # ResourceSpecification
   trackingIdentifier: String
   lot: ID # ProductBatch
   image: URI # URI
-  accountingQuantity: IMeasure
-  onhandQuantity: IMeasure
   containedIn: ID # EconomicResource
   currentLocation: ID # SpatialThing
-  state: ID # Action
-  stage: ID # Processspecification
   note: String
 }
 
 input EconomicResourceUpdateParams { # implements UpdateParams & EconomicResourceParams
   id: ID!
   classifiedAs: [URI!]
-  conformsTo: ID # ResourceSpecification
-  unitOfEffort: ID # Unit
-  trackingIdentifier: String
-  lot: ID # ProductBatch
   image: URI # URI
-  accountingQuantity: IMeasure
-  onhandQuantity: IMeasure
   containedIn: ID # EconomicResource
-  currentLocation: ID # SpatialThing
-  state: ID # Action
-  stage: ID # Processspecification
+  unitOfEffort: ID # Unit
   note: String
 }
 
