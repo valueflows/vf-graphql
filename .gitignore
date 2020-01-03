@@ -2,6 +2,7 @@ node_modules/
 
 # build artifacts used only during packaging
 lib/build/
+lib/json-schema.json
 lib/index.d.ts
 lib/index.flow.js
 lib/LICENSE
