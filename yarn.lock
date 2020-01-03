@@ -2696,6 +2696,13 @@ function-bind@^1.0.2, function-bind@^1.1.1, function-bind@~1.1.1:
   resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.1.tgz#a56899d3ea3c9bab874bb9773b7c5ede92f4895d"
   integrity sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A==
 
+functional-json-schema@0.0.2-3:
+  version "0.0.2-3"
+  resolved "https://registry.yarnpkg.com/functional-json-schema/-/functional-json-schema-0.0.2-3.tgz#51e62e82d2b0b93447b13b204601618683d81cd3"
+  integrity sha512-g8+l/yMSW50E5jeBEqzIArUg6lfPy++J63OVM1sS9CFq4PM6Vf1QMmZjwNiofRKlP5bTHKrHHvD6BZv0K9R10A==
+  dependencies:
+    lodash "^4.17.10"
+
 gauge@~2.7.3:
   version "2.7.4"
   resolved "https://registry.yarnpkg.com/gauge/-/gauge-2.7.4.tgz#2c03405c7538c39d7eb37b317022e325fb018bf7"
@@ -2838,6 +2845,14 @@ graceful-fs@^4.1.11, graceful-fs@^4.1.2:
   version "4.1.15"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.15.tgz#ffb703e1066e8a0eeaa4c8b80ba9253eeefbfb00"
   integrity sha512-6uHUhOPEBgQ24HM+r6b/QwWfZq+yiFcipKFrOFiBEnWdy5sdzYoi+pJeQaPI5qOLRFqWmAXUPQNsielzdLoecA==
+
+graphql-2-json-schema@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/graphql-2-json-schema/-/graphql-2-json-schema-0.2.0.tgz#ef02d7d422071be199bfb4d3c6719f3431005661"
+  integrity sha512-INEySjzTCb+oI8RTVBGQDHBgOiXtHlcR47MKvyWtaiJbptUBUXHlfO1njI89NeU+KIF6cUnAqmKgyYgyJVYwbA==
+  dependencies:
+    functional-json-schema "0.0.2-3"
+    lodash "^4.17.10"
 
 graphql-config@2.2.1:
   version "2.2.1"
