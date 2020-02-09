@@ -142,6 +142,9 @@ type EconomicResource {
   "The current place an economic resource is located. Could be at any level of granularity, from a town to an address to a warehouse location. Usually mappable."
   currentLocation: SpatialThing
 
+  "The agent currently with primary rights and responsibilites for the economic resource. It is the agent that is associated with the accountingQuantity of the economic resource."
+  primaryAccountable: Agent
+
   ##############################################################################
   # inverse relationships and queries
 

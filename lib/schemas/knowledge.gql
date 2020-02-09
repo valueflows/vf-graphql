@@ -45,7 +45,7 @@ type Action {
 #   deliver-service     (0) new service produced and delivered (being a service implies that an agent actively receives the service)
 #   transfer-all-rights (-+) give full (in the human realm) rights and responsibilities to another agent, without transferring physical custody
 #   transfer-custody    (-+) give physical custody and control of a resource, without full accounting or ownership rights
-#   transfer-complete   (-+) give full rights and responsibilities plus physical custody
+#   transfer            (-+) give full rights and responsibilities plus physical custody
 #   move                (-+) change location and/or identity of a resource with no change of agent
 #   raise               (+) adjusts a quantity up based on a beginning balance or inventory count
 #   lower               (-) adjusts a quantity down based on a beginning balance or inventory count
