@@ -2,7 +2,6 @@
  * GraphQL / iQL server
  *
  * @package: HoloREA
- * @author:  pospi <pospi@spadgos.com>
  * @since:   2019-03-18
  */
 
