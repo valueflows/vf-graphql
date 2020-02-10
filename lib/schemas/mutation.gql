@@ -201,7 +201,6 @@ type EconomicEventResponse {
 #   unitOfEffort: ID # Unit
 #   state: ID # Action
 #   stage: ID # ProcessSpecification
-#   primaryAccountable: ID # Agent
 # }
 
 """
@@ -215,7 +214,6 @@ input EconomicResourceCreateParams { # implements EconomicResourceParams
   image: URI # URI
   containedIn: ID # EconomicResource
   currentLocation: ID # SpatialThing
-  primaryAccountable: ID # Agent
   note: String
 }
 
