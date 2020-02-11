@@ -55,6 +55,7 @@
   },
   "homepage": "https://github.com/valueflows/vf-graphql#readme",
   "dependencies": {
+    "@graphql-toolkit/schema-merging": "^0.9.7",
     "graphql": "14.5.8",
     "graphql-tools": "4.0.6"
   },
