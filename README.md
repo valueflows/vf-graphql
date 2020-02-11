@@ -70,6 +70,7 @@ The `lib/` directory contains all source of the reference schema & validation he
 
 - You will need to be given access to the [VF NPM org](https://www.npmjs.com/org/valueflows) in order to update the module on the registry. You can request access in https://gitter.im/valueflows/welcome
 - Bump the version in `lib/package.json` & commit to the repository
+- Update `CHANGELOG.md` with the new version ID and list of changes, and commit
 - Run `npm run publish` from this directory
 - Tag the current release in git and push the tag to `origin`
 
