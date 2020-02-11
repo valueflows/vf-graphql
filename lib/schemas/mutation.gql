@@ -543,34 +543,8 @@ type ProposalResponse {
   proposal: Proposal
 }
 
-
-input ProposedIntentCreateParams {
-  publishes: Intent!
-  publishedIn: Proposal!
-  reciprocal: Boolean
-}
-
-input ProposedIntentUpdateParams {
-  id: ID!
-  publishes: Intent!
-  publishedIn: Proposal!
-  reciprocal: Boolean
-}
-
 type ProposedIntentResponse {
   proposedIntent: ProposedIntent
-}
-
-
-input ProposedToCreateParams {
-  proposedTo: Agent!
-  proposed: Proposal!
-}
-
-input ProposedToUpdateParams {
-  id: ID!
-  proposedTo: Agent!
-  proposed: Proposal!
 }
 
 type ProposedToResponse {
@@ -1047,12 +1021,10 @@ type Mutation {
   updateProposal(proposal: ProposalUpdateParams): ProposalResponse
   deleteProposal(id: String!): Boolean
 
-  createProposedIntent(proposedIntent: ProposedIntentCreateParams): ProposedIntentResponse
-  updateProposedIntent(proposedIntent: ProposedIntentUpdateParams): ProposedIntentResponse
+  proposeIntent(publishedIn: ID!, publishes: ID!, reciprocal: Boolean): ProposedIntentResponse
   deleteProposedIntent(id: String!): Boolean
 
-  createProposedTo(proposedTo: ProposedToCreateParams): ProposedToResponse
-  updateProposedTo(proposedTo: ProposedToUpdateParams): ProposedToResponse
+  proposeTo(proposed: ID!, proposedTo: ID!): ProposedToResponse
   deleteProposedTo(id: String!): Boolean
 
   createPlan(plan: PlanCreateParams!): PlanResponse
