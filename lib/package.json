@@ -64,6 +64,7 @@
     "@graphql-codegen/flow": "1.8.2",
     "@graphql-codegen/typescript": "1.8.2",
     "faucet": "0.0.1",
+    "globby": "^11.0.0",
     "graphql-2-json-schema": "^0.2.0",
     "graphql-toolkit": "0.6.4",
     "npm-watch": "^0.6.0",
