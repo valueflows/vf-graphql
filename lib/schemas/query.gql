@@ -56,6 +56,9 @@ type Query {
   satisfaction(id: ID): Satisfaction
   allSatisfactions: [Satisfaction!]
 
+  proposal(id: ID): Proposal
+  allProposals: [Proposal!]
+
   plan(id: ID): Plan
   allPlans: [Plan!]
 
