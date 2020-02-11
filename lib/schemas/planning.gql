@@ -405,6 +405,7 @@ type Proposal {
   # inverse relationships and queries
 
   publishes: [ProposedIntent!]
+  publishedTo: [ProposedTo!]
 }
 
 """
