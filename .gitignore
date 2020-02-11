@@ -6,6 +6,7 @@ lib/json-schema.json
 lib/index.d.ts
 lib/index.flow.js
 lib/LICENSE
+lib/CHANGELOG.md
 lib/README.md
 
 # https://github.com/maxlath/backup-github-repo
