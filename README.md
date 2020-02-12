@@ -1,6 +1,6 @@
 # vf-graphql
 
-Reference GraphQL implementation of the ValueFlows spec
+GraphQL reference implementation of the [ValueFlows](http://valueflo.ws/) grammar.
 
 <!-- MarkdownTOC -->
 
@@ -17,7 +17,16 @@ Reference GraphQL implementation of the ValueFlows spec
 <!-- /MarkdownTOC -->
 
 
-This is to help synchronize the projects using VF for a graphql interface between client and server.  It includes the VF specification, plus recommended vocabulary specification not part of the rdf-based VF spec but needed for all VF based implementations of economic software (for example Agent, Person, Organization, note, image).  It also includes recommended inverse relationship naming, which is particularly useful in graphql implementations.
+This project synchronizes projects implementing VF for a GraphQL interface between client and server. It includes:
+
+- A GraphQL-native specification of the core VF grammar
+- Complementary schemas not part of the RDF-based VF spec but needed for all VF implementations of economic software (for example `Agent`, `Person`, `Organization`, `SpatialThing`, `note`, `image`). 
+- Formal definition of mutation, query & subscriptions APIs
+- Formal definition of available query parameters
+- Inverse relationship naming
+- Composable GraphQL schemas, TypeScript and FlowType definitions
+- Runtime composition of schema modules into application-specific APIs which implement subsets of the ValueFlows vocabulary
+
 
 
 
@@ -61,10 +70,10 @@ The recommended way to contribute to this repo is via the `npm run dev:schema` c
 The `lib/` directory contains all source of the reference schema & validation helpers:
 
 - `index.js` is the main entrypoint to the module, used by other packages wishing to validate schemas against the spec.
-- `typeDefs.js` contains only the schemas themselves (as strings); packages wishing to *implement* APIs using the reference spec can reference this file instead of the main module entrypoint to skip some initialisation logic only needed for validation.
 - `tests/` contains tests for ensuring the schemas compile successfully.
 - `schemas/` contains the actual GraphQL schema definition files. **These are the files you should edit.**
-- `build/` and `index.d.ts` are generated from the schema files, using helper code in `lib/scripts/`.
+	- `schemas/bridging/` contains files which are automatically loaded in `buildSchema`. The filenames are dot-separated, and if all of the filename components are present in the module IDs passed then the schema is injected. For a list of available module IDs, see `schema-manifest.js`.
+- `build/`, `json-schema.json` and the other `*.js` files are excluded from version control. They are generated from the schema definition files, using helper code in `lib/scripts/`.
 
 ### Publishing to NPM
 
