@@ -12,7 +12,7 @@
     "index.flow.js",
     "index.js",
     "package.json",
-    "typeDefs.js",
+    "schema-manifest.js",
     "LICENSE",
     "CHANGELOG.md",
     "README.md"

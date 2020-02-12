@@ -5,6 +5,7 @@ lib/build/
 lib/json-schema.json
 lib/index.d.ts
 lib/index.flow.js
+lib/schema-manifest.js
 lib/LICENSE
 lib/CHANGELOG.md
 lib/README.md
