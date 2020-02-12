@@ -39,3 +39,46 @@ type Plan {
 
   deletable: Boolean
 }
+
+
+
+
+
+
+# interface PlanParams {
+#   name: String
+#   created: DateTime
+#   due: DateTime
+#   note: String
+# }
+
+input PlanCreateParams { # implements PlanParams
+  name: String!
+  created: DateTime
+  due: DateTime
+  note: String
+}
+
+input PlanUpdateParams { # implements UpdateParams & PlanParams
+  id: ID!
+  name: String
+  created: DateTime
+  due: DateTime
+  note: String
+}
+
+type PlanResponse {
+  plan: Plan
+}
+
+type Query {
+  plan(id: ID): Plan
+  allPlans: [Plan!]
+}
+
+type Mutation {
+  createPlan(plan: PlanCreateParams!): PlanResponse
+  # createPlanFromRecipe(): PlanResponse
+  updatePlan(plan: PlanUpdateParams!): PlanResponse
+  deletePlan(id: String!): Boolean
+}

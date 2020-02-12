@@ -96,3 +96,136 @@ type RecipeProcess {
   "A textual description or comment."
   note: String
 }
+
+
+
+
+
+# interface RecipeResourceParams {
+#   name: String
+#   image: URI
+#   unitOfResource: ID
+#   unitOfEffort: ID
+#   resourceClassifiedAs: [URI!]
+#   substitutable: Boolean
+#   note: String
+# }
+
+input RecipeResourceCreateParams { # implements RecipeResourceParams
+  name: String!
+  unitOfResource: ID
+  unitOfEffort: ID
+  substitutable: Boolean
+  image: URI
+  resourceClassifiedAs: [URI!]
+  note: String
+}
+
+input RecipeResourceUpdateParams { # implements UpdateParams & RecipeResourceParams
+  id: ID!
+  name: String
+  unitOfResource: ID
+  unitOfEffort: ID
+  substitutable: Boolean
+  image: URI
+  resourceClassifiedAs: [URI!]
+  note: String
+}
+
+type RecipeResourceResponse {
+  recipeResource: RecipeResource
+}
+
+
+# interface RecipeProcessParams {
+#   name: String
+#   hasDuration: IDuration
+#   processClassifiedAs: [URI!]
+#   note: String
+# }
+
+input RecipeProcessCreateParams { # implements RecipeProcessParams
+  name: String!
+  hasDuration: IDuration
+  processClassifiedAs: [URI!]
+  note: String
+}
+
+input RecipeProcessUpdateParams { # implements UpdateParams & RecipeProcessParams
+  id: ID!
+  name: String
+  hasDuration: IDuration
+  processClassifiedAs: [URI!]
+  note: String
+}
+
+type RecipeProcessResponse {
+  recipeProcess: RecipeProcess
+}
+
+
+# interface RecipeFlowParams {
+#   action: Action
+#   recipeFlowResource: RecipeResource
+#   resourceQuantity: IMeasure
+#   effortQuantity: IMeasure
+#   recipeInputOf: RecipeProcess
+#   recipeOutputOf: RecipeProcess
+#   stage: ProcessSpecification
+#   state: Action
+#   note: String
+# }
+
+input RecipeFlowCreateParams { # implements RecipeFlowParams
+  action: ID! # Action
+  recipeFlowResource: ID # RecipeResource!
+  resourceQuantity: IMeasure
+  effortQuantity: IMeasure
+  recipeInputOf: ID # RecipeProcess
+  recipeOutputOf: ID # RecipeProcess
+  stage: ID # ProcessSpecification
+  state: ID # Action
+  note: String
+}
+
+input RecipeFlowUpdateParams { # implements UpdateParams & RecipeFlowParams
+  id: ID!
+  action: ID # Action
+  recipeFlowResource: ID # RecipeResource
+  resourceQuantity: IMeasure
+  effortQuantity: IMeasure
+  recipeInputOf: ID # RecipeProcess
+  recipeOutputOf: ID # RecipeProcess
+  stage: ID # ProcessSpecification
+  state: ID # Action
+  note: String
+}
+
+type RecipeFlowResponse {
+  recipeFlow: RecipeFlow
+}
+
+type Query {
+  recipeResource(id: ID): RecipeResource
+  allRecipeResources: [RecipeResource!]
+
+  recipeProcess(id: ID): RecipeProcess
+  allRecipeProcesses: [RecipeProcess!]
+
+  recipeFlow(id: ID): RecipeFlow
+  allRecipeFlows: [RecipeFlow!]
+}
+
+type Mutation {
+  createRecipeFlow(recipeFlow: RecipeFlowCreateParams): RecipeFlowResponse
+  updateRecipeFlow(recipeFlow: RecipeFlowUpdateParams): RecipeFlowResponse
+  deleteRecipeFlow(id: String!): Boolean
+
+  createRecipeProcess(recipeProcess: RecipeProcessCreateParams): RecipeProcessResponse
+  updateRecipeProcess(recipeProcess: RecipeProcessUpdateParams): RecipeProcessResponse
+  deleteRecipeProcess(id: String!): Boolean
+
+  createRecipeResource(recipeResource: RecipeResourceCreateParams): RecipeResourceResponse
+  updateRecipeResource(recipeResource: RecipeResourceUpdateParams): RecipeResourceResponse
+  deleteRecipeResource(id: String!): Boolean
+}

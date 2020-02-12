@@ -83,3 +83,104 @@ type Settlement {
   "A textual description or comment."
   note: String
 }
+
+
+
+
+
+
+# type ClaimParams {
+#   action: Action
+#   provider: Agent
+#   receiver: Agent
+#   resourceClassifiedAs: [URI!]
+#   resourceConformsTo: ResourceSpecification
+#   resourceQuantity: IMeasure
+#   effortQuantity: IMeasure
+#   due: DateTime
+#   triggeredBy: EconomicEvent!
+#   created: DateTime
+#   finished: Boolean
+#   note: String
+#   agreedIn: URI
+#   inScopeOf: [AnyType!]
+# }
+
+input ClaimCreateParams {
+  action: ID! # Action
+  provider: ID! # Agent
+  receiver: ID! # Agent
+  resourceClassifiedAs: [URI!]
+  resourceConformsTo: ID # ResourceSpecification
+  resourceQuantity: IMeasure
+  effortQuantity: IMeasure
+  due: DateTime
+  triggeredBy: ID # EconomicEvent
+  created: DateTime
+  finished: Boolean
+  note: String
+  agreedIn: URI
+  inScopeOf: [AnyType!]
+}
+
+input ClaimUpdateParams {
+  id: ID!
+  action: ID
+  provider: ID
+  receiver: ID
+  resourceClassifiedAs: [URI!]
+  resourceConformsTo: ID
+  resourceQuantity: IMeasure
+  effortQuantity: IMeasure
+  due: DateTime
+  triggeredBy: ID
+  created: DateTime
+  finished: Boolean
+  note: String
+  agreedIn: URI
+  inScopeOf: [AnyType!]
+}
+
+type ClaimResponse {
+  claim: Claim
+}
+
+
+# type SettlementParams {
+#   settles: ID! # Claim
+#   settledBy: ID! # EconomicEvent
+#   resourceQuantity: IMeasure
+#   effortQuantity: IMeasure
+#   note: String
+# }
+
+input SettlementCreateParams {
+  settles: ID! # Claim
+  settledBy: ID! # EconomicEvent
+  resourceQuantity: IMeasure
+  effortQuantity: IMeasure
+  note: String
+}
+
+input SettlementUpdateParams {
+  id: ID!
+  settles: ID
+  settledBy: ID
+  resourceQuantity: IMeasure
+  effortQuantity: IMeasure
+  note: String
+}
+
+type SettlementResponse {
+  settlement: Settlement
+}
+
+type Mutation {
+  createClaim(claim: ClaimCreateParams!): ClaimResponse
+  updateClaim(claim: ClaimUpdateParams!): ClaimResponse
+  deleteClaim(id: String!): Boolean
+
+  createSettlement(settlement: SettlementCreateParams!): SettlementResponse
+  updateSettlement(s0ettlement: SettlementUpdateParams!): SettlementResponse
+  deleteSettlement(id: String!): Boolean
+}

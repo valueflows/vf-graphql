@@ -85,3 +85,72 @@ type ProcessSpecification {
   "A textual description or comment."
   note: String
 }
+
+
+
+
+
+# interface ResourceSpecificationParams {
+#   name: String
+#   image: URI
+#   note: String
+# }
+
+input ResourceSpecificationCreateParams { # implements ResourceSpecificationParams
+  name: String!
+  image: URI
+  note: String
+}
+
+input ResourceSpecificationUpdateParams { # implements UpdateParams & ResourceSpecificationParams
+  id: ID!
+  name: String
+  image: URI
+  note: String
+}
+
+type ResourceSpecificationResponse {
+  resourceSpecification: ResourceSpecification
+}
+
+
+# interface ProcessSpecificationParams {
+#   name: String
+#   note: String
+# }
+
+input ProcessSpecificationCreateParams { # implements ProcessSpecificationParams
+  name: String!
+  note: String
+}
+
+input ProcessSpecificationUpdateParams { # implements UpdateParams & ProcessSpecificationParams
+  id: ID!
+  name: String
+  note: String
+}
+
+type ProcessSpecificationResponse {
+  processSpecification: ProcessSpecification
+}
+
+type Query {
+  action(id: ID): Action
+  allActions: [Action!]
+
+  resourceSpecification(id: ID): ResourceSpecification
+  allResourceSpecifications: [ResourceSpecification!]
+
+  processSpecification(id: ID): ProcessSpecification
+  allProcessSpecifications: [ProcessSpecification!]
+}
+
+type Mutation {
+  createResourceSpecification(resourceSpecification: ResourceSpecificationCreateParams): ResourceSpecificationResponse
+  updateResourceSpecification(resourceSpecification: ResourceSpecificationUpdateParams): ResourceSpecificationResponse
+  deleteResourceSpecification(id: String!): Boolean
+
+  createProcessSpecification(processSpecification: ProcessSpecificationCreateParams): ProcessSpecificationResponse
+  updateProcessSpecification(processSpecification: ProcessSpecificationUpdateParams): ProcessSpecificationResponse
+  deleteProcessSpecification(id: String!): Boolean
+}

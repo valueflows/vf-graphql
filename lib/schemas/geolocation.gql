@@ -23,3 +23,10 @@ type SpatialThing {
   "A textual description or comment."
   note: String
 }
+
+type Query {
+  spatialThing(id: ID): SpatialThing
+  allSpatialThings: [SpatialThing!]
+}
+
+# :TODO: Mutation API

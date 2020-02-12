@@ -28,3 +28,41 @@ type Agreement {
   "A textual description or comment."
   note: String
 }
+
+
+
+
+
+# interface AgreementParams {
+#   name: String
+#   created: DateTime
+#   note: String
+# }
+
+input AgreementCreateParams { # implements AgreementParams
+  name: String!
+  created: DateTime!
+  note: String
+}
+
+input AgreementUpdateParams { # implements UpdateParams & AgreementParams
+  id: ID!
+  name: String
+  created: DateTime
+  note: String
+}
+
+type AgreementResponse {
+  Agreement: Agreement
+}
+
+type Query {
+  agreement(id: ID): Agreement
+  allAgreements: [Agreement!]
+}
+
+type Mutation {
+  createAgreement(agreement: AgreementCreateParams): AgreementResponse
+  updateAgreement(agreement: AgreementUpdateParams): AgreementResponse
+  deleteAgreement(id: String!): Boolean
+}

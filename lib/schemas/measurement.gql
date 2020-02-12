@@ -59,3 +59,39 @@ input IDuration {
   numericDuration: Float!
   unitType: TimeUnit!
 }
+
+
+
+
+
+
+# interface UnitParams {
+#   label: String
+#   symbol: String
+# }
+
+input UnitCreateParams { # implements UnitParams
+  label: String!
+  symbol: String!
+}
+
+input UnitUpdateParams { # implements UpdateParams & UnitParams
+  id: ID!
+  label: String
+  symbol: String
+}
+
+type UnitResponse {
+  unit: Unit
+}
+
+type Query {
+  unit(id: ID): Unit
+  allUnits: [Unit!]
+}
+
+type Mutation {
+  createUnit(unit: UnitCreateParams): UnitResponse
+  updateUnit(unit: UnitUpdateParams): UnitResponse
+  deleteUnit(id: String!): Boolean
+}

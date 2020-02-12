@@ -141,3 +141,124 @@ type AgentRelationshipRole {
 #   PEER
 #   TRADINGPARTNER
 # }
+
+
+
+
+
+# interface AgentParams {
+#   name: String
+#   image: URI
+#   primaryLocation: String
+#   note: String
+# }
+
+input AgentCreateParams { # implements AgentParams
+  name: String!
+  image: URI
+  primaryLocation: ID
+  note: String
+}
+
+input AgentUpdateParams { # implements UpdateParams & AgentParams
+  id: ID!
+  name: String
+  image: URI
+  primaryLocation: ID
+  note: String
+}
+
+type PersonResponse {
+  agent: Person!
+}
+
+type OrganizationResponse {
+  agent: Organization!
+}
+
+
+# interface AgentRelationshipParams {
+#   subject: ID
+#   object: ID
+#   relationship: ID
+#   note: String
+# }
+
+input AgentRelationshipCreateParams { # implements AgentRelationshipParams
+  subject: ID! # Agent
+  object: ID! # Agent
+  relationship: ID! # AgentRelationshipRole
+  note: String
+}
+
+input AgentRelationshipUpdateParams { # implements UpdateParams & AgentRelationshipParams
+  id: ID!
+  subject: ID
+  object: ID
+  relationship: ID
+  note: String
+}
+
+type AgentRelationshipResponse {
+  agentRelationship: AgentRelationship!
+}
+
+
+# interface AgentRelationshipRoleParams {
+#   roleLabel: String
+#   inverseRoleLabel: String
+#   note: String
+# }
+
+input AgentRelationshipRoleCreateParams { # implements AgentRelationshipRoleParams
+  roleLabel: String!
+  inverseRoleLabel: String
+  note: String
+}
+
+input AgentRelationshipRoleUpdateParams { # implements UpdateParams & AgentRelationshipRoleParams
+  id: ID!
+  roleLabel: String
+  inverseRoleLabel: String
+  note: String
+}
+
+type AgentRelationshipRoleResponse {
+  agentRelationshipRole: AgentRelationshipRole
+}
+
+type Query {
+  myAgent: Agent
+
+  agent(id: ID): Agent
+  allAgents: [Agent!]
+
+  organization(id: ID): Organization
+  allOrganizations: [Organization!]
+
+  person(id: ID): Person
+  allPeople: [Person!]
+
+  agentRelationship(id: ID): AgentRelationship
+  allAgentRelationships: [AgentRelationship!]
+  agentRelationshipRole(id: ID): AgentRelationshipRole
+  allAgentRelationshipRoles: [AgentRelationshipRole!]
+}
+
+type Mutation {
+  createPerson(person: AgentCreateParams!): PersonResponse
+  updatePerson(person: AgentUpdateParams!): PersonResponse
+  deletePerson(id: String!): Boolean
+
+  createOrganization(organization: AgentCreateParams!): OrganizationResponse
+  updateOrganization(organization: AgentUpdateParams!): OrganizationResponse
+  deleteOrganization(id: String!): Boolean
+
+  createAgentRelationship(relationship: AgentRelationshipCreateParams!): AgentRelationshipResponse
+  updateAgentRelationship(relationship: AgentRelationshipUpdateParams!): AgentRelationshipResponse
+  deleteAgentRelationship(id: String!): Boolean
+
+  createAgentRelationshipRole(agentRelationshipRole: AgentRelationshipRoleCreateParams): AgentRelationshipRoleResponse
+  updateAgentRelationshipRole(agentRelationshipRole: AgentRelationshipRoleUpdateParams): AgentRelationshipRoleResponse
+  deleteAgentRelationshipRole(id: String!): Boolean
+}

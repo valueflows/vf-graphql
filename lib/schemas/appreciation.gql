@@ -26,3 +26,35 @@ type Appreciation {
   "A textual description or comment."
   note: String
 }
+
+
+
+
+# interface AppreciationParams {
+#   appreciationOf: ID
+#   appreciationWith: ID
+#   note: String
+# }
+
+input AppreciationCreateParams {
+  appreciationOf: ID # EconomicEvent
+  appreciationWith: ID # EconomicEvent
+  note: String
+}
+
+input AppreciationUpdateParams {
+  id: ID!
+  appreciationOf: ID # EconomicEvent
+  appreciationWith: ID # EconomicEvent
+  note: String
+}
+
+type AppreciationResponse {
+  appreciation: Appreciation
+}
+
+type Mutation {
+  createAppreciation(appreciation: AppreciationCreateParams!): AppreciationResponse
+  updateAppreciation(appreciation: AppreciationUpdateParams!): AppreciationResponse
+  deleteAppreciation(id: String!): Boolean
+}

@@ -218,3 +218,256 @@ type Satisfaction {
   "A textual description or comment."
   note: String
 }
+
+
+
+
+
+# interface IntentParams {
+#   name: String
+#   action: ID
+#   inputOf: ID
+#   outputOf: ID
+#   provider: ID
+#   receiver: ID
+#   resourceConformsTo: ID
+#   resourceClassifiedAs: [URI!]
+#   resourceInventoriedAs: ID
+#   resourceQuantity: IMeasure
+#   effortQuantity: IMeasure
+#   availableQuantity: IMeasure
+#   hasBeginning: DateTime
+#   hasEnd: DateTime
+#   hasPointInTime: DateTime
+#   due: DateTime
+#   image: URI
+#   note: String
+#   inScopeOf: [AnyType!]
+#   atLocation: ID
+#   agreedIn: URI
+#   finished: Boolean
+# }
+
+input IntentCreateParams { # implements IntentParams
+  action: ID!
+  name: String
+  inputOf: ID
+  outputOf: ID
+  provider: ID
+  receiver: ID
+  resourceConformsTo: ID
+  resourceClassifiedAs: [URI!]
+  resourceInventoriedAs: ID
+  resourceQuantity: IMeasure
+  effortQuantity: IMeasure
+  availableQuantity: IMeasure
+  hasBeginning: DateTime
+  hasEnd: DateTime
+  hasPointInTime: DateTime
+  due: DateTime
+  image: URI
+  note: String
+  inScopeOf: [AnyType!]
+  atLocation: ID # SpatialThing
+  agreedIn: URI
+  finished: Boolean
+}
+
+input IntentUpdateParams { # implements UpdateParams & IntentParams
+  id: ID!
+  name: String
+  action: ID
+  inputOf: ID
+  outputOf: ID
+  provider: ID
+  receiver: ID
+  resourceConformsTo: ID
+  resourceClassifiedAs: [URI!]
+  resourceInventoriedAs: ID
+  resourceQuantity: IMeasure
+  effortQuantity: IMeasure
+  availableQuantity: IMeasure
+  hasBeginning: DateTime
+  hasEnd: DateTime
+  hasPointInTime: DateTime
+  due: DateTime
+  image: URI
+  finished: Boolean
+  note: String
+  inScopeOf: [AnyType!]
+  atLocation: ID # SpatialThing
+  agreedIn: URI
+}
+
+type IntentResponse {
+  intent: Intent!
+}
+
+
+# interface CommitmentParams {
+#   action: ID
+#   inputOf: ID
+#   outputOf: ID
+#   provider: ID
+#   receiver: ID
+#   resourceClassifiedAs: [URI!]
+#   resourceConformsTo: ID
+#   resourceInventoriedAs: ID
+#   resourceQuantity: IMeasure
+#   effortQuantity: IMeasure
+#   hasBeginning: DateTime
+#   hasEnd: DateTime
+#   hasPointInTime: DateTime
+#   due: DateTime
+#   finished: Boolean
+#   note: String
+#   inScopeOf: [AnyType!]
+#   independentDemandOf: ID #Plan
+#   atLocation: ID
+#   agreedIn: URI
+#   clauseOf: Agreement
+# }
+
+input CommitmentCreateParams { # implements CommitmentParams
+  action: ID!
+  inputOf: ID
+  outputOf: ID
+  provider: ID!
+  receiver: ID!
+  resourceClassifiedAs: [URI!]
+  resourceConformsTo: ID
+  resourceInventoriedAs: ID
+  resourceQuantity: IMeasure
+  effortQuantity: IMeasure
+  hasBeginning: DateTime
+  hasEnd: DateTime
+  hasPointInTime: DateTime
+  due: DateTime
+  finished: Boolean
+  note: String
+  inScopeOf: [AnyType!]
+  independentDemandOf: ID #Plan
+  atLocation: ID # SpatialThing
+  agreedIn: URI
+  clauseOf: ID # Agreement
+}
+
+input CommitmentUpdateParams { # implements UpdateParams & CommitmentParams
+  id: ID!
+  inputOf: ID
+  outputOf: ID
+  provider: ID
+  receiver: ID
+  resourceClassifiedAs: [URI!]
+  resourceConformsTo: ID
+  resourceInventoriedAs: ID
+  resourceQuantity: IMeasure
+  effortQuantity: IMeasure
+  hasBeginning: DateTime
+  hasEnd: DateTime
+  hasPointInTime: DateTime
+  due: DateTime
+  finished: Boolean
+  note: String
+  inScopeOf: [AnyType!]
+  independentDemandOf: ID #Plan
+  atLocation: ID # SpatialThing
+  agreedIn: URI
+  clauseOf: ID # Agreement
+}
+
+type CommitmentResponse {
+  commitment: Commitment
+}
+
+
+# interface FulfillmentParams {
+#   fulfilledBy: ID # EconomicEvent
+#   fulfills: ID # Commmitment
+#   resourceQuantity: IMeasure
+#   effortQuantity: IMeasure
+#   note: String
+# }
+
+input FulfillmentCreateParams { # implements FulfillmentParams
+  fulfilledBy: ID!
+  fulfills: ID!
+  resourceQuantity: IMeasure
+  effortQuantity: IMeasure
+  note: String
+}
+
+input FulfillmentUpdateParams { # implements UpdateParams & FulfillmentParams
+  id: ID!
+  fulfilledBy: ID
+  fulfills: ID
+  resourceQuantity: IMeasure
+  effortQuantity: IMeasure
+  note: String
+}
+
+type FulfillmentResponse {
+  fulfillment: Fulfillment
+}
+
+
+# interface SatisfactionParams {
+#   satisfies: Intent
+#   satisfiedBy: Commitment
+#   resourceQuantity: IMeasure
+#   effortQuantity: IMeasure
+#   note: String
+# }
+
+input SatisfactionCreateParams { # implements SatisfactionParams
+  satisfies: ID! # Intent
+  satisfiedBy: ID! # Commitment
+  resourceQuantity: IMeasure
+  effortQuantity: IMeasure
+  note: String
+}
+
+input SatisfactionUpdateParams { # implements UpdateParams & SatisfactionParams
+  id: ID!
+  satisfies: ID # Intent
+  satisfiedBy: ID # Commitment
+  resourceQuantity: IMeasure
+  effortQuantity: IMeasure
+  note: String
+}
+
+type SatisfactionResponse {
+  satisfaction: Satisfaction
+}
+
+type Query {
+  commitment(id: ID): Commitment
+  allCommitments: [Commitment!]
+
+  intent(id: ID): Intent
+  allIntents: [Intent!]
+
+  fulfillment(id: ID): Fulfillment
+  allFulfillments: [Fulfillment!]
+
+  satisfaction(id: ID): Satisfaction
+  allSatisfactions: [Satisfaction!]
+}
+
+type Mutation {
+  createCommitment(commitment: CommitmentCreateParams): CommitmentResponse
+  updateCommitment(commitment: CommitmentUpdateParams): CommitmentResponse
+  deleteCommitment(id: String!): Boolean
+
+  createIntent(intent: IntentCreateParams): IntentResponse
+  updateIntent(intent: IntentUpdateParams): IntentResponse
+  deleteIntent(id: String!): Boolean
+
+  createFulfillment(fulfillment: FulfillmentCreateParams!): FulfillmentResponse
+  updateFulfillment(fulfillment: FulfillmentUpdateParams!): FulfillmentResponse
+  deleteFulfillment(id: String!): Boolean
+
+  createSatisfaction(satisfaction: SatisfactionCreateParams): SatisfactionResponse
+  updateSatisfaction(satisfaction: SatisfactionUpdateParams): SatisfactionResponse
+  deleteSatisfaction(id: String!): Boolean
+}

@@ -49,3 +49,72 @@ type ScenarioDefinition {
   "A textual description or comment."
   note: String
 }
+
+
+
+
+
+
+# interface ScenarioParams {
+#   name: String
+#   definedAs: ScenarioDefinition
+#   hasBeginning: DateTime
+#   hasEnd: DateTime
+#   inScopeOf: [AnyType!]
+#   note: String
+# }
+
+input ScenarioCreateParams { # implements ScenarioParams
+  name: String!
+  definedAs: ID! #ScenarioDefinition
+  hasBeginning: DateTime
+  hasEnd: DateTime
+  inScopeOf: [AnyType!]
+  note: String
+}
+
+input ScenarioUpdateParams { # implements UpdateParams & ScenarioParams
+  id: ID!
+  name: String
+  definedAs: ID! #ScenarioDefinition
+  hasBeginning: DateTime
+  hasEnd: DateTime
+  inScopeOf: [AnyType!]
+  note: String
+}
+
+type ScenarioResponse {
+  scenario: Scenario
+}
+
+# interface ScenarioDefinitionParams {
+#   name: String
+#   hasDuration: IDuration
+#   note: String
+# }
+
+input ScenarioDefinitionCreateParams { # implements ScenarioDefinitionParams
+  name: String
+  hasDuration: IDuration
+  note: String
+}
+
+input ScenarioDefinitionUpdateParams { # implements UpdateParams & ScenarioDefinitionParams
+  id: ID!
+  hasDuration: IDuration
+  note: String
+}
+
+type ScenarioDefinitionResponse {
+  scenarioDefinition: ScenarioDefinition
+}
+
+type Mutation {
+  createScenario(plan: ScenarioCreateParams!): ScenarioResponse
+  updateScenario(plan: ScenarioUpdateParams!): ScenarioResponse
+  deleteScenario(id: String!): Boolean
+
+  createScenarioDefinition(plan: ScenarioDefinitionCreateParams!): ScenarioDefinitionResponse
+  updateScenarioDefinition(plan: ScenarioDefinitionUpdateParams!): ScenarioDefinitionResponse
+  deleteScenarioDefinition(id: String!): Boolean
+}

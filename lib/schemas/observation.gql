@@ -204,3 +204,195 @@ type Process {
   "The process can be safely deleted, has no dependent information."
   deletable: Boolean
 }
+
+
+
+
+# interface EconomicEventParams {
+#   action: ID!
+#   inputOf: ID
+#   outputOf: ID
+#   provider: ID
+#   receiver: ID
+#   resourceQuantity: IMeasure
+#   effortQuantity: IMeasure
+#   hasBeginning: DateTime
+#   hasEnd: DateTime
+#   hasPointInTime: DateTime
+#   note: String
+#   inScopeOf: [AnyType!]
+#   atLocation: ID
+#   agreedIn: URI
+#   realizationOf: ID # Agreement
+#   triggeredBy: ID # EconomicEvent
+#   toResourceInventoriedAs: ID # EconomicResource
+# }
+
+input EconomicEventCreateParams { # implements EconomicEventParams
+  action: ID! # Action
+  inputOf: ID # Process
+  outputOf: ID # Process
+  provider: ID! # Agent
+  receiver: ID! # Agent
+  inScopeOf: [AnyType!]
+  resourceInventoriedAs: ID # EconomicResource
+  resourceClassifiedAs: [URI!]
+  resourceConformsTo: ID # ResourceSpecification
+  resourceQuantity: IMeasure
+  effortQuantity: IMeasure
+  atLocation: ID # SpatialThing
+  hasBeginning: DateTime
+  hasEnd: DateTime
+  hasPointInTime: DateTime
+  note: String
+  agreedIn: URI
+  realizationOf: ID # Agreement
+  triggeredBy: ID # EconomicEvent
+  toResourceInventoriedAs: ID # EconomicResource
+}
+
+input EconomicEventUpdateParams { # implements UpdateParams & EconomicEventParams
+  id: ID!
+  action: ID
+  inputOf: ID
+  outputOf: ID
+  provider: ID
+  receiver: ID
+  inScopeOf: [AnyType!]
+  resourceInventoriedAs: ID
+  resourceClassifiedAs: [URI!]
+  resourceConformsTo: ID
+  resourceQuantity: IMeasure
+  effortQuantity: IMeasure
+  atLocation: ID # SpatialThing
+  hasBeginning: DateTime
+  hasEnd: DateTime
+  hasPointInTime: DateTime
+  note: String
+  agreedIn: URI
+  realizationOf: ID # Agreement
+  triggeredBy: ID # EconomicEvent
+  toResourceInventoriedAs: ID # EconomicResource
+}
+
+type EconomicEventResponse {
+  economicEvent: EconomicEvent!
+  economicResource: EconomicResource # only for resource creation events
+}
+
+
+# interface EconomicResourceParams {
+#   name: String
+#   classifiedAs: [URI!]
+#   conformsTo: ID # ResourceSpecification
+#   trackingIdentifier: String
+#   lot: ID # ProductBatch
+#   image: URI # URI
+#   accountingQuantity: IMeasure
+#   onhandQuantity: IMeasure
+#   currentLocation: ID
+#   note: String
+#   containedIn: ID # EconomicResource
+#   unitOfEffort: ID # Unit
+#   state: ID # Action
+#   stage: ID # ProcessSpecification
+# }
+
+"""
+Input `EconomicResource` type used when sending events to setup initial resource recordings
+"""
+input EconomicResourceCreateParams { # implements EconomicResourceParams
+  name: String
+  conformsTo: ID # ResourceSpecification
+  trackingIdentifier: String
+  lot: ID # ProductBatch
+  image: URI # URI
+  containedIn: ID # EconomicResource
+  currentLocation: ID # SpatialThing
+  note: String
+}
+
+input EconomicResourceUpdateParams { # implements UpdateParams & EconomicResourceParams
+  id: ID!
+  classifiedAs: [URI!]
+  image: URI # URI
+  containedIn: ID # EconomicResource
+  unitOfEffort: ID # Unit
+  note: String
+}
+
+type EconomicResourceResponse {
+  economicResource: EconomicResource!
+}
+
+
+# interface ProcessParams {
+#   name: String
+#   hasBeginning: DateTime
+#   hasEnd: DateTime
+#   note: String
+#   inScopeOf: String
+#   plannedWithin: ID # Plan
+#   finished: Boolean
+# }
+
+input ProcessCreateParams { # implements ProcessParams
+  name: String!
+  hasBeginning: DateTime
+  hasEnd: DateTime
+  finished: Boolean
+  note: String
+  inScopeOf: [AnyType!]
+  plannedWithin: ID # Plan
+}
+
+input ProcessUpdateParams { # implements UpdateParams & ProcessParams
+  id: ID!
+  name: String
+  hasBeginning: DateTime
+  hasEnd: DateTime
+  finished: Boolean
+  note: String
+  inScopeOf: [AnyType!]
+  plannedWithin: ID # Plan
+}
+
+type ProcessResponse {
+  process: Process
+}
+
+type Query {
+  economicEvent(id: ID): EconomicEvent
+  allEconomicEvents: [EconomicEvent!]
+  filteredEconomicEvents(
+    providerId: ID,
+    receiverId: ID,
+    resourceClassifiedAs: [URI!],
+    action: ID,
+    startDate: String,
+    endDate: String
+  ): [EconomicEvent!]
+
+  economicResource(id: ID): EconomicResource
+  allEconomicResources: [EconomicResource!]
+
+  process(id: ID): Process
+  allProcesses: [Process!]
+}
+
+type Mutation {
+  createEconomicEvent(event: EconomicEventCreateParams!, newInventoriedResource: EconomicResourceCreateParams): EconomicEventResponse
+  updateEconomicEvent(event: EconomicEventUpdateParams!): EconomicEventResponse
+  deleteEconomicEvent(id: String!): Boolean
+
+  # :TODO: should this be allowed without an originating event? Or should the event be recorded transparently?
+  updateEconomicResource(resource: EconomicResourceUpdateParams!): EconomicResourceResponse
+  deleteEconomicResource(id: String!): Boolean
+
+  #createValidation(note: String, economicEvent: String!, validatedBy: String!): CreateValidation
+  #deleteValidation(id: String!): DeleteValidation
+
+  createProcess(process: ProcessCreateParams!): ProcessResponse
+  updateProcess(process: ProcessUpdateParams!): ProcessResponse
+  deleteProcess(id: String!): Boolean
+}
