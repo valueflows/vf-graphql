@@ -9,14 +9,14 @@
 const express = require('express')
 const { ApolloServer, gql } = require('apollo-server-express')
 const { express: voyagerMiddleware } = require('graphql-voyager/middleware')
-const { makeExecutableSchema, addMockFunctionsToSchema } = require('graphql-tools')
+const { addMockFunctionsToSchema } = require('graphql-tools')
 
 const SERVER_PORT = 3000
 const SCHEMA_VIEWER_PATH = '/viewer'
 
-const typeDefs = require('@valueflows/vf-graphql/typeDefs').all_vf
+const { buildSchema } = require('@valueflows/vf-graphql')
 
-const schema = makeExecutableSchema({ typeDefs })
+const schema = buildSchema()
 addMockFunctionsToSchema({ schema, mocks: {
   URI: () => 'http://example.com/thing',
   DateTime: () => new Date().toISOString(),
