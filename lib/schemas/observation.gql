@@ -1,9 +1,14 @@
 ##
 #
-# Observation layer
+# Observation module
 #
 # Record of what actually happened affecting the economic ecosystem.
 #
+# @depends  measurement.gql
+# @depends  knowledge.gql
+# @depends  agent.gql
+# @package  vf-graphql
+# @since    2019-02-11
 #
 ##
 
@@ -57,9 +62,6 @@ type EconomicEvent {
   "The date/time at which the economic event occurred. Can be used instead of beginning and end."
   hasPointInTime: DateTime
 
-  "The place where an economic event occurs.  Usually mappable."
-  atLocation: SpatialThing
-
   "A textual description or comment."
   note: String
 
@@ -69,23 +71,11 @@ type EconomicEvent {
   "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this economic event."
   agreedIn: URI
 
-  "This economic event occurs as part of this agreement."
-  realizationOf: Agreement
-
   "References another economic event that implied this economic event, often based on a prior agreement."
   triggeredBy: EconomicEvent
 
   ##############################################################################
   # inverse relationships and queries
-
-  "The commitment which is completely or partially fulfilled by an economic event."
-  fulfills: [Fulfillment!]
-
-  "An intent satisfied fully or partially by an economic event or commitment."
-  satisfies: [Satisfaction!]
-
-  appreciationOf: [EconomicEvent!]
-  appreciatedBy: [EconomicEvent!]
 
   track: [ProductionFlowItem!]
   trace: [ProductionFlowItem!]
@@ -138,9 +128,6 @@ type EconomicResource {
 
   "Used when a stock economic resource contains items also defined as economic resources."
   containedIn: EconomicResource
-
-  "The current place an economic resource is located. Could be at any level of granularity, from a town to an address to a warehouse location. Usually mappable."
-  currentLocation: SpatialThing
 
   ##############################################################################
   # inverse relationships and queries
@@ -199,24 +186,12 @@ type Process {
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
   inScopeOf: [AnyType!]
 
-  "The process with its inputs and outputs is part of the plan."
-  plannedWithin: Plan
-
-  "The process with its inputs and outputs is part of the scenario."
-  nestedIn: Scenario
-
   ##############################################################################
   # inverse relationships and queries
 
   inputs(action: ID): [EconomicEvent!]
   outputs(action: ID): [EconomicEvent!]
   unplannedEconomicEvents(action: ID): [EconomicEvent!]
-
-  committedInputs(action: ID): [Commitment!]
-  committedOutputs(action: ID): [Commitment!]
-
-  intendedInputs(action: ID): [Intent!]
-  intendedOutputs(action: ID): [Intent!]
 
   nextProcesses: [Process!]
   previousProcesses: [Process!]
@@ -228,20 +203,4 @@ type Process {
 
   "The process can be safely deleted, has no dependent information."
   deletable: Boolean
-}
-
-"""
-A way to tie an economic event that is given in loose fulfilment for another economic event, without commitments or expectations. Supports the gift economy.
-"""
-type Appreciation {
-  id: ID!
-
-  "The `EconomicEvent` this appreciation has been given in acknowledgement of"
-  appreciationOf: EconomicEvent!
-
-  "The `EconomicEvent` provided as a gift in this appreciation"
-  appreciationWith: EconomicEvent!
-
-  "A textual description or comment."
-  note: String
 }

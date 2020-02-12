@@ -1,0 +1,27 @@
+##
+#
+# Location <> Agent query indexes
+#
+# @package  vf-graphql
+# @since    2020-02-12
+#
+##
+
+interface Agent {
+  "The main place an agent is located, often an address where activities occur and mail can be sent. This is usually a mappable geographic location.  It also could be a website address, as in the case of agents who have no physical location."
+  primaryLocation: SpatialThing
+}
+
+type Person implements Agent {
+  "The main place an agent is located, often an address where activities occur and mail can be sent. This is usually a mappable geographic location.  It also could be a website address, as in the case of agents who have no physical location."
+  primaryLocation: SpatialThing
+}
+
+type Organization implements Agent {
+  "The main place an agent is located, often an address where activities occur and mail can be sent. This is usually a mappable geographic location.  It also could be a website address, as in the case of agents who have no physical location."
+  primaryLocation: SpatialThing
+}
+
+type SpatialThing {
+  agents: [Agent!]
+}

@@ -1,0 +1,15 @@
+##
+#
+# Knowledge <> Observation indexes
+#
+# Provides search intelligence for Observation module records via the
+# Knowledge module, enabling type-based queries.
+#
+# @package  vf-graphql
+# @since    2020-02-12
+#
+##
+
+type ResourceSpecification {
+  conformingResources: [EconomicResource!]
+}

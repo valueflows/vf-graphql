@@ -1,0 +1,76 @@
+##
+#
+# Proposal module
+#
+# Allows grouping of many intents (requests or offers) into a related proposal for actioning.
+#
+# @depends  agent.gql
+# @depends  planning.gql
+# @package  vf-graphql
+# @since    2019-02-11
+#
+##
+
+"""
+Published requests or offers, sometimes with what is expected in return.
+"""
+type Proposal {
+  id: ID!
+
+  "An informal or formal textual identifier for an item. Does not imply uniqueness."
+  name: String
+
+  "The beginning date/time of proposal publication."
+  hasBeginning: DateTime
+
+  "The end date/time of proposal publication."
+  hasEnd: DateTime
+
+  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
+  inScopeOf: [AnyType!]
+
+  "This proposal contains unit based quantities, which can be multipied to create commitments; commonly seen in a price list or e-commerce."
+  unitBased: Boolean
+
+  "The date and time the proposal was created."
+  created: DateTime
+
+  "A textual description or comment."
+  note: String
+
+  ##############################################################################
+  # inverse relationships and queries
+
+  publishes: [ProposedIntent!]
+  publishedTo: [ProposedTo!]
+}
+
+"""
+Represents many-to-many relationships between Proposals and Intents, supporting including intents in multiple proposals, as well as a proposal including multiple intents.
+"""
+type ProposedIntent {
+  id: ID!
+
+  "This is a reciprocal intent of this proposal, not primary. Not meant to be used for intent matching."
+  reciprocal: Boolean
+
+  "The intent which is part of this published proposal."
+  publishes: Intent!
+
+  "The published proposal which this intent is part of."
+  publishedIn: Proposal!
+}
+
+
+"""
+An agent to which the proposal is to be published.  A proposal can be published to many agents.
+"""
+type ProposedTo {
+  id: ID!
+
+  "The agent to which the proposal is published."
+  proposedTo: Agent!
+
+  "The proposal that is published to a specific agent."
+  proposed: Proposal!
+}

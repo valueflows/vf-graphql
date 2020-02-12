@@ -1,0 +1,30 @@
+##
+#
+# Agreement module
+#
+# Simple module to manage shared agreements between agents in order for such
+# agreements to be referenced in actual commitments made.
+#
+# Often referenced by file upload functionality or similar for attaching
+# legal documents or more detailed information.
+#
+# @package  vf-graphql
+# @since    2019-02-11
+#
+##
+
+"""
+Any type of agreement among economic agents.
+"""
+type Agreement {
+  id: ID!
+
+  "An informal or formal textual identifier for an item. Does not imply uniqueness."
+  name: String
+
+  "The date and time the agreement was created."
+  created: DateTime
+
+  "A textual description or comment."
+  note: String
+}

@@ -5,6 +5,15 @@
 # Allows agents to coordinate economic activity by agreeing on a series of
 # future events to be undertaken.
 #
+# :TODO: split out observation fields into bridging schema to allow planning
+#        systems to operate without observed events
+#
+# @depends  measurement.gql
+# @depends  knowledge.gql
+# @depends  agent.gql
+# @depends  observation.gql
+# @package  vf-graphql
+# @since    2019-02-11
 #
 ##
 
@@ -64,9 +73,6 @@ type Commitment {
   "The commitment is complete or not.  This is irrespective of if the original goal has been met, and indicates that no more will be done."
   finished: Boolean
 
-  "The place where a commitment occurs.  Usually mappable."
-  atLocation: SpatialThing
-
   "A textual description or comment."
   note: String
 
@@ -76,11 +82,8 @@ type Commitment {
   "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this commitment."
   agreedIn: URI
 
-  "This commitment is part of the exchange agreement."
-  clauseOf: Agreement
-
-  "Represents a desired deliverable expected from this plan."
-  independentDemandOf: Plan
+  "The commitment can be safely deleted, has no dependent information."
+  deletable: Boolean
 
   ##############################################################################
   # inverse relationships and queries
@@ -92,11 +95,6 @@ type Commitment {
   satisfies: [Satisfaction!]
 
   involvedAgents: [Agent!]
-
-  plan: Plan
-
-  "The commitment can be safely deleted, has no dependent information."
-  deletable: Boolean
 }
 
 """
@@ -156,9 +154,6 @@ type Intent {
   "The intent is complete or not.  This is irrespective of if the original goal has been met, and indicates that no more will be done."
   finished: Boolean
 
-  "The place where an intent would occur.  Usually mappable."
-  atLocation: SpatialThing
-
   "The uri to an image relevant to the intent, such as a photo."
   image: URI
 
@@ -171,63 +166,13 @@ type Intent {
   "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this intent."
   agreedIn: URI
 
+  "The intent can be safely deleted, has no dependent information."
+  deletable: Boolean
+
   ##############################################################################
   # inverse relationships and queries
 
   satisfiedBy: [Satisfaction!]
-  publishedIn: [ProposedIntent!]
-
-  "The intent can be safely deleted, has no dependent information."
-  deletable: Boolean
-}
-
-"""
-A claim for a future economic event(s) in reciprocity for an economic event that already occurred. For example, a claim for payment for goods received.
-"""
-type Claim {
-  id: ID!
-
-  "Relates a claim to a verb, such as consume, produce, work, improve, etc."
-  action: Action!
-
-  "The economic agent from whom the claim is initiated."
-  provider: Agent!
-
-  "The economic agent whom the claim is for."
-  receiver: Agent!
-
-  "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
-  resourceClassifiedAs: [URI!]
-
-  "The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
-  resourceConformsTo: ResourceSpecification
-
-  "The amount and unit of the economic resource counted or inventoried."
-  resourceQuantity: Measure
-
-  "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
-  effortQuantity: Measure
-
-  "The economic event which already occurred which this claim has been made against."
-  triggeredBy: EconomicEvent!
-
-  "The time the claim is expected to be settled."
-  due: DateTime
-
-  "The data on which the claim was made."
-  created: DateTime
-
-  "The claim is complete or not.  This is irrespective of if the original goal has been met, and indicates that no more will be done."
-  finished: Boolean
-
-  "A textual description or comment."
-  note: String
-
-  "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this claim."
-  agreedIn: URI
-
-  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType!]
 }
 
 """
@@ -250,7 +195,6 @@ type Fulfillment {
 
   "A textual description or comment."
   note: String
-
 }
 
 """
@@ -272,193 +216,5 @@ type Satisfaction {
   effortQuantity: Measure
 
   "A textual description or comment."
-  note: String
-}
-
-"""
-Represents many-to-many relationships between claim and economic events that fully or partially settle one or more claims.
-"""
-type Settlement {
-  id: ID!
-
-  "A `Claim` which is fully or partially settled by an `EconomicEvent`."
-  settles: Claim!
-
-  "The `EconomicEvent` fully or partially settling a `Claim`."
-  settledBy: EconomicEvent!
-
-  "The amount and unit of the economic resource counted or inventoried."
-  resourceQuantity: Measure
-
-  "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
-  effortQuantity: Measure
-
-  "A textual description or comment."
-  note: String
-}
-
-
-"Query parameters for reading `Process`es related to a `Plan`"
-input planProcessSearchParams {
-  searchString: String
-  after: DateTime
-  before: DateTime
-  finished: Boolean
-}
-
-"""
-A logical collection of processes that constitute a body of planned work with defined deliverable(s).
-"""
-type Plan {
-  id: ID!
-
-  "An informal or formal textual identifier for an item. Does not imply uniqueness."
-  name: String
-
-  "The date and time the plan was made."
-  created: DateTime
-
-  "The time the plan is expected to be complete."
-  due: DateTime
-
-  "A textual description or comment."
-  note: String
-
-  "This plan refines a scenario, making it operational."
-  refinementOf: Scenario
-
-  ##############################################################################
-  # inverse relationships and queries
-
-  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType!]
-
-  processes(filter: planProcessSearchParams): [Process!]
-  independentDemands: [Commitment!]
-
-  deletable: Boolean
-}
-
-"""
-Any type of agreement among economic agents.
-"""
-type Agreement {
-  id: ID!
-
-  "An informal or formal textual identifier for an item. Does not imply uniqueness."
-  name: String
-
-  "The date and time the agreement was created."
-  created: DateTime
-
-  "A textual description or comment."
-  note: String
-
-  ##############################################################################
-  # inverse relationships and queries
-
-  commitments: [Commitment!]
-  economicEvents: [EconomicEvent!]
-  involvedAgents: [Agent!]
-}
-
-"""
-A reference to some external agreement between agents which specifies the rules
-or policies or calculations which govern a flow.
-"""
-type ReferencedAgreement {
-  id: URI!
-}
-
-
-"""
-Published requests or offers, sometimes with what is expected in return.
-"""
-type Proposal {
-  id: ID!
-
-  "An informal or formal textual identifier for an item. Does not imply uniqueness."
-  name: String
-
-  "The beginning date/time of proposal publication."
-  hasBeginning: DateTime
-
-  "The end date/time of proposal publication."
-  hasEnd: DateTime
-
-  "Location or area where the proposal is valid."
-  eligibleLocation: SpatialThing
-
-  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType!]
-
-  "This proposal contains unit based quantities, which can be multipied to create commitments; commonly seen in a price list or e-commerce."
-  unitBased: Boolean
-
-  "The date and time the proposal was created."
-  created: DateTime
-
-  "A textual description or comment."
-  note: String
-
-  ##############################################################################
-  # inverse relationships and queries
-
-  publishes: [ProposedIntent!]
-  publishedTo: [ProposedTo!]
-}
-
-"""
-Represents many-to-many relationships between Proposals and Intents, supporting including intents in multiple proposals, as well as a proposal including multiple intents.
-"""
-type ProposedIntent {
-  id: ID!
-
-  "This is a reciprocal intent of this proposal, not primary. Not meant to be used for intent matching."
-  reciprocal: Boolean
-
-  "The intent which is part of this published proposal."
-  publishes: Intent!
-
-  "The published proposal which this intent is part of."
-  publishedIn: Proposal!
-}
-
-
-"""
-An agent to which the proposal is to be published.  A proposal can be published to many agents.
-"""
-type ProposedTo {
-  id: ID!
-
-  "The agent to which the proposal is published."
-  proposedTo: Agent!
-
-  "The proposal that is published to a specific agent."
-  proposed: Proposal!
-}
-
-
-"""
-An estimated or analytical logical collection of higher level processes used for budgeting, analysis, plan refinement, etc.
-"""
-type Scenario {
-  id: ID!
-
-  "An informal or formal textual identifier for an item. Does not imply uniqueness."
-  name: String!
-
-  "The beginning date/time of the scenario, often the beginning of an accounting period."
-  hasBeginning: DateTime
-
-  "The ending date/time of the scenario, often the end of an accounting period."
-  hasEnd: DateTime
-
-  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType!]
-
-  "This scenario refines another scenario, often as time moves closer or for more detail."
-  refinementOf: Scenario
-
   note: String
 }

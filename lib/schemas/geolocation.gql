@@ -1,0 +1,25 @@
+##
+#
+# Geolocation module
+#
+# Defines a generic data structure to represent a physical location
+#
+# @package  vf-graphql
+# @since    2019-02-11
+#
+##
+
+"""
+A physical mappable location.
+"""
+type SpatialThing {
+  id: ID!
+  name: String!
+  mappableAddress: String
+  lat: Float
+  long: Float
+  alt: Float
+
+  "A textual description or comment."
+  note: String
+}

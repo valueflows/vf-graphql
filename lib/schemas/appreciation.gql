@@ -1,0 +1,28 @@
+##
+#
+# Appreciation module
+#
+# Allows linking EconomicEvents to indicate that some contribution was given in loose appreciation for another.
+#
+# @depends  observation.gql
+# @package  vf-graphql
+# @since    2019-02-11
+#
+##
+
+"""
+A way to tie an economic event that is given in loose fulfilment for another economic event, without commitments or expectations.
+Supports the gift economy.
+"""
+type Appreciation {
+  id: ID!
+
+  "The `EconomicEvent` this appreciation has been given in acknowledgement of"
+  appreciationOf: EconomicEvent!
+
+  "The `EconomicEvent` provided as a gift in this appreciation"
+  appreciationWith: EconomicEvent!
+
+  "A textual description or comment."
+  note: String
+}

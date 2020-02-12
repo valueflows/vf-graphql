@@ -1,0 +1,25 @@
+##
+#
+# Planning <> Geolocation API
+#
+# Augments records of planned events with geospatial information.
+#
+# @package  vf-graphql
+# @since    2020-02-12
+#
+##
+
+type Commitment {
+  "The place where a commitment occurs. Usually mappable."
+  atLocation: SpatialThing
+}
+
+type Intent {
+  "The place where an intent would occur. Usually mappable."
+  atLocation: SpatialThing
+}
+
+type SpatialThing {
+  commitments: [Commitment!]
+  intents: [Intent!]
+}

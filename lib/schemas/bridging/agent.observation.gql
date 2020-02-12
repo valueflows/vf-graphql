@@ -1,0 +1,49 @@
+##
+#
+# Agent <> Observation API
+#
+# Queries related to observation-level data exposed within an agent context.
+#
+# @package  vf-graphql
+# @since    2020-02-11
+#
+##
+
+"Query parameters for reading `EconomicEvent`s related to an `Agent`"
+input agentEventSearchParams {
+  searchString: String
+  action: ID
+  startDate: DateTime
+  endDate: DateTime
+}
+
+"Query parameters for reading `EconomicResource`s related to an `Agent`"
+input agentResourceSearchParams {
+  searchString: String
+  resourceClassification: URI
+  page: Int
+}
+
+"Query parameters for reading `Process`es related to an `Agent`"
+input agentProcessSearchParams {
+  searchString: String
+  finished: Boolean
+}
+
+interface Agent {
+  economicEvents(filter: agentEventSearchParams): [EconomicEvent!]
+  inventoriedEconomicResources(filter: agentResourceSearchParams): [EconomicResource!]
+  processes(filter: agentProcessSearchParams): [Process!]
+}
+
+type Person implements Agent {
+  economicEvents(filter: agentEventSearchParams): [EconomicEvent!]
+  inventoriedEconomicResources(filter: agentResourceSearchParams): [EconomicResource!]
+  processes(filter: agentProcessSearchParams): [Process!]
+}
+
+type Organization implements Agent {
+  economicEvents(filter: agentEventSearchParams): [EconomicEvent!]
+  inventoriedEconomicResources(filter: agentResourceSearchParams): [EconomicResource!]
+  processes(filter: agentProcessSearchParams): [Process!]
+}

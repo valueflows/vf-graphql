@@ -1,0 +1,20 @@
+##
+#
+# Observation <> Agreement API
+#
+# Augments EconomicEvent with properties that link events to Agreements
+# which have governed the execution of those events.
+#
+# @package  vf-graphql
+# @since    2020-02-12
+#
+##
+
+type EconomicEvent {
+  "This economic event occurs as part of this agreement."
+  realizationOf: Agreement
+}
+
+type Agreement {
+  economicEvents: [EconomicEvent!]
+}

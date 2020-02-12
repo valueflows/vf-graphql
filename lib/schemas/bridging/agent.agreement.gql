@@ -1,0 +1,15 @@
+##
+#
+# Agent <> Agreement query API
+#
+# Provides information about the agents involved in agreements.
+#
+# @package  HoloREA
+# @author   pospi <pospi@spadgos.com>
+# @since    2020-02-12
+#
+##
+
+type Agreement {
+  involvedAgents: [Agent!]
+}

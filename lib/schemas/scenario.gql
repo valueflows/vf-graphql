@@ -1,0 +1,51 @@
+##
+#
+# Scenario module
+#
+# Facilitates grouping of processes together into logical collections of higher level processes.
+#
+# @depends  measurement.gql
+# @package  vf-graphql
+# @since    2019-02-11
+#
+##
+
+"""
+An estimated or analytical logical collection of higher level processes used for budgeting, analysis, plan refinement, etc.
+"""
+type Scenario {
+  id: ID!
+
+  "An informal or formal textual identifier for an item. Does not imply uniqueness."
+  name: String!
+
+  "The beginning date/time of the scenario, often the beginning of an accounting period."
+  hasBeginning: DateTime
+
+  "The ending date/time of the scenario, often the end of an accounting period."
+  hasEnd: DateTime
+
+  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
+  inScopeOf: [AnyType!]
+
+  "This scenario refines another scenario, often as time moves closer or for more detail."
+  refinementOf: Scenario
+
+  note: String
+}
+
+"""
+The type definition of one or more scenarios, such as Yearly Budget.
+"""
+type ScenarioDefinition {
+  id: ID!
+
+  "An informal or formal textual identifier for an item. Does not imply uniqueness."
+  name: String!
+
+  "The duration of the scenario, often an accounting period."
+  hasDuration: Duration
+
+  "A textual description or comment."
+  note: String
+}

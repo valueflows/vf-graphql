@@ -1,0 +1,14 @@
+##
+#
+# Planning <> Proposal indexes
+#
+# Enables traversing Intent links into related Proposal modules.
+#
+# @package  vf-graphql
+# @since    2020-02-12
+#
+##
+
+type Intent {
+  publishedIn: [ProposedIntent!]
+}

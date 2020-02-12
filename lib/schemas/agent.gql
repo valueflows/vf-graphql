@@ -5,52 +5,10 @@
 # All functionality related to the definition of autonomous agents
 # (people, organizations, groups) and their relationships.
 #
+# @package  vf-graphql
+# @since    2019-02-11
 #
 ##
-
-"Query parameters for reading `EconomicResource`s related to an `Agent`"
-input agentResourceSearchParams {
-  searchString: String
-  resourceClassification: URI
-  page: Int
-}
-
-"Query parameters for reading `Process`es related to an `Agent`"
-input agentProcessSearchParams {
-  searchString: String
-  finished: Boolean
-}
-
-"Query parameters for reading `Plan`s related to an `Agent`"
-input agentPlanSearchParams {
-  searchString: String
-  finished: Boolean
-}
-
-"Query parameters for reading `EconomicEvent`s related to an `Agent`"
-input agentEventSearchParams {
-  searchString: String
-  action: ID
-  startDate: DateTime
-  endDate: DateTime
-}
-
-"Query parameters for reading `Commitment`s related to an `Agent`"
-input agentCommitmentSearchParams {
-  searchString: String
-  action: ID
-  startDate: DateTime
-  endDate: DateTime
-  finished: Boolean
-}
-
-input agentIntentSearchParams {
-  searchString: String
-  action: ID
-  startDate: DateTime
-  endDate: DateTime
-  finished: Boolean
-}
 
 """
 A person or group or organization with economic agency.
@@ -64,21 +22,11 @@ interface Agent {
   "The uri to an image relevant to the agent, such as a logo, avatar, photo, etc."
   image: URI
 
-  "The main place an agent is located, often an address where activities occur and mail can be sent. This is usually a mappable geographic location.  It also could be a website address, as in the case of agents who have no physical location."
-  primaryLocation: SpatialThing
-
   "A textual description or comment."
   note: String
 
   ##############################################################################
   # inverse relationships and queries
-
-  inventoriedEconomicResources(filter: agentResourceSearchParams): [EconomicResource!]
-  economicEvents(filter: agentEventSearchParams): [EconomicEvent!]
-  processes(filter: agentProcessSearchParams): [Process!]
-  commitments(filter: agentCommitmentSearchParams): [Commitment!]
-  intents(filter: agentIntentSearchParams): [Intent!]
-  plans(filter: agentPlanSearchParams): [Plan!]
 
   relationships(roleId: ID): [AgentRelationship!] # :TODO: category filtering
   relationshipsAsSubject(roleId: ID): [AgentRelationship!] # :TODO: category filtering
@@ -86,8 +34,6 @@ interface Agent {
 
   roles: [AgentRelationshipRole!]
 }
-
-# Variants of agents
 
 """
 A natural person.
@@ -101,21 +47,11 @@ type Person implements Agent {
   "The uri to an image relevant to the agent, such as a logo, avatar, photo, etc."
   image: URI
 
-  "The main place an agent is located, often an address where activities occur and mail can be sent. This is usually a mappable geographic location.  It also could be a website address, as in the case of agents who have no physical location."
-  primaryLocation: SpatialThing
-
   "A textual description or comment."
   note: String
 
   ##############################################################################
   # inverse relationships and queries
-
-  inventoriedEconomicResources(filter: agentResourceSearchParams): [EconomicResource!]
-  economicEvents(filter: agentEventSearchParams): [EconomicEvent!]
-  processes(filter: agentProcessSearchParams): [Process!]
-  commitments(filter: agentCommitmentSearchParams): [Commitment!]
-  intents(filter: agentIntentSearchParams): [Intent!]
-  plans(filter: agentPlanSearchParams): [Plan!]
 
   relationships(roleId: ID): [AgentRelationship!] # :TODO: category filtering
   relationshipsAsSubject(roleId: ID): [AgentRelationship!] # :TODO: category filtering
@@ -139,21 +75,11 @@ type Organization implements Agent {
   "The uri to an image relevant to the agent, such as a logo, avatar, photo, etc."
   image: URI
 
-  "The main place an agent is located, often an address where activities occur and mail can be sent. This is usually a mappable geographic location.  It also could be a website address, as in the case of agents who have no physical location."
-  primaryLocation: SpatialThing
-
   "A textual description or comment."
   note: String
 
   ##############################################################################
   # inverse relationships and queries
-
-  inventoriedEconomicResources(filter: agentResourceSearchParams): [EconomicResource!]
-  economicEvents(filter: agentEventSearchParams): [EconomicEvent!]
-  processes(filter: agentProcessSearchParams): [Process!]
-  commitments(filter: agentCommitmentSearchParams): [Commitment!]
-  intents(filter: agentIntentSearchParams): [Intent!]
-  plans(filter: agentPlanSearchParams): [Plan!]
 
   relationships(roleId: ID): [AgentRelationship!] # :TODO: category filtering
   relationshipsAsSubject(roleId: ID): [AgentRelationship!] # :TODO: category filtering

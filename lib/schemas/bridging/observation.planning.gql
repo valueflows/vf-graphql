@@ -1,0 +1,27 @@
+##
+#
+# Observation <> Planning indexes
+#
+# Provides linkage between the observation and planning spaces within
+# economic networks.
+#
+# @package  vf-graphql
+# @since    2020-02-12
+#
+##
+
+type EconomicEvent {
+  "The commitment which is completely or partially fulfilled by an economic event."
+  fulfills: [Fulfillment!]
+
+  "An intent satisfied fully or partially by an economic event or commitment."
+  satisfies: [Satisfaction!]
+}
+
+type Process {
+  committedInputs(action: ID): [Commitment!]
+  committedOutputs(action: ID): [Commitment!]
+
+  intendedInputs(action: ID): [Intent!]
+  intendedOutputs(action: ID): [Intent!]
+}

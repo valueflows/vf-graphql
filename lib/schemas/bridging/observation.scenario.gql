@@ -1,0 +1,15 @@
+##
+#
+# Observation <> Scenario API
+#
+# Augments observation records with the ability to be referenced in Scenarios.
+#
+# @package  vf-graphql
+# @since    2020-02-12
+#
+##
+
+type Process {
+  "The process with its inputs and outputs is part of the scenario."
+  nestedIn: Scenario
+}

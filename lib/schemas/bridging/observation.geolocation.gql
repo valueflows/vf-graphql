@@ -1,0 +1,25 @@
+##
+#
+# Observation <> Geolocation API
+#
+# Augments records of real-world resources and observations with geospatial information.
+#
+# @package  vf-graphql
+# @since    2020-02-12
+#
+##
+
+type EconomicEvent {
+  "The place where an economic event occurs.  Usually mappable."
+  atLocation: SpatialThing
+}
+
+type EconomicResource {
+  "The current place an economic resource is located. Could be at any level of granularity, from a town to an address to a warehouse location. Usually mappable."
+  currentLocation: SpatialThing
+}
+
+type SpatialThing {
+  economicResources: [EconomicResource!]
+  economicEvents: [EconomicEvent!]
+}

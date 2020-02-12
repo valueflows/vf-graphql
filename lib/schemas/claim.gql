@@ -1,0 +1,85 @@
+##
+#
+# Claim module
+#
+# Facilitates claiming of future events in return for contributions already given.
+#
+# @depends  measurement.gql
+# @depends  knowledge.gql
+# @depends  agent.gql
+# @depends  observation.gql
+# @package  vf-graphql
+# @since    2019-02-11
+#
+##
+
+"""
+A claim for a future economic event(s) in reciprocity for an economic event that already occurred. For example, a claim for payment for goods received.
+"""
+type Claim {
+  id: ID!
+
+  "Relates a claim to a verb, such as consume, produce, work, improve, etc."
+  action: Action!
+
+  "The economic agent from whom the claim is initiated."
+  provider: Agent!
+
+  "The economic agent whom the claim is for."
+  receiver: Agent!
+
+  "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
+  resourceClassifiedAs: [URI!]
+
+  "The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
+  resourceConformsTo: ResourceSpecification
+
+  "The amount and unit of the economic resource counted or inventoried."
+  resourceQuantity: Measure
+
+  "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
+  effortQuantity: Measure
+
+  "The economic event which already occurred which this claim has been made against."
+  triggeredBy: EconomicEvent!
+
+  "The time the claim is expected to be settled."
+  due: DateTime
+
+  "The data on which the claim was made."
+  created: DateTime
+
+  "The claim is complete or not.  This is irrespective of if the original goal has been met, and indicates that no more will be done."
+  finished: Boolean
+
+  "A textual description or comment."
+  note: String
+
+  "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this claim."
+  agreedIn: URI
+
+  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
+  inScopeOf: [AnyType!]
+}
+
+"""
+Represents many-to-many relationships between claim and economic events that fully or partially settle one or more claims.
+"""
+type Settlement {
+  id: ID!
+
+  "A `Claim` which is fully or partially settled by an `EconomicEvent`."
+  settles: Claim!
+
+  "The `EconomicEvent` fully or partially settling a `Claim`."
+  settledBy: EconomicEvent!
+
+  "The amount and unit of the economic resource counted or inventoried."
+  resourceQuantity: Measure
+
+  "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
+  effortQuantity: Measure
+
+  "A textual description or comment."
+  note: String
+}

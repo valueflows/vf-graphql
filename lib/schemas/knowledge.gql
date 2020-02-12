@@ -1,9 +1,12 @@
 ##
 #
-# Knowledge layer
+# Knowledge module
 #
 # Provides functionality for classifying and organising other parts of the system, including recipes.
 #
+# @depends  measurement.gql
+# @package  vf-graphql
+# @since    2019-02-11
 #
 ##
 
@@ -68,96 +71,6 @@ type ResourceSpecification {
 
   "[UNSTABLE] The default unit used for quantifying this resource type."
   defaultUnitOfEffort: Unit,
-
-  ##############################################################################
-  # inverse relationships and queries
-
-  conformingResources: [EconomicResource!]
-}
-
-"""
-Specifies the resource as part of a recipe, for use in planning from recipe.
-"""
-type RecipeResource {
-  id: ID!
-
-  "An informal or formal textual identifier for an object. Does not imply uniqueness."
-  name: String!
-
-  "The unit of inventory used for this resource in the recipe."
-  unitOfResource: Unit
-
-  "The unit used for use action on this resource or work action in the recipe."
-  unitOfEffort: Unit
-
-  "The uri to an image relevant to the entity, such as a photo, diagram, etc."
-  image: URI
-
-  "A textual description or comment."
-  note: String
-
-  "The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
-  resourceConformsTo: ResourceSpecification
-
-  "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
-  resourceClassifiedAs: [URI!]
-
-  "Defines if any resource of that type can be freely substituted for any other resource of that type when used, consumed, traded, etc."
-  substitutable: Boolean
-
-  ##############################################################################
-  # inverse relationships and queries
-
-}
-
-"""
-The specification of a resource inflow to, or outflow from, a recipe process.
-"""
-type RecipeFlow {
-  id: ID!
-
-  "The amount and unit of the economic resource counted or inventoried."
-  resourceQuantity: Measure
-
-  "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
-  effortQuantity: Measure
-
-  "The resource definition referenced by this flow in the recipe."
-  recipeFlowResource: RecipeResource
-
-  "Relates a process input or output to a verb, such as consume, produce, work, modify, etc."
-  action: Action!
-
-  "Relates an input flow to its process in a recipe."
-  recipeInputOf: RecipeProcess
-
-  "Relates an output flow to its process in a recipe."
-  recipeOutputOf: RecipeProcess
-
-  "A textual description or comment."
-  note: String
-}
-
-"""
-Specifies a process in a recipe for use in planning from recipe.
-"""
-type RecipeProcess {
-  id: ID!
-
-  "An informal or formal textual identifier for an item. Does not imply uniqueness."
-  name: String!
-
-  "The planned calendar duration of the process as defined for the recipe batch."
-  hasDuration: Duration
-
-  "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
-  processClassifiedAs: [URI!]
-
-  "The standard specification or definition of a process."
-  processConformsTo: ProcessSpecification!
-
-  "A textual description or comment."
-  note: String
 }
 
 """
@@ -168,22 +81,6 @@ type ProcessSpecification {
 
   "An informal or formal textual identifier for an item. Does not imply uniqueness."
   name: String!
-
-  "A textual description or comment."
-  note: String
-}
-
-"""
-The type definition of one or more scenarios, such as Yearly Budget.
-"""
-type ScenarioDefinition {
-  id: ID!
-
-  "An informal or formal textual identifier for an item. Does not imply uniqueness."
-  name: String!
-
-  "The duration of the scenario, often an accounting period."
-  hasDuration: Duration
 
   "A textual description or comment."
   note: String

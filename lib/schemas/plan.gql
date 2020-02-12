@@ -1,0 +1,41 @@
+##
+#
+# Plan module
+#
+# Allows for grouping processes into related groups of work with defined deliverables.
+#
+# @depends  scenario.gql
+# @package  vf-graphql
+# @since    2019-02-11
+#
+##
+
+"""
+A logical collection of processes that constitute a body of planned work with defined deliverable(s).
+"""
+type Plan {
+  id: ID!
+
+  "An informal or formal textual identifier for an item. Does not imply uniqueness."
+  name: String
+
+  "The date and time the plan was made."
+  created: DateTime
+
+  "The time the plan is expected to be complete."
+  due: DateTime
+
+  "A textual description or comment."
+  note: String
+
+  "This plan refines a scenario, making it operational."
+  refinementOf: Scenario
+
+  ##############################################################################
+  # inverse relationships and queries
+
+  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
+  inScopeOf: [AnyType!]
+
+  deletable: Boolean
+}

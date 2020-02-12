@@ -1,0 +1,15 @@
+##
+#
+# Observation <> Appreciation indexes
+#
+# Augments EconomicEvent with read-only fields for retrieving reciprocal events.
+#
+# @package  vf-graphql
+# @since    2020-02-12
+#
+##
+
+type EconomicEvent {
+  appreciationOf: [EconomicEvent!]
+  appreciatedBy: [EconomicEvent!]
+}

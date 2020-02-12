@@ -1,27 +1,14 @@
 ##
 #
-# Utility structs
+# Measurement module
 #
-# These are common data structures used throughout the API
+# Typedefs used for defining and representing measurements
+# in the real (physical) world.
 #
+# @package  vf-graphql
+# @since    2019-02-11
 #
 ##
-
-"""
-A type which allows any arbitrary value to be set
-"""
-scalar AnyType
-
-"""
-The `URI` type simply declares a reference to an external web URL, Holochain entry or other resource.
-"""
-scalar URI
-
-"""
-The `DateTime` scalar type represents a DateTime value as specified by
-[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601).
-"""
-scalar DateTime
 
 """
 Defines the unit of time measured in a temporal `Duration`.
@@ -71,28 +58,4 @@ Mutation input structure for defining time durations.
 input IDuration {
   numericDuration: Float!
   unitType: TimeUnit!
-}
-
-"""
-A physical mappable location.
-"""
-type SpatialThing {
-  id: ID!
-  name: String!
-  mappableAddress: String
-  lat: Float
-  long: Float
-  alt: Float
-
-  "A textual description or comment."
-  note: String
-
-  ##############################################################################
-  # inverse relationships and queries
-
-  economicResources: [EconomicResource!]
-  agents: [Agent!]
-  economicEvents: [EconomicEvent!]
-  commitments: [Commitment!]
-  intents: [Intent!]
 }

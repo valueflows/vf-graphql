@@ -1,0 +1,15 @@
+##
+#
+# Proposal <> Geolocation API
+#
+# Augments proposals with geospatial information.
+#
+# @package  vf-graphql
+# @since    2020-02-12
+#
+##
+
+type Proposal {
+  "Location or area where the proposal is valid."
+  eligibleLocation: SpatialThing
+}
