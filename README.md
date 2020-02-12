@@ -4,6 +4,7 @@ GraphQL reference implementation of the [ValueFlows](http://valueflo.ws/) gramma
 
 <!-- MarkdownTOC -->
 
+- [API](#api)
 - [Implementing](#implementing)
 - [Development setup](#development-setup)
 	- [Prerequisites](#prerequisites)
@@ -11,6 +12,7 @@ GraphQL reference implementation of the [ValueFlows](http://valueflo.ws/) gramma
 	- [Available commands](#available-commands)
 - [Contributing](#contributing)
 	- [Directory structure](#directory-structure)
+	- [Code structure](#code-structure)
 	- [Publishing to NPM](#publishing-to-npm)
 - [License](#license)
 
@@ -27,6 +29,24 @@ This project synchronizes projects implementing VF for a GraphQL interface betwe
 - Composable GraphQL schemas, TypeScript and FlowType definitions
 - Runtime composition of schema modules into application-specific APIs which implement subsets of the ValueFlows vocabulary
 
+
+
+
+## API
+
+The top-level module export contains three methods: `buildSchema`, `printSchema` and `validate`.
+
+`buildSchema`, when run without arguments, will return a GraphQLSchema object for the entire ValueFlows API, including all optional and auxiliary modules. When passed an array, it builds a subset of the full spec which includes only the specified modules. For a complete list of modules, see `schemaModules` in `schema-manifest.js`.
+
+`printSchema` from the `graphql` module is also exported to make it easy to turn built schema objects into SDL strings, as some modules require this input format.
+
+`validate` takes another GraphQL schema as input and validates it against a schema generated from any set of module IDs. The output format is that of GraphQL's [`findBreakingChanges`](https://github.com/graphql/graphql-js/blob/master/src/utilities/findBreakingChanges.js).
+
+If you need access to a string version of any schema, you can get an SDL version with
+
+	printSchema(buildSchema(/* [...] */))
+
+If all you need is the *entire* schema as a string, consider importing `@valueflows/vf-graphql/ALL_VF_SDL` or `@valueflows/vf-graphql/json-schema.json` instead.
 
 
 
@@ -74,6 +94,14 @@ The `lib/` directory contains all source of the reference schema & validation he
 - `schemas/` contains the actual GraphQL schema definition files. **These are the files you should edit.**
 	- `schemas/bridging/` contains files which are automatically loaded in `buildSchema`. The filenames are dot-separated, and if all of the filename components are present in the module IDs passed then the schema is injected. For a list of available module IDs, see `schema-manifest.js`.
 - `build/`, `json-schema.json` and the other `*.js` files are excluded from version control. They are generated from the schema definition files, using helper code in `lib/scripts/`.
+
+
+### Code structure
+
+The "bridging" schema files in `schemas/bridging/` create non-obvious behaviour within the top-level schema modules in `schemas/`. On first glance, some fields (eg. `EconomicEvent.realizationOf`) may appear to be missing from the record type definitions. However, this field's presence in the `observation.agreement` "bridging" schema means that it will automatically be added to the output schema if both `observation` and `agreement` are included. So&mdash; always check these files for a property before consider it missing as it may be part of a cross-module relationship or index.
+
+The `buildSchema` helper defined in the module root manages all the logic for managing "bridging" schemas internally.
+
 
 ### Publishing to NPM
 
