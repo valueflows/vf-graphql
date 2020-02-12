@@ -3,9 +3,10 @@ node_modules/
 # build artifacts used only during packaging
 lib/build/
 lib/json-schema.json
+lib/schema-manifest.js
+lib/ALL_VF_SDL.js
 lib/index.d.ts
 lib/index.flow.js
-lib/schema-manifest.js
 lib/LICENSE
 lib/CHANGELOG.md
 lib/README.md
