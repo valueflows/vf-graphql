@@ -87,7 +87,7 @@ type UnitResponse {
 
 type Query {
   unit(id: ID): Unit
-  allUnits: [Unit!]
+  allUnits(start: ID, limit: Int): [Unit!]
 }
 
 type Mutation {

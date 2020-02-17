@@ -58,7 +58,7 @@ type AgreementResponse {
 
 type Query {
   agreement(id: ID): Agreement
-  allAgreements: [Agreement!]
+  allAgreements(start: ID, limit: Int): [Agreement!]
 }
 
 type Mutation {

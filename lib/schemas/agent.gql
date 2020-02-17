@@ -231,18 +231,18 @@ type Query {
   myAgent: Agent
 
   agent(id: ID): Agent
-  allAgents: [Agent!]
+  allAgents(start: ID, limit: Int): [Agent!]
 
   organization(id: ID): Organization
-  allOrganizations: [Organization!]
+  allOrganizations(start: ID, limit: Int): [Organization!]
 
   person(id: ID): Person
-  allPeople: [Person!]
+  allPeople(start: ID, limit: Int): [Person!]
 
   agentRelationship(id: ID): AgentRelationship
-  allAgentRelationships: [AgentRelationship!]
+  allAgentRelationships(start: ID, limit: Int): [AgentRelationship!]
   agentRelationshipRole(id: ID): AgentRelationshipRole
-  allAgentRelationshipRoles: [AgentRelationshipRole!]
+  allAgentRelationshipRoles(start: ID, limit: Int): [AgentRelationshipRole!]
 }
 
 type Mutation {

@@ -363,7 +363,7 @@ type ProcessResponse {
 
 type Query {
   economicEvent(id: ID): EconomicEvent
-  allEconomicEvents: [EconomicEvent!]
+  allEconomicEvents(start: ID, limit: Int): [EconomicEvent!]
   filteredEconomicEvents(
     providerId: ID,
     receiverId: ID,
@@ -374,10 +374,10 @@ type Query {
   ): [EconomicEvent!]
 
   economicResource(id: ID): EconomicResource
-  allEconomicResources: [EconomicResource!]
+  allEconomicResources(start: ID, limit: Int): [EconomicResource!]
 
   process(id: ID): Process
-  allProcesses: [Process!]
+  allProcesses(start: ID, limit: Int): [Process!]
 }
 
 type Mutation {
