@@ -10,9 +10,6 @@
 ##
 
 type Commitment {
-  # :TODO:
-  plan: Plan
-
   "Represents a desired deliverable expected from this plan."
   independentDemandOf: Plan
 }
