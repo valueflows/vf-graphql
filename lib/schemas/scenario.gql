@@ -28,6 +28,9 @@ type Scenario {
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
   inScopeOf: [AnyType!]
 
+  "The scenario definition for this scenario, for example yearly budget."
+  definedAs: ScenarioDefinition
+
   "This scenario refines another scenario, often as time moves closer or for more detail."
   refinementOf: Scenario
 
