@@ -82,9 +82,6 @@ type Commitment {
   "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this commitment."
   agreedIn: URI
 
-  "The commitment can be safely deleted, has no dependent information."
-  deletable: Boolean
-
   ##############################################################################
   # inverse relationships and queries
 
@@ -95,6 +92,9 @@ type Commitment {
   satisfies: [Satisfaction!]
 
   involvedAgents: [Agent!]
+
+  "The commitment can be safely deleted, has no dependent information."
+  deletable: Boolean
 }
 
 """
@@ -103,7 +103,7 @@ A planned economic flow which has not been committed to, which can lead to econo
 type Intent {
   id: ID!
 
-  "An informal or formal textual identifier for an item. Does not imply uniqueness."
+  "An informal or formal textual identifier for an intent. Does not imply uniqueness."
   name: String
 
   "Relates an intent to a verb, such as consume, produce, work, improve, etc."
@@ -249,8 +249,12 @@ type Satisfaction {
 # }
 
 input IntentCreateParams { # implements IntentParams
+  "Relates an intent to a verb, such as consume, produce, work, improve, etc."
   action: ID!
+
+  "An informal or formal textual identifier for an intent. Does not imply uniqueness."
   name: String
+
   inputOf: ID
   outputOf: ID
   provider: ID
@@ -266,6 +270,8 @@ input IntentCreateParams { # implements IntentParams
   hasPointInTime: DateTime
   due: DateTime
   image: URI
+
+  "A textual description or comment."
   note: String
   inScopeOf: [AnyType!]
   atLocation: ID # SpatialThing
@@ -275,8 +281,13 @@ input IntentCreateParams { # implements IntentParams
 
 input IntentUpdateParams { # implements UpdateParams & IntentParams
   id: ID!
+
+  "An informal or formal textual identifier for an intent. Does not imply uniqueness."
   name: String
+
+  "Relates an intent to a verb, such as consume, produce, work, improve, etc."
   action: ID
+
   inputOf: ID
   outputOf: ID
   provider: ID
@@ -293,6 +304,8 @@ input IntentUpdateParams { # implements UpdateParams & IntentParams
   due: DateTime
   image: URI
   finished: Boolean
+
+  "A textual description or comment."
   note: String
   inScopeOf: [AnyType!]
   atLocation: ID # SpatialThing
@@ -329,50 +342,131 @@ type IntentResponse {
 # }
 
 input CommitmentCreateParams { # implements CommitmentParams
+  "Relates a commitment to a verb, such as consume, produce, work, improve, etc."
   action: ID!
+
+  "Defines the process to which this commitment is an input."
   inputOf: ID
+
+  "Defines the process for which this commitment is an output."
   outputOf: ID
+
+  "The economic agent from whom the commitment is initiated."
   provider: ID!
+
+  "The economic agent whom the commitment is for."
   receiver: ID!
+
+  "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   resourceClassifiedAs: [URI!]
+
+  "The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
   resourceConformsTo: ID
+
+  "Exact economic resource involved in the commitment."
   resourceInventoriedAs: ID
+
+  "The amount and unit of the economic resource counted or inventoried."
   resourceQuantity: IMeasure
+
+  "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
   effortQuantity: IMeasure
+
+  "The planned beginning of the commitment."
   hasBeginning: DateTime
+
+  "The planned end of the commitment."
   hasEnd: DateTime
+
+  "The planned date/time for the commitment. Can be used instead of beginning and end."
   hasPointInTime: DateTime
+
+  "The time something is expected to be complete."
   due: DateTime
+
+  "The commitment is complete or not.  This is irrespective of if the original goal has been met, and indicates that no more will be done."
   finished: Boolean
+
+  "A textual description or comment."
   note: String
+
+  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
   inScopeOf: [AnyType!]
+
+  "Represents a desired deliverable expected from this plan."
   independentDemandOf: ID #Plan
+
+  "The place where an commitment occurs.  Usually mappable."
   atLocation: ID # SpatialThing
+
+  "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this commitment."
   agreedIn: URI
+
+  "This commitment is part of the agreement."
   clauseOf: ID # Agreement
 }
 
 input CommitmentUpdateParams { # implements UpdateParams & CommitmentParams
   id: ID!
+
+  "Defines the process to which this commitment is an input."
   inputOf: ID
+
+  "Defines the process for which this commitment is an output."
   outputOf: ID
+
+  "The economic agent from whom the commitment is initiated."
   provider: ID
+
+  "The economic agent whom the commitment is for."
   receiver: ID
+
+  "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   resourceClassifiedAs: [URI!]
+
+  "The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
   resourceConformsTo: ID
+
+  "Exact economic resource involved in the commitment."
   resourceInventoriedAs: ID
+
+  "The amount and unit of the economic resource counted or inventoried."
   resourceQuantity: IMeasure
+
+  "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
   effortQuantity: IMeasure
+
+  "The planned beginning of the commitment."
   hasBeginning: DateTime
+
+  "The planned end of the commitment."
   hasEnd: DateTime
+
+  "The planned date/time for the commitment. Can be used instead of beginning and end."
   hasPointInTime: DateTime
+
+  "The time something is expected to be complete."
   due: DateTime
+
+  "The commitment is complete or not.  This is irrespective of if the original goal has been met, and indicates that no more will be done."
   finished: Boolean
+
+  "A textual description or comment."
   note: String
+
+  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
   inScopeOf: [AnyType!]
+
+  "Represents a desired deliverable expected from this plan."
   independentDemandOf: ID #Plan
+
+  "The place where an commitment occurs.  Usually mappable."
   atLocation: ID # SpatialThing
+
+  "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this commitment."
   agreedIn: URI
+
+  "This commitment is part of the agreement."
   clauseOf: ID # Agreement
 }
 
@@ -394,6 +488,8 @@ input FulfillmentCreateParams { # implements FulfillmentParams
   fulfills: ID!
   resourceQuantity: IMeasure
   effortQuantity: IMeasure
+
+  "A textual description or comment."
   note: String
 }
 
@@ -403,6 +499,8 @@ input FulfillmentUpdateParams { # implements UpdateParams & FulfillmentParams
   fulfills: ID
   resourceQuantity: IMeasure
   effortQuantity: IMeasure
+
+  "A textual description or comment."
   note: String
 }
 
@@ -424,6 +522,8 @@ input SatisfactionCreateParams { # implements SatisfactionParams
   satisfiedBy: ID! # Commitment
   resourceQuantity: IMeasure
   effortQuantity: IMeasure
+
+  "A textual description or comment."
   note: String
 }
 
@@ -433,6 +533,8 @@ input SatisfactionUpdateParams { # implements UpdateParams & SatisfactionParams
   satisfiedBy: ID # Commitment
   resourceQuantity: IMeasure
   effortQuantity: IMeasure
+
+  "A textual description or comment."
   note: String
 }
 

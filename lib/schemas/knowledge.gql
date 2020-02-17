@@ -60,7 +60,7 @@ Used instead of a classification when more information is needed, particularly f
 type ResourceSpecification {
   id: ID!
 
-  "An informal or formal textual identifier for an object. Does not imply uniqueness."
+  "An informal or formal textual identifier for a type of resource. Does not imply uniqueness."
   name: String!
 
   "The uri to an image relevant to the entity, such as a photo, diagram, etc."
@@ -79,7 +79,7 @@ Specifies the kind of process.
 type ProcessSpecification {
   id: ID!
 
-  "An informal or formal textual identifier for an item. Does not imply uniqueness."
+  "An informal or formal textual identifier for the process. Does not imply uniqueness."
   name: String!
 
   "A textual description or comment."
@@ -97,15 +97,26 @@ type ProcessSpecification {
 # }
 
 input ResourceSpecificationCreateParams { # implements ResourceSpecificationParams
+  "An informal or formal textual identifier for a type of resource. Does not imply uniqueness."
   name: String!
+
+  "The uri to an image relevant to the entity, such as a photo, diagram, etc."
   image: URI
+
+  "A textual description or comment."
   note: String
 }
 
 input ResourceSpecificationUpdateParams { # implements UpdateParams & ResourceSpecificationParams
   id: ID!
+
+  "An informal or formal textual identifier for a type of resource. Does not imply uniqueness."
   name: String
+
+  "The uri to an image relevant to the entity, such as a photo, diagram, etc."
   image: URI
+
+  "A textual description or comment."
   note: String
 }
 
@@ -120,13 +131,20 @@ type ResourceSpecificationResponse {
 # }
 
 input ProcessSpecificationCreateParams { # implements ProcessSpecificationParams
+  "An informal or formal textual identifier for the process. Does not imply uniqueness."
   name: String!
+
+  "A textual description or comment."
   note: String
 }
 
 input ProcessSpecificationUpdateParams { # implements UpdateParams & ProcessSpecificationParams
   id: ID!
+
+  "An informal or formal textual identifier for the process. Does not imply uniqueness."
   name: String
+
+  "A textual description or comment."
   note: String
 }
 
