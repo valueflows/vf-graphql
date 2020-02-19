@@ -21,7 +21,10 @@ enum TimeUnit {
 A `Duration` represents an interval between two `DateTime` values.
 """
 type Duration {
+  "A number representing the duration, will be paired with a unit."
   numericDuration: Float!
+
+  "A unit of measure."
   unitType: TimeUnit!
 }
 
@@ -31,7 +34,11 @@ From OM2 vocabulary.
 """
 type Unit {
   id: ID!
+
+  "A human readable label for the unit, can be language specific."
   label: String!
+
+  "A standard display symbol for a unit of measure."
   symbol: String!
 }
 
@@ -40,7 +47,10 @@ Semantic meaning for measurements: binds a quantity to its measurement unit.
 See http://www.qudt.org/pages/QUDToverviewPage.html
 """
 type Measure {
+  "A number representing the quantity, will be paired with a unit."
   hasNumericalValue: Float!
+
+  "A unit of measure."
   hasUnit: Unit
 }
 
@@ -48,7 +58,10 @@ type Measure {
 Mutation input structure for defining measurements. Should be nulled if not present, rather than empty.
 """
 input IMeasure {
+  "A number representing the quantity, will be paired with a unit."
   hasNumericalValue: Float!
+
+  "A unit of measure."
   hasUnit: ID # Unit
 }
 
@@ -56,7 +69,10 @@ input IMeasure {
 Mutation input structure for defining time durations.
 """
 input IDuration {
+  "A number representing the duration, will be paired with a unit."
   numericDuration: Float!
+
+  "A unit of measure."
   unitType: TimeUnit!
 }
 
@@ -71,13 +87,20 @@ input IDuration {
 # }
 
 input UnitCreateParams { # implements UnitParams
+  "A human readable label for the unit, can be language specific."
   label: String!
+
+  "A standard display symbol for a unit of measure."
   symbol: String!
 }
 
 input UnitUpdateParams { # implements UpdateParams & UnitParams
   id: ID!
+
+  "A human readable label for the unit, can be language specific."
   label: String
+
+  "A standard display symbol for a unit of measure."
   symbol: String
 }
 

@@ -16,10 +16,10 @@ A logical collection of processes that constitute a body of planned work with de
 type Plan {
   id: ID!
 
-  "An informal or formal textual identifier for an item. Does not imply uniqueness."
+  "An informal or formal textual identifier for a plan. Does not imply uniqueness."
   name: String
 
-  "The date and time the plan was made."
+  "The time the plan was made."
   created: DateTime
 
   "The time the plan is expected to be complete."
@@ -37,6 +37,7 @@ type Plan {
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
   inScopeOf: [AnyType!]
 
+  "The plan is able to be deleted or not."
   deletable: Boolean
 }
 
@@ -53,17 +54,32 @@ type Plan {
 # }
 
 input PlanCreateParams { # implements PlanParams
+  "An informal or formal textual identifier for a plan. Does not imply uniqueness."
   name: String!
+
+  "The time the plan was made."
   created: DateTime
+
+  "The time the plan is expected to be complete."
   due: DateTime
+
+  "A textual description or comment."
   note: String
 }
 
 input PlanUpdateParams { # implements UpdateParams & PlanParams
   id: ID!
+
+  "An informal or formal textual identifier for a plan. Does not imply uniqueness."
   name: String
+
+  "The time the plan was made."
   created: DateTime
+
+  "The time the plan is expected to be complete."
   due: DateTime
+
+  "A textual description or comment."
   note: String
 }
 
