@@ -11,7 +11,7 @@ const { ApolloServer, gql } = require('apollo-server-express')
 const { express: voyagerMiddleware } = require('graphql-voyager/middleware')
 const { addMockFunctionsToSchema } = require('graphql-tools')
 
-const SERVER_PORT = 3000
+const SERVER_PORT = process.env.PORT || 3000
 const SCHEMA_VIEWER_PATH = '/viewer'
 
 const { buildSchema } = require('@valueflows/vf-graphql')
