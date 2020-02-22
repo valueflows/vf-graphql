@@ -293,51 +293,6 @@ input EconomicEventCreateParams { # implements EconomicEventParams
 input EconomicEventUpdateParams { # implements UpdateParams & EconomicEventParams
   id: ID!
 
-  "Relates an economic event to a verb, such as consume, produce, work, improve, etc."
-  action: ID
-
-  "Defines the process to which this event is an input."
-  inputOf: ID
-
-  "Defines the process for which this event is an output."
-  outputOf: ID
-
-  "The economic agent from whom the actual economic event is initiated."
-  provider: ID
-
-  "The economic agent whom the actual economic event is for."
-  receiver: ID
-
-  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType!]
-
-  "Economic resource involved in the economic event."
-  resourceInventoriedAs: ID
-
-  "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
-  resourceClassifiedAs: [URI!]
-
-  "The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
-  resourceConformsTo: ID
-
-  "The amount and unit of the economic resource counted or inventoried. This is the quantity that could be used to increment or decrement a resource, depending on the type of resource and resource effect of action."
-  resourceQuantity: IMeasure
-
-  "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
-  effortQuantity: IMeasure
-
-  "The place where an economic event occurs.  Usually mappable."
-  atLocation: ID # SpatialThing
-
-  "The beginning of the economic event."
-  hasBeginning: DateTime
-
-  "The end of the economic event."
-  hasEnd: DateTime
-
-  "The date/time at which the economic event occurred. Can be used instead of beginning and end."
-  hasPointInTime: DateTime
-
   "A textual description or comment."
   note: String
 
@@ -350,8 +305,8 @@ input EconomicEventUpdateParams { # implements UpdateParams & EconomicEventParam
   "References another economic event that implied this economic event, often based on a prior agreement."
   triggeredBy: ID # EconomicEvent
 
-  "Additional economic resource on the economic event when needed by the receiver. Used when a transfer or move, or sometimes other actions, requires explicitly identifying an economic resource on the receiving side."
-  toResourceInventoriedAs: ID # EconomicResource
+  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
+  inScopeOf: [AnyType!]
 }
 
 type EconomicEventResponse {
