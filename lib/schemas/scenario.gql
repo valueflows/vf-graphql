@@ -84,6 +84,9 @@ input ScenarioCreateParams { # implements ScenarioParams
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
   inScopeOf: [AnyType!]
 
+  "This scenario refines another scenario, often as time moves closer or for more detail."
+  refinementOf: Scenario
+
   "A textual description or comment."
   note: String
 }
@@ -105,6 +108,9 @@ input ScenarioUpdateParams { # implements UpdateParams & ScenarioParams
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
   inScopeOf: [AnyType!]
+
+  "This scenario refines another scenario, often as time moves closer or for more detail."
+  refinementOf: Scenario
 
   "A textual description or comment."
   note: String
@@ -133,6 +139,9 @@ input ScenarioDefinitionCreateParams { # implements ScenarioDefinitionParams
 
 input ScenarioDefinitionUpdateParams { # implements UpdateParams & ScenarioDefinitionParams
   id: ID!
+
+  "An informal or formal textual identifier for a scenario definition. Does not imply uniqueness."
+  name: String!
 
   "The duration of the scenario, often an accounting period."
   hasDuration: IDuration

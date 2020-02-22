@@ -65,6 +65,9 @@ input PlanCreateParams { # implements PlanParams
 
   "A textual description or comment."
   note: String
+
+  "This plan refines a scenario, making it operational."
+  refinementOf: Scenario
 }
 
 input PlanUpdateParams { # implements UpdateParams & PlanParams
@@ -81,6 +84,9 @@ input PlanUpdateParams { # implements UpdateParams & PlanParams
 
   "A textual description or comment."
   note: String
+
+  "This plan refines a scenario, making it operational."
+  refinementOf: Scenario
 }
 
 type PlanResponse {

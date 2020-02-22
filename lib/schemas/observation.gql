@@ -129,6 +129,9 @@ type EconomicResource {
   "Used when a stock economic resource contains items also defined as economic resources."
   containedIn: EconomicResource
 
+  "The agent currently with primary rights and responsibilites for the economic resource. It is the agent that is associated with the accountingQuantity of the economic resource."
+  primaryAccountable: Agent
+
   ##############################################################################
   # inverse relationships and queries
 
@@ -461,6 +464,12 @@ input ProcessCreateParams { # implements ProcessParams
 
   "The process with its inputs and outputs is part of the plan."
   plannedWithin: ID # Plan
+
+  "The definition or specification for a process."
+  basedOn: ProcessSpecification
+
+  "References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping."
+  classifiedAs: [URI!]
 }
 
 input ProcessUpdateParams { # implements UpdateParams & ProcessParams
@@ -486,6 +495,12 @@ input ProcessUpdateParams { # implements UpdateParams & ProcessParams
 
   "The process with its inputs and outputs is part of the plan."
   plannedWithin: ID # Plan
+
+  "The definition or specification for a process."
+  basedOn: ProcessSpecification
+
+  "References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping."
+  classifiedAs: [URI!]
 }
 
 type ProcessResponse {

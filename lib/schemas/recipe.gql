@@ -127,6 +127,9 @@ input RecipeResourceCreateParams { # implements RecipeResourceParams
   "The uri to an image relevant to the entity, such as a photo, diagram, etc."
   image: URI
 
+  "The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
+  resourceConformsTo: ResourceSpecification
+
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   resourceClassifiedAs: [URI!]
 
@@ -151,6 +154,9 @@ input RecipeResourceUpdateParams { # implements UpdateParams & RecipeResourcePar
 
   "The uri to an image relevant to the entity, such as a photo, diagram, etc."
   image: URI
+
+  "The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
+  resourceConformsTo: ResourceSpecification
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   resourceClassifiedAs: [URI!]
@@ -178,6 +184,9 @@ input RecipeProcessCreateParams { # implements RecipeProcessParams
   "The planned calendar duration of the process as defined for the recipe batch."
   hasDuration: IDuration
 
+  "The standard specification or definition of a process."
+  processConformsTo: ProcessSpecification!
+
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
   processClassifiedAs: [URI!]
 
@@ -193,6 +202,9 @@ input RecipeProcessUpdateParams { # implements UpdateParams & RecipeProcessParam
 
   "The planned calendar duration of the process as defined for the recipe batch."
   hasDuration: IDuration
+
+  "The standard specification or definition of a process."
+  processConformsTo: ProcessSpecification!
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
   processClassifiedAs: [URI!]
