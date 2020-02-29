@@ -128,7 +128,7 @@ input RecipeResourceCreateParams { # implements RecipeResourceParams
   image: URI
 
   "The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
-  resourceConformsTo: ResourceSpecification
+  resourceConformsTo: ID # ResourceSpecification
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   resourceClassifiedAs: [URI!]
@@ -156,7 +156,7 @@ input RecipeResourceUpdateParams { # implements UpdateParams & RecipeResourcePar
   image: URI
 
   "The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
-  resourceConformsTo: ResourceSpecification
+  resourceConformsTo: ID # ResourceSpecification
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   resourceClassifiedAs: [URI!]
@@ -185,7 +185,7 @@ input RecipeProcessCreateParams { # implements RecipeProcessParams
   hasDuration: IDuration
 
   "The standard specification or definition of a process."
-  processConformsTo: ProcessSpecification!
+  processConformsTo: ID! # ProcessSpecification!
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
   processClassifiedAs: [URI!]
@@ -204,7 +204,7 @@ input RecipeProcessUpdateParams { # implements UpdateParams & RecipeProcessParam
   hasDuration: IDuration
 
   "The standard specification or definition of a process."
-  processConformsTo: ProcessSpecification!
+  processConformsTo: ID! # ProcessSpecification!
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
   processClassifiedAs: [URI!]

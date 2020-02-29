@@ -85,7 +85,7 @@ input ScenarioCreateParams { # implements ScenarioParams
   inScopeOf: [AnyType!]
 
   "This scenario refines another scenario, often as time moves closer or for more detail."
-  refinementOf: Scenario
+  refinementOf: ID # Scenario
 
   "A textual description or comment."
   note: String
@@ -110,7 +110,7 @@ input ScenarioUpdateParams { # implements UpdateParams & ScenarioParams
   inScopeOf: [AnyType!]
 
   "This scenario refines another scenario, often as time moves closer or for more detail."
-  refinementOf: Scenario
+  refinementOf: ID # Scenario
 
   "A textual description or comment."
   note: String

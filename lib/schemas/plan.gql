@@ -67,7 +67,7 @@ input PlanCreateParams { # implements PlanParams
   note: String
 
   "This plan refines a scenario, making it operational."
-  refinementOf: Scenario
+  refinementOf: ID # Scenario
 }
 
 input PlanUpdateParams { # implements UpdateParams & PlanParams
@@ -86,7 +86,7 @@ input PlanUpdateParams { # implements UpdateParams & PlanParams
   note: String
 
   "This plan refines a scenario, making it operational."
-  refinementOf: Scenario
+  refinementOf: ID # Scenario
 }
 
 type PlanResponse {

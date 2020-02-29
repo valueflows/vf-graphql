@@ -454,7 +454,7 @@ input ProcessCreateParams { # implements ProcessParams
   plannedWithin: ID # Plan
 
   "The definition or specification for a process."
-  basedOn: ProcessSpecification
+  basedOn: ID # ProcessSpecification
 
   "References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   classifiedAs: [URI!]
@@ -485,7 +485,7 @@ input ProcessUpdateParams { # implements UpdateParams & ProcessParams
   plannedWithin: ID # Plan
 
   "The definition or specification for a process."
-  basedOn: ProcessSpecification
+  basedOn: ID # ProcessSpecification
 
   "References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   classifiedAs: [URI!]
