@@ -180,7 +180,7 @@ input AgentUpdateParams { # implements UpdateParams & AgentParams
   id: ID!
 
   "An informal or formal textual identifier for an agent. Does not imply uniqueness."
-  name: Strin
+  name: String
 
   "The uri to an image relevant to the agent, such as a logo, avatar, photo, etc."
   image: URI
