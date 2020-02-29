@@ -23,7 +23,7 @@ interface Agent {
   image: URI
 
   "The main place an agent is located, often an address where activities occur and mail can be sent. This is usually a mappable geographic location.  It also could be a website address, as in the case of agents who have no physical location."
-  primaryLocation: ID
+  primaryLocation: SpatialThing
 
   "A textual description or comment."
   note: String
@@ -51,7 +51,7 @@ type Person implements Agent {
   image: URI
 
   "The main place an agent is located, often an address where activities occur and mail can be sent. This is usually a mappable geographic location.  It also could be a website address, as in the case of agents who have no physical location."
-  primaryLocation: ID
+  primaryLocation: SpatialThing
 
   "A textual description or comment."
   note: String
@@ -82,7 +82,7 @@ type Organization implements Agent {
   image: URI
 
   "The main place an agent is located, often an address where activities occur and mail can be sent. This is usually a mappable geographic location.  It also could be a website address, as in the case of agents who have no physical location."
-  primaryLocation: ID
+  primaryLocation: SpatialThing
 
   "A textual description or comment."
   note: String
