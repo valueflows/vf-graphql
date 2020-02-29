@@ -406,7 +406,7 @@ input ProductBatchUpdateParams {
   id: ID!
 
   "The standard unique identifier of the batch."
-  batchNumber: String!
+  batchNumber: String
 
   "Expiration date of the batch, commonly used for food."
   expiryDate: DateTime
