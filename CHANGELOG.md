@@ -13,6 +13,7 @@
 	- `processClassifiedAs` in `RecipeProcess` create / update
 	- `refinementOf` in `Scenario` create / update
 	- `ScenarioDefinitionUpdateParams.name`
+- Removed `pass` & `fail` actions from the set of core verbs (see [ValueFlows/#610](https://github.com/valueflows/valueflows/issues/610))
 
 ## 0.6.1
 
