@@ -103,6 +103,9 @@ input ResourceSpecificationCreateParams { # implements ResourceSpecificationPara
 
   "A textual description or comment."
   note: String
+
+  "[UNSTABLE] The default unit used for quantifying this resource type."
+  defaultUnitOfEffort: ID # Unit
 }
 
 input ResourceSpecificationUpdateParams { # implements UpdateParams & ResourceSpecificationParams
@@ -116,6 +119,9 @@ input ResourceSpecificationUpdateParams { # implements UpdateParams & ResourceSp
 
   "A textual description or comment."
   note: String
+
+  "[UNSTABLE] The default unit used for quantifying this resource type."
+  defaultUnitOfEffort: ID # Unit
 }
 
 type ResourceSpecificationResponse {
