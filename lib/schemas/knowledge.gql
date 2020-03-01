@@ -68,7 +68,7 @@ type ResourceSpecification {
   note: String
 
   "[UNSTABLE] The default unit used for quantifying this resource type."
-  defaultUnitOfEffort: Unit,
+  defaultUnitOfEffort: Unit
 }
 
 """
