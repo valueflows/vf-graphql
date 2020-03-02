@@ -1,3 +1,21 @@
+## 0.7.0
+
+- Added descriptions to all `input` fields, to make interacting with the API more self-documenting
+- Added pagination parameters to all list queries
+- Removed many accounting fields from `EconomicEventUpdateParams` that should not have been present
+- Added various fields missed in the original conversion:
+	- `Agent.primaryLocation`
+	- `Scenario.definedAs`
+- Fixed missing input fields:
+	- `basedOn` & `classifiedAs` in `ProcessUpdateParams`
+	- `refinementOf` in `Plan` create / update
+	- `resourceConformsTo` in `RecipeResource` create / update
+	- `processClassifiedAs` in `RecipeProcess` create / update
+	- `refinementOf` in `Scenario` create / update
+	- `ScenarioDefinitionUpdateParams.name`
+- Add missing mutations & queries for `Claim`, `Scenario`, `ScenarioDefinition` & `SpatialThing`
+- Removed `pass` & `fail` actions from the set of core verbs (see [ValueFlows/#610](https://github.com/valueflows/valueflows/issues/610))
+
 ## 0.6.1
 
 - Finished some rough edges on modularisation such that you no longer need to explicitly include `query` and `mutation` in the list of schemas to `buildSchema()`.

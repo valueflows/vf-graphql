@@ -68,10 +68,10 @@ Represents many-to-many relationships between claim and economic events that ful
 type Settlement {
   id: ID!
 
-  "A `Claim` which is fully or partially settled by an `EconomicEvent`."
+  "A claim which is fully or partially settled by an economic event."
   settles: Claim!
 
-  "The `EconomicEvent` fully or partially settling a `Claim`."
+  "The economic event fully or partially settling a claim."
   settledBy: EconomicEvent!
 
   "The amount and unit of the economic resource counted or inventoried."
@@ -86,58 +86,93 @@ type Settlement {
 
 
 
-
-
-
-# type ClaimParams {
-#   action: Action
-#   provider: Agent
-#   receiver: Agent
-#   resourceClassifiedAs: [URI!]
-#   resourceConformsTo: ResourceSpecification
-#   resourceQuantity: IMeasure
-#   effortQuantity: IMeasure
-#   due: DateTime
-#   triggeredBy: EconomicEvent!
-#   created: DateTime
-#   finished: Boolean
-#   note: String
-#   agreedIn: URI
-#   inScopeOf: [AnyType!]
-# }
-
 input ClaimCreateParams {
-  action: ID! # Action
-  provider: ID! # Agent
-  receiver: ID! # Agent
+  "(`Action`) Relates a claim to a verb, such as consume, produce, work, improve, etc."
+  action: ID!
+
+  "(`Agent`) The economic agent from whom the claim is initiated."
+  provider: ID!
+
+  "(`Agent`) The economic agent whom the claim is for."
+  receiver: ID!
+
+  "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   resourceClassifiedAs: [URI!]
-  resourceConformsTo: ID # ResourceSpecification
+
+  "(`ResourceSpecification`) The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
+  resourceConformsTo: ID
+
+  "The amount and unit of the economic resource counted or inventoried."
   resourceQuantity: IMeasure
+
+  "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
   effortQuantity: IMeasure
+
+  "The time the claim is expected to be settled."
   due: DateTime
-  triggeredBy: ID # EconomicEvent
+
+  "(`EconomicEvent`) The economic event which already occurred which this claim has been made against."
+  triggeredBy: ID
+
+  "The data on which the claim was made."
   created: DateTime
+
+  "The claim is complete or not.  This is irrespective of if the original goal has been met, and indicates that no more will be done."
   finished: Boolean
+
+  "A textual description or comment."
   note: String
+
+  "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this claim."
   agreedIn: URI
+
+  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
   inScopeOf: [AnyType!]
 }
 
 input ClaimUpdateParams {
   id: ID!
+
+  "(`Action`) Relates a claim to a verb, such as consume, produce, work, improve, etc."
   action: ID
+
+  "(`Agent`) The economic agent from whom the claim is initiated."
   provider: ID
+
+  "(`Agent`) The economic agent whom the claim is for."
   receiver: ID
+
+  "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   resourceClassifiedAs: [URI!]
+
+  "(`ResourceSpecification`) The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
   resourceConformsTo: ID
+
+  "The amount and unit of the economic resource counted or inventoried."
   resourceQuantity: IMeasure
+
+  "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
   effortQuantity: IMeasure
+
+  "The time the claim is expected to be settled."
   due: DateTime
+
+  "(`EconomicEvent`) The economic event which already occurred which this claim has been made against."
   triggeredBy: ID
+
+  "The data on which the claim was made."
   created: DateTime
+
+  "The claim is complete or not.  This is irrespective of if the original goal has been met, and indicates that no more will be done."
   finished: Boolean
+
+  "A textual description or comment."
   note: String
+
+  "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this claim."
   agreedIn: URI
+
+  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
   inScopeOf: [AnyType!]
 }
 
@@ -146,33 +181,55 @@ type ClaimResponse {
 }
 
 
-# type SettlementParams {
-#   settles: ID! # Claim
-#   settledBy: ID! # EconomicEvent
-#   resourceQuantity: IMeasure
-#   effortQuantity: IMeasure
-#   note: String
-# }
 
 input SettlementCreateParams {
-  settles: ID! # Claim
-  settledBy: ID! # EconomicEvent
+  "(`Claim`) A claim which is fully or partially settled by an economic event."
+  settles: ID!
+
+  "(`EconomicEvent`) The economic event fully or partially settling a claim."
+  settledBy: ID!
+
+  "The amount and unit of the economic resource counted or inventoried."
   resourceQuantity: IMeasure
+
+  "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
   effortQuantity: IMeasure
+
+  "A textual description or comment."
   note: String
 }
 
 input SettlementUpdateParams {
   id: ID!
+
+  "(`Claim`) A claim which is fully or partially settled by an economic event."
   settles: ID
+
+  "(`EconomicEvent`) The economic event fully or partially settling a claim."
   settledBy: ID
+
+  "The amount and unit of the economic resource counted or inventoried."
   resourceQuantity: IMeasure
+
+  "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
   effortQuantity: IMeasure
+
+  "A textual description or comment."
   note: String
 }
 
 type SettlementResponse {
   settlement: Settlement
+}
+
+
+
+type Query {
+  claim(id: ID): Claim
+  allClaims(start: ID, limit: Int): [Claim!]
+
+  settlement(id: ID): Settlement
+  allSettlements(start: ID, limit: Int): [Settlement!]
 }
 
 type Mutation {

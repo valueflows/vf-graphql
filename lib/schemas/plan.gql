@@ -16,10 +16,10 @@ A logical collection of processes that constitute a body of planned work with de
 type Plan {
   id: ID!
 
-  "An informal or formal textual identifier for an item. Does not imply uniqueness."
+  "An informal or formal textual identifier for a plan. Does not imply uniqueness."
   name: String
 
-  "The date and time the plan was made."
+  "The time the plan was made."
   created: DateTime
 
   "The time the plan is expected to be complete."
@@ -37,39 +37,53 @@ type Plan {
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
   inScopeOf: [AnyType!]
 
+  "The plan is able to be deleted or not."
   deletable: Boolean
 }
 
 
 
-
-
-
-# interface PlanParams {
-#   name: String
-#   created: DateTime
-#   due: DateTime
-#   note: String
-# }
-
-input PlanCreateParams { # implements PlanParams
+input PlanCreateParams {
+  "An informal or formal textual identifier for a plan. Does not imply uniqueness."
   name: String!
+
+  "The time the plan was made."
   created: DateTime
+
+  "The time the plan is expected to be complete."
   due: DateTime
+
+  "A textual description or comment."
   note: String
+
+  "(`Scenario`) This plan refines a scenario, making it operational."
+  refinementOf: ID
 }
 
-input PlanUpdateParams { # implements UpdateParams & PlanParams
+input PlanUpdateParams {
   id: ID!
+
+  "An informal or formal textual identifier for a plan. Does not imply uniqueness."
   name: String
+
+  "The time the plan was made."
   created: DateTime
+
+  "The time the plan is expected to be complete."
   due: DateTime
+
+  "A textual description or comment."
   note: String
+
+  "(`Scenario`) This plan refines a scenario, making it operational."
+  refinementOf: ID
 }
 
 type PlanResponse {
   plan: Plan
 }
+
+
 
 type Query {
   plan(id: ID): Plan
@@ -78,6 +92,7 @@ type Query {
 
 type Mutation {
   createPlan(plan: PlanCreateParams!): PlanResponse
+  # :TODO:
   # createPlanFromRecipe(): PlanResponse
   updatePlan(plan: PlanUpdateParams!): PlanResponse
   deletePlan(id: String!): Boolean

@@ -82,9 +82,6 @@ type Commitment {
   "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this commitment."
   agreedIn: URI
 
-  "The commitment can be safely deleted, has no dependent information."
-  deletable: Boolean
-
   ##############################################################################
   # inverse relationships and queries
 
@@ -95,6 +92,9 @@ type Commitment {
   satisfies: [Satisfaction!]
 
   involvedAgents: [Agent!]
+
+  "The commitment can be safely deleted, has no dependent information."
+  deletable: Boolean
 }
 
 """
@@ -103,7 +103,7 @@ A planned economic flow which has not been committed to, which can lead to econo
 type Intent {
   id: ID!
 
-  "An informal or formal textual identifier for an item. Does not imply uniqueness."
+  "An informal or formal textual identifier for an intent. Does not imply uniqueness."
   name: String
 
   "Relates an intent to a verb, such as consume, produce, work, improve, etc."
@@ -166,11 +166,11 @@ type Intent {
   "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this intent."
   agreedIn: URI
 
-  "The intent can be safely deleted, has no dependent information."
-  deletable: Boolean
-
   ##############################################################################
   # inverse relationships and queries
+
+  "The intent can be safely deleted, has no dependent information."
+  deletable: Boolean
 
   satisfiedBy: [Satisfaction!]
 }
@@ -221,81 +221,141 @@ type Satisfaction {
 
 
 
-
-
-# interface IntentParams {
-#   name: String
-#   action: ID
-#   inputOf: ID
-#   outputOf: ID
-#   provider: ID
-#   receiver: ID
-#   resourceConformsTo: ID
-#   resourceClassifiedAs: [URI!]
-#   resourceInventoriedAs: ID
-#   resourceQuantity: IMeasure
-#   effortQuantity: IMeasure
-#   availableQuantity: IMeasure
-#   hasBeginning: DateTime
-#   hasEnd: DateTime
-#   hasPointInTime: DateTime
-#   due: DateTime
-#   image: URI
-#   note: String
-#   inScopeOf: [AnyType!]
-#   atLocation: ID
-#   agreedIn: URI
-#   finished: Boolean
-# }
-
-input IntentCreateParams { # implements IntentParams
+input IntentCreateParams {
+  "(`Action`) Relates an intent to a verb, such as consume, produce, work, improve, etc."
   action: ID!
+
+  "An informal or formal textual identifier for an intent. Does not imply uniqueness."
   name: String
+
+  "(`Process`) Defines the process to which this intent is an input."
   inputOf: ID
+
+  "(`Process`) Defines the process to which this intent is an output."
   outputOf: ID
+
+  "(`Agent`) The economic agent from whom the intent is initiated. This implies that the intent is an offer."
   provider: ID
+
+  "(`Agent`) The economic agent whom the intent is for.  This implies that the intent is a request."
   receiver: ID
+
+  "(`ResourceSpecification`) The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
   resourceConformsTo: ID
+
+  "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   resourceClassifiedAs: [URI!]
+
+  "(`EconomicResource`) When a specific `EconomicResource` is known which can service the `Intent`, this defines that resource."
   resourceInventoriedAs: ID
+
+  "The amount and unit of the economic resource counted or inventoried. This is the quantity that could be used to increment or decrement a resource, depending on the type of resource and resource effect of action."
   resourceQuantity: IMeasure
+
+  "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
   effortQuantity: IMeasure
+
+  "The total quantity of the offered resource available."
   availableQuantity: IMeasure
+
+  "The planned beginning of the intent."
   hasBeginning: DateTime
+
+  "The planned end of the intent."
   hasEnd: DateTime
+
+  "The planned date/time for the intent. Can be used instead of beginning and end."
   hasPointInTime: DateTime
+
+  "The time something is expected to be complete."
   due: DateTime
+
+  "The uri to an image relevant to the intent, such as a photo."
   image: URI
+
+  "A textual description or comment."
   note: String
+
+  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
   inScopeOf: [AnyType!]
-  atLocation: ID # SpatialThing
+
+  "(`SpatialThing`) The place where an intent occurs. Usually mappable."
+  atLocation: ID
+
+  "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this intent."
   agreedIn: URI
+
+  "The intent is complete or not.  This is irrespective of if the original goal has been met, and indicates that no more will be done."
   finished: Boolean
 }
 
-input IntentUpdateParams { # implements UpdateParams & IntentParams
+input IntentUpdateParams {
   id: ID!
+
+  "An informal or formal textual identifier for an intent. Does not imply uniqueness."
   name: String
+
+  "(`Action`) Relates an intent to a verb, such as consume, produce, work, improve, etc."
   action: ID
+
+  "(`Process`) Defines the process to which this intent is an input."
   inputOf: ID
+
+  "(`Process`) Defines the process to which this intent is an output."
   outputOf: ID
+
+  "(`Agent`) The economic agent from whom the intent is initiated. This implies that the intent is an offer."
   provider: ID
+
+  "(`Agent`) The economic agent whom the intent is for.  This implies that the intent is a request."
   receiver: ID
+
+  "(`ResourceSpecification`) The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
   resourceConformsTo: ID
+
+  "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   resourceClassifiedAs: [URI!]
+
+  "(`EconomicResource`) When a specific `EconomicResource` is known which can service the `Intent`, this defines that resource."
   resourceInventoriedAs: ID
+
+  "The amount and unit of the economic resource counted or inventoried. This is the quantity that could be used to increment or decrement a resource, depending on the type of resource and resource effect of action."
   resourceQuantity: IMeasure
+
+  "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
   effortQuantity: IMeasure
+
+  "The total quantity of the offered resource available."
   availableQuantity: IMeasure
+
+  "The planned beginning of the intent."
   hasBeginning: DateTime
+
+  "The planned end of the intent."
   hasEnd: DateTime
+
+  "The planned date/time for the intent. Can be used instead of beginning and end."
   hasPointInTime: DateTime
+
+  "The time something is expected to be complete."
   due: DateTime
+
+  "The uri to an image relevant to the intent, such as a photo."
   image: URI
+
+  "The intent is complete or not.  This is irrespective of if the original goal has been met, and indicates that no more will be done."
   finished: Boolean
+
+  "A textual description or comment."
   note: String
+
+  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
   inScopeOf: [AnyType!]
-  atLocation: ID # SpatialThing
+
+  "(`SpatialThing`) The place where an intent occurs. Usually mappable."
+  atLocation: ID
+
+  "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this intent."
   agreedIn: URI
 }
 
@@ -304,76 +364,134 @@ type IntentResponse {
 }
 
 
-# interface CommitmentParams {
-#   action: ID
-#   inputOf: ID
-#   outputOf: ID
-#   provider: ID
-#   receiver: ID
-#   resourceClassifiedAs: [URI!]
-#   resourceConformsTo: ID
-#   resourceInventoriedAs: ID
-#   resourceQuantity: IMeasure
-#   effortQuantity: IMeasure
-#   hasBeginning: DateTime
-#   hasEnd: DateTime
-#   hasPointInTime: DateTime
-#   due: DateTime
-#   finished: Boolean
-#   note: String
-#   inScopeOf: [AnyType!]
-#   independentDemandOf: ID #Plan
-#   atLocation: ID
-#   agreedIn: URI
-#   clauseOf: Agreement
-# }
 
-input CommitmentCreateParams { # implements CommitmentParams
+input CommitmentCreateParams {
+  "(`Action`) Relates a commitment to a verb, such as consume, produce, work, improve, etc."
   action: ID!
+
+  "(`Process`) Defines the process to which this commitment is an input."
   inputOf: ID
+
+  "(`Process`) Defines the process for which this commitment is an output."
   outputOf: ID
+
+  "(`Agent`) The economic agent from whom the commitment is initiated."
   provider: ID!
+
+  "(`Agent`) The economic agent whom the commitment is for."
   receiver: ID!
+
+  "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   resourceClassifiedAs: [URI!]
+
+  "(`ResourceSpecification`) The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
   resourceConformsTo: ID
+
+  "(`EconomicResource`) Exact economic resource involved in the commitment."
   resourceInventoriedAs: ID
+
+  "The amount and unit of the economic resource counted or inventoried."
   resourceQuantity: IMeasure
+
+  "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
   effortQuantity: IMeasure
+
+  "The planned beginning of the commitment."
   hasBeginning: DateTime
+
+  "The planned end of the commitment."
   hasEnd: DateTime
+
+  "The planned date/time for the commitment. Can be used instead of beginning and end."
   hasPointInTime: DateTime
+
+  "The time something is expected to be complete."
   due: DateTime
+
+  "The commitment is complete or not.  This is irrespective of if the original goal has been met, and indicates that no more will be done."
   finished: Boolean
+
+  "A textual description or comment."
   note: String
+
+  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
   inScopeOf: [AnyType!]
-  independentDemandOf: ID #Plan
-  atLocation: ID # SpatialThing
+
+  "(`Plan`) Represents a desired deliverable expected from this plan."
+  independentDemandOf: ID
+
+  "(`SpatialThing`) The place where an commitment occurs.  Usually mappable."
+  atLocation: ID
+
+  "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this commitment."
   agreedIn: URI
-  clauseOf: ID # Agreement
+
+  "(`Agreement`) This commitment is part of the agreement."
+  clauseOf: ID
 }
 
-input CommitmentUpdateParams { # implements UpdateParams & CommitmentParams
+input CommitmentUpdateParams {
   id: ID!
+
+  "(`Process`) Defines the process to which this commitment is an input."
   inputOf: ID
+
+  "(`Process`) Defines the process for which this commitment is an output."
   outputOf: ID
+
+  "(`Agent`) The economic agent from whom the commitment is initiated."
   provider: ID
+
+  "(`Agent`) The economic agent whom the commitment is for."
   receiver: ID
+
+  "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   resourceClassifiedAs: [URI!]
+
+  "(`ResourceSpecification`) The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
   resourceConformsTo: ID
+
+  "(`EconomicResource`) Exact economic resource involved in the commitment."
   resourceInventoriedAs: ID
+
+  "The amount and unit of the economic resource counted or inventoried."
   resourceQuantity: IMeasure
+
+  "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
   effortQuantity: IMeasure
+
+  "The planned beginning of the commitment."
   hasBeginning: DateTime
+
+  "The planned end of the commitment."
   hasEnd: DateTime
+
+  "The planned date/time for the commitment. Can be used instead of beginning and end."
   hasPointInTime: DateTime
+
+  "The time something is expected to be complete."
   due: DateTime
+
+  "The commitment is complete or not.  This is irrespective of if the original goal has been met, and indicates that no more will be done."
   finished: Boolean
+
+  "A textual description or comment."
   note: String
+
+  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
   inScopeOf: [AnyType!]
-  independentDemandOf: ID #Plan
-  atLocation: ID # SpatialThing
+
+  "(`Plan`) Represents a desired deliverable expected from this plan."
+  independentDemandOf: ID
+
+  "(`SpatialThing`) The place where an commitment occurs.  Usually mappable."
+  atLocation: ID
+
+  "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this commitment."
   agreedIn: URI
-  clauseOf: ID # Agreement
+
+  "(`Agreement`) This commitment is part of the agreement."
+  clauseOf: ID
 }
 
 type CommitmentResponse {
@@ -381,28 +499,40 @@ type CommitmentResponse {
 }
 
 
-# interface FulfillmentParams {
-#   fulfilledBy: ID # EconomicEvent
-#   fulfills: ID # Commmitment
-#   resourceQuantity: IMeasure
-#   effortQuantity: IMeasure
-#   note: String
-# }
 
-input FulfillmentCreateParams { # implements FulfillmentParams
+input FulfillmentCreateParams {
+  "(`EconomicEvent`) The economic event which completely or partially fulfills a commitment."
   fulfilledBy: ID!
+
+  "(`Commitment`) The commitment which is completely or partially fulfilled by an economic event."
   fulfills: ID!
+
+  "The amount and unit of the economic resource counted or inventoried."
   resourceQuantity: IMeasure
+
+  "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
   effortQuantity: IMeasure
+
+  "A textual description or comment."
   note: String
 }
 
-input FulfillmentUpdateParams { # implements UpdateParams & FulfillmentParams
+input FulfillmentUpdateParams {
   id: ID!
+
+  "(`EconomicEvent`) The economic event which completely or partially fulfills a commitment."
   fulfilledBy: ID
+
+  "(`Commitment`) The commitment which is completely or partially fulfilled by an economic event."
   fulfills: ID
+
+  "The amount and unit of the economic resource counted or inventoried."
   resourceQuantity: IMeasure
+
+  "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
   effortQuantity: IMeasure
+
+  "A textual description or comment."
   note: String
 }
 
@@ -411,34 +541,48 @@ type FulfillmentResponse {
 }
 
 
-# interface SatisfactionParams {
-#   satisfies: Intent
-#   satisfiedBy: Commitment
-#   resourceQuantity: IMeasure
-#   effortQuantity: IMeasure
-#   note: String
-# }
 
-input SatisfactionCreateParams { # implements SatisfactionParams
-  satisfies: ID! # Intent
-  satisfiedBy: ID! # Commitment
+input SatisfactionCreateParams {
+  "(`Intent`) An intent satisfied fully or partially by an economic event or commitment."
+  satisfies: ID!
+
+  "(`Commitment`|`EconomicEvent`) A commitment or economic event fully or partially satisfying an intent."
+  satisfiedBy: ID!
+
+  "The amount and unit of the economic resource counted or inventoried."
   resourceQuantity: IMeasure
+
+  "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
   effortQuantity: IMeasure
+
+  "A textual description or comment."
   note: String
 }
 
-input SatisfactionUpdateParams { # implements UpdateParams & SatisfactionParams
+input SatisfactionUpdateParams {
   id: ID!
-  satisfies: ID # Intent
-  satisfiedBy: ID # Commitment
+
+  "(`Intent`) An intent satisfied fully or partially by an economic event or commitment."
+  satisfies: ID
+
+  "(`Commitment`|`EconomicEvent`) A commitment or economic event fully or partially satisfying an intent."
+  satisfiedBy: ID
+
+  "The amount and unit of the economic resource counted or inventoried."
   resourceQuantity: IMeasure
+
+  "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
   effortQuantity: IMeasure
+
+  "A textual description or comment."
   note: String
 }
 
 type SatisfactionResponse {
   satisfaction: Satisfaction
 }
+
+
 
 type Query {
   commitment(id: ID): Commitment

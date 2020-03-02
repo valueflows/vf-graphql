@@ -1,6 +1,6 @@
 {
   "name": "@valueflows/vf-graphql",
-  "version": "0.6.1",
+  "version": "0.7.0",
   "description": "Reference GraphQL implementation of the ValueFlows spec",
   "main": "index.js",
   "types": "index.d.ts",

@@ -21,9 +21,25 @@ enum TimeUnit {
 A `Duration` represents an interval between two `DateTime` values.
 """
 type Duration {
+  "A number representing the duration, will be paired with a unit."
   numericDuration: Float!
+
+  "A unit of measure."
   unitType: TimeUnit!
 }
+
+"""
+Mutation input structure for defining time durations.
+"""
+input IDuration {
+  "A number representing the duration, will be paired with a unit."
+  numericDuration: Float!
+
+  "A unit of measure."
+  unitType: TimeUnit!
+}
+
+
 
 """
 Defines a unit of measurement, along with its display symbol.
@@ -31,16 +47,25 @@ From OM2 vocabulary.
 """
 type Unit {
   id: ID!
+
+  "A human readable label for the unit, can be language specific."
   label: String!
+
+  "A standard display symbol for a unit of measure."
   symbol: String!
 }
+
+
 
 """
 Semantic meaning for measurements: binds a quantity to its measurement unit.
 See http://www.qudt.org/pages/QUDToverviewPage.html
 """
 type Measure {
+  "A number representing the quantity, will be paired with a unit."
   hasNumericalValue: Float!
+
+  "A unit of measure."
   hasUnit: Unit
 }
 
@@ -48,42 +73,38 @@ type Measure {
 Mutation input structure for defining measurements. Should be nulled if not present, rather than empty.
 """
 input IMeasure {
+  "A number representing the quantity, will be paired with a unit."
   hasNumericalValue: Float!
-  hasUnit: ID # Unit
-}
 
-"""
-Mutation input structure for defining time durations.
-"""
-input IDuration {
-  numericDuration: Float!
-  unitType: TimeUnit!
+  "(`Unit`) A unit of measure."
+  hasUnit: ID
 }
 
 
 
-
-
-
-# interface UnitParams {
-#   label: String
-#   symbol: String
-# }
-
-input UnitCreateParams { # implements UnitParams
+input UnitCreateParams {
+  "A human readable label for the unit, can be language specific."
   label: String!
+
+  "A standard display symbol for a unit of measure."
   symbol: String!
 }
 
-input UnitUpdateParams { # implements UpdateParams & UnitParams
+input UnitUpdateParams {
   id: ID!
+
+  "A human readable label for the unit, can be language specific."
   label: String
+
+  "A standard display symbol for a unit of measure."
   symbol: String
 }
 
 type UnitResponse {
   unit: Unit
 }
+
+
 
 type Query {
   unit(id: ID): Unit

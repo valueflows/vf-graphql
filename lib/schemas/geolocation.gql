@@ -14,19 +14,83 @@ A physical mappable location.
 """
 type SpatialThing {
   id: ID!
+
+  "An informal or formal textual identifier for a location. Does not imply uniqueness."
   name: String!
+
+  "An address that will be recognized as mappable by mapping software."
   mappableAddress: String
+
+  "Latitude."
   lat: Float
+
+  "Longitude."
   long: Float
+
+  "Altitude."
   alt: Float
 
   "A textual description or comment."
   note: String
 }
 
+
+
+input SpatialThingCreateParams {
+  "An informal or formal textual identifier for a location. Does not imply uniqueness."
+  name: String!
+
+  "An address that will be recognized as mappable by mapping software."
+  mappableAddress: String
+
+  "Latitude."
+  lat: Float
+
+  "Longitude."
+  long: Float
+
+  "Altitude."
+  alt: Float
+
+  "A textual description or comment."
+  note: String
+}
+
+input SpatialThingUpdateParams {
+  id: ID!
+
+  "An informal or formal textual identifier for a location. Does not imply uniqueness."
+  name: String
+
+  "An address that will be recognized as mappable by mapping software."
+  mappableAddress: String
+
+  "Latitude."
+  lat: Float
+
+  "Longitude."
+  long: Float
+
+  "Altitude."
+  alt: Float
+
+  "A textual description or comment."
+  note: String
+}
+
+type SpatialThingResponse {
+  spatialThing: SpatialThing
+}
+
+
+
 type Query {
   spatialThing(id: ID): SpatialThing
   allSpatialThings(start: ID, limit: Int): [SpatialThing!]
 }
 
-# :TODO: Mutation API
+type Mutation {
+  createSpatialThing(spatialThing: SpatialThingCreateParams!): SpatialThingResponse
+  updateSpatialThing(spatialThing: SpatialThingUpdateParams!): SpatialThingResponse
+  deleteSpatialThing(id: String!): Boolean
+}

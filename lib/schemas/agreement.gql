@@ -19,7 +19,7 @@ Any type of agreement among economic agents.
 type Agreement {
   id: ID!
 
-  "An informal or formal textual identifier for an item. Does not imply uniqueness."
+  "An informal or formal textual identifier for an agreement. Does not imply uniqueness."
   name: String
 
   "The date and time the agreement was created."
@@ -31,30 +31,35 @@ type Agreement {
 
 
 
-
-
-# interface AgreementParams {
-#   name: String
-#   created: DateTime
-#   note: String
-# }
-
 input AgreementCreateParams { # implements AgreementParams
+  "An informal or formal textual identifier for an agreement. Does not imply uniqueness."
   name: String!
+
+  "The date and time the agreement was created."
   created: DateTime!
+
+  "A textual description or comment."
   note: String
 }
 
 input AgreementUpdateParams { # implements UpdateParams & AgreementParams
   id: ID!
+
+  "An informal or formal textual identifier for an agreement. Does not imply uniqueness."
   name: String
+
+  "The date and time the agreement was created."
   created: DateTime
+
+  "A textual description or comment."
   note: String
 }
 
 type AgreementResponse {
   Agreement: Agreement
 }
+
+
 
 type Query {
   agreement(id: ID): Agreement

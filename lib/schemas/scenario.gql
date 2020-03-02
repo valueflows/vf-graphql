@@ -16,7 +16,7 @@ An estimated or analytical logical collection of higher level processes used for
 type Scenario {
   id: ID!
 
-  "An informal or formal textual identifier for an item. Does not imply uniqueness."
+  "An informal or formal textual identifier for a scenario. Does not imply uniqueness."
   name: String!
 
   "The beginning date/time of the scenario, often the beginning of an accounting period."
@@ -34,6 +34,7 @@ type Scenario {
   "This scenario refines another scenario, often as time moves closer or for more detail."
   refinementOf: Scenario
 
+  "A textual description or comment."
   note: String
 }
 
@@ -43,7 +44,7 @@ The type definition of one or more scenarios, such as Yearly Budget.
 type ScenarioDefinition {
   id: ID!
 
-  "An informal or formal textual identifier for an item. Does not imply uniqueness."
+  "An informal or formal textual identifier for a scenario definition. Does not imply uniqueness."
   name: String!
 
   "The duration of the scenario, often an accounting period."
@@ -55,34 +56,51 @@ type ScenarioDefinition {
 
 
 
-
-
-
-# interface ScenarioParams {
-#   name: String
-#   definedAs: ScenarioDefinition
-#   hasBeginning: DateTime
-#   hasEnd: DateTime
-#   inScopeOf: [AnyType!]
-#   note: String
-# }
-
-input ScenarioCreateParams { # implements ScenarioParams
+input ScenarioCreateParams {
+  "An informal or formal textual identifier for a scenario. Does not imply uniqueness."
   name: String!
-  definedAs: ID! #ScenarioDefinition
+
+  "(`ScenarioDefinition`) The scenario definition for this scenario, for example yearly budget."
+  definedAs: ID!
+
+  "The beginning date/time of the scenario, often the beginning of an accounting period."
   hasBeginning: DateTime
+
+  "The ending date/time of the scenario, often the end of an accounting period."
   hasEnd: DateTime
+
+  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
   inScopeOf: [AnyType!]
+
+  "(`Scenario`) This scenario refines another scenario, often as time moves closer or for more detail."
+  refinementOf: ID
+
+  "A textual description or comment."
   note: String
 }
 
-input ScenarioUpdateParams { # implements UpdateParams & ScenarioParams
+input ScenarioUpdateParams {
   id: ID!
+
+  "An informal or formal textual identifier for a scenario. Does not imply uniqueness."
   name: String
-  definedAs: ID! #ScenarioDefinition
+
+  "(`ScenarioDefinition`) The scenario definition for this scenario, for example yearly budget."
+  definedAs: ID!
+
+  "The beginning date/time of the scenario, often the beginning of an accounting period."
   hasBeginning: DateTime
+
+  "The ending date/time of the scenario, often the end of an accounting period."
   hasEnd: DateTime
+
+  "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
   inScopeOf: [AnyType!]
+
+  "(`Scenario`) This scenario refines another scenario, often as time moves closer or for more detail."
+  refinementOf: ID
+
+  "A textual description or comment."
   note: String
 }
 
@@ -90,26 +108,44 @@ type ScenarioResponse {
   scenario: Scenario
 }
 
-# interface ScenarioDefinitionParams {
-#   name: String
-#   hasDuration: IDuration
-#   note: String
-# }
 
-input ScenarioDefinitionCreateParams { # implements ScenarioDefinitionParams
+
+input ScenarioDefinitionCreateParams {
+  "An informal or formal textual identifier for a scenario definition. Does not imply uniqueness."
   name: String
+
+  "The duration of the scenario, often an accounting period."
   hasDuration: IDuration
+
+  "A textual description or comment."
   note: String
 }
 
-input ScenarioDefinitionUpdateParams { # implements UpdateParams & ScenarioDefinitionParams
+input ScenarioDefinitionUpdateParams {
   id: ID!
+
+  "An informal or formal textual identifier for a scenario definition. Does not imply uniqueness."
+  name: String!
+
+  "The duration of the scenario, often an accounting period."
   hasDuration: IDuration
+
+  "A textual description or comment."
   note: String
 }
 
 type ScenarioDefinitionResponse {
   scenarioDefinition: ScenarioDefinition
+}
+
+
+
+type Query {
+  scenario(id: ID): Scenario
+  allScenarios(start: ID, limit: Int): [Scenario!]
+
+  scenarioDefinition(id: ID): ScenarioDefinition
+  allScenarioDefinitions(start: ID, limit: Int): [ScenarioDefinition!]
 }
 
 type Mutation {

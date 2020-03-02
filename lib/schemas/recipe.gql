@@ -18,7 +18,7 @@ Specifies the resource as part of a recipe, for use in planning from recipe.
 type RecipeResource {
   id: ID!
 
-  "An informal or formal textual identifier for an object. Does not imply uniqueness."
+  "An informal or formal textual identifier for a recipe resource. Does not imply uniqueness."
   name: String!
 
   "The unit of inventory used for this resource in the recipe."
@@ -81,7 +81,7 @@ Specifies a process in a recipe for use in planning from recipe.
 type RecipeProcess {
   id: ID!
 
-  "An informal or formal textual identifier for an item. Does not imply uniqueness."
+  "An informal or formal textual identifier for a recipe process. Does not imply uniqueness."
   name: String!
 
   "The planned calendar duration of the process as defined for the recipe batch."
@@ -99,36 +99,57 @@ type RecipeProcess {
 
 
 
-
-
-# interface RecipeResourceParams {
-#   name: String
-#   image: URI
-#   unitOfResource: ID
-#   unitOfEffort: ID
-#   resourceClassifiedAs: [URI!]
-#   substitutable: Boolean
-#   note: String
-# }
-
-input RecipeResourceCreateParams { # implements RecipeResourceParams
+input RecipeResourceCreateParams {
+  "An informal or formal textual identifier for a recipe resource. Does not imply uniqueness."
   name: String!
+
+  "(`Unit`) The unit of inventory used for this resource in the recipe."
   unitOfResource: ID
+
+  "(`Unit`) The unit used for use action on this resource or work action in the recipe."
   unitOfEffort: ID
+
+  "Defines if any resource of that type can be freely substituted for any other resource of that type when used, consumed, traded, etc."
   substitutable: Boolean
+
+  "The uri to an image relevant to the entity, such as a photo, diagram, etc."
   image: URI
+
+  "(`ResourceSpecification`) The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
+  resourceConformsTo: ID
+
+  "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   resourceClassifiedAs: [URI!]
+
+  "A textual description or comment."
   note: String
 }
 
-input RecipeResourceUpdateParams { # implements UpdateParams & RecipeResourceParams
+input RecipeResourceUpdateParams {
   id: ID!
+
+  "An informal or formal textual identifier for a recipe resource. Does not imply uniqueness."
   name: String
+
+  "(`Unit`) The unit of inventory used for this resource in the recipe."
   unitOfResource: ID
+
+  "(`Unit`) The unit used for use action on this resource or work action in the recipe."
   unitOfEffort: ID
+
+  "Defines if any resource of that type can be freely substituted for any other resource of that type when used, consumed, traded, etc."
   substitutable: Boolean
+
+  "The uri to an image relevant to the entity, such as a photo, diagram, etc."
   image: URI
+
+  "(`ResourceSpecification`) The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
+  resourceConformsTo: ID
+
+  "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   resourceClassifiedAs: [URI!]
+
+  "A textual description or comment."
   note: String
 }
 
@@ -137,25 +158,40 @@ type RecipeResourceResponse {
 }
 
 
-# interface RecipeProcessParams {
-#   name: String
-#   hasDuration: IDuration
-#   processClassifiedAs: [URI!]
-#   note: String
-# }
 
-input RecipeProcessCreateParams { # implements RecipeProcessParams
+input RecipeProcessCreateParams {
+  "An informal or formal textual identifier for a recipe process. Does not imply uniqueness."
   name: String!
+
+  "The planned calendar duration of the process as defined for the recipe batch."
   hasDuration: IDuration
+
+  "(`ProcessSpecification`) The standard specification or definition of a process."
+  processConformsTo: ID!
+
+  "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
   processClassifiedAs: [URI!]
+
+  "A textual description or comment."
   note: String
 }
 
-input RecipeProcessUpdateParams { # implements UpdateParams & RecipeProcessParams
+input RecipeProcessUpdateParams {
   id: ID!
+
+  "An informal or formal textual identifier for a recipe process. Does not imply uniqueness."
   name: String
+
+  "The planned calendar duration of the process as defined for the recipe batch."
   hasDuration: IDuration
+
+  "(`ProcessSpecification`) The standard specification or definition of a process."
+  processConformsTo: ID!
+
+  "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
   processClassifiedAs: [URI!]
+
+  "A textual description or comment."
   note: String
 }
 
@@ -164,46 +200,72 @@ type RecipeProcessResponse {
 }
 
 
-# interface RecipeFlowParams {
-#   action: Action
-#   recipeFlowResource: RecipeResource
-#   resourceQuantity: IMeasure
-#   effortQuantity: IMeasure
-#   recipeInputOf: RecipeProcess
-#   recipeOutputOf: RecipeProcess
-#   stage: ProcessSpecification
-#   state: Action
-#   note: String
-# }
 
-input RecipeFlowCreateParams { # implements RecipeFlowParams
-  action: ID! # Action
-  recipeFlowResource: ID # RecipeResource!
+input RecipeFlowCreateParams {
+  "(`Action`) Relates a process input or output to a verb, such as consume, produce, work, modify, etc."
+  action: ID!
+
+  "(`RecipeResource`) The resource definition referenced by this flow in the recipe."
+  recipeFlowResource: ID!
+
+  "The amount and unit of the economic resource counted or inventoried."
   resourceQuantity: IMeasure
+
+  "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
   effortQuantity: IMeasure
-  recipeInputOf: ID # RecipeProcess
-  recipeOutputOf: ID # RecipeProcess
-  stage: ID # ProcessSpecification
-  state: ID # Action
+
+  "(`RecipeProcess`) Relates an input flow to its process in a recipe."
+  recipeInputOf: ID
+
+  "(`RecipeProcess`) Relates an output flow to its process in a recipe."
+  recipeOutputOf: ID
+
+  "(`ProcessSpecification`) References the ProcessSpecification of the last process the economic resource went through. Stage is used when the last process is important for finding proper resources, such as where the publishing process wants only documents that have gone through the editing process."
+  stage: ID
+
+  "The state of the desired economic resource (pass or fail), after coming out of a test or review process."
+  state: String
+
+  "A textual description or comment."
   note: String
 }
 
-input RecipeFlowUpdateParams { # implements UpdateParams & RecipeFlowParams
+input RecipeFlowUpdateParams {
   id: ID!
-  action: ID # Action
-  recipeFlowResource: ID # RecipeResource
+
+  "(`Action`) Relates a process input or output to a verb, such as consume, produce, work, modify, etc."
+  action: ID
+
+  "(`RecipeResource`) The resource definition referenced by this flow in the recipe."
+  recipeFlowResource: ID
+
+  "The amount and unit of the economic resource counted or inventoried."
   resourceQuantity: IMeasure
+
+  "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
   effortQuantity: IMeasure
-  recipeInputOf: ID # RecipeProcess
-  recipeOutputOf: ID # RecipeProcess
-  stage: ID # ProcessSpecification
-  state: ID # Action
+
+  "(`RecipeProcess`) Relates an input flow to its process in a recipe."
+  recipeInputOf: ID
+
+  "(`RecipeProcess`) Relates an output flow to its process in a recipe."
+  recipeOutputOf: ID
+
+  "(`ProcessSpecification`) References the ProcessSpecification of the last process the economic resource went through. Stage is used when the last process is important for finding proper resources, such as where the publishing process wants only documents that have gone through the editing process."
+  stage: ID
+
+  "The state of the desired economic resource (pass or fail), after coming out of a test or review process."
+  state: String
+
+  "A textual description or comment."
   note: String
 }
 
 type RecipeFlowResponse {
   recipeFlow: RecipeFlow
 }
+
+
 
 type Query {
   recipeResource(id: ID): RecipeResource

@@ -17,10 +17,10 @@ Supports the gift economy.
 type Appreciation {
   id: ID!
 
-  "The `EconomicEvent` this appreciation has been given in acknowledgement of"
+  "The economic event this appreciation has been given in acknowledgement of."
   appreciationOf: EconomicEvent!
 
-  "The `EconomicEvent` provided as a gift in this appreciation"
+  "The economic event provided as a gift in this appreciation."
   appreciationWith: EconomicEvent!
 
   "A textual description or comment."
@@ -29,29 +29,35 @@ type Appreciation {
 
 
 
-
-# interface AppreciationParams {
-#   appreciationOf: ID
-#   appreciationWith: ID
-#   note: String
-# }
-
 input AppreciationCreateParams {
-  appreciationOf: ID # EconomicEvent
-  appreciationWith: ID # EconomicEvent
+  "(`EconomicEvent`) The economic event this appreciation has been given in acknowledgement of."
+  appreciationOf: ID!
+
+  "(`EconomicEvent`) The economic event provided as a gift in this appreciation."
+  appreciationWith: ID!
+
+  "A textual description or comment."
   note: String
 }
 
 input AppreciationUpdateParams {
   id: ID!
-  appreciationOf: ID # EconomicEvent
-  appreciationWith: ID # EconomicEvent
+
+  "(`EconomicEvent`) The economic event this appreciation has been given in acknowledgement of."
+  appreciationOf: ID
+
+  "(`EconomicEvent`) The economic event provided as a gift in this appreciation."
+  appreciationWith: ID
+
+  "A textual description or comment."
   note: String
 }
 
 type AppreciationResponse {
   appreciation: Appreciation
 }
+
+
 
 type Mutation {
   createAppreciation(appreciation: AppreciationCreateParams!): AppreciationResponse

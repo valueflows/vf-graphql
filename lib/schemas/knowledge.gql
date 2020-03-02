@@ -43,8 +43,6 @@ type Action {
 #   produce             (+) new resource created in that process or an existing stock resource added to
 #   accept              (0) in processes like repair or maintentance, the same resource will appear in output with vf:modify verb
 #   modify              (0) in processes like repair or maintentance, the same resource will appear in input with vf:accept verb
-#   pass                (0) possible output of a testing or reviewing process, indicating the resource passed, the same resource will appear in input with *vf:accept* verb
-#   fail                (0) possible output of a testing or reviewing process, indicating the resource failed, the same resource will appear in input with *vf:accept* verb
 #   deliver-service     (0) new service produced and delivered (being a service implies that an agent actively receives the service)
 #   transfer-all-rights (-+) give full (in the human realm) rights and responsibilities to another agent, without transferring physical custody
 #   transfer-custody    (-+) give physical custody and control of a resource, without full accounting or ownership rights
@@ -60,7 +58,7 @@ Used instead of a classification when more information is needed, particularly f
 type ResourceSpecification {
   id: ID!
 
-  "An informal or formal textual identifier for an object. Does not imply uniqueness."
+  "An informal or formal textual identifier for a type of resource. Does not imply uniqueness."
   name: String!
 
   "The uri to an image relevant to the entity, such as a photo, diagram, etc."
@@ -70,7 +68,7 @@ type ResourceSpecification {
   note: String
 
   "[UNSTABLE] The default unit used for quantifying this resource type."
-  defaultUnitOfEffort: Unit,
+  defaultUnitOfEffort: Unit
 }
 
 """
@@ -79,7 +77,7 @@ Specifies the kind of process.
 type ProcessSpecification {
   id: ID!
 
-  "An informal or formal textual identifier for an item. Does not imply uniqueness."
+  "An informal or formal textual identifier for the process. Does not imply uniqueness."
   name: String!
 
   "A textual description or comment."
@@ -88,25 +86,34 @@ type ProcessSpecification {
 
 
 
-
-
-# interface ResourceSpecificationParams {
-#   name: String
-#   image: URI
-#   note: String
-# }
-
-input ResourceSpecificationCreateParams { # implements ResourceSpecificationParams
+input ResourceSpecificationCreateParams {
+  "An informal or formal textual identifier for a type of resource. Does not imply uniqueness."
   name: String!
+
+  "The uri to an image relevant to the entity, such as a photo, diagram, etc."
   image: URI
+
+  "A textual description or comment."
   note: String
+
+  "(`Unit`) [UNSTABLE] The default unit used for quantifying this resource type."
+  defaultUnitOfEffort: ID
 }
 
-input ResourceSpecificationUpdateParams { # implements UpdateParams & ResourceSpecificationParams
+input ResourceSpecificationUpdateParams {
   id: ID!
+
+  "An informal or formal textual identifier for a type of resource. Does not imply uniqueness."
   name: String
+
+  "The uri to an image relevant to the entity, such as a photo, diagram, etc."
   image: URI
+
+  "A textual description or comment."
   note: String
+
+  "(`Unit`) [UNSTABLE] The default unit used for quantifying this resource type."
+  defaultUnitOfEffort: ID
 }
 
 type ResourceSpecificationResponse {
@@ -114,25 +121,30 @@ type ResourceSpecificationResponse {
 }
 
 
-# interface ProcessSpecificationParams {
-#   name: String
-#   note: String
-# }
 
-input ProcessSpecificationCreateParams { # implements ProcessSpecificationParams
+input ProcessSpecificationCreateParams {
+  "An informal or formal textual identifier for the process. Does not imply uniqueness."
   name: String!
+
+  "A textual description or comment."
   note: String
 }
 
-input ProcessSpecificationUpdateParams { # implements UpdateParams & ProcessSpecificationParams
+input ProcessSpecificationUpdateParams {
   id: ID!
+
+  "An informal or formal textual identifier for the process. Does not imply uniqueness."
   name: String
+
+  "A textual description or comment."
   note: String
 }
 
 type ProcessSpecificationResponse {
   processSpecification: ProcessSpecification
 }
+
+
 
 type Query {
   action(id: ID): Action

@@ -144,27 +144,33 @@ type AgentRelationshipRole {
 
 
 
-
-
-# interface AgentParams {
-#   name: String
-#   image: URI
-#   primaryLocation: String
-#   note: String
-# }
-
 input AgentCreateParams { # implements AgentParams
+  "An informal or formal textual identifier for an agent. Does not imply uniqueness."
   name: String!
+
+  "The uri to an image relevant to the agent, such as a logo, avatar, photo, etc."
   image: URI
+
+  "(`SpatialThing`) The main place an agent is located, often an address where activities occur and mail can be sent. This is usually a mappable geographic location.  It also could be a website address, as in the case of agents who have no physical location."
   primaryLocation: ID
+
+  "A textual description or comment."
   note: String
 }
 
 input AgentUpdateParams { # implements UpdateParams & AgentParams
   id: ID!
+
+  "An informal or formal textual identifier for an agent. Does not imply uniqueness."
   name: String
+
+  "The uri to an image relevant to the agent, such as a logo, avatar, photo, etc."
   image: URI
+
+  "(`SpatialThing`) The main place an agent is located, often an address where activities occur and mail can be sent. This is usually a mappable geographic location.  It also could be a website address, as in the case of agents who have no physical location."
   primaryLocation: ID
+
+  "A textual description or comment."
   note: String
 }
 
@@ -177,25 +183,34 @@ type OrganizationResponse {
 }
 
 
-# interface AgentRelationshipParams {
-#   subject: ID
-#   object: ID
-#   relationship: ID
-#   note: String
-# }
 
 input AgentRelationshipCreateParams { # implements AgentRelationshipParams
+  "(`Agent`) The subject of a relationship between 2 agents.  For example, if Mary is a member of a group, then Mary is the subject."
   subject: ID! # Agent
+
+  "(`Agent`) The object of a relationship between 2 agents.  For example, if Mary is a member of a group, then the group is the object."
   object: ID! # Agent
+
+  "(`AgentRelationshipRole`) The role of an economic relationship that exists between 2 agents, such as member, trading partner."
   relationship: ID! # AgentRelationshipRole
+
+  "A textual description or comment."
   note: String
 }
 
 input AgentRelationshipUpdateParams { # implements UpdateParams & AgentRelationshipParams
   id: ID!
+
+  "(`Agent`) The subject of a relationship between 2 agents.  For example, if Mary is a member of a group, then Mary is the subject."
   subject: ID
+
+  "(`Agent`) The object of a relationship between 2 agents.  For example, if Mary is a member of a group, then the group is the object."
   object: ID
+
+  "(`AgentRelationshipRole`) The role of an economic relationship that exists between 2 agents, such as member, trading partner."
   relationship: ID
+
+  "A textual description or comment."
   note: String
 }
 
@@ -204,22 +219,28 @@ type AgentRelationshipResponse {
 }
 
 
-# interface AgentRelationshipRoleParams {
-#   roleLabel: String
-#   inverseRoleLabel: String
-#   note: String
-# }
 
 input AgentRelationshipRoleCreateParams { # implements AgentRelationshipRoleParams
+  "The human readable name of the role, inverse from the object to the subject. For example, 'is member of'."
   roleLabel: String!
+
+  "The human readable name of the role, inverse from the object to the subject. For example, 'has member'."
   inverseRoleLabel: String
+
+  "A textual description or comment."
   note: String
 }
 
 input AgentRelationshipRoleUpdateParams { # implements UpdateParams & AgentRelationshipRoleParams
   id: ID!
+
+  "The human readable name of the role, inverse from the object to the subject. For example, 'is member of'."
   roleLabel: String
+
+  "The human readable name of the role, inverse from the object to the subject. For example, 'has member'."
   inverseRoleLabel: String
+
+  "A textual description or comment."
   note: String
 }
 
@@ -228,30 +249,47 @@ type AgentRelationshipRoleResponse {
 }
 
 type Query {
+  "Loads details of the currently authenticated REA agent"
   myAgent: Agent
 
+  "Find an agent (person or organization) by their ID"
   agent(id: ID): Agent
+  "Loads all agents publicly registered within this collaboration space"
   allAgents(start: ID, limit: Int): [Agent!]
 
+  "Find an organization (group) agent by its ID"
   organization(id: ID): Organization
+  "Loads all organizations publicly registered within this collaboration space"
   allOrganizations(start: ID, limit: Int): [Organization!]
 
+  "Find a person by their ID"
   person(id: ID): Person
+  "Loads all people who have publicly registered with this collaboration space."
   allPeople(start: ID, limit: Int): [Person!]
 
+  "Retrieve details of an agent relationship by its ID"
   agentRelationship(id: ID): AgentRelationship
+  "Retrieve details of all the relationships between all agents registered in this collaboration space"
   allAgentRelationships(start: ID, limit: Int): [AgentRelationship!]
+  "Retrieve details of an agent relationship role by its ID"
   agentRelationshipRole(id: ID): AgentRelationshipRole
+  "Retrieve all possible kinds of associations that agents may have with one another in this collaboration space"
   allAgentRelationshipRoles(start: ID, limit: Int): [AgentRelationshipRole!]
 }
 
 type Mutation {
+  "Registers a new (human) person with the collaboration space"
   createPerson(person: AgentCreateParams!): PersonResponse
+  "Update profile details"
   updatePerson(person: AgentUpdateParams!): PersonResponse
+  "Erase record of a person and thus remove them from the collaboration space"
   deletePerson(id: String!): Boolean
 
+  "Registers a new organization (group agent) with the collaboration space"
   createOrganization(organization: AgentCreateParams!): OrganizationResponse
+  "Update organization profile details"
   updateOrganization(organization: AgentUpdateParams!): OrganizationResponse
+  "Erase record of an organization and thus remove it from the collaboration space"
   deleteOrganization(id: String!): Boolean
 
   createAgentRelationship(relationship: AgentRelationshipCreateParams!): AgentRelationshipResponse
