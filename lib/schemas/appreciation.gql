@@ -29,19 +29,12 @@ type Appreciation {
 
 
 
-
-# interface AppreciationParams {
-#   appreciationOf: ID
-#   appreciationWith: ID
-#   note: String
-# }
-
 input AppreciationCreateParams {
-  "The economic event this appreciation has been given in acknowledgement of."
-  appreciationOf: ID # EconomicEvent
+  "(`EconomicEvent`) The economic event this appreciation has been given in acknowledgement of."
+  appreciationOf: ID!
 
-  "The economic event provided as a gift in this appreciation."
-  appreciationWith: ID # EconomicEvent
+  "(`EconomicEvent`) The economic event provided as a gift in this appreciation."
+  appreciationWith: ID!
 
   "A textual description or comment."
   note: String
@@ -50,11 +43,11 @@ input AppreciationCreateParams {
 input AppreciationUpdateParams {
   id: ID!
 
-  "The economic event this appreciation has been given in acknowledgement of."
-  appreciationOf: ID # EconomicEvent
+  "(`EconomicEvent`) The economic event this appreciation has been given in acknowledgement of."
+  appreciationOf: ID
 
-  "The economic event provided as a gift in this appreciation."
-  appreciationWith: ID # EconomicEvent
+  "(`EconomicEvent`) The economic event provided as a gift in this appreciation."
+  appreciationWith: ID
 
   "A textual description or comment."
   note: String
@@ -63,6 +56,8 @@ input AppreciationUpdateParams {
 type AppreciationResponse {
   appreciation: Appreciation
 }
+
+
 
 type Mutation {
   createAppreciation(appreciation: AppreciationCreateParams!): AppreciationResponse

@@ -86,15 +86,7 @@ type ProcessSpecification {
 
 
 
-
-
-# interface ResourceSpecificationParams {
-#   name: String
-#   image: URI
-#   note: String
-# }
-
-input ResourceSpecificationCreateParams { # implements ResourceSpecificationParams
+input ResourceSpecificationCreateParams {
   "An informal or formal textual identifier for a type of resource. Does not imply uniqueness."
   name: String!
 
@@ -104,11 +96,11 @@ input ResourceSpecificationCreateParams { # implements ResourceSpecificationPara
   "A textual description or comment."
   note: String
 
-  "[UNSTABLE] The default unit used for quantifying this resource type."
-  defaultUnitOfEffort: ID # Unit
+  "(`Unit`) [UNSTABLE] The default unit used for quantifying this resource type."
+  defaultUnitOfEffort: ID
 }
 
-input ResourceSpecificationUpdateParams { # implements UpdateParams & ResourceSpecificationParams
+input ResourceSpecificationUpdateParams {
   id: ID!
 
   "An informal or formal textual identifier for a type of resource. Does not imply uniqueness."
@@ -120,8 +112,8 @@ input ResourceSpecificationUpdateParams { # implements UpdateParams & ResourceSp
   "A textual description or comment."
   note: String
 
-  "[UNSTABLE] The default unit used for quantifying this resource type."
-  defaultUnitOfEffort: ID # Unit
+  "(`Unit`) [UNSTABLE] The default unit used for quantifying this resource type."
+  defaultUnitOfEffort: ID
 }
 
 type ResourceSpecificationResponse {
@@ -129,12 +121,8 @@ type ResourceSpecificationResponse {
 }
 
 
-# interface ProcessSpecificationParams {
-#   name: String
-#   note: String
-# }
 
-input ProcessSpecificationCreateParams { # implements ProcessSpecificationParams
+input ProcessSpecificationCreateParams {
   "An informal or formal textual identifier for the process. Does not imply uniqueness."
   name: String!
 
@@ -142,7 +130,7 @@ input ProcessSpecificationCreateParams { # implements ProcessSpecificationParams
   note: String
 }
 
-input ProcessSpecificationUpdateParams { # implements UpdateParams & ProcessSpecificationParams
+input ProcessSpecificationUpdateParams {
   id: ID!
 
   "An informal or formal textual identifier for the process. Does not imply uniqueness."
@@ -155,6 +143,8 @@ input ProcessSpecificationUpdateParams { # implements UpdateParams & ProcessSpec
 type ProcessSpecificationResponse {
   processSpecification: ProcessSpecification
 }
+
+
 
 type Query {
   action(id: ID): Action

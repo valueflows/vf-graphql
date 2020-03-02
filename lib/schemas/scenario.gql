@@ -56,24 +56,12 @@ type ScenarioDefinition {
 
 
 
-
-
-
-# interface ScenarioParams {
-#   name: String
-#   definedAs: ScenarioDefinition
-#   hasBeginning: DateTime
-#   hasEnd: DateTime
-#   inScopeOf: [AnyType!]
-#   note: String
-# }
-
-input ScenarioCreateParams { # implements ScenarioParams
+input ScenarioCreateParams {
   "An informal or formal textual identifier for a scenario. Does not imply uniqueness."
   name: String!
 
-  "The scenario definition for this scenario, for example yearly budget."
-  definedAs: ID! #ScenarioDefinition
+  "(`ScenarioDefinition`) The scenario definition for this scenario, for example yearly budget."
+  definedAs: ID!
 
   "The beginning date/time of the scenario, often the beginning of an accounting period."
   hasBeginning: DateTime
@@ -84,21 +72,21 @@ input ScenarioCreateParams { # implements ScenarioParams
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
   inScopeOf: [AnyType!]
 
-  "This scenario refines another scenario, often as time moves closer or for more detail."
-  refinementOf: ID # Scenario
+  "(`Scenario`) This scenario refines another scenario, often as time moves closer or for more detail."
+  refinementOf: ID
 
   "A textual description or comment."
   note: String
 }
 
-input ScenarioUpdateParams { # implements UpdateParams & ScenarioParams
+input ScenarioUpdateParams {
   id: ID!
 
   "An informal or formal textual identifier for a scenario. Does not imply uniqueness."
   name: String
 
-  "The scenario definition for this scenario, for example yearly budget."
-  definedAs: ID! #ScenarioDefinition
+  "(`ScenarioDefinition`) The scenario definition for this scenario, for example yearly budget."
+  definedAs: ID!
 
   "The beginning date/time of the scenario, often the beginning of an accounting period."
   hasBeginning: DateTime
@@ -109,8 +97,8 @@ input ScenarioUpdateParams { # implements UpdateParams & ScenarioParams
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
   inScopeOf: [AnyType!]
 
-  "This scenario refines another scenario, often as time moves closer or for more detail."
-  refinementOf: ID # Scenario
+  "(`Scenario`) This scenario refines another scenario, often as time moves closer or for more detail."
+  refinementOf: ID
 
   "A textual description or comment."
   note: String
@@ -120,13 +108,9 @@ type ScenarioResponse {
   scenario: Scenario
 }
 
-# interface ScenarioDefinitionParams {
-#   name: String
-#   hasDuration: IDuration
-#   note: String
-# }
 
-input ScenarioDefinitionCreateParams { # implements ScenarioDefinitionParams
+
+input ScenarioDefinitionCreateParams {
   "An informal or formal textual identifier for a scenario definition. Does not imply uniqueness."
   name: String
 
@@ -137,7 +121,7 @@ input ScenarioDefinitionCreateParams { # implements ScenarioDefinitionParams
   note: String
 }
 
-input ScenarioDefinitionUpdateParams { # implements UpdateParams & ScenarioDefinitionParams
+input ScenarioDefinitionUpdateParams {
   id: ID!
 
   "An informal or formal textual identifier for a scenario definition. Does not imply uniqueness."
@@ -152,6 +136,16 @@ input ScenarioDefinitionUpdateParams { # implements UpdateParams & ScenarioDefin
 
 type ScenarioDefinitionResponse {
   scenarioDefinition: ScenarioDefinition
+}
+
+
+
+type Query {
+  scenario(id: ID): Scenario
+  allScenarios(start: ID, limit: Int): [Scenario!]
+
+  scenarioDefinition(id: ID): ScenarioDefinition
+  allScenarioDefinitions(start: ID, limit: Int): [ScenarioDefinition!]
 }
 
 type Mutation {

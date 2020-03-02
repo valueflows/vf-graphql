@@ -43,17 +43,7 @@ type Plan {
 
 
 
-
-
-
-# interface PlanParams {
-#   name: String
-#   created: DateTime
-#   due: DateTime
-#   note: String
-# }
-
-input PlanCreateParams { # implements PlanParams
+input PlanCreateParams {
   "An informal or formal textual identifier for a plan. Does not imply uniqueness."
   name: String!
 
@@ -66,11 +56,11 @@ input PlanCreateParams { # implements PlanParams
   "A textual description or comment."
   note: String
 
-  "This plan refines a scenario, making it operational."
-  refinementOf: ID # Scenario
+  "(`Scenario`) This plan refines a scenario, making it operational."
+  refinementOf: ID
 }
 
-input PlanUpdateParams { # implements UpdateParams & PlanParams
+input PlanUpdateParams {
   id: ID!
 
   "An informal or formal textual identifier for a plan. Does not imply uniqueness."
@@ -85,13 +75,15 @@ input PlanUpdateParams { # implements UpdateParams & PlanParams
   "A textual description or comment."
   note: String
 
-  "This plan refines a scenario, making it operational."
-  refinementOf: ID # Scenario
+  "(`Scenario`) This plan refines a scenario, making it operational."
+  refinementOf: ID
 }
 
 type PlanResponse {
   plan: Plan
 }
+
+
 
 type Query {
   plan(id: ID): Plan
@@ -100,6 +92,7 @@ type Query {
 
 type Mutation {
   createPlan(plan: PlanCreateParams!): PlanResponse
+  # :TODO:
   # createPlanFromRecipe(): PlanResponse
   updatePlan(plan: PlanUpdateParams!): PlanResponse
   deletePlan(id: String!): Boolean

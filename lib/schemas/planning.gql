@@ -221,59 +221,32 @@ type Satisfaction {
 
 
 
-
-
-# interface IntentParams {
-#   name: String
-#   action: ID
-#   inputOf: ID
-#   outputOf: ID
-#   provider: ID
-#   receiver: ID
-#   resourceConformsTo: ID
-#   resourceClassifiedAs: [URI!]
-#   resourceInventoriedAs: ID
-#   resourceQuantity: IMeasure
-#   effortQuantity: IMeasure
-#   availableQuantity: IMeasure
-#   hasBeginning: DateTime
-#   hasEnd: DateTime
-#   hasPointInTime: DateTime
-#   due: DateTime
-#   image: URI
-#   note: String
-#   inScopeOf: [AnyType!]
-#   atLocation: ID
-#   agreedIn: URI
-#   finished: Boolean
-# }
-
-input IntentCreateParams { # implements IntentParams
-  "Relates an intent to a verb, such as consume, produce, work, improve, etc."
+input IntentCreateParams {
+  "(`Action`) Relates an intent to a verb, such as consume, produce, work, improve, etc."
   action: ID!
 
   "An informal or formal textual identifier for an intent. Does not imply uniqueness."
   name: String
 
-  "Defines the process to which this intent is an input."
+  "(`Process`) Defines the process to which this intent is an input."
   inputOf: ID
 
-  "Defines the process to which this intent is an output."
+  "(`Process`) Defines the process to which this intent is an output."
   outputOf: ID
 
-  "The economic agent from whom the intent is initiated. This implies that the intent is an offer."
+  "(`Agent`) The economic agent from whom the intent is initiated. This implies that the intent is an offer."
   provider: ID
 
-  "The economic agent whom the intent is for.  This implies that the intent is a request."
+  "(`Agent`) The economic agent whom the intent is for.  This implies that the intent is a request."
   receiver: ID
 
-  "The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
+  "(`ResourceSpecification`) The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
   resourceConformsTo: ID
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   resourceClassifiedAs: [URI!]
 
-  "When a specific `EconomicResource` is known which can service the `Intent`, this defines that resource."
+  "(`EconomicResource`) When a specific `EconomicResource` is known which can service the `Intent`, this defines that resource."
   resourceInventoriedAs: ID
 
   "The amount and unit of the economic resource counted or inventoried. This is the quantity that could be used to increment or decrement a resource, depending on the type of resource and resource effect of action."
@@ -306,8 +279,8 @@ input IntentCreateParams { # implements IntentParams
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
   inScopeOf: [AnyType!]
 
-  "The place where an intent occurs. Usually mappable."
-  atLocation: ID # SpatialThing
+  "(`SpatialThing`) The place where an intent occurs. Usually mappable."
+  atLocation: ID
 
   "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this intent."
   agreedIn: URI
@@ -316,34 +289,34 @@ input IntentCreateParams { # implements IntentParams
   finished: Boolean
 }
 
-input IntentUpdateParams { # implements UpdateParams & IntentParams
+input IntentUpdateParams {
   id: ID!
 
   "An informal or formal textual identifier for an intent. Does not imply uniqueness."
   name: String
 
-  "Relates an intent to a verb, such as consume, produce, work, improve, etc."
+  "(`Action`) Relates an intent to a verb, such as consume, produce, work, improve, etc."
   action: ID
 
-  "Defines the process to which this intent is an input."
+  "(`Process`) Defines the process to which this intent is an input."
   inputOf: ID
 
-  "Defines the process to which this intent is an output."
+  "(`Process`) Defines the process to which this intent is an output."
   outputOf: ID
 
-  "The economic agent from whom the intent is initiated. This implies that the intent is an offer."
+  "(`Agent`) The economic agent from whom the intent is initiated. This implies that the intent is an offer."
   provider: ID
 
-  "The economic agent whom the intent is for.  This implies that the intent is a request."
+  "(`Agent`) The economic agent whom the intent is for.  This implies that the intent is a request."
   receiver: ID
 
-  "The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
+  "(`ResourceSpecification`) The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
   resourceConformsTo: ID
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   resourceClassifiedAs: [URI!]
 
-  "When a specific `EconomicResource` is known which can service the `Intent`, this defines that resource."
+  "(`EconomicResource`) When a specific `EconomicResource` is known which can service the `Intent`, this defines that resource."
   resourceInventoriedAs: ID
 
   "The amount and unit of the economic resource counted or inventoried. This is the quantity that could be used to increment or decrement a resource, depending on the type of resource and resource effect of action."
@@ -379,8 +352,8 @@ input IntentUpdateParams { # implements UpdateParams & IntentParams
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
   inScopeOf: [AnyType!]
 
-  "The place where an intent occurs. Usually mappable."
-  atLocation: ID # SpatialThing
+  "(`SpatialThing`) The place where an intent occurs. Usually mappable."
+  atLocation: ID
 
   "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this intent."
   agreedIn: URI
@@ -391,53 +364,30 @@ type IntentResponse {
 }
 
 
-# interface CommitmentParams {
-#   action: ID
-#   inputOf: ID
-#   outputOf: ID
-#   provider: ID
-#   receiver: ID
-#   resourceClassifiedAs: [URI!]
-#   resourceConformsTo: ID
-#   resourceInventoriedAs: ID
-#   resourceQuantity: IMeasure
-#   effortQuantity: IMeasure
-#   hasBeginning: DateTime
-#   hasEnd: DateTime
-#   hasPointInTime: DateTime
-#   due: DateTime
-#   finished: Boolean
-#   note: String
-#   inScopeOf: [AnyType!]
-#   independentDemandOf: ID #Plan
-#   atLocation: ID
-#   agreedIn: URI
-#   clauseOf: Agreement
-# }
 
-input CommitmentCreateParams { # implements CommitmentParams
-  "Relates a commitment to a verb, such as consume, produce, work, improve, etc."
+input CommitmentCreateParams {
+  "(`Action`) Relates a commitment to a verb, such as consume, produce, work, improve, etc."
   action: ID!
 
-  "Defines the process to which this commitment is an input."
+  "(`Process`) Defines the process to which this commitment is an input."
   inputOf: ID
 
-  "Defines the process for which this commitment is an output."
+  "(`Process`) Defines the process for which this commitment is an output."
   outputOf: ID
 
-  "The economic agent from whom the commitment is initiated."
+  "(`Agent`) The economic agent from whom the commitment is initiated."
   provider: ID!
 
-  "The economic agent whom the commitment is for."
+  "(`Agent`) The economic agent whom the commitment is for."
   receiver: ID!
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   resourceClassifiedAs: [URI!]
 
-  "The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
+  "(`ResourceSpecification`) The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
   resourceConformsTo: ID
 
-  "Exact economic resource involved in the commitment."
+  "(`EconomicResource`) Exact economic resource involved in the commitment."
   resourceInventoriedAs: ID
 
   "The amount and unit of the economic resource counted or inventoried."
@@ -467,41 +417,41 @@ input CommitmentCreateParams { # implements CommitmentParams
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
   inScopeOf: [AnyType!]
 
-  "Represents a desired deliverable expected from this plan."
-  independentDemandOf: ID #Plan
+  "(`Plan`) Represents a desired deliverable expected from this plan."
+  independentDemandOf: ID
 
-  "The place where an commitment occurs.  Usually mappable."
-  atLocation: ID # SpatialThing
+  "(`SpatialThing`) The place where an commitment occurs.  Usually mappable."
+  atLocation: ID
 
   "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this commitment."
   agreedIn: URI
 
-  "This commitment is part of the agreement."
-  clauseOf: ID # Agreement
+  "(`Agreement`) This commitment is part of the agreement."
+  clauseOf: ID
 }
 
-input CommitmentUpdateParams { # implements UpdateParams & CommitmentParams
+input CommitmentUpdateParams {
   id: ID!
 
-  "Defines the process to which this commitment is an input."
+  "(`Process`) Defines the process to which this commitment is an input."
   inputOf: ID
 
-  "Defines the process for which this commitment is an output."
+  "(`Process`) Defines the process for which this commitment is an output."
   outputOf: ID
 
-  "The economic agent from whom the commitment is initiated."
+  "(`Agent`) The economic agent from whom the commitment is initiated."
   provider: ID
 
-  "The economic agent whom the commitment is for."
+  "(`Agent`) The economic agent whom the commitment is for."
   receiver: ID
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   resourceClassifiedAs: [URI!]
 
-  "The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
+  "(`ResourceSpecification`) The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
   resourceConformsTo: ID
 
-  "Exact economic resource involved in the commitment."
+  "(`EconomicResource`) Exact economic resource involved in the commitment."
   resourceInventoriedAs: ID
 
   "The amount and unit of the economic resource counted or inventoried."
@@ -531,17 +481,17 @@ input CommitmentUpdateParams { # implements UpdateParams & CommitmentParams
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
   inScopeOf: [AnyType!]
 
-  "Represents a desired deliverable expected from this plan."
-  independentDemandOf: ID #Plan
+  "(`Plan`) Represents a desired deliverable expected from this plan."
+  independentDemandOf: ID
 
-  "The place where an commitment occurs.  Usually mappable."
-  atLocation: ID # SpatialThing
+  "(`SpatialThing`) The place where an commitment occurs.  Usually mappable."
+  atLocation: ID
 
   "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this commitment."
   agreedIn: URI
 
-  "This commitment is part of the agreement."
-  clauseOf: ID # Agreement
+  "(`Agreement`) This commitment is part of the agreement."
+  clauseOf: ID
 }
 
 type CommitmentResponse {
@@ -549,19 +499,12 @@ type CommitmentResponse {
 }
 
 
-# interface FulfillmentParams {
-#   fulfilledBy: ID # EconomicEvent
-#   fulfills: ID # Commmitment
-#   resourceQuantity: IMeasure
-#   effortQuantity: IMeasure
-#   note: String
-# }
 
-input FulfillmentCreateParams { # implements FulfillmentParams
-  "The economic event which completely or partially fulfills a commitment."
+input FulfillmentCreateParams {
+  "(`EconomicEvent`) The economic event which completely or partially fulfills a commitment."
   fulfilledBy: ID!
 
-  "The commitment which is completely or partially fulfilled by an economic event."
+  "(`Commitment`) The commitment which is completely or partially fulfilled by an economic event."
   fulfills: ID!
 
   "The amount and unit of the economic resource counted or inventoried."
@@ -574,13 +517,13 @@ input FulfillmentCreateParams { # implements FulfillmentParams
   note: String
 }
 
-input FulfillmentUpdateParams { # implements UpdateParams & FulfillmentParams
+input FulfillmentUpdateParams {
   id: ID!
 
-  "The economic event which completely or partially fulfills a commitment."
+  "(`EconomicEvent`) The economic event which completely or partially fulfills a commitment."
   fulfilledBy: ID
 
-  "The commitment which is completely or partially fulfilled by an economic event."
+  "(`Commitment`) The commitment which is completely or partially fulfilled by an economic event."
   fulfills: ID
 
   "The amount and unit of the economic resource counted or inventoried."
@@ -598,20 +541,13 @@ type FulfillmentResponse {
 }
 
 
-# interface SatisfactionParams {
-#   satisfies: Intent
-#   satisfiedBy: Commitment
-#   resourceQuantity: IMeasure
-#   effortQuantity: IMeasure
-#   note: String
-# }
 
-input SatisfactionCreateParams { # implements SatisfactionParams
-  "An intent satisfied fully or partially by an economic event or commitment."
-  satisfies: ID! # Intent
+input SatisfactionCreateParams {
+  "(`Intent`) An intent satisfied fully or partially by an economic event or commitment."
+  satisfies: ID!
 
-  "A commitment or economic event fully or partially satisfying an intent."
-  satisfiedBy: ID! # Commitment
+  "(`Commitment`|`EconomicEvent`) A commitment or economic event fully or partially satisfying an intent."
+  satisfiedBy: ID!
 
   "The amount and unit of the economic resource counted or inventoried."
   resourceQuantity: IMeasure
@@ -623,14 +559,14 @@ input SatisfactionCreateParams { # implements SatisfactionParams
   note: String
 }
 
-input SatisfactionUpdateParams { # implements UpdateParams & SatisfactionParams
+input SatisfactionUpdateParams {
   id: ID!
 
-  "An intent satisfied fully or partially by an economic event or commitment."
-  satisfies: ID # Intent
+  "(`Intent`) An intent satisfied fully or partially by an economic event or commitment."
+  satisfies: ID
 
-  "A commitment or economic event fully or partially satisfying an intent."
-  satisfiedBy: ID # Commitment
+  "(`Commitment`|`EconomicEvent`) A commitment or economic event fully or partially satisfying an intent."
+  satisfiedBy: ID
 
   "The amount and unit of the economic resource counted or inventoried."
   resourceQuantity: IMeasure
@@ -645,6 +581,8 @@ input SatisfactionUpdateParams { # implements UpdateParams & SatisfactionParams
 type SatisfactionResponse {
   satisfaction: Satisfaction
 }
+
+
 
 type Query {
   commitment(id: ID): Commitment

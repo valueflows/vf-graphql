@@ -210,54 +210,33 @@ type Process {
 
 
 
+input EconomicEventCreateParams {
+  "(`Action`) Relates an economic event to a verb, such as consume, produce, work, improve, etc."
+  action: ID!
 
-# interface EconomicEventParams {
-#   action: ID!
-#   inputOf: ID
-#   outputOf: ID
-#   provider: ID
-#   receiver: ID
-#   resourceQuantity: IMeasure
-#   effortQuantity: IMeasure
-#   hasBeginning: DateTime
-#   hasEnd: DateTime
-#   hasPointInTime: DateTime
-#   note: String
-#   inScopeOf: [AnyType!]
-#   atLocation: ID
-#   agreedIn: URI
-#   realizationOf: ID # Agreement
-#   triggeredBy: ID # EconomicEvent
-#   toResourceInventoriedAs: ID # EconomicResource
-# }
+  "(`Process`) Defines the process to which this event is an input."
+  inputOf: ID
 
-input EconomicEventCreateParams { # implements EconomicEventParams
-  "Relates an economic event to a verb, such as consume, produce, work, improve, etc."
-  action: ID! # Action
+  "(`Process`) Defines the process for which this event is an output."
+  outputOf: ID
 
-  "Defines the process to which this event is an input."
-  inputOf: ID # Process
+  "(`Agent`) The economic agent from whom the actual economic event is initiated."
+  provider: ID!
 
-  "Defines the process for which this event is an output."
-  outputOf: ID # Process
-
-  "The economic agent from whom the actual economic event is initiated."
-  provider: ID! # Agent
-
-  "The economic agent whom the actual economic event is for."
-  receiver: ID! # Agent
+  "(`Agent`) The economic agent whom the actual economic event is for."
+  receiver: ID!
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
   inScopeOf: [AnyType!]
 
-  "Economic resource involved in the economic event."
-  resourceInventoriedAs: ID # EconomicResource
+  "(`EconomicResource`) Economic resource involved in the economic event."
+  resourceInventoriedAs: ID
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   resourceClassifiedAs: [URI!]
 
-  "The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
-  resourceConformsTo: ID # ResourceSpecification
+  "(`ResourceSpecification`) The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
+  resourceConformsTo: ID
 
   "The amount and unit of the economic resource counted or inventoried. This is the quantity that could be used to increment or decrement a resource, depending on the type of resource and resource effect of action."
   resourceQuantity: IMeasure
@@ -265,8 +244,8 @@ input EconomicEventCreateParams { # implements EconomicEventParams
   "The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness."
   effortQuantity: IMeasure
 
-  "The place where an economic event occurs.  Usually mappable."
-  atLocation: ID # SpatialThing
+  "(`SpatialThing`) The place where an economic event occurs.  Usually mappable."
+  atLocation: ID
 
   "The beginning of the economic event."
   hasBeginning: DateTime
@@ -283,17 +262,17 @@ input EconomicEventCreateParams { # implements EconomicEventParams
   "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this economic event."
   agreedIn: URI
 
-  "This economic event occurs as part of this agreement."
-  realizationOf: ID # Agreement
+  "(`Agreement`) This economic event occurs as part of this agreement."
+  realizationOf: ID
 
-  "References another economic event that implied this economic event, often based on a prior agreement."
-  triggeredBy: ID # EconomicEvent
+  "(`EconomicEvent`) References another economic event that implied this economic event, often based on a prior agreement."
+  triggeredBy: ID
 
-  "Additional economic resource on the economic event when needed by the receiver. Used when a transfer or move, or sometimes other actions, requires explicitly identifying an economic resource on the receiving side."
-  toResourceInventoriedAs: ID # EconomicResource
+  "(`EconomicResource`) Additional economic resource on the economic event when needed by the receiver. Used when a transfer or move, or sometimes other actions, requires explicitly identifying an economic resource on the receiving side."
+  toResourceInventoriedAs: ID
 }
 
-input EconomicEventUpdateParams { # implements UpdateParams & EconomicEventParams
+input EconomicEventUpdateParams {
   id: ID!
 
   "A textual description or comment."
@@ -302,82 +281,68 @@ input EconomicEventUpdateParams { # implements UpdateParams & EconomicEventParam
   "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this economic event."
   agreedIn: URI
 
-  "This economic event occurs as part of this agreement."
-  realizationOf: ID # Agreement
+  "(`Agreement`) This economic event occurs as part of this agreement."
+  realizationOf: ID
 
-  "References another economic event that implied this economic event, often based on a prior agreement."
-  triggeredBy: ID # EconomicEvent
+  "(`EconomicEvent`) References another economic event that implied this economic event, often based on a prior agreement."
+  triggeredBy: ID
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
   inScopeOf: [AnyType!]
 }
 
 type EconomicEventResponse {
+  "Details of the newly created event."
   economicEvent: EconomicEvent!
-  economicResource: EconomicResource # only for resource creation events
+  "Details of any newly created `EconomicResource`, for events that create new resources."
+  economicResource: EconomicResource
 }
 
 
-# interface EconomicResourceParams {
-#   name: String
-#   classifiedAs: [URI!]
-#   conformsTo: ID # ResourceSpecification
-#   trackingIdentifier: String
-#   lot: ID # ProductBatch
-#   image: URI # URI
-#   accountingQuantity: IMeasure
-#   onhandQuantity: IMeasure
-#   currentLocation: ID
-#   note: String
-#   containedIn: ID # EconomicResource
-#   unitOfEffort: ID # Unit
-#   state: ID # Action
-#   stage: ID # ProcessSpecification
-# }
 
 """
 Input `EconomicResource` type used when sending events to setup initial resource recordings
 """
-input EconomicResourceCreateParams { # implements EconomicResourceParams
+input EconomicResourceCreateParams {
   "An informal or formal textual identifier for an item. Does not imply uniqueness."
   name: String
 
-  "The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
-  conformsTo: ID # ResourceSpecification
+  "(`ResourceSpecification`) The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
+  conformsTo: ID
 
   "Sometimes called serial number, used when each item must have a traceable identifier (like a computer). Could also be used for other unique tracking identifiers needed for resources."
   trackingIdentifier: String
 
-  "Lot or batch of an economic resource, used to track forward or backwards to all occurrences of resources of that lot. Note more than one resource can be of the same lot."
-  lot: ID # ProductBatch
+  "(`ProductBatch`) Lot or batch of an economic resource, used to track forward or backwards to all occurrences of resources of that lot. Note more than one resource can be of the same lot."
+  lot: ID
 
   "The uri to an image relevant to the resource, such as a photo, diagram, etc."
-  image: URI # URI
+  image: URI
 
-  "Used when a stock economic resource contains items also defined as economic resources."
-  containedIn: ID # EconomicResource
+  "(`EconomicResource`) Used when a stock economic resource contains items also defined as economic resources."
+  containedIn: ID
 
-  "The current place an economic resource is located.  Could be at any level of granularity, from a town to an address to a warehouse location.  Usually mappable."
-  currentLocation: ID # SpatialThing
+  "(`SpatialThing`) The current place an economic resource is located.  Could be at any level of granularity, from a town to an address to a warehouse location.  Usually mappable."
+  currentLocation: ID
 
   "A textual description or comment."
   note: String
 }
 
-input EconomicResourceUpdateParams { # implements UpdateParams & EconomicResourceParams
+input EconomicResourceUpdateParams {
   id: ID!
 
   "References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   classifiedAs: [URI!]
 
   "The uri to an image relevant to the resource, such as a photo, diagram, etc."
-  image: URI # URI
+  image: URI
 
-  "Used when a stock economic resource contains items also defined as economic resources."
-  containedIn: ID # EconomicResource
+  "(`EconomicResource`) Used when a stock economic resource contains items also defined as economic resources."
+  containedIn: ID
 
-  "The unit used for use or work or cite actions for this resource."
-  unitOfEffort: ID # Unit
+  "(`Unit`) The unit used for use or work or cite actions for this resource."
+  unitOfEffort: ID
 
   "A textual description or comment."
   note: String
@@ -386,8 +351,6 @@ input EconomicResourceUpdateParams { # implements UpdateParams & EconomicResourc
 type EconomicResourceResponse {
   economicResource: EconomicResource!
 }
-
-
 
 
 
@@ -421,17 +384,7 @@ type ProductBatchResponse {
 
 
 
-# interface ProcessParams {
-#   name: String
-#   hasBeginning: DateTime
-#   hasEnd: DateTime
-#   note: String
-#   inScopeOf: String
-#   plannedWithin: ID # Plan
-#   finished: Boolean
-# }
-
-input ProcessCreateParams { # implements ProcessParams
+input ProcessCreateParams {
   "An informal or formal textual identifier for a process. Does not imply uniqueness."
   name: String!
 
@@ -450,17 +403,17 @@ input ProcessCreateParams { # implements ProcessParams
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
   inScopeOf: [AnyType!]
 
-  "The process with its inputs and outputs is part of the plan."
-  plannedWithin: ID # Plan
+  "(`Plan`) The process with its inputs and outputs is part of the plan."
+  plannedWithin: ID
 
-  "The definition or specification for a process."
-  basedOn: ID # ProcessSpecification
+  "(`ProcessSpecification`) The definition or specification for a process."
+  basedOn: ID
 
   "References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   classifiedAs: [URI!]
 }
 
-input ProcessUpdateParams { # implements UpdateParams & ProcessParams
+input ProcessUpdateParams {
   id: ID!
 
   "An informal or formal textual identifier for a process. Does not imply uniqueness."
@@ -481,11 +434,11 @@ input ProcessUpdateParams { # implements UpdateParams & ProcessParams
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
   inScopeOf: [AnyType!]
 
-  "The process with its inputs and outputs is part of the plan."
-  plannedWithin: ID # Plan
+  "(`Plan`) The process with its inputs and outputs is part of the plan."
+  plannedWithin: ID
 
-  "The definition or specification for a process."
-  basedOn: ID # ProcessSpecification
+  "(`ProcessSpecification`) The definition or specification for a process."
+  basedOn: ID
 
   "References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   classifiedAs: [URI!]
@@ -494,6 +447,8 @@ input ProcessUpdateParams { # implements UpdateParams & ProcessParams
 type ProcessResponse {
   process: Process
 }
+
+
 
 type Query {
   economicEvent(id: ID): EconomicEvent

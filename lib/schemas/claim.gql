@@ -86,41 +86,21 @@ type Settlement {
 
 
 
-
-
-
-# type ClaimParams {
-#   action: Action
-#   provider: Agent
-#   receiver: Agent
-#   resourceClassifiedAs: [URI!]
-#   resourceConformsTo: ResourceSpecification
-#   resourceQuantity: IMeasure
-#   effortQuantity: IMeasure
-#   due: DateTime
-#   triggeredBy: EconomicEvent!
-#   created: DateTime
-#   finished: Boolean
-#   note: String
-#   agreedIn: URI
-#   inScopeOf: [AnyType!]
-# }
-
 input ClaimCreateParams {
-  "Relates a claim to a verb, such as consume, produce, work, improve, etc."
-  action: ID! # Action
+  "(`Action`) Relates a claim to a verb, such as consume, produce, work, improve, etc."
+  action: ID!
 
-  "The economic agent from whom the claim is initiated."
-  provider: ID! # Agent
+  "(`Agent`) The economic agent from whom the claim is initiated."
+  provider: ID!
 
-  "The economic agent whom the claim is for."
-  receiver: ID! # Agent
+  "(`Agent`) The economic agent whom the claim is for."
+  receiver: ID!
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   resourceClassifiedAs: [URI!]
 
-  "The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
-  resourceConformsTo: ID # ResourceSpecification
+  "(`ResourceSpecification`) The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
+  resourceConformsTo: ID
 
   "The amount and unit of the economic resource counted or inventoried."
   resourceQuantity: IMeasure
@@ -131,8 +111,8 @@ input ClaimCreateParams {
   "The time the claim is expected to be settled."
   due: DateTime
 
-  "The economic event which already occurred which this claim has been made against."
-  triggeredBy: ID # EconomicEvent
+  "(`EconomicEvent`) The economic event which already occurred which this claim has been made against."
+  triggeredBy: ID
 
   "The data on which the claim was made."
   created: DateTime
@@ -153,19 +133,19 @@ input ClaimCreateParams {
 input ClaimUpdateParams {
   id: ID!
 
-  "Relates a claim to a verb, such as consume, produce, work, improve, etc."
+  "(`Action`) Relates a claim to a verb, such as consume, produce, work, improve, etc."
   action: ID
 
-  "The economic agent from whom the claim is initiated."
+  "(`Agent`) The economic agent from whom the claim is initiated."
   provider: ID
 
-  "The economic agent whom the claim is for."
+  "(`Agent`) The economic agent whom the claim is for."
   receiver: ID
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   resourceClassifiedAs: [URI!]
 
-  "The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
+  "(`ResourceSpecification`) The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
   resourceConformsTo: ID
 
   "The amount and unit of the economic resource counted or inventoried."
@@ -177,7 +157,7 @@ input ClaimUpdateParams {
   "The time the claim is expected to be settled."
   due: DateTime
 
-  "The economic event which already occurred which this claim has been made against."
+  "(`EconomicEvent`) The economic event which already occurred which this claim has been made against."
   triggeredBy: ID
 
   "The data on which the claim was made."
@@ -201,20 +181,13 @@ type ClaimResponse {
 }
 
 
-# type SettlementParams {
-#   settles: ID! # Claim
-#   settledBy: ID! # EconomicEvent
-#   resourceQuantity: IMeasure
-#   effortQuantity: IMeasure
-#   note: String
-# }
 
 input SettlementCreateParams {
-  "A claim which is fully or partially settled by an economic event."
-  settles: ID! # Claim
+  "(`Claim`) A claim which is fully or partially settled by an economic event."
+  settles: ID!
 
-  "The economic event fully or partially settling a claim."
-  settledBy: ID! # EconomicEvent
+  "(`EconomicEvent`) The economic event fully or partially settling a claim."
+  settledBy: ID!
 
   "The amount and unit of the economic resource counted or inventoried."
   resourceQuantity: IMeasure
@@ -229,10 +202,10 @@ input SettlementCreateParams {
 input SettlementUpdateParams {
   id: ID!
 
-  "A claim which is fully or partially settled by an economic event."
+  "(`Claim`) A claim which is fully or partially settled by an economic event."
   settles: ID
 
-  "The economic event fully or partially settling a claim."
+  "(`EconomicEvent`) The economic event fully or partially settling a claim."
   settledBy: ID
 
   "The amount and unit of the economic resource counted or inventoried."
@@ -247,6 +220,16 @@ input SettlementUpdateParams {
 
 type SettlementResponse {
   settlement: Settlement
+}
+
+
+
+type Query {
+  claim(id: ID): Claim
+  allClaims(start: ID, limit: Int): [Claim!]
+
+  settlement(id: ID): Settlement
+  allSettlements(start: ID, limit: Int): [Settlement!]
 }
 
 type Mutation {

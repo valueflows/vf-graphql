@@ -29,6 +29,19 @@ type Duration {
 }
 
 """
+Mutation input structure for defining time durations.
+"""
+input IDuration {
+  "A number representing the duration, will be paired with a unit."
+  numericDuration: Float!
+
+  "A unit of measure."
+  unitType: TimeUnit!
+}
+
+
+
+"""
 Defines a unit of measurement, along with its display symbol.
 From OM2 vocabulary.
 """
@@ -41,6 +54,8 @@ type Unit {
   "A standard display symbol for a unit of measure."
   symbol: String!
 }
+
+
 
 """
 Semantic meaning for measurements: binds a quantity to its measurement unit.
@@ -61,32 +76,13 @@ input IMeasure {
   "A number representing the quantity, will be paired with a unit."
   hasNumericalValue: Float!
 
-  "A unit of measure."
-  hasUnit: ID # Unit
-}
-
-"""
-Mutation input structure for defining time durations.
-"""
-input IDuration {
-  "A number representing the duration, will be paired with a unit."
-  numericDuration: Float!
-
-  "A unit of measure."
-  unitType: TimeUnit!
+  "(`Unit`) A unit of measure."
+  hasUnit: ID
 }
 
 
 
-
-
-
-# interface UnitParams {
-#   label: String
-#   symbol: String
-# }
-
-input UnitCreateParams { # implements UnitParams
+input UnitCreateParams {
   "A human readable label for the unit, can be language specific."
   label: String!
 
@@ -94,7 +90,7 @@ input UnitCreateParams { # implements UnitParams
   symbol: String!
 }
 
-input UnitUpdateParams { # implements UpdateParams & UnitParams
+input UnitUpdateParams {
   id: ID!
 
   "A human readable label for the unit, can be language specific."
@@ -107,6 +103,8 @@ input UnitUpdateParams { # implements UpdateParams & UnitParams
 type UnitResponse {
   unit: Unit
 }
+
+
 
 type Query {
   unit(id: ID): Unit
