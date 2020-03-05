@@ -10,6 +10,6 @@
 ##
 
 type EconomicEvent {
-  appreciationOf: [EconomicEvent!]
-  appreciatedBy: [EconomicEvent!]
+  appreciationOf: [Appreciation!]
+  appreciatedBy: [Appreciation!]
 }
