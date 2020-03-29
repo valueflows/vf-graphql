@@ -121,7 +121,7 @@ type EconomicResource {
   unitOfEffort: Unit
 
   "References the ProcessSpecification of the last process the desired economic resource went through. Stage is used when the last process is important for finding proper resources, such as where the publishing process wants only documents that have gone through the editing process."
-  stage: ProcessSpecification
+  stage: ProcessSpecificationRef
 
   "The state of the desired economic resource (pass or fail), after coming out of a test or review process. Can be derived from the last event if a pass or fail event."
   state: Action
@@ -178,7 +178,7 @@ type Process {
   finished: Boolean
 
   "The definition or specification for a process."
-  basedOn: ProcessSpecification
+  basedOn: ProcessSpecificationRef
 
   "References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   classifiedAs: [URI!]
@@ -406,7 +406,7 @@ input ProcessCreateParams {
   "(`Plan`) The process with its inputs and outputs is part of the plan."
   plannedWithin: ID
 
-  "(`ProcessSpecification`) The definition or specification for a process."
+  "(`ProcessSpecification` | URI) The definition or specification for a process."
   basedOn: ID
 
   "References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping."
@@ -437,7 +437,7 @@ input ProcessUpdateParams {
   "(`Plan`) The process with its inputs and outputs is part of the plan."
   plannedWithin: ID
 
-  "(`ProcessSpecification`) The definition or specification for a process."
+  "(`ProcessSpecification` | URI) The definition or specification for a process."
   basedOn: ID
 
   "References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping."

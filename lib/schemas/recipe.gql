@@ -91,7 +91,7 @@ type RecipeProcess {
   processClassifiedAs: [URI!]
 
   "The standard specification or definition of a process."
-  processConformsTo: ProcessSpecification!
+  processConformsTo: ProcessSpecificationRef!
 
   "A textual description or comment."
   note: String
@@ -166,7 +166,7 @@ input RecipeProcessCreateParams {
   "The planned calendar duration of the process as defined for the recipe batch."
   hasDuration: IDuration
 
-  "(`ProcessSpecification`) The standard specification or definition of a process."
+  "(`ProcessSpecification` | URI) The standard specification or definition of a process."
   processConformsTo: ID!
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
@@ -185,7 +185,7 @@ input RecipeProcessUpdateParams {
   "The planned calendar duration of the process as defined for the recipe batch."
   hasDuration: IDuration
 
-  "(`ProcessSpecification`) The standard specification or definition of a process."
+  "(`ProcessSpecification` | URI) The standard specification or definition of a process."
   processConformsTo: ID!
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization."
@@ -220,7 +220,7 @@ input RecipeFlowCreateParams {
   "(`RecipeProcess`) Relates an output flow to its process in a recipe."
   recipeOutputOf: ID
 
-  "(`ProcessSpecification`) References the ProcessSpecification of the last process the economic resource went through. Stage is used when the last process is important for finding proper resources, such as where the publishing process wants only documents that have gone through the editing process."
+  "(`ProcessSpecification` | URI) References the ProcessSpecification of the last process the economic resource went through. Stage is used when the last process is important for finding proper resources, such as where the publishing process wants only documents that have gone through the editing process."
   stage: ID
 
   "The state of the desired economic resource (pass or fail), after coming out of a test or review process."
@@ -251,7 +251,7 @@ input RecipeFlowUpdateParams {
   "(`RecipeProcess`) Relates an output flow to its process in a recipe."
   recipeOutputOf: ID
 
-  "(`ProcessSpecification`) References the ProcessSpecification of the last process the economic resource went through. Stage is used when the last process is important for finding proper resources, such as where the publishing process wants only documents that have gone through the editing process."
+  "(`ProcessSpecification` | URI) References the ProcessSpecification of the last process the economic resource went through. Stage is used when the last process is important for finding proper resources, such as where the publishing process wants only documents that have gone through the editing process."
   stage: ID
 
   "The state of the desired economic resource (pass or fail), after coming out of a test or review process."
