@@ -269,13 +269,13 @@ type RecipeFlowResponse {
 
 type Query {
   recipeResource(id: ID): RecipeResource
-  allRecipeResources(start: ID, limit: Int): [RecipeResource!]
+  recipeResources(start: ID, limit: Int): [RecipeResource!]
 
   recipeProcess(id: ID): RecipeProcess
-  allRecipeProcesses(start: ID, limit: Int): [RecipeProcess!]
+  recipeProcesses(start: ID, limit: Int): [RecipeProcess!]
 
   recipeFlow(id: ID): RecipeFlow
-  allRecipeFlows(start: ID, limit: Int): [RecipeFlow!]
+  recipeFlows(start: ID, limit: Int): [RecipeFlow!]
 }
 
 type Mutation {

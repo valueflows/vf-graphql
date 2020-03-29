@@ -226,10 +226,10 @@ type SettlementResponse {
 
 type Query {
   claim(id: ID): Claim
-  allClaims(start: ID, limit: Int): [Claim!]
+  claims(start: ID, limit: Int): [Claim!]
 
   settlement(id: ID): Settlement
-  allSettlements(start: ID, limit: Int): [Settlement!]
+  settlements(start: ID, limit: Int): [Settlement!]
 }
 
 type Mutation {

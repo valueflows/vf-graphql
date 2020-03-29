@@ -148,13 +148,13 @@ type ProcessSpecificationResponse {
 
 type Query {
   action(id: ID): Action
-  allActions: [Action!]
+  actions: [Action!]
 
   resourceSpecification(id: ID): ResourceSpecification
-  allResourceSpecifications(start: ID, limit: Int): [ResourceSpecification!]
+  resourceSpecifications(start: ID, limit: Int): [ResourceSpecification!]
 
   processSpecification(id: ID): ProcessSpecification
-  allProcessSpecifications(start: ID, limit: Int): [ProcessSpecification!]
+  processSpecifications(start: ID, limit: Int): [ProcessSpecification!]
 }
 
 type Mutation {

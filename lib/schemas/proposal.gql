@@ -148,7 +148,7 @@ type ProposedToResponse {
 
 type Query {
   proposal(id: ID): Proposal
-  allProposals(start: ID, limit: Int): [Proposal!]
+  proposals(start: ID, limit: Int): [Proposal!]
 }
 
 type Mutation {

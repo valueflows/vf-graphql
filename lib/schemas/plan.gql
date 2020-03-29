@@ -87,7 +87,7 @@ type PlanResponse {
 
 type Query {
   plan(id: ID): Plan
-  allPlans(start: ID, limit: Int): [Plan!]
+  plans(start: ID, limit: Int): [Plan!]
 }
 
 type Mutation {

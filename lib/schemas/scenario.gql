@@ -142,10 +142,10 @@ type ScenarioDefinitionResponse {
 
 type Query {
   scenario(id: ID): Scenario
-  allScenarios(start: ID, limit: Int): [Scenario!]
+  scenarios(start: ID, limit: Int): [Scenario!]
 
   scenarioDefinition(id: ID): ScenarioDefinition
-  allScenarioDefinitions(start: ID, limit: Int): [ScenarioDefinition!]
+  scenarioDefinitions(start: ID, limit: Int): [ScenarioDefinition!]
 }
 
 type Mutation {

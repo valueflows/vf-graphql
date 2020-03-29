@@ -586,16 +586,16 @@ type SatisfactionResponse {
 
 type Query {
   commitment(id: ID): Commitment
-  allCommitments(start: ID, limit: Int): [Commitment!]
+  commitments(start: ID, limit: Int): [Commitment!]
 
   intent(id: ID): Intent
-  allIntents(start: ID, limit: Int): [Intent!]
+  intents(start: ID, limit: Int): [Intent!]
 
   fulfillment(id: ID): Fulfillment
-  allFulfillments(start: ID, limit: Int): [Fulfillment!]
+  fulfillments(start: ID, limit: Int): [Fulfillment!]
 
   satisfaction(id: ID): Satisfaction
-  allSatisfactions(start: ID, limit: Int): [Satisfaction!]
+  satisfactions(start: ID, limit: Int): [Satisfaction!]
 }
 
 type Mutation {

@@ -452,8 +452,8 @@ type ProcessResponse {
 
 type Query {
   economicEvent(id: ID): EconomicEvent
-  allEconomicEvents(start: ID, limit: Int): [EconomicEvent!]
-  filteredEconomicEvents(
+  economicEvents(start: ID, limit: Int): [EconomicEvent!]
+  economicEventsFiltered(
     providerId: ID,
     receiverId: ID,
     resourceClassifiedAs: [URI!],
@@ -463,13 +463,13 @@ type Query {
   ): [EconomicEvent!]
 
   economicResource(id: ID): EconomicResource
-  allEconomicResources(start: ID, limit: Int): [EconomicResource!]
+  economicResources(start: ID, limit: Int): [EconomicResource!]
 
   productBatch(id: ID): ProductBatch
-  allProductBatches(start: ID, limit: Int): [ProductBatch!]
+  productBatches(start: ID, limit: Int): [ProductBatch!]
 
   process(id: ID): Process
-  allProcesses(start: ID, limit: Int): [Process!]
+  processes(start: ID, limit: Int): [Process!]
 }
 
 type Mutation {

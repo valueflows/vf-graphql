@@ -86,7 +86,7 @@ type SpatialThingResponse {
 
 type Query {
   spatialThing(id: ID): SpatialThing
-  allSpatialThings(start: ID, limit: Int): [SpatialThing!]
+  spatialThings(start: ID, limit: Int): [SpatialThing!]
 }
 
 type Mutation {
