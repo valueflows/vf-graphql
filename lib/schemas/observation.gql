@@ -14,8 +14,6 @@
 
 union ProductionFlowItem = Process | EconomicResource
 
-union ResourceSpecificationRef = ResourceSpecification | ExternalSpecification
-
 """
 An observed economic flow, as opposed to a flow planned to happen in the future. This could reflect a change in the quantity of an economic resource. It is also defined by its behavior in relation to the economic resource (see `Action`)
 """
