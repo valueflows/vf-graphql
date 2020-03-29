@@ -20,7 +20,7 @@
   ],
   "scripts": {
     "dev": "npm-watch",
-    "test": "tape tests/**/*.js | faucet",
+    "test": "tape tests/**/test-*.js | faucet",
     "build": "mkdir build; graphql-codegen --config scripts/codegen.yml; node scripts/build.js",
     "prepare": "npm run build"
   },
