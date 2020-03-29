@@ -5,6 +5,9 @@ GraphQL reference implementation of the [ValueFlows](http://valueflo.ws/) gramma
 <!-- MarkdownTOC -->
 
 - [API](#api)
+	- [Generating schemas](#generating-schemas)
+	- [Accessing schemas](#accessing-schemas)
+	- [Validating implementations](#validating-implementations)
 - [Implementing](#implementing)
 - [Development setup](#development-setup)
 	- [Prerequisites](#prerequisites)
@@ -36,17 +39,30 @@ This project synchronizes projects implementing VF for a GraphQL interface betwe
 
 The top-level module export contains three methods: `buildSchema`, `printSchema` and `validate`.
 
-`buildSchema`, when run without arguments, will return a GraphQLSchema object for the entire ValueFlows API, including all optional and auxiliary modules. When passed an array, it builds a subset of the full spec which includes only the specified modules. For a complete list of modules, see `schemaModules` in `schema-manifest.js`.
+### Generating schemas
 
-`printSchema` from the `graphql` module is also exported to make it easy to turn built schema objects into SDL strings, as some modules require this input format.
+The **`buildSchema`** method allows you to dynamically create schemas for the entire ValueFlows specification, or modular subsets of it. The full schema is broken down into modules of functionality, so that implementations which only aim to cover part of the specification can do so.
 
-`validate` takes another GraphQL schema as input and validates it against a schema generated from any set of module IDs. The output format is that of GraphQL's [`findBreakingChanges`](https://github.com/graphql/graphql-js/blob/master/src/utilities/findBreakingChanges.js).
+- When run without arguments, `buildSchema` will return a GraphQLSchema object for the entire ValueFlows API, including all optional and auxiliary modules.
+- When passed an array, it builds a subset of the full spec which includes only the specified modules. For a complete list of modules, see `schemaModules` in `schema-manifest.js` or refer to the filenames in `lib/schemas`.
+- An optional third argument allows for custom extensions to the core specification to be injected, where implementations include additional domain-specific logic that is not part of ValueFlows. Simply pass an array of GraphQL [SDL schema strings](https://graphql.org/learn/schema/) and these will be merged into the resultant schema.
 
-If you need access to a string version of any schema, you can get an SDL version with
+### Accessing schemas
+
+[**`printSchema`**](https://graphql.org/graphql-js/utilities/#printschema) from the `graphql` module is also exported to make it easy to turn the built schema objects created by `buildSchema` into SDL strings, as some tooling requires this input format.
+
+Therefore, if you need access to a string version of any schema you can get an SDL version with:
 
 	printSchema(buildSchema(/* [...] */))
 
 If all you need is the *entire* schema as a string, consider importing `@valueflows/vf-graphql/ALL_VF_SDL` or `@valueflows/vf-graphql/json-schema.json` instead.
+
+For more advanced usage we also export `mergeTypeDefs`
+
+### Validating implementations
+
+**`validate`** has the same parameters as `buildSchema`, but takes another GraphQL schema as its first argument and validates it against a schema generated from the given set of module IDs and extension schemas. The output format is that of GraphQL's [`findBreakingChanges`](https://github.com/graphql/graphql-js/blob/master/src/utilities/findBreakingChanges.js) method.
+
 
 
 
