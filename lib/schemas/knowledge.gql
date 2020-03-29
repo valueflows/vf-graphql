@@ -72,6 +72,13 @@ type ResourceSpecification {
 }
 
 """
+A reference to an external specification defined in some other (non-VF) grammar.
+"""
+type ExternalSpecification {
+  uri: URI
+}
+
+"""
 Specifies the kind of process.
 """
 type ProcessSpecification {

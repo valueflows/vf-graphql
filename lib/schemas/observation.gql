@@ -14,6 +14,8 @@
 
 union ProductionFlowItem = Process | EconomicResource
 
+union ResourceSpecificationRef = ResourceSpecification | ExternalSpecification
+
 """
 An observed economic flow, as opposed to a flow planned to happen in the future. This could reflect a change in the quantity of an economic resource. It is also defined by its behavior in relation to the economic resource (see `Action`)
 """
@@ -45,7 +47,7 @@ type EconomicEvent {
   resourceClassifiedAs: [URI!]
 
   "The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
-  resourceConformsTo: ResourceSpecification
+  resourceConformsTo: ResourceSpecificationRef
 
   "The amount and unit of the economic resource counted or inventoried. This is the quantity that could be used to increment or decrement a resource, depending on the type of resource and resource effect of action."
   resourceQuantity: Measure
@@ -97,7 +99,7 @@ type EconomicResource {
   classifiedAs: [URI!]
 
   "The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
-  conformsTo: ResourceSpecification!
+  conformsTo: ResourceSpecificationRef!
 
   "Sometimes called serial number, used when each item must have a traceable identifier (like a computer). Could also be used for other unique tracking identifiers needed for resources."
   trackingIdentifier: String
@@ -235,7 +237,7 @@ input EconomicEventCreateParams {
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   resourceClassifiedAs: [URI!]
 
-  "(`ResourceSpecification`) The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
+  "(`ResourceSpecification` | URI) The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
   resourceConformsTo: ID
 
   "The amount and unit of the economic resource counted or inventoried. This is the quantity that could be used to increment or decrement a resource, depending on the type of resource and resource effect of action."
@@ -307,7 +309,7 @@ input EconomicResourceCreateParams {
   "An informal or formal textual identifier for an item. Does not imply uniqueness."
   name: String
 
-  "(`ResourceSpecification`) The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
+  "(`ResourceSpecification` | URI) The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
   conformsTo: ID
 
   "Sometimes called serial number, used when each item must have a traceable identifier (like a computer). Could also be used for other unique tracking identifiers needed for resources."

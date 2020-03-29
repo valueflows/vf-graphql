@@ -34,7 +34,7 @@ type RecipeResource {
   note: String
 
   "The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
-  resourceConformsTo: ResourceSpecification
+  resourceConformsTo: ResourceSpecificationRef
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   resourceClassifiedAs: [URI!]
@@ -115,7 +115,7 @@ input RecipeResourceCreateParams {
   "The uri to an image relevant to the entity, such as a photo, diagram, etc."
   image: URI
 
-  "(`ResourceSpecification`) The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
+  "(`ResourceSpecification` | URI) The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
   resourceConformsTo: ID
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
@@ -143,7 +143,7 @@ input RecipeResourceUpdateParams {
   "The uri to an image relevant to the entity, such as a photo, diagram, etc."
   image: URI
 
-  "(`ResourceSpecification`) The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
+  "(`ResourceSpecification` | URI) The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
   resourceConformsTo: ID
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
