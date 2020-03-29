@@ -57,8 +57,6 @@ Therefore, if you need access to a string version of any schema you can get an S
 
 If all you need is the *entire* schema as a string, consider importing `@valueflows/vf-graphql/ALL_VF_SDL` or `@valueflows/vf-graphql/json-schema.json` instead.
 
-For more advanced usage we also export `mergeTypeDefs`
-
 ### Validating implementations
 
 **`validate`** has the same parameters as `buildSchema`, but takes another GraphQL schema as its first argument and validates it against a schema generated from the given set of module IDs and extension schemas. The output format is that of GraphQL's [`findBreakingChanges`](https://github.com/graphql/graphql-js/blob/master/src/utilities/findBreakingChanges.js) method.
