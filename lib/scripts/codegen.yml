@@ -1,5 +1,5 @@
 overwrite: true
-schema: "./schemas/*.gql"
+schema: "./schemas/**/*.gql"
 # documents: "./ops"
 config:
   scalars:
