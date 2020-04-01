@@ -1,3 +1,8 @@
+## 0.7.1
+
+- Fix generated TypeScript / Flow types missing "bridging" fields due to misconfiguration of `graphql-codegen`
+- Fix `EconomicEvent` appreciation edges linking directly to other events instead of via `Appreciation`
+
 ## 0.7.0
 
 - Added descriptions to all `input` fields, to make interacting with the API more self-documenting
