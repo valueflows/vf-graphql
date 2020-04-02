@@ -9,6 +9,8 @@ GraphQL reference implementation of the [ValueFlows](http://valueflo.ws/) gramma
 	- [Accessing schemas](#accessing-schemas)
 	- [Validating implementations](#validating-implementations)
 - [Implementing](#implementing)
+	- [Resolver logic](#resolver-logic)
+	- [Date & time scalars](#date--time-scalars)
 - [Development setup](#development-setup)
 	- [Prerequisites](#prerequisites)
 	- [Initialising for development](#initialising-for-development)
@@ -68,10 +70,21 @@ If all you need is the *entire* schema as a string, consider importing `@valuefl
 
 To implement a system gateway compatible with the ValueFlows spec, you will need to define the following:
 
-- An [implementation object](https://www.apollographql.com/docs/graphql-tools/generate-schema.html) for resolving all relationship fields, to be passed to `makeExecutableSchema` along with the `schema` definition exported by this module
-- [Scalar type resolvers](https://www.apollographql.com/docs/graphql-tools/scalars.html) for the ISO8601 `DateTime` & `DateInterval` types
+### Resolver logic
 
-For a more detailed example, see the project in `./mock-server/`.
+Resolver methods which bind to your application services must be implemented. In traditional client/server architecture, this is usually done serverside and the implementation executes remotely. In distributed/decentralised systems it is usually important that this be done in the client app to avoid adding any extra centralised services to your infrastructure.
+
+If using Apollo GraphQL, this means defining an [implementation object](https://www.apollographql.com/docs/graphql-tools/generate-schema.html) which contains methods for resolving all relationship fields. This object is passed to `makeExecutableSchema` along with the `schema` definition exported by this module.
+
+Schemas will usually have to inject `__typename` parameters to disambiguate union types, especially for `EventOrCommitment` where there are no required fields which can determine the difference between the two records via duck-typing.
+
+For a more detailed example, see the [Holochain schema bindings](https://github.com/holo-rea/holo-rea/tree/master/modules/vf-graphql-holochain#readme).
+
+### Date & time scalars
+
+[Scalar type resolvers](https://www.apollographql.com/docs/graphql-tools/scalars.html) need to be provided for the ISO8601 `DateTime` & `DateInterval` types, in order to handle date encoding & decoding to your chosen storage system.
+
+`DateTime` should be of variable precision, and allow specifying dates without time components as well as times without milliseconds. The timezone specifier may be omitted, but it is recommended to inject it manually prior to transmission to the server to ensure that specified times remain local to the user making the request.
 
 
 
