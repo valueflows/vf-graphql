@@ -114,5 +114,5 @@ type Query {
 type Mutation {
   createUnit(unit: UnitCreateParams): UnitResponse
   updateUnit(unit: UnitUpdateParams): UnitResponse
-  deleteUnit(id: String!): Boolean
+  deleteUnit(id: ID!): Boolean
 }

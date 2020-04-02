@@ -154,7 +154,7 @@ type Query {
 type Mutation {
   createProposal(proposal: ProposalCreateParams): ProposalResponse
   updateProposal(proposal: ProposalUpdateParams): ProposalResponse
-  deleteProposal(id: String!): Boolean
+  deleteProposal(id: ID!): Boolean
 
   """
   Include an existing intent as part of a proposal.
@@ -162,7 +162,7 @@ type Mutation {
   @param publishes the (`Intent`) to include as part of the proposal
   """
   proposeIntent(publishedIn: ID!, publishes: ID!, reciprocal: Boolean): ProposedIntentResponse
-  deleteProposedIntent(id: String!): Boolean
+  deleteProposedIntent(id: ID!): Boolean
 
   """
   Send a proposal to another agent.
@@ -170,5 +170,5 @@ type Mutation {
   @param proposedTo the (`Agent`) to include in the proposal
   """
   proposeTo(proposed: ID!, proposedTo: ID!): ProposedToResponse
-  deleteProposedTo(id: String!): Boolean
+  deleteProposedTo(id: ID!): Boolean
 }

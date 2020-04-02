@@ -69,5 +69,5 @@ type Query {
 type Mutation {
   createAgreement(agreement: AgreementCreateParams): AgreementResponse
   updateAgreement(agreement: AgreementUpdateParams): AgreementResponse
-  deleteAgreement(id: String!): Boolean
+  deleteAgreement(id: ID!): Boolean
 }

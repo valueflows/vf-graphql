@@ -151,9 +151,9 @@ type Query {
 type Mutation {
   createScenario(plan: ScenarioCreateParams!): ScenarioResponse
   updateScenario(plan: ScenarioUpdateParams!): ScenarioResponse
-  deleteScenario(id: String!): Boolean
+  deleteScenario(id: ID!): Boolean
 
   createScenarioDefinition(plan: ScenarioDefinitionCreateParams!): ScenarioDefinitionResponse
   updateScenarioDefinition(plan: ScenarioDefinitionUpdateParams!): ScenarioDefinitionResponse
-  deleteScenarioDefinition(id: String!): Boolean
+  deleteScenarioDefinition(id: ID!): Boolean
 }

@@ -92,5 +92,5 @@ type Query {
 type Mutation {
   createSpatialThing(spatialThing: SpatialThingCreateParams!): SpatialThingResponse
   updateSpatialThing(spatialThing: SpatialThingUpdateParams!): SpatialThingResponse
-  deleteSpatialThing(id: String!): Boolean
+  deleteSpatialThing(id: ID!): Boolean
 }

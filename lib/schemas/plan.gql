@@ -95,5 +95,5 @@ type Mutation {
   # :TODO:
   # createPlanFromRecipe(): PlanResponse
   updatePlan(plan: PlanUpdateParams!): PlanResponse
-  deletePlan(id: String!): Boolean
+  deletePlan(id: ID!): Boolean
 }

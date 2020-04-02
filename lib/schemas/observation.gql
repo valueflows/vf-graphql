@@ -475,17 +475,17 @@ type Query {
 type Mutation {
   createEconomicEvent(event: EconomicEventCreateParams!, newInventoriedResource: EconomicResourceCreateParams): EconomicEventResponse
   updateEconomicEvent(event: EconomicEventUpdateParams!): EconomicEventResponse
-  deleteEconomicEvent(id: String!): Boolean
+  deleteEconomicEvent(id: ID!): Boolean
 
   # :TODO: should this be allowed without an originating event? Or should the event be recorded transparently?
   updateEconomicResource(resource: EconomicResourceUpdateParams!): EconomicResourceResponse
-  deleteEconomicResource(id: String!): Boolean
+  deleteEconomicResource(id: ID!): Boolean
 
   createProductBatch(productBatch: ProductBatchCreateParams!): ProductBatchResponse
   updateProductBatch(productBatch: ProductBatchUpdateParams!): ProductBatchResponse
-  deleteProductBatch(id: String!): Boolean
+  deleteProductBatch(id: ID!): Boolean
 
   createProcess(process: ProcessCreateParams!): ProcessResponse
   updateProcess(process: ProcessUpdateParams!): ProcessResponse
-  deleteProcess(id: String!): Boolean
+  deleteProcess(id: ID!): Boolean
 }

@@ -601,17 +601,17 @@ type Query {
 type Mutation {
   createCommitment(commitment: CommitmentCreateParams): CommitmentResponse
   updateCommitment(commitment: CommitmentUpdateParams): CommitmentResponse
-  deleteCommitment(id: String!): Boolean
+  deleteCommitment(id: ID!): Boolean
 
   createIntent(intent: IntentCreateParams): IntentResponse
   updateIntent(intent: IntentUpdateParams): IntentResponse
-  deleteIntent(id: String!): Boolean
+  deleteIntent(id: ID!): Boolean
 
   createFulfillment(fulfillment: FulfillmentCreateParams!): FulfillmentResponse
   updateFulfillment(fulfillment: FulfillmentUpdateParams!): FulfillmentResponse
-  deleteFulfillment(id: String!): Boolean
+  deleteFulfillment(id: ID!): Boolean
 
   createSatisfaction(satisfaction: SatisfactionCreateParams): SatisfactionResponse
   updateSatisfaction(satisfaction: SatisfactionUpdateParams): SatisfactionResponse
-  deleteSatisfaction(id: String!): Boolean
+  deleteSatisfaction(id: ID!): Boolean
 }

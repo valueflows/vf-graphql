@@ -160,9 +160,9 @@ type Query {
 type Mutation {
   createResourceSpecification(resourceSpecification: ResourceSpecificationCreateParams): ResourceSpecificationResponse
   updateResourceSpecification(resourceSpecification: ResourceSpecificationUpdateParams): ResourceSpecificationResponse
-  deleteResourceSpecification(id: String!): Boolean
+  deleteResourceSpecification(id: ID!): Boolean
 
   createProcessSpecification(processSpecification: ProcessSpecificationCreateParams): ProcessSpecificationResponse
   updateProcessSpecification(processSpecification: ProcessSpecificationUpdateParams): ProcessSpecificationResponse
-  deleteProcessSpecification(id: String!): Boolean
+  deleteProcessSpecification(id: ID!): Boolean
 }
