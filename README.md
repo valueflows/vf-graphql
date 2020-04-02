@@ -10,7 +10,9 @@ GraphQL reference implementation of the [ValueFlows](http://valueflo.ws/) gramma
 	- [Validating implementations](#validating-implementations)
 - [Implementing](#implementing)
 	- [Resolver logic](#resolver-logic)
-	- [Date & time scalars](#date--time-scalars)
+	- [Scalar type resolvers](#scalar-type-resolvers)
+		- [Dates & times](#dates--times)
+		- [URIs](#uris)
 - [Development setup](#development-setup)
 	- [Prerequisites](#prerequisites)
 	- [Initialising for development](#initialising-for-development)
@@ -80,11 +82,19 @@ Schemas will usually have to inject `__typename` parameters to disambiguate unio
 
 For a more detailed example, see the [Holochain schema bindings](https://github.com/holo-rea/holo-rea/tree/master/modules/vf-graphql-holochain#readme).
 
-### Date & time scalars
+### Scalar type resolvers
 
-[Scalar type resolvers](https://www.apollographql.com/docs/graphql-tools/scalars.html) need to be provided for the ISO8601 `DateTime` & `DateInterval` types, in order to handle date encoding & decoding to your chosen storage system.
+#### Dates & times
+
+[Scalar type resolvers](https://www.apollographql.com/docs/graphql-tools/scalars.html) need to be provided for the ISO8601 `DateTime` type, in order to handle date encoding & decoding to your chosen storage system.
 
 `DateTime` should be of variable precision, and allow specifying dates without time components as well as times without milliseconds. The timezone specifier may be omitted, but it is recommended to inject it manually prior to transmission to the server to ensure that specified times remain local to the user making the request.
+
+#### URIs
+
+There is also a separate `URI` type which simply makes it explicit when a reference to some external asset is expected. Implementations may treat these as strings, or perform URI validation as needed.
+
+We usually suggest that you do *not* enforce an http/https protocol scheme, to allow for cross-system data linkage where records from distributed systems with their own URI resolution behaviour can be interlinked with web-based URLs.
 
 
 
