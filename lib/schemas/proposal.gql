@@ -27,7 +27,7 @@ type Proposal {
   hasEnd: DateTime
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType!]
+  inScopeOf: [AccountingScope!]
 
   "This proposal contains unit based quantities, which can be multipied to create commitments; commonly seen in a price list or e-commerce."
   unitBased: Boolean
@@ -93,7 +93,7 @@ input ProposalCreateParams {
   eligibleLocation: ID
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType!]
+  inScopeOf: [ID!]
 
   "This proposal contains unit based quantities, which can be multipied to create commitments; commonly seen in a price list or e-commerce."
   unitBased: Boolean
@@ -121,7 +121,7 @@ input ProposalUpdateParams {
   eligibleLocation: ID
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType!]
+  inScopeOf: [ID!]
 
   "This proposal contains unit based quantities, which can be multipied to create commitments; commonly seen in a price list or e-commerce."
   unitBased: Boolean

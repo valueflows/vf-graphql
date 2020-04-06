@@ -66,7 +66,7 @@ type EconomicEvent {
   note: String
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType!]
+  inScopeOf: [AccountingScope!]
 
   "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this economic event."
   agreedIn: URI
@@ -187,7 +187,7 @@ type Process {
   note: String
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType!]
+  inScopeOf: [AccountingScope!]
 
   ##############################################################################
   # inverse relationships and queries
@@ -227,7 +227,7 @@ input EconomicEventCreateParams {
   receiver: ID!
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType!]
+  inScopeOf: [ID!]
 
   "(`EconomicResource`) Economic resource involved in the economic event."
   resourceInventoriedAs: ID
@@ -288,7 +288,7 @@ input EconomicEventUpdateParams {
   triggeredBy: ID
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType!]
+  inScopeOf: [ID!]
 }
 
 type EconomicEventResponse {
@@ -401,7 +401,7 @@ input ProcessCreateParams {
   note: String
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType!]
+  inScopeOf: [ID!]
 
   "(`Plan`) The process with its inputs and outputs is part of the plan."
   plannedWithin: ID
@@ -432,7 +432,7 @@ input ProcessUpdateParams {
   note: String
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType!]
+  inScopeOf: [ID!]
 
   "(`Plan`) The process with its inputs and outputs is part of the plan."
   plannedWithin: ID

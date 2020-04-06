@@ -59,7 +59,7 @@ type Claim {
   agreedIn: URI
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType!]
+  inScopeOf: [AccountingScope!]
 }
 
 """
@@ -127,7 +127,7 @@ input ClaimCreateParams {
   agreedIn: URI
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType!]
+  inScopeOf: [ID!]
 }
 
 input ClaimUpdateParams {
@@ -173,7 +173,7 @@ input ClaimUpdateParams {
   agreedIn: URI
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType!]
+  inScopeOf: [ID!]
 }
 
 type ClaimResponse {

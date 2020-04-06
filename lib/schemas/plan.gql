@@ -35,7 +35,7 @@ type Plan {
   # inverse relationships and queries
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType!]
+  inScopeOf: [AccountingScope!]
 
   "The plan is able to be deleted or not."
   deletable: Boolean

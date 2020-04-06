@@ -11,6 +11,11 @@
 ##
 
 """
+A boundary or context grouped around some other record- used for documenting, accounting, planning.
+"""
+union AccountingScope = Person | Organization
+
+"""
 A person or group or organization with economic agency.
 """
 interface Agent {
@@ -106,7 +111,7 @@ type AgentRelationship {
   relationship: AgentRelationshipRole!
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType!]
+  inScopeOf: [AccountingScope!]
 
   "A textual description or comment."
   note: String
