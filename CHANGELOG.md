@@ -1,3 +1,10 @@
+## 0.8.0
+
+- Added an additional argument to `buildSchema` to allow passing extension schemas as SDL strings in order to extend core VF with custom domain-specific additions easily
+- **Breaking:** removed loose `AnyType` custom scalar and restricted `inScopeOf` fields to only allow `Person | Organization` as valid values. Note that implementations may extend the `AccountingScope` union type if they wish to allow other types of record scoping (eg. groups without collective agency, geographical locations).
+- **Breaking:** removed `all` prefixes from toplevel record listing endpoints for sensible autocomplete, and made search endpoint query prefixes into suffixes
+- **Breaking:** fixed deletion methods taking `String` when they should receive `ID`
+
 ## 0.7.1
 
 - Fix generated TypeScript / Flow types missing "bridging" fields due to misconfiguration of `graphql-codegen`
