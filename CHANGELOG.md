@@ -1,3 +1,7 @@
+## 0.8.1
+
+- Allow overriding options to `mergeTypeDefs` in order to deal with looser validation in extension schemas
+
 ## 0.8.0
 
 - Added an additional argument to `buildSchema` to allow passing extension schemas as SDL strings in order to extend core VF with custom domain-specific additions easily
