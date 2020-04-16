@@ -64,6 +64,9 @@ type ResourceSpecification {
   "The uri to an image relevant to the entity, such as a photo, diagram, etc."
   image: URI
 
+  "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
+  resourceClassifiedAs: [URI!]
+
   "A textual description or comment."
   note: String
 
@@ -93,6 +96,9 @@ input ResourceSpecificationCreateParams {
   "The uri to an image relevant to the entity, such as a photo, diagram, etc."
   image: URI
 
+  "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
+  resourceClassifiedAs: [URI!]
+
   "A textual description or comment."
   note: String
 
@@ -108,6 +114,9 @@ input ResourceSpecificationUpdateParams {
 
   "The uri to an image relevant to the entity, such as a photo, diagram, etc."
   image: URI
+
+  "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
+  resourceClassifiedAs: [URI!]
 
   "A textual description or comment."
   note: String
