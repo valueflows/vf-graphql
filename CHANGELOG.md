@@ -1,3 +1,7 @@
+## 0.8.2
+
+- Allow overriding options for both `buildASTSchema` and `mergeTypeDefs` 
+
 ## 0.8.1
 
 - Allow overriding options to `mergeTypeDefs` in order to deal with looser validation in extension schemas
