@@ -86,11 +86,11 @@ type SpatialThingResponse {
 
 type Query {
   spatialThing(id: ID): SpatialThing
-  allSpatialThings(start: ID, limit: Int): [SpatialThing!]
+  spatialThings(start: ID, limit: Int): [SpatialThing!]
 }
 
 type Mutation {
   createSpatialThing(spatialThing: SpatialThingCreateParams!): SpatialThingResponse
   updateSpatialThing(spatialThing: SpatialThingUpdateParams!): SpatialThingResponse
-  deleteSpatialThing(id: String!): Boolean
+  deleteSpatialThing(id: ID!): Boolean
 }

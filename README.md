@@ -5,7 +5,14 @@ GraphQL reference implementation of the [ValueFlows](http://valueflo.ws/) gramma
 <!-- MarkdownTOC -->
 
 - [API](#api)
+	- [Generating schemas](#generating-schemas)
+	- [Accessing schemas](#accessing-schemas)
+	- [Validating implementations](#validating-implementations)
 - [Implementing](#implementing)
+	- [Resolver logic](#resolver-logic)
+	- [Scalar type resolvers](#scalar-type-resolvers)
+		- [Dates & times](#dates--times)
+		- [URIs](#uris)
 - [Development setup](#development-setup)
 	- [Prerequisites](#prerequisites)
 	- [Initialising for development](#initialising-for-development)
@@ -36,17 +43,28 @@ This project synchronizes projects implementing VF for a GraphQL interface betwe
 
 The top-level module export contains three methods: `buildSchema`, `printSchema` and `validate`.
 
-`buildSchema`, when run without arguments, will return a GraphQLSchema object for the entire ValueFlows API, including all optional and auxiliary modules. When passed an array, it builds a subset of the full spec which includes only the specified modules. For a complete list of modules, see `schemaModules` in `schema-manifest.js`.
+### Generating schemas
 
-`printSchema` from the `graphql` module is also exported to make it easy to turn built schema objects into SDL strings, as some modules require this input format.
+The **`buildSchema`** method allows you to dynamically create schemas for the entire ValueFlows specification, or modular subsets of it. The full schema is broken down into modules of functionality, so that implementations which only aim to cover part of the specification can do so.
 
-`validate` takes another GraphQL schema as input and validates it against a schema generated from any set of module IDs. The output format is that of GraphQL's [`findBreakingChanges`](https://github.com/graphql/graphql-js/blob/master/src/utilities/findBreakingChanges.js).
+- When run without arguments, `buildSchema` will return a GraphQLSchema object for the entire ValueFlows API, including all optional and auxiliary modules.
+- When passed an array, it builds a subset of the full spec which includes only the specified modules. For a complete list of modules, see `schemaModules` in `schema-manifest.js` or refer to the filenames in `lib/schemas`.
+- An optional third argument allows for custom extensions to the core specification to be injected, where implementations include additional domain-specific logic that is not part of ValueFlows. Simply pass an array of GraphQL [SDL schema strings](https://graphql.org/learn/schema/) and these will be merged into the resultant schema.
 
-If you need access to a string version of any schema, you can get an SDL version with
+### Accessing schemas
+
+[**`printSchema`**](https://graphql.org/graphql-js/utilities/#printschema) from the `graphql` module is also exported to make it easy to turn the built schema objects created by `buildSchema` into SDL strings, as some tooling requires this input format.
+
+Therefore, if you need access to a string version of any schema you can get an SDL version with:
 
 	printSchema(buildSchema(/* [...] */))
 
 If all you need is the *entire* schema as a string, consider importing `@valueflows/vf-graphql/ALL_VF_SDL` or `@valueflows/vf-graphql/json-schema.json` instead.
+
+### Validating implementations
+
+**`validate`** has the same parameters as `buildSchema`, but takes another GraphQL schema as its first argument and validates it against a schema generated from the given set of module IDs and extension schemas. The output format is that of GraphQL's [`findBreakingChanges`](https://github.com/graphql/graphql-js/blob/master/src/utilities/findBreakingChanges.js) method.
+
 
 
 
@@ -54,10 +72,29 @@ If all you need is the *entire* schema as a string, consider importing `@valuefl
 
 To implement a system gateway compatible with the ValueFlows spec, you will need to define the following:
 
-- An [implementation object](https://www.apollographql.com/docs/graphql-tools/generate-schema.html) for resolving all relationship fields, to be passed to `makeExecutableSchema` along with the `schema` definition exported by this module
-- [Scalar type resolvers](https://www.apollographql.com/docs/graphql-tools/scalars.html) for the ISO8601 `DateTime` & `DateInterval` types
+### Resolver logic
 
-For a more detailed example, see the project in `./mock-server/`.
+Resolver methods which bind to your application services must be implemented. In traditional client/server architecture, this is usually done serverside and the implementation executes remotely. In distributed/decentralised systems it is usually important that this be done in the client app to avoid adding any extra centralised services to your infrastructure.
+
+If using Apollo GraphQL, this means defining an [implementation object](https://www.apollographql.com/docs/graphql-tools/generate-schema.html) which contains methods for resolving all relationship fields. This object is passed to `makeExecutableSchema` along with the `schema` definition exported by this module.
+
+Schemas will usually have to inject `__typename` parameters to disambiguate union types, especially for `EventOrCommitment` where there are no required fields which can determine the difference between the two records via duck-typing.
+
+For a more detailed example, see the [Holochain schema bindings](https://github.com/holo-rea/holo-rea/tree/master/modules/vf-graphql-holochain#readme).
+
+### Scalar type resolvers
+
+#### Dates & times
+
+[Scalar type resolvers](https://www.apollographql.com/docs/graphql-tools/scalars.html) need to be provided for the ISO8601 `DateTime` type, in order to handle date encoding & decoding to your chosen storage system.
+
+`DateTime` should be of variable precision, and allow specifying dates without time components as well as times without milliseconds. The timezone specifier may be omitted, but it is recommended to inject it manually prior to transmission to the server to ensure that specified times remain local to the user making the request.
+
+#### URIs
+
+There is also a separate `URI` type which simply makes it explicit when a reference to some external asset is expected. Implementations may treat these as strings, or perform URI validation as needed.
+
+We usually suggest that you do *not* enforce an http/https protocol scheme, to allow for cross-system data linkage where records from distributed systems with their own URI resolution behaviour can be interlinked with web-based URLs.
 
 
 

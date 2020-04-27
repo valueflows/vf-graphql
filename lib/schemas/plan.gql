@@ -35,7 +35,7 @@ type Plan {
   # inverse relationships and queries
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType!]
+  inScopeOf: [AccountingScope!]
 
   "The plan is able to be deleted or not."
   deletable: Boolean
@@ -87,7 +87,7 @@ type PlanResponse {
 
 type Query {
   plan(id: ID): Plan
-  allPlans(start: ID, limit: Int): [Plan!]
+  plans(start: ID, limit: Int): [Plan!]
 }
 
 type Mutation {
@@ -95,5 +95,5 @@ type Mutation {
   # :TODO:
   # createPlanFromRecipe(): PlanResponse
   updatePlan(plan: PlanUpdateParams!): PlanResponse
-  deletePlan(id: String!): Boolean
+  deletePlan(id: ID!): Boolean
 }

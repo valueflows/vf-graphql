@@ -59,7 +59,7 @@ type Claim {
   agreedIn: URI
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType!]
+  inScopeOf: [AccountingScope!]
 }
 
 """
@@ -127,7 +127,7 @@ input ClaimCreateParams {
   agreedIn: URI
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType!]
+  inScopeOf: [ID!]
 }
 
 input ClaimUpdateParams {
@@ -173,7 +173,7 @@ input ClaimUpdateParams {
   agreedIn: URI
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType!]
+  inScopeOf: [ID!]
 }
 
 type ClaimResponse {
@@ -226,18 +226,18 @@ type SettlementResponse {
 
 type Query {
   claim(id: ID): Claim
-  allClaims(start: ID, limit: Int): [Claim!]
+  claims(start: ID, limit: Int): [Claim!]
 
   settlement(id: ID): Settlement
-  allSettlements(start: ID, limit: Int): [Settlement!]
+  settlements(start: ID, limit: Int): [Settlement!]
 }
 
 type Mutation {
   createClaim(claim: ClaimCreateParams!): ClaimResponse
   updateClaim(claim: ClaimUpdateParams!): ClaimResponse
-  deleteClaim(id: String!): Boolean
+  deleteClaim(id: ID!): Boolean
 
   createSettlement(settlement: SettlementCreateParams!): SettlementResponse
   updateSettlement(s0ettlement: SettlementUpdateParams!): SettlementResponse
-  deleteSettlement(id: String!): Boolean
+  deleteSettlement(id: ID!): Boolean
 }

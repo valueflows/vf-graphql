@@ -27,7 +27,7 @@ type Proposal {
   hasEnd: DateTime
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType!]
+  inScopeOf: [AccountingScope!]
 
   "This proposal contains unit based quantities, which can be multipied to create commitments; commonly seen in a price list or e-commerce."
   unitBased: Boolean
@@ -93,7 +93,7 @@ input ProposalCreateParams {
   eligibleLocation: ID
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType!]
+  inScopeOf: [ID!]
 
   "This proposal contains unit based quantities, which can be multipied to create commitments; commonly seen in a price list or e-commerce."
   unitBased: Boolean
@@ -121,7 +121,7 @@ input ProposalUpdateParams {
   eligibleLocation: ID
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType!]
+  inScopeOf: [ID!]
 
   "This proposal contains unit based quantities, which can be multipied to create commitments; commonly seen in a price list or e-commerce."
   unitBased: Boolean
@@ -148,13 +148,13 @@ type ProposedToResponse {
 
 type Query {
   proposal(id: ID): Proposal
-  allProposals(start: ID, limit: Int): [Proposal!]
+  proposals(start: ID, limit: Int): [Proposal!]
 }
 
 type Mutation {
   createProposal(proposal: ProposalCreateParams): ProposalResponse
   updateProposal(proposal: ProposalUpdateParams): ProposalResponse
-  deleteProposal(id: String!): Boolean
+  deleteProposal(id: ID!): Boolean
 
   """
   Include an existing intent as part of a proposal.
@@ -162,7 +162,7 @@ type Mutation {
   @param publishes the (`Intent`) to include as part of the proposal
   """
   proposeIntent(publishedIn: ID!, publishes: ID!, reciprocal: Boolean): ProposedIntentResponse
-  deleteProposedIntent(id: String!): Boolean
+  deleteProposedIntent(id: ID!): Boolean
 
   """
   Send a proposal to another agent.
@@ -170,5 +170,5 @@ type Mutation {
   @param proposedTo the (`Agent`) to include in the proposal
   """
   proposeTo(proposed: ID!, proposedTo: ID!): ProposedToResponse
-  deleteProposedTo(id: String!): Boolean
+  deleteProposedTo(id: ID!): Boolean
 }

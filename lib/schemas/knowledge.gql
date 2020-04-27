@@ -66,6 +66,9 @@ type ResourceSpecification {
   "The uri to an image relevant to the entity, such as a photo, diagram, etc."
   image: URI
 
+  "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
+  resourceClassifiedAs: [URI!]
+
   "A textual description or comment."
   note: String
 
@@ -102,6 +105,9 @@ input ResourceSpecificationCreateParams {
   "The uri to an image relevant to the entity, such as a photo, diagram, etc."
   image: URI
 
+  "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
+  resourceClassifiedAs: [URI!]
+
   "A textual description or comment."
   note: String
 
@@ -117,6 +123,9 @@ input ResourceSpecificationUpdateParams {
 
   "The uri to an image relevant to the entity, such as a photo, diagram, etc."
   image: URI
+
+  "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
+  resourceClassifiedAs: [URI!]
 
   "A textual description or comment."
   note: String
@@ -157,21 +166,21 @@ type ProcessSpecificationResponse {
 
 type Query {
   action(id: ID): Action
-  allActions: [Action!]
+  actions: [Action!]
 
   resourceSpecification(id: ID): ResourceSpecification
-  allResourceSpecifications(start: ID, limit: Int): [ResourceSpecification!]
+  resourceSpecifications(start: ID, limit: Int): [ResourceSpecification!]
 
   processSpecification(id: ID): ProcessSpecification
-  allProcessSpecifications(start: ID, limit: Int): [ProcessSpecification!]
+  processSpecifications(start: ID, limit: Int): [ProcessSpecification!]
 }
 
 type Mutation {
   createResourceSpecification(resourceSpecification: ResourceSpecificationCreateParams): ResourceSpecificationResponse
   updateResourceSpecification(resourceSpecification: ResourceSpecificationUpdateParams): ResourceSpecificationResponse
-  deleteResourceSpecification(id: String!): Boolean
+  deleteResourceSpecification(id: ID!): Boolean
 
   createProcessSpecification(processSpecification: ProcessSpecificationCreateParams): ProcessSpecificationResponse
   updateProcessSpecification(processSpecification: ProcessSpecificationUpdateParams): ProcessSpecificationResponse
-  deleteProcessSpecification(id: String!): Boolean
+  deleteProcessSpecification(id: ID!): Boolean
 }

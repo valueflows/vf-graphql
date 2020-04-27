@@ -63,11 +63,11 @@ type AgreementResponse {
 
 type Query {
   agreement(id: ID): Agreement
-  allAgreements(start: ID, limit: Int): [Agreement!]
+  agreements(start: ID, limit: Int): [Agreement!]
 }
 
 type Mutation {
   createAgreement(agreement: AgreementCreateParams): AgreementResponse
   updateAgreement(agreement: AgreementUpdateParams): AgreementResponse
-  deleteAgreement(id: String!): Boolean
+  deleteAgreement(id: ID!): Boolean
 }

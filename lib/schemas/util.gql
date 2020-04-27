@@ -7,11 +7,6 @@
 ##
 
 """
-A type which allows any arbitrary value to be set
-"""
-scalar AnyType
-
-"""
 The `URI` type simply declares a reference to an external web URL, Holochain entry or other resource.
 """
 scalar URI

@@ -108,11 +108,11 @@ type UnitResponse {
 
 type Query {
   unit(id: ID): Unit
-  allUnits(start: ID, limit: Int): [Unit!]
+  units(start: ID, limit: Int): [Unit!]
 }
 
 type Mutation {
   createUnit(unit: UnitCreateParams): UnitResponse
   updateUnit(unit: UnitUpdateParams): UnitResponse
-  deleteUnit(id: String!): Boolean
+  deleteUnit(id: ID!): Boolean
 }

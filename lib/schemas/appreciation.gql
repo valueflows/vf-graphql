@@ -62,5 +62,5 @@ type AppreciationResponse {
 type Mutation {
   createAppreciation(appreciation: AppreciationCreateParams!): AppreciationResponse
   updateAppreciation(appreciation: AppreciationUpdateParams!): AppreciationResponse
-  deleteAppreciation(id: String!): Boolean
+  deleteAppreciation(id: ID!): Boolean
 }

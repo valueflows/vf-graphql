@@ -77,7 +77,7 @@ type Commitment {
   note: String
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType!]
+  inScopeOf: [AccountingScope!]
 
   "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this commitment."
   agreedIn: URI
@@ -161,7 +161,7 @@ type Intent {
   note: String
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType!]
+  inScopeOf: [AccountingScope!]
 
   "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this intent."
   agreedIn: URI
@@ -277,7 +277,7 @@ input IntentCreateParams {
   note: String
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType!]
+  inScopeOf: [ID!]
 
   "(`SpatialThing`) The place where an intent occurs. Usually mappable."
   atLocation: ID
@@ -350,7 +350,7 @@ input IntentUpdateParams {
   note: String
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType!]
+  inScopeOf: [ID!]
 
   "(`SpatialThing`) The place where an intent occurs. Usually mappable."
   atLocation: ID
@@ -415,7 +415,7 @@ input CommitmentCreateParams {
   note: String
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType!]
+  inScopeOf: [ID!]
 
   "(`Plan`) Represents a desired deliverable expected from this plan."
   independentDemandOf: ID
@@ -479,7 +479,7 @@ input CommitmentUpdateParams {
   note: String
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AnyType!]
+  inScopeOf: [ID!]
 
   "(`Plan`) Represents a desired deliverable expected from this plan."
   independentDemandOf: ID
@@ -586,32 +586,32 @@ type SatisfactionResponse {
 
 type Query {
   commitment(id: ID): Commitment
-  allCommitments(start: ID, limit: Int): [Commitment!]
+  commitments(start: ID, limit: Int): [Commitment!]
 
   intent(id: ID): Intent
-  allIntents(start: ID, limit: Int): [Intent!]
+  intents(start: ID, limit: Int): [Intent!]
 
   fulfillment(id: ID): Fulfillment
-  allFulfillments(start: ID, limit: Int): [Fulfillment!]
+  fulfillments(start: ID, limit: Int): [Fulfillment!]
 
   satisfaction(id: ID): Satisfaction
-  allSatisfactions(start: ID, limit: Int): [Satisfaction!]
+  satisfactions(start: ID, limit: Int): [Satisfaction!]
 }
 
 type Mutation {
   createCommitment(commitment: CommitmentCreateParams): CommitmentResponse
   updateCommitment(commitment: CommitmentUpdateParams): CommitmentResponse
-  deleteCommitment(id: String!): Boolean
+  deleteCommitment(id: ID!): Boolean
 
   createIntent(intent: IntentCreateParams): IntentResponse
   updateIntent(intent: IntentUpdateParams): IntentResponse
-  deleteIntent(id: String!): Boolean
+  deleteIntent(id: ID!): Boolean
 
   createFulfillment(fulfillment: FulfillmentCreateParams!): FulfillmentResponse
   updateFulfillment(fulfillment: FulfillmentUpdateParams!): FulfillmentResponse
-  deleteFulfillment(id: String!): Boolean
+  deleteFulfillment(id: ID!): Boolean
 
   createSatisfaction(satisfaction: SatisfactionCreateParams): SatisfactionResponse
   updateSatisfaction(satisfaction: SatisfactionUpdateParams): SatisfactionResponse
-  deleteSatisfaction(id: String!): Boolean
+  deleteSatisfaction(id: ID!): Boolean
 }
