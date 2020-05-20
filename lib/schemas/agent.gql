@@ -80,6 +80,9 @@ type Organization implements Agent {
   "The uri to an image relevant to the agent, such as a logo, avatar, photo, etc."
   image: URI
 
+  "References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping."
+  classifiedAs: [URI!]
+
   "A textual description or comment."
   note: String
 
