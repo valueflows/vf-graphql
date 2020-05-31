@@ -182,6 +182,43 @@ input AgentUpdateParams { # implements UpdateParams & AgentParams
   note: String
 }
 
+
+input OrganizationCreateParams { # implements AgentParams
+  "An informal or formal textual identifier for an agent. Does not imply uniqueness."
+  name: String!
+
+  "The uri to an image relevant to the agent, such as a logo, avatar, photo, etc."
+  image: URI
+
+  "(`SpatialThing`) The main place an agent is located, often an address where activities occur and mail can be sent. This is usually a mappable geographic location.  It also could be a website address, as in the case of agents who have no physical location."
+  primaryLocation: ID
+
+  "References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping."
+  classifiedAs: [URI!]
+
+  "A textual description or comment."
+  note: String
+}
+
+input OrganizationUpdateParams { # implements UpdateParams & AgentParams
+  id: ID!
+
+  "An informal or formal textual identifier for an agent. Does not imply uniqueness."
+  name: String
+
+  "The uri to an image relevant to the agent, such as a logo, avatar, photo, etc."
+  image: URI
+
+  "(`SpatialThing`) The main place an agent is located, often an address where activities occur and mail can be sent. This is usually a mappable geographic location.  It also could be a website address, as in the case of agents who have no physical location."
+  primaryLocation: ID
+
+  "References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping."
+  classifiedAs: [URI!]
+
+  "A textual description or comment."
+  note: String
+}
+
 type PersonResponse {
   agent: Person!
 }
@@ -294,9 +331,9 @@ type Mutation {
   deletePerson(id: ID!): Boolean
 
   "Registers a new organization (group agent) with the collaboration space"
-  createOrganization(organization: AgentCreateParams!): OrganizationResponse
+  createOrganization(organization: OrganizationCreateParams!): OrganizationResponse
   "Update organization profile details"
-  updateOrganization(organization: AgentUpdateParams!): OrganizationResponse
+  updateOrganization(organization: OrganizationUpdateParams!): OrganizationResponse
   "Erase record of an organization and thus remove it from the collaboration space"
   deleteOrganization(id: ID!): Boolean
 
