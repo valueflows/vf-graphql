@@ -22,34 +22,21 @@ type Action {
   "A unique verb which defines the action."
   label: String!
 
-  "The effect of an economic event on a resource, increment, decrement, no effect, or decrement resource and increment 'to' resource."
+  "The accounting effect of an economic event on a resource, increment, decrement, no effect, or decrement resource and increment 'to' resource."
   resourceEffect: String! # "increment", "decrement", "noEffect", "decrementIncrement"
+
+  "The onhand effect of an economic event on a resource, increment, decrement, no effect, or decrement resource and increment 'to' resource."
+  onhandEffect: String! # "increment", "decrement", "noEffect", "decrementIncrement"
 
   "Denotes if a process input or output, or not related to a process."
   inputOutput: String # "input", "output", "notApplicable"
 
   "The action that should be included on the other direction of the process, for example accept with modify."
-  pairsWith: String # "notApplicable", (any of the action labels) TODO: do we want to do this as an actual Action (optional)? In the VF spec they are NamedIndividuals defined in the spec, including "notApplicable".
+  pairsWith: String # "notApplicable", (any of the action labels)
 }
 
 # Core VF action IDs & `resourceEffect`s:
-# @see https://github.com/valueflows/valueflows/issues/487
-#   dropoff             (+) transported resource or person leaves the process, the same resource will appear in input with vf:pickup verb
-#   pickup              (-) transported resource or person enters the process, the same resource will appear in output with vf:dropoff verb
-#   consume             (-) for example an ingredient composed into the output, after the process the ingredient is gone
-#   use                 (0) for example a tool used in process, after the process, the tool still exists
-#   work                (0) labor power towards a process
-#   cite                (0) for example a design file, neither used nor consumed, the file remains available at all times
-#   produce             (+) new resource created in that process or an existing stock resource added to
-#   accept              (0) in processes like repair or maintentance, the same resource will appear in output with vf:modify verb
-#   modify              (0) in processes like repair or maintentance, the same resource will appear in input with vf:accept verb
-#   deliver-service     (0) new service produced and delivered (being a service implies that an agent actively receives the service)
-#   transfer-all-rights (-+) give full (in the human realm) rights and responsibilities to another agent, without transferring physical custody
-#   transfer-custody    (-+) give physical custody and control of a resource, without full accounting or ownership rights
-#   transfer            (-+) give full rights and responsibilities plus physical custody
-#   move                (-+) change location and/or identity of a resource with no change of agent
-#   raise               (+) adjusts a quantity up based on a beginning balance or inventory count
-#   lower               (-) adjusts a quantity down based on a beginning balance or inventory count
+# @see https://valueflo.ws/introduction/flows.html#actions
 
 """
 Specification of a kind of resource. Could define a material item, service, digital item, currency account, etc.
