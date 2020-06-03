@@ -2,12 +2,40 @@
 #
 # Agent <> Observation API
 #
-# Queries related to observation-level data exposed within an agent context.
+# Queries & related to observation-level data exposed within an agent context,
+# and identifiers linking Agents to observation record types.
 #
 # @package  vf-graphql
 # @since    2020-02-11
 #
 ##
+
+type EconomicEvent {
+  "The economic agent from whom the actual economic event is initiated."
+  provider: Agent!
+
+  "The economic agent whom the actual economic event is for."
+  receiver: Agent!
+}
+
+type EconomicResource {
+  "The agent currently with primary rights and responsibilites for the economic resource. It is the agent that is associated with the accountingQuantity of the economic resource."
+  primaryAccountable: Agent
+}
+
+type Process {
+  workingAgents: [Agent!]
+}
+
+
+input EconomicEventCreateParams {
+  "(`Agent`) The economic agent from whom the actual economic event is initiated."
+  provider: ID!
+
+  "(`Agent`) The economic agent whom the actual economic event is for."
+  receiver: ID!
+}
+
 
 "Query parameters for reading `EconomicEvent`s related to an `Agent`"
 input agentEventSearchParams {

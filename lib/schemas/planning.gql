@@ -10,7 +10,6 @@
 #
 # @depends  measurement.gql
 # @depends  knowledge.gql
-# @depends  agent.gql
 # @depends  observation.gql
 # @package  vf-graphql
 # @since    2019-02-11
@@ -33,12 +32,6 @@ type Commitment {
 
   "Defines the process for which this commitment is an output."
   outputOf: Process
-
-  "The economic agent from whom the commitment is initiated."
-  provider: Agent!
-
-  "The economic agent whom the commitment is for."
-  receiver: Agent!
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   resourceClassifiedAs: [URI!]
@@ -91,8 +84,6 @@ type Commitment {
   "An intent satisfied fully or partially by an economic event or commitment."
   satisfies: [Satisfaction!]
 
-  involvedAgents: [Agent!]
-
   "The commitment can be safely deleted, has no dependent information."
   deletable: Boolean
 }
@@ -114,12 +105,6 @@ type Intent {
 
   "Defines the process to which this intent is an output."
   outputOf: Process
-
-  "The economic agent from whom the intent is initiated. This implies that the intent is an offer."
-  provider: Agent
-
-  "The economic agent whom the intent is for.  This implies that the intent is a request."
-  receiver: Agent
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   resourceClassifiedAs: [URI!]
@@ -234,12 +219,6 @@ input IntentCreateParams {
   "(`Process`) Defines the process to which this intent is an output."
   outputOf: ID
 
-  "(`Agent`) The economic agent from whom the intent is initiated. This implies that the intent is an offer."
-  provider: ID
-
-  "(`Agent`) The economic agent whom the intent is for.  This implies that the intent is a request."
-  receiver: ID
-
   "(`ResourceSpecification`) The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
   resourceConformsTo: ID
 
@@ -303,12 +282,6 @@ input IntentUpdateParams {
 
   "(`Process`) Defines the process to which this intent is an output."
   outputOf: ID
-
-  "(`Agent`) The economic agent from whom the intent is initiated. This implies that the intent is an offer."
-  provider: ID
-
-  "(`Agent`) The economic agent whom the intent is for.  This implies that the intent is a request."
-  receiver: ID
 
   "(`ResourceSpecification`) The primary resource specification or definition of an existing or potential economic resource. A resource will have only one, as this specifies exactly what the resource is."
   resourceConformsTo: ID
@@ -375,12 +348,6 @@ input CommitmentCreateParams {
   "(`Process`) Defines the process for which this commitment is an output."
   outputOf: ID
 
-  "(`Agent`) The economic agent from whom the commitment is initiated."
-  provider: ID!
-
-  "(`Agent`) The economic agent whom the commitment is for."
-  receiver: ID!
-
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   resourceClassifiedAs: [URI!]
 
@@ -438,12 +405,6 @@ input CommitmentUpdateParams {
 
   "(`Process`) Defines the process for which this commitment is an output."
   outputOf: ID
-
-  "(`Agent`) The economic agent from whom the commitment is initiated."
-  provider: ID
-
-  "(`Agent`) The economic agent whom the commitment is for."
-  receiver: ID
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   resourceClassifiedAs: [URI!]

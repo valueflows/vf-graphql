@@ -2,12 +2,68 @@
 #
 # Agent <> Planning API
 #
-# Queries related to planning-level data exposed within an agent context.
+# Queries related to planning-level data exposed within an agent context,
+# and identifiers linking Agents to planning record types.
 #
 # @package  vf-graphql
 # @since    2020-02-11
 #
 ##
+
+type Intent {
+  "The economic agent from whom the intent is initiated. This implies that the intent is an offer."
+  provider: Agent
+
+  "The economic agent whom the intent is for.  This implies that the intent is a request."
+  receiver: Agent
+}
+
+type Commitment {
+  "The economic agent from whom the commitment is initiated."
+  provider: Agent!
+
+  "The economic agent whom the commitment is for."
+  receiver: Agent!
+
+  ##############################################################################
+  # inverse relationships and queries
+
+  involvedAgents: [Agent!]
+}
+
+
+input IntentCreateParams {
+  "(`Agent`) The economic agent from whom the intent is initiated. This implies that the intent is an offer."
+  provider: ID
+
+  "(`Agent`) The economic agent whom the intent is for.  This implies that the intent is a request."
+  receiver: ID
+}
+
+input IntentUpdateParams {
+  "(`Agent`) The economic agent from whom the intent is initiated. This implies that the intent is an offer."
+  provider: ID
+
+  "(`Agent`) The economic agent whom the intent is for.  This implies that the intent is a request."
+  receiver: ID
+}
+
+input CommitmentCreateParams {
+  "(`Agent`) The economic agent from whom the commitment is initiated."
+  provider: ID!
+
+  "(`Agent`) The economic agent whom the commitment is for."
+  receiver: ID!
+}
+
+input CommitmentUpdateParams {
+  "(`Agent`) The economic agent from whom the commitment is initiated."
+  provider: ID
+
+  "(`Agent`) The economic agent whom the commitment is for."
+  receiver: ID
+}
+
 
 "Query parameters for reading `Commitment`s related to an `Agent`"
 input agentCommitmentSearchParams {
