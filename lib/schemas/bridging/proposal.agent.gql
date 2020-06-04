@@ -1,0 +1,42 @@
+##
+#
+# Proposal-related functionality that interacts with Agents
+#
+# Allows flagging Proposals for interest by agents who have an interest in
+# completing them.
+#
+# @package  Holo-REA
+# @since    2020-06-03
+#
+##
+
+type Proposal {
+  publishedTo: [ProposedTo!]
+}
+
+"""
+An agent to which the proposal is to be published.  A proposal can be published to many agents.
+"""
+type ProposedTo {
+  id: ID!
+
+  "The agent to which the proposal is published."
+  proposedTo: Agent!
+
+  "The proposal that is published to a specific agent."
+  proposed: Proposal!
+}
+
+type ProposedToResponse {
+  proposedTo: ProposedTo
+}
+
+type Mutation {
+  """
+  Send a proposal to another agent.
+  @param proposed the (`Proposal`) to send to an involved agent
+  @param proposedTo the (`Agent`) to include in the proposal
+  """
+  proposeTo(proposed: ID!, proposedTo: ID!): ProposedToResponse
+  deleteProposedTo(id: ID!): Boolean
+}

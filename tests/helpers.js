@@ -7,19 +7,20 @@
 
 const {
   graphqlSync,
-  introspectionQuery,
+  getIntrospectionQuery,
 } = require('graphql')
-const { makeExecutableSchema, addMockFunctionsToSchema } = require('graphql-tools')
+const { makeExecutableSchema } = require('@graphql-tools/schema')
+const { addMocksToSchema } = require('@graphql-tools/mock')
 
 function makeMockSchema(typeDefs) {
   const schema = makeExecutableSchema({ typeDefs })
-  addMockFunctionsToSchema({ schema })
+  addMocksToSchema({ schema })
   return schema
 }
 
 function exerciseSchema(schema) {
   // Perform runtime validation of the schema via introspection query
-  const introspection = graphqlSync(schema, introspectionQuery)
+  const introspection = graphqlSync({ schema, source: getIntrospectionQuery() })
   if (!introspection) {
     throw new Error('Unknown error executing introspection query. Schema may be invalid.')
   } else if (introspection.error) {

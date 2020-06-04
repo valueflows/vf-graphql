@@ -1,6 +1,6 @@
 {
   "name": "@valueflows/vf-graphql",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "description": "Reference GraphQL implementation of the ValueFlows spec",
   "main": "index.js",
   "types": "index.d.ts",
@@ -20,8 +20,8 @@
   ],
   "scripts": {
     "dev": "npm-watch",
-    "test": "tape tests/**/test-*.js | faucet",
     "build": "mkdir build; graphql-codegen --config scripts/codegen.yml; node scripts/build.js",
+    "test": "cd ../tests && npm test",
     "prepare": "npm run build"
   },
   "watch": {
@@ -50,26 +50,24 @@
     "grammar"
   ],
   "author": "ValueFlows contributors",
-  "license": "Apache2",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/valueflows/vf-graphql/issues"
   },
   "homepage": "https://github.com/valueflows/vf-graphql#readme",
   "dependencies": {
-    "@graphql-toolkit/schema-merging": "^0.9.7",
-    "graphql": "14.5.8",
-    "graphql-tools": "4.0.6"
+    "@graphql-tools/merge": "^6.0.7"
+  },
+  "peerDependencies": {
+    "graphql": ">= 14.0.0"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "1.8.2",
-    "@graphql-codegen/flow": "1.8.2",
-    "@graphql-codegen/typescript": "1.8.2",
-    "faucet": "0.0.1",
+    "@graphql-codegen/cli": "^1.15.1",
+    "@graphql-codegen/flow": "^1.15.1",
+    "@graphql-codegen/typescript": "^1.15.1",
+    "@graphql-tools/merge": "^6.0.7",
     "globby": "^11.0.0",
     "graphql-2-json-schema": "^0.2.0",
-    "graphql-toolkit": "0.6.4",
-    "npm-watch": "^0.6.0",
-    "tape": "^4.10.0",
-    "tape-catch": "^1.0.6"
+    "npm-watch": "^0.6.0"
   }
 }

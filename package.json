@@ -3,8 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "workspaces": [
+    "lib",
     "mock-server",
-    "lib"
+    "tests"
   ],
   "description": "ValueFlows reference GraphQL spec, authored in GraphQL SDL; plus validator methods for apps wishing to adhere to the spec.",
   "main": "/dev/null",
@@ -13,10 +14,10 @@
     "build": "cd lib && npm run build",
     "publish": "cd lib && npm publish --access public",
     "start": "npm-run-all --parallel dev:schema dev:demoUI",
-    "test": "cd lib && npm run test",
+    "test": "cd tests && npm run test",
     "dev:schema": "cd lib && npm run dev",
     "dev:demoUI": "cd mock-server && npm start",
-    "clean": "rm -Rf node_modules; rm -Rf mock-server/node_modules; rm -Rf lib/node_modules"
+    "clean": "rm -Rf node_modules; rm -Rf mock-server/node_modules; rm -Rf lib/node_modules; rm -Rf tests/node_modules"
   },
   "repository": {
     "type": "git",
@@ -38,6 +39,9 @@
     "url": "https://github.com/holo-rea/holo-rea-proto.git/issues"
   },
   "homepage": "https://github.com/holo-rea/holo-rea-proto#readme",
+  "dependencies": {
+    "graphql": "^15.0.0"
+  },
   "devDependencies": {
     "npm-run-all": "^4.1.5"
   }

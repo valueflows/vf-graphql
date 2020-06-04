@@ -24,10 +24,11 @@
   },
   "homepage": "https://github.com/valueflows/vf-graphql#readme",
   "dependencies": {
-    "@valueflows/vf-graphql": "0.7.0",
-    "apollo-server-express": "^2.4.8",
-    "express": "^4.16.4",
-    "graphql": "14.5.8",
-    "graphql-voyager": "^1.0.0-rc.26"
+    "@valueflows/vf-graphql": "^0.8",
+    "@graphql-tools/mock": "^6.0.7",
+    "apollo-server-express": "^2.14.1",
+    "express": "^4.17.1",
+    "graphql": "^15.0.0",
+    "graphql-voyager": "^1.0.0-rc.31"
   }
 }

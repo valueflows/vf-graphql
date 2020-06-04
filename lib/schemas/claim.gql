@@ -6,7 +6,6 @@
 #
 # @depends  measurement.gql
 # @depends  knowledge.gql
-# @depends  agent.gql
 # @depends  observation.gql
 # @package  vf-graphql
 # @since    2019-02-11
@@ -21,12 +20,6 @@ type Claim {
 
   "Relates a claim to a verb, such as consume, produce, work, improve, etc."
   action: Action!
-
-  "The economic agent from whom the claim is initiated."
-  provider: Agent!
-
-  "The economic agent whom the claim is for."
-  receiver: Agent!
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   resourceClassifiedAs: [URI!]
@@ -90,12 +83,6 @@ input ClaimCreateParams {
   "(`Action`) Relates a claim to a verb, such as consume, produce, work, improve, etc."
   action: ID!
 
-  "(`Agent`) The economic agent from whom the claim is initiated."
-  provider: ID!
-
-  "(`Agent`) The economic agent whom the claim is for."
-  receiver: ID!
-
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   resourceClassifiedAs: [URI!]
 
@@ -135,12 +122,6 @@ input ClaimUpdateParams {
 
   "(`Action`) Relates a claim to a verb, such as consume, produce, work, improve, etc."
   action: ID
-
-  "(`Agent`) The economic agent from whom the claim is initiated."
-  provider: ID
-
-  "(`Agent`) The economic agent whom the claim is for."
-  receiver: ID
 
   "References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping."
   resourceClassifiedAs: [URI!]

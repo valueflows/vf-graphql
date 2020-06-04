@@ -6,7 +6,6 @@
 #
 # @depends  measurement.gql
 # @depends  knowledge.gql
-# @depends  agent.gql
 # @package  vf-graphql
 # @since    2019-02-11
 #
@@ -28,12 +27,6 @@ type EconomicEvent {
 
   "Defines the process for which this event is an output."
   outputOf: Process
-
-  "The economic agent from whom the actual economic event is initiated."
-  provider: Agent!
-
-  "The economic agent whom the actual economic event is for."
-  receiver: Agent!
 
   "Economic resource involved in the economic event."
   resourceInventoriedAs: EconomicResource
@@ -129,9 +122,6 @@ type EconomicResource {
   "Used when a stock economic resource contains items also defined as economic resources."
   containedIn: EconomicResource
 
-  "The agent currently with primary rights and responsibilites for the economic resource. It is the agent that is associated with the accountingQuantity of the economic resource."
-  primaryAccountable: Agent
-
   ##############################################################################
   # inverse relationships and queries
 
@@ -199,8 +189,6 @@ type Process {
   nextProcesses: [Process!]
   previousProcesses: [Process!]
 
-  workingAgents: [Agent!]
-
   trace: [EconomicEvent!]
   track: [EconomicEvent!]
 
@@ -219,12 +207,6 @@ input EconomicEventCreateParams {
 
   "(`Process`) Defines the process for which this event is an output."
   outputOf: ID
-
-  "(`Agent`) The economic agent from whom the actual economic event is initiated."
-  provider: ID!
-
-  "(`Agent`) The economic agent whom the actual economic event is for."
-  receiver: ID!
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
   inScopeOf: [ID!]
