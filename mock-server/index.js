@@ -7,22 +7,24 @@
  */
 
 const express = require('express')
-const { ApolloServer, gql } = require('apollo-server-express')
+const { ApolloServer } = require('apollo-server-express')
 const { express: voyagerMiddleware } = require('graphql-voyager/middleware')
-const { addMockFunctionsToSchema } = require('graphql-tools')
+const { addMocksToSchema } = require('@graphql-tools/mock')
 
 const SERVER_PORT = process.env.PORT || 3000
 const SCHEMA_VIEWER_PATH = '/viewer'
 
 const { buildSchema } = require('@valueflows/vf-graphql')
 
-const schema = buildSchema()
-addMockFunctionsToSchema({ schema, mocks: {
-  URI: () => 'http://example.com/thing',
-  DateTime: () => new Date().toISOString(),
-  DateInterval: () => 'P1Y2M10DT2H30M',
-  AnyType: () => '??????',
-}})
+const schema = addMocksToSchema({
+  schema: buildSchema(),
+  mocks: {
+    URI: () => 'http://example.com/thing',
+    DateTime: () => new Date().toISOString(),
+    DateInterval: () => 'P1Y2M10DT2H30M',
+    AnyType: () => '??????',
+  },
+})
 
 const server = new ApolloServer({ schema })
 
@@ -35,7 +37,7 @@ app.use(SCHEMA_VIEWER_PATH, voyagerMiddleware({
     hideRoot: true,
     showLeafFields: true,
   },
-}));
+}))
 
 app.listen({ port: SERVER_PORT }, () =>
   console.log(`🚀🚀🚀
