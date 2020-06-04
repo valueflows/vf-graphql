@@ -1,0 +1,22 @@
+{
+  "name": "@valueflows/vf-graphql-tests",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Test module for vf-graphql spec",
+  "main": "/dev/null",
+  "scripts": {
+    "test": "tape test-*.js | faucet"
+  },
+  "dependencies": {
+    "graphql": "^15.0.0"
+  },
+  "devDependencies": {
+    "@graphql-tools/schema": "^6.0.7",
+    "@graphql-tools/mock": "^6.0.7",
+    "faucet": "0.0.1",
+    "tape": "^4.10.0",
+    "tape-catch": "^1.0.6"
+  },
+  "author": "ValueFlows contributors",
+  "license": "Apache-2.0"
+}
