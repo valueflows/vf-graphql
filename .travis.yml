@@ -2,7 +2,7 @@ language: node_js
 node_js:
   - 11
 # before_script:
-script: yarn && npm run build && npm run test
+script: yarn && pushd lib && npm run build && popd && pushd tests && npm run test && popd
 git:
   quiet: true
   depth: false
