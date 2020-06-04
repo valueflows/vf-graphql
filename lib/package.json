@@ -59,7 +59,7 @@
     "@graphql-tools/merge": "^6.0.7"
   },
   "peerDependencies": {
-    "graphql": ">= 14.0.0"
+    "graphql": ">= 15.0.0"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^1.15.1",
