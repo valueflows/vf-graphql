@@ -8,7 +8,7 @@
 const test = require('tape-catch')
 
 const { makeMockSchema, exerciseSchema } = require('./helpers')
-const { buildSchema, printSchema } = require('../')
+const { buildSchema, printSchema } = require('../lib')
 
 test('schema compiles', (t) => {
   const schema = makeMockSchema(printSchema(buildSchema()))

@@ -7,7 +7,7 @@
 
 const test = require('tape-catch')
 
-const { buildSchema, printSchema } = require('../')
+const { buildSchema, printSchema } = require('../lib')
 
 test('custom extensions', (t) => {
   const knowledgeExtensions = `
