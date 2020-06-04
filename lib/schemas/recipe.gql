@@ -71,6 +71,9 @@ type RecipeFlow {
   "Relates an output flow to its process in a recipe."
   recipeOutputOf: RecipeProcess
 
+  "Relates a flow to its exchange agreement in a recipe."
+  recipeClauseOf: RecipeExchange
+
   "A textual description or comment."
   note: String
 }
@@ -97,7 +100,18 @@ type RecipeProcess {
   note: String
 }
 
+"""
+Specifies an exchange agreement as part of a recipe.
+"""
+type RecipeExchange {
+  id: ID!
 
+  "An informal or formal textual identifier for a recipe exchange. Does not imply uniqueness."
+  name: String!
+
+  "A textual description or comment."
+  note: String
+}
 
 input RecipeResourceCreateParams {
   "An informal or formal textual identifier for a recipe resource. Does not imply uniqueness."
@@ -201,6 +215,30 @@ type RecipeProcessResponse {
 
 
 
+input RecipeExchangeCreateParams {
+  "An informal or formal textual identifier for a recipe exchange. Does not imply uniqueness."
+  name: String!
+
+  "A textual description or comment."
+  note: String
+}
+
+input RecipeExchangeUpdateParams {
+  id: ID!
+
+  "An informal or formal textual identifier for a recipe exchange. Does not imply uniqueness."
+  name: String
+
+  "A textual description or comment."
+  note: String
+}
+
+type RecipeExchangeResponse {
+  recipeExchange: RecipeExchange
+}
+
+
+
 input RecipeFlowCreateParams {
   "(`Action`) Relates a process input or output to a verb, such as consume, produce, work, modify, etc."
   action: ID!
@@ -219,6 +257,9 @@ input RecipeFlowCreateParams {
 
   "(`RecipeProcess`) Relates an output flow to its process in a recipe."
   recipeOutputOf: ID
+
+  "(`RecipeExchange`) Relates a flow to its exchange agreement in a recipe."
+  recipeClauseOf: ID
 
   "(`ProcessSpecification`) References the ProcessSpecification of the last process the economic resource went through. Stage is used when the last process is important for finding proper resources, such as where the publishing process wants only documents that have gone through the editing process."
   stage: ID
@@ -250,6 +291,9 @@ input RecipeFlowUpdateParams {
 
   "(`RecipeProcess`) Relates an output flow to its process in a recipe."
   recipeOutputOf: ID
+
+  "(`RecipeExchange`) Relates a flow to its exchange agreement in a recipe."
+  recipeClauseOf: ID
 
   "(`ProcessSpecification`) References the ProcessSpecification of the last process the economic resource went through. Stage is used when the last process is important for finding proper resources, such as where the publishing process wants only documents that have gone through the editing process."
   stage: ID
