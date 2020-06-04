@@ -12,9 +12,8 @@ branches:
   - master
   # :NOTE: pull request builds are on, so this takes care of feature branches
   - /^(release|hotfix)\/.*/
-cache:
-  yarn: false
-  npm: false
+# cache:
+  # yarn: true
 #   directories:
 #   - "/tmp/holochain/target"
 #   cargo: true
