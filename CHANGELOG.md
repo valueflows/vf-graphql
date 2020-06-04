@@ -1,3 +1,10 @@
+## 0.8.3
+
+- Added `classifiedAs` to `Organization`
+- Added `onHandEffect` to `Action`
+- Further modularised schemas to allow economic modules to be used without `Agent` functionality
+- Updated GraphQL modules to most recent version (`15.x` series) and configured `graphql` as a peerDependency to allow broader compatibility
+
 ## 0.8.2
 
 - Allow overriding options for both `buildASTSchema` and `mergeTypeDefs` 
