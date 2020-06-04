@@ -2,6 +2,7 @@
 
 - Added `classifiedAs` to `Organization`
 - Added `onHandEffect` to `Action`
+- Added `defaultUnitOfResource` to `ResourceSpecification`
 - Further modularised schemas to allow economic modules to be used without `Agent` functionality
 - Updated GraphQL modules to most recent version (`15.x` series) and configured `graphql` as a peerDependency to allow broader compatibility
 
