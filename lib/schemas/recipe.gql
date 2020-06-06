@@ -312,14 +312,17 @@ type RecipeFlowResponse {
 
 
 type Query {
+  recipeFlow(id: ID): RecipeFlow
+  recipeFlows(start: ID, limit: Int): [RecipeFlow!]
+
   recipeResource(id: ID): RecipeResource
   recipeResources(start: ID, limit: Int): [RecipeResource!]
 
   recipeProcess(id: ID): RecipeProcess
   recipeProcesses(start: ID, limit: Int): [RecipeProcess!]
 
-  recipeFlow(id: ID): RecipeFlow
-  recipeFlows(start: ID, limit: Int): [RecipeFlow!]
+  recipeExchange(id: ID): RecipeExchange
+  recipeExchanges(start: ID, limit: Int): [RecipeExchange!]
 }
 
 type Mutation {
@@ -327,11 +330,15 @@ type Mutation {
   updateRecipeFlow(recipeFlow: RecipeFlowUpdateParams): RecipeFlowResponse
   deleteRecipeFlow(id: ID!): Boolean
 
+  createRecipeResource(recipeResource: RecipeResourceCreateParams): RecipeResourceResponse
+  updateRecipeResource(recipeResource: RecipeResourceUpdateParams): RecipeResourceResponse
+  deleteRecipeResource(id: ID!): Boolean
+
   createRecipeProcess(recipeProcess: RecipeProcessCreateParams): RecipeProcessResponse
   updateRecipeProcess(recipeProcess: RecipeProcessUpdateParams): RecipeProcessResponse
   deleteRecipeProcess(id: ID!): Boolean
 
-  createRecipeResource(recipeResource: RecipeResourceCreateParams): RecipeResourceResponse
-  updateRecipeResource(recipeResource: RecipeResourceUpdateParams): RecipeResourceResponse
-  deleteRecipeResource(id: ID!): Boolean
+  createRecipeExchange(recipeExchange: RecipeExchangeCreateParams): RecipeExchangeResponse
+  updateRecipeExchange(recipeExchange: RecipeExchangeUpdateParams): RecipeExchangeResponse
+  deleteRecipeExchange(id: ID!): Boolean
 }
