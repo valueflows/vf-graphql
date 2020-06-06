@@ -22,7 +22,8 @@
     "dev": "npm-watch",
     "build": "mkdir build; graphql-codegen --config scripts/codegen.yml; node scripts/build.js",
     "test": "cd ../tests && npm test",
-    "prepare": "npm run build"
+    "clean": "scripts/clean.sh",
+    "prepare": "npm run clean; npm run build"
   },
   "watch": {
     "build": {

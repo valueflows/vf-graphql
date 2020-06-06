@@ -17,7 +17,7 @@
     "test": "cd tests && npm run test",
     "dev:schema": "cd lib && npm run dev",
     "dev:demoUI": "cd mock-server && npm start",
-    "clean": "rm -Rf node_modules; rm -Rf mock-server/node_modules; rm -Rf lib/node_modules; rm -Rf tests/node_modules"
+    "clean": "rm -Rf node_modules; rm -Rf mock-server/node_modules; rm -Rf lib/node_modules; rm -Rf tests/node_modules; cd lib && npm run clean"
   },
   "repository": {
     "type": "git",
