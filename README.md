@@ -49,7 +49,7 @@ The **`buildSchema`** method allows you to dynamically create schemas for the en
 
 - When run without arguments, `buildSchema` will return a GraphQLSchema object for the entire ValueFlows API, including all optional and auxiliary modules.
 - When passed an array, it builds a subset of the full spec which includes only the specified modules. For a complete list of modules, see `schemaModules` in `schema-manifest.js` or refer to the filenames in `lib/schemas`.
-- An optional third argument allows for custom extensions to the core specification to be injected, where implementations include additional domain-specific logic that is not part of ValueFlows. Simply pass an array of GraphQL [SDL schema strings](https://graphql.org/learn/schema/) and these will be merged into the resultant schema.
+- An optional second argument allows for custom extensions to the core specification to be injected, where implementations include additional domain-specific logic that is not part of ValueFlows. Simply pass an array of GraphQL [SDL schema strings](https://graphql.org/learn/schema/) and these will be merged into the resultant schema.
 
 ### Accessing schemas
 
