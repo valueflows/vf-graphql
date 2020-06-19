@@ -1,3 +1,8 @@
+## 0.8.4
+
+- Fixed casing of `AgreementResponse.agreement` to remove uppercase `A`
+- GraphQL peer dependency minimum compatible version downgraded to `14.5.8`. (Incompatibilities were between GraphQL & GraphiQL, not this lib.)
+
 ## 0.8.3
 
 - Added `classifiedAs` to `Organization`

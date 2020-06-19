@@ -107,7 +107,8 @@ We usually suggest that you do *not* enforce an http/https protocol scheme, to a
 
 ### Initialising for development
 
-- Run `yarn` from the top level folder of this repository to install and wire up all dependencies.
+1. Run `yarn` from the top level folder of this repository to install and wire up all dependencies.
+2. Run `npm run build` to compile the schema files.
 
 ### Available commands
 
