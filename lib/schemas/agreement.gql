@@ -56,7 +56,7 @@ input AgreementUpdateParams { # implements UpdateParams & AgreementParams
 }
 
 type AgreementResponse {
-  Agreement: Agreement
+  agreement: Agreement
 }
 
 
