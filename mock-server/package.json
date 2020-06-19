@@ -26,7 +26,7 @@
   "dependencies": {
     "@valueflows/vf-graphql": "^0.8",
     "@graphql-tools/mock": "^6.0.7",
-    "apollo-server-express": "^2.14.1",
+    "apollo-server-express": "^2.14.2",
     "express": "^4.17.1",
     "graphql": "^15.0.0",
     "graphql-voyager": "^1.0.0-rc.31"
