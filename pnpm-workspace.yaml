@@ -1,4 +1,5 @@
 packages:
   - 'lib'
+  - 'mock-client'
   - 'mock-server'
   - 'tests'

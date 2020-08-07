@@ -1,0 +1,36 @@
+{
+  "name": "@vf-ui/graphql-client-mock",
+  "version": "0.0.1",
+  "description": "A preconfigured GraphQLClient for testing the ValueFlows schema with mock data.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/valueflows/vf-graphql.git"
+  },
+  "keywords": [
+    "ValueFlows",
+    "GraphQL",
+    "server",
+    "mock"
+  ],
+  "author": "ValueFlows project contributors",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/valueflows/vf-graphql/issues"
+  },
+  "homepage": "https://github.com/valueflows/vf-graphql#readme",
+  "dependencies": {
+    "apollo-client": "^2.6.0",
+    "apollo-cache-inmemory": "^1.6.6",
+    "apollo-link-schema": "^1.2.5",
+    "@valueflows/vf-graphql": "^0.8",
+    "@graphql-tools/mock": "^6.0.7"
+  },
+  "peerDependencies": {
+    "graphql": ">=14"
+  }
+}
