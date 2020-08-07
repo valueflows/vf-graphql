@@ -4,7 +4,6 @@ schema: "./schemas/**/*.gql"
 config:
   scalars:
     DateTime: Date
-    AnyType: any
     URI: string
 generates:
   index.d.ts:

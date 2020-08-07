@@ -21,8 +21,6 @@ const schema = addMocksToSchema({
   mocks: {
     URI: () => 'http://example.com/thing',
     DateTime: () => new Date().toISOString(),
-    DateInterval: () => 'P1Y2M10DT2H30M',
-    AnyType: () => '??????',
   },
 })
 
