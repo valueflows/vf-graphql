@@ -18,7 +18,7 @@
     "mock"
   ],
   "author": "ValueFlows project contributors",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/valueflows/vf-graphql/issues"
   },
