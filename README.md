@@ -1,4 +1,13 @@
-# vf-graphql
+# This Project Has Moved
+
+All activity and development of this project has moved to a GitLab instance:
+
+https://lab.allmende.io/valueflows/vf-graphql
+
+This project only remains here for archival purposes.
+
+
+## vf-graphql
 
 GraphQL reference implementation of the [ValueFlows](http://valueflo.ws/) grammar.
 
