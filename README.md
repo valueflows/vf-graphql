@@ -1,10 +1,10 @@
 # This Project Has Moved
 
-This project has moved to a GitLab instance
+All activity and development of this project has moved to a GitLab instance:
 
 https://lab.allmende.io/valueflows/vf-graphql
 
-This project is only here for archival purposes.
+This project only remains here for archival purposes.
 
 
 ## vf-graphql
